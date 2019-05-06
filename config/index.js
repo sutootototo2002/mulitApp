@@ -8,7 +8,7 @@ const config = {
     '828': 1.81 / 2
   },
   sourceRoot: 'src',
-  outputRoot: 'dist',
+  outputRoot: 'dist_'+process.env.npm_lifecycle_event.split(':')[1],
   plugins: {
     babel: {
       sourceMap: true,
@@ -68,6 +68,7 @@ const config = {
     }
   },
   h5: {
+    esnextModules: ['taro-ui'],
     publicPath: '/',
     staticDirectory: 'static',
     module: {

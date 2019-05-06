@@ -1,0 +1,225 @@
+<block>
+    <view>
+        <map class="mb-map" id="mymap" show-location="{{showLocation}}" subkey="{{mapKey}}" latitude="{{latitude}}" longitude="{{longitude}}" scale="{{scale}}" controls="{{controls}}" bindcontroltap="onControlTap"></map>
+        <cover-view class="menus_avator">
+            <cover-image class="menus_user" src="{{zm}}"></cover-image>
+        </cover-view>
+        <block>
+            <block wx:if="{{markBoolean}}">
+                <cover-view class="mark"></cover-view>
+            </block>
+            <block wx:else>
+                <cover-view></cover-view>
+            </block>
+        </block>
+        <block>
+            <block wx:if="{{posBoolean}}">
+                <cover-view class="boxInfo" catchtap="onInfo" hidden="{{posBoolean}}">
+                    <cover-image class="posImg" src="{{dw}}"></cover-image>
+                    <cover-view class="info">亲！{{systemUser}}找不到您的位置...</cover-view>
+                    <cover-view class="btnOpen" catchtap="onClosePos">打开定位权限</cover-view>
+                </cover-view>
+            </block>
+            <block wx:else>
+                <cover-view></cover-view>
+            </block>
+        </block>
+        <block>
+            <block wx:if="{{unpayBoolean}}">
+                <cover-view class="unpayOrder">
+                    <cover-image src="{{unpayImg}}"></cover-image>
+                    <cover-image class="unprice" src="{{unpriceImg}}"></cover-image>
+                    <cover-view class="textOne">本次</cover-view>
+                    <cover-view class="textTwo">应付款(元)</cover-view>
+                    <cover-view class="textPrice">{{anonymousState__temp}}</cover-view>
+                    <cover-view class="textshi">Wa! 这里有未付订单！</cover-view>
+                    <cover-view class="unpayList">
+                        <cover-view class="orderList">
+                            <cover-view class="orderInfo">
+                                <cover-view class="goodstate">未付知码订单</cover-view>
+                                <cover-view class="time">2019/11/10 23:00</cover-view>
+                            </cover-view>
+                            <cover-image class="goodsImg" src="{{tempImg}}"></cover-image>
+                            <cover-view class="goodsInfos">
+                                <cover-view>
+                                    <cover-image class="del" src="{{del}}"></cover-image>
+                                    <cover-view class="total">共5件商品</cover-view>
+                                </cover-view>
+                                <cover-view class="goodsInfoDetail">[脉动300mlx1瓶] 丰台区南四环</cover-view>
+                            </cover-view>
+                        </cover-view>
+                        <button class="BtnOne" bindtap="onPay">支付</button>
+                    </cover-view>
+                </cover-view>
+            </block>
+            <block wx:else>
+                <cover-view></cover-view>
+            </block>
+        </block>
+        <block>
+            <block wx:if="{{DensityFree}}">
+                <cover-view class="desityFree">
+                    <cover-image class="mmImg" src="{{mm}}"></cover-image>
+                    <cover-view class="mmText">无需输入支付密码，快速购物！</cover-view>
+                    <button class="BtnTwo" bindtap="onMM">开启免密 愉快购物</button>
+                </cover-view>
+            </block>
+            <block wx:else>
+                <cover-view></cover-view>
+            </block>
+        </block>
+        <block>
+            <block wx:if="{{HearlistBoolean}}">
+                <cover-view class="HearDiv1">
+                    <cover-image src="{{xydd}}"></cover-image>
+                    <cover-image src="{{closebtn}}" bindtouchstart="onCloseHeardlist" class="closeBtn"></cover-image>
+                    <cover-view class="myhear" bindtouchstart="onSetheart" hover-start-time="{{10}}"></cover-view>
+                    <cover-view class="bgColor">
+                        <cover-view class="hearList">
+                            <cover-view class="hearLi">
+                                <cover-image class="userInfo" src="{{zm}}"></cover-image>
+                                <cover-view class="CVFloat">
+                                    <cover-view class="cvtitle">用户小怪兽大胖子111点赞了您的心愿</cover-view>
+                                    <cover-view class="cvcallback">点赞心愿：百事可乐</cover-view>
+                                    <cover-view class="checkInfo">查看消息</cover-view>
+                                </cover-view>
+                            </cover-view>
+                            <cover-view class="hearLi">
+                                <cover-image class="userInfo" src="{{zm}}"></cover-image>
+                                <cover-view class="CVFloat">
+                                    <cover-view class="cvtitle">用户小怪兽大胖子111点赞了您的心愿</cover-view>
+                                    <cover-view class="cvcallback">点赞心愿：百事可乐</cover-view>
+                                    <cover-view class="checkInfo">查看消息</cover-view>
+                                </cover-view>
+                            </cover-view>
+                            <cover-view class="hearLi">
+                                <cover-image class="userInfo" src="{{zm}}"></cover-image>
+                                <cover-view class="CVFloat">
+                                    <cover-view class="cvtitle">用户小怪兽大胖子111点赞了您的心愿</cover-view>
+                                    <cover-view class="cvcallback">点赞心愿：百事可乐</cover-view>
+                                    <cover-view class="checkInfo">查看消息</cover-view>
+                                </cover-view>
+                            </cover-view>
+                            <cover-view class="hearLi">
+                                <cover-image class="userInfo" src="{{zm}}"></cover-image>
+                                <cover-view class="CVFloat">
+                                    <cover-view class="cvtitle">用户小怪兽大胖子111点赞了您的心愿</cover-view>
+                                    <cover-view class="cvcallback">点赞心愿：百事可乐</cover-view>
+                                    <cover-view class="checkInfo">查看消息</cover-view>
+                                </cover-view>
+                            </cover-view>
+                        </cover-view>
+                    </cover-view>
+                </cover-view>
+            </block>
+            <block wx:else>
+                <cover-view></cover-view>
+            </block>
+        </block>
+        <block>
+            <block wx:if="{{HearBoolean}}">
+                <cover-view class="HearDiv">
+                    <cover-image class="HearImg" src="{{HearHead}}"></cover-image>
+                    <cover-image src="{{closebtn}}" bindtouchstart="onCloseHeard" class="closeBtn"></cover-image>
+                    <cover-view class="HearList">
+                        <cover-view class="title">
+                            <cover-view class="gTitle">零度可乐</cover-view>
+                            <cover-view class="gline">|</cover-view>
+                            <cover-view class="gInfo">这些货柜都能找到</cover-view>
+                        </cover-view>
+                        <cover-view class="goodsList">
+                            <cover-view class="gLi">
+                                <cover-image class="machBigImg" src="{{heardImg}}"></cover-image>
+                                <cover-image class="yyzh" src="{{yyzh}}"></cover-image>
+                                <cover-view class="gAddr">富海国际港1层大厅3号柜</cover-view>
+                                <cover-view class="gAddr_">北京市海淀区大柳树北路17号</cover-view>
+                                <button class="gdetail">查看详情</button>
+                                <cover-view class="gdistDiv">
+                                    <cover-image class="gdist" src="{{addr}}"></cover-image>
+                                    <cover-view class="gdist1">距离您1.2m</cover-view>
+                                </cover-view>
+                            </cover-view>
+                            <cover-view class="gLi">
+                                <cover-image class="machBigImg" src="{{heardImg}}"></cover-image>
+                                <cover-image class="yyzh" src="{{dyzh}}"></cover-image>
+                                <cover-view class="gAddr">富海国际港1层大厅3号柜</cover-view>
+                                <cover-view class="gAddr_">北京市海淀区大柳树北路17号</cover-view>
+                                <button class="gdetail">查看详情</button>
+                                <cover-view class="gdistDiv">
+                                    <cover-image class="gdist" src="{{addr}}"></cover-image>
+                                    <cover-view class="gdist1">距离您1.2m</cover-view>
+                                </cover-view>
+                            </cover-view>
+                            <cover-view class="gLi">
+                                <cover-image class="machBigImg" src="{{heardImg}}"></cover-image>
+                                <cover-image class="yyzh" src="{{yyzh}}"></cover-image>
+                                <cover-view class="gAddr">富海国际港1层大厅3号柜</cover-view>
+                                <cover-view class="gAddr_">北京市海淀区大柳树北路17号</cover-view>
+                                <button class="gdetail">查看详情</button>
+                                <cover-view class="gdistDiv">
+                                    <cover-image class="gdist" src="{{addr}}"></cover-image>
+                                    <cover-view class="gdist1">距离您1.2m</cover-view>
+                                </cover-view>
+                            </cover-view>
+                            <cover-view class="gLi">
+                                <cover-image class="machBigImg" src="{{heardImg}}"></cover-image>
+                                <cover-image class="yyzh" src="{{yyzh}}"></cover-image>
+                                <cover-view class="gAddr">富海国际港1层大厅3号柜</cover-view>
+                                <cover-view class="gAddr_">北京市海淀区大柳树北路17号</cover-view>
+                                <button class="gdetail">查看详情</button>
+                                <cover-view class="gdistDiv">
+                                    <cover-image class="gdist" src="{{addr}}"></cover-image>
+                                    <cover-view class="gdist1">距离您1.2m</cover-view>
+                                </cover-view>
+                            </cover-view>
+                        </cover-view>
+                        <cover-view class="clickBtn">点击加载更多</cover-view>
+                    </cover-view>
+                </cover-view>
+            </block>
+            <block wx:else>
+                <cover-view></cover-view>
+            </block>
+        </block>
+        <block>
+            <block wx:if="{{bool}}">
+                <cover-view class="menus">
+                    <cover-image class="menusImg" src="{{menus}}"></cover-image>
+                    <cover-image class="menuscreen" bindtap="onScreen" src="{{screen}}"></cover-image>
+                    <cover-image class="menusBtnRight" bindtap="onRight" src="{{user}}"></cover-image>
+                    <cover-image class="menusBtnLeft" bindtap="onLeft" src="{{person}}"></cover-image>
+                    <block>
+                        <block wx:if="{{machineBoolean}}">
+                            <cover-view class="machineInfo">
+                                <cover-image class="pos_" src="{{pos_}}"></cover-image>
+                                <cover-image class="openImg" src="{{open}}"></cover-image>
+                                <cover-view class="addrDiv">
+                                    <cover-image class="addr" src="{{mach}}"></cover-image>
+                                    <cover-view class="address">车道沟北方地产大厦楼西侧</cover-view>
+                                </cover-view>
+                                <cover-view class="addrDiv_">
+                                    <cover-image class="addr_" src="{{addr}}"></cover-image>
+                                    <cover-view class="address_">地址：北京市海淀区紫竹院路81号</cover-view>
+                                    <cover-view class="dist">| 距您步行539m</cover-view>
+                                    <cover-view class="goodType">
+                                        <cover-view class="goodli">
+                                            <cover-image class="goodImg" src="{{tempImg}}"></cover-image>
+                                            <cover-view class="goodsName">水果</cover-view>
+                                        </cover-view>
+                                    </cover-view>
+                                    <cover-view class="zhanweifu"></cover-view>
+                                </cover-view>
+                            </cover-view>
+                        </block>
+                        <block wx:else>
+                            <cover-view></cover-view>
+                        </block>
+                    </block>
+                </cover-view>
+            </block>
+            <block wx:else>
+                <cover-view></cover-view>
+            </block>
+        </block>
+    </view>
+</block>

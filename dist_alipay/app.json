@@ -1,0 +1,13 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/orders/index"
+  ],
+  "window": {
+    "disableScroll": true,
+    "backgroundTextStyle": "light",
+    "titleBarColor": "#ff9409",
+    "defaultTitle": "WeChat",
+    "navigationBarTextStyle": "black"
+  }
+}

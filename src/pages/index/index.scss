@@ -1,0 +1,686 @@
+
+$color-white:#fff;
+$color-white1:#f3f3f3;
+$color-default:#ff7700;
+$color-orgent:#ff4e00;
+$color-gray:#eeeceb;
+$color-gray1:#919191;
+$color-orgent1:#ff3b3b;
+$color-orgent2:#e64307;
+$color-brown:#e1cda9;
+$color-brown1:#633226;
+//地图样式
+.mb-map {
+    width: 100%;
+    height: 100vh;
+  }
+  //头像样式
+  .menus_avator{
+    position: absolute;
+    width:90%;
+    height:78px;
+    left:50%;
+    margin-left:-45%;
+    border:0;
+    box-shadow: 1px 1px 1px #888888;
+    border-radius: 999px;
+    background:$color-white;
+    top:46px;
+    z-index:999;
+ }
+ .menus_user{
+  width:78px;
+  height:78px;
+  border-radius: 39px;
+}
+//menus样式
+.menus{
+  position: absolute;
+  width:100%;
+  height:266px;
+  bottom:0;
+  margin-top:-200px;
+  // background:rgba(255, 255, 255, 0.000001);
+  z-index:1;
+  overflow: visible;
+}
+
+.menusImg{
+  width:100%;
+  height:266px;
+}
+
+
+.menuscreen{
+  width:168px;
+  height:168px;
+  position: absolute;
+  left:50%;
+  top:50%;
+  margin-left:-84px;
+  margin-top:-84px;
+}
+
+
+.menusBtnRight{
+  position: absolute;
+  width:126px;
+  height:126px;
+  top:50%;
+  left:50%;
+  margin-left:146px;
+  margin-top:-53px;
+}
+.menusBtnLeft{
+  position: absolute;
+  width:126px;
+  height:126px;
+  top:50%;
+  left:50%;
+  margin-left:-260px;
+  margin-top:-53px;
+}
+
+//免密提示框
+  .boxInfo{
+    position: absolute;
+    top:50%;
+    margin-top:-180px;
+    width:563px;
+    height:376px;
+    margin-left:-40%;
+    left:50%;
+    padding:10px;
+    background:$color-white;
+    border-radius: 10px;
+    z-index:10001;
+  }
+  
+  .closeInfo{
+    width:10px;
+    height:10px;
+    // border:1px solid red;
+    position: absolute;
+  }
+  .mark{
+
+    position: absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    width:100%;
+    height:100%;
+    background:rgba(0, 0, 0, 0.6);
+    z-index:10000;
+
+  }
+
+  .btnOpen{
+    position: absolute;
+    bottom:20px;
+    width:250px;
+    height:60px;
+    padding:10px 0;
+    line-height: 60px;
+    left:50%;
+    margin-left:-125px;
+    border-radius: 45px;
+    background:$color-default;
+    color:$color-white;
+    text-align: center;
+    font-size:30px;
+    // font-size:20px;
+    z-index: 100001;
+  }
+
+  .posImg{
+    width:312px;
+    height:215px;
+    position: absolute;
+    left:50%;
+    margin-left:-156px;
+    top:50%;
+    margin-top:-140px;
+  }
+
+  .info{
+    position: absolute;
+    top:60%;
+    height:40px;
+    margin-top:0px;
+    font-size:25px;
+    text-align: center;
+    left:20%;
+   
+  }
+
+
+  .unpayOrder{
+    width:563px;
+    position:absolute;
+    top:10%;
+    left:50%;
+    margin-left:-281px;
+    border-radius: 20px;
+    z-index: 99999;
+
+  }
+
+
+  .unpayList{
+    width:563px;
+    left:50%;
+    margin-left:-281px;
+    margin:auto;
+    background:$color-white1;
+    margin-top:-1px;
+    padding:33px 0;
+  }
+
+  .unprice{
+    position: absolute;
+    width:332px;
+    height:324px;
+    top:10px;
+    left:50%;
+    margin-left:-166px;
+    z-index:9;
+    text-align:center;
+  }
+  .textOne{
+    position: absolute;
+    top:45px;
+    width:100%;
+    text-align: center;
+    font-size:25px;
+    z-index:9999;
+    color:$color-orgent;
+
+  }
+  .textTwo{
+    position: absolute;
+    top:100px;
+    width:100%;
+    text-align: center;
+    font-size:25px;
+    z-index:9999;
+    color:$color-orgent;
+  }
+  .textPrice{
+     font-size:33px;
+     position: absolute;
+     top:150px;
+     width:100%;
+     text-align: center;
+     font-size:50px;
+     z-index:9999;
+     color:$color-orgent;
+  }
+  .textshi{
+    font-size:33px;
+    position: absolute;
+    top:420px;
+    width:100%;
+    text-align: center;
+    font-size:35px;
+    z-index:9999;
+    color:$color-white;
+  }
+
+  .BtnOne{
+    color:$color-white;
+    background:color-default;
+    line-height:64px;
+    border:0;
+    width:95%;
+
+    margin:auto;
+    
+  }
+
+  .BtnTwo{
+    color:$color-white;
+    background:$color-default;
+    line-height:64px;
+    border:0;
+    width:95%;
+    font-size:30px;
+    margin:auto;
+    margin-top:20px;
+    
+  }
+
+  .orderList{
+    width:90%;
+    margin:auto;
+    padding:5px 20px 20px 20px;
+    background:$color-gray;
+    border-radius: 10px;
+    margin-bottom:20px;
+  }
+
+  .clist{
+    background:$color-gray;
+    margin-bottom:10px;
+    padding:10px 5px;
+  }
+
+.canme{float:left;}
+.ctime{float: right;}
+.goodsCV{
+  
+}
+.goods{
+  clear:both;
+  float:left;
+  // border:1px solid red;
+  top:40px;
+  width:100%;
+  font-size:25px;
+  top:0;
+  background:$color-white;
+  // height:200px
+}
+.gImg{
+  float:left;
+  width:100px;
+  height:100px;
+  // border:1px solid red;
+}
+.gName{
+  float:left;
+  padding:0 0 0 20px;
+  
+}
+
+.goodsImg{
+  float:left;
+  width:65px;
+  height:65px;
+  border-radius: 10px;
+  background:$color-white;
+}
+.goodsInfos{
+  float:left;
+  margin-left:20px;
+}
+.del{
+  float:left;
+  width:31px;
+  height:31px;
+  margin-top:2px;
+  margin:5px 10px 0 0;
+  color:$color-orgent2;
+  font-size:25px;
+}
+.total{
+  float:left;
+  color:$color-orgent2;
+  font-size:30px;
+}
+.goodsInfoDetail{
+  font-size:30px;
+  color:$color-gray1;
+}
+
+.goodstate{
+  float:left;
+  font-size:30px;
+}
+.time{
+  float: right;
+  font-size:30px;
+  color:$color-gray1;
+}
+
+.orderInfo{
+  padding:0 0 20px 0;
+  color:$color-gray1;
+}
+
+.machineInfo{
+  width:634px;
+  height:240px;
+  overflow-y:scroll;
+  overflow-x:scroll;
+  background:$color-white;
+  padding:20px 0;
+  position: absolute;
+  left:50%;
+  margin-left:-317px;
+  bottom:-20px;
+  border-radius: 20px;
+  z-index:9999999999999;
+}
+
+.pos_{
+  position: absolute;;
+  width:100%;
+  height:37px;
+  top:-5px;
+  z-index:9999;
+}
+
+.openImg{
+  position: absolute;
+  top:50px;
+  right:20px;
+  width:88px;
+  height:75px;
+}
+.addrDiv{
+  padding:40px 0 0 0;
+}
+.addrDiv_{
+  padding:20px 0 0 0;
+}
+.addr{
+  
+  padding:0px 0 0 10px;
+  width:50px;
+  height:50px;
+  float:left;
+
+}
+.addr_{
+  
+  padding:0px 0 0 10px;
+  width:50px;
+  height:50px;
+  float:left;
+
+}
+.address{
+ 
+  float:left;
+  font-size:35px;
+  padding:0 0 0 10px;
+  color:#616161;
+}
+.address_{
+ 
+  float:left;
+  font-size:25px;
+  padding:0 0 0 10px;
+  color:#7d7d7d;
+}
+.dist{
+  float:left;
+  font-size:25px;
+  padding:0 0 0 10px;
+  color:#7d7d7d;
+}
+
+.goodType{
+  clear:both;
+  padding:10px;
+}
+.goodli{
+  width:90px;
+  
+}
+.goodImg{
+  width:90px;
+  height:90px;
+  background:#eceded;
+  border-radius: 45px;
+  border:1px solid #eceded;
+  overflow:hidden;
+}
+
+.goodsName{
+  text-align: center;
+  font-size:25px;
+  color:#b0afaf;
+}
+
+.zhanweifu{
+  height:40px;
+}
+
+.desityFree{
+  position: absolute;
+  top:50%;
+  margin-top:-180px;
+  width:563px;
+  padding:0 0 30px 0;
+  margin-left:-40%;
+  left:50%;
+  
+  background:$color-white;
+  border-radius: 10px;
+  z-index:10001;
+  // border:1px solid red;
+}
+
+.HearDiv{
+  position: absolute;
+  top:50%;
+  margin-top:-450px;
+  width:695px;
+  padding:0 0 0px 0;
+  margin-left:-347px;
+  left:50%;
+  border-radius: 10px;
+  z-index:10001;
+  // border:1px solid red;
+}
+
+.closeBtn{
+  position: absolute;
+  width:55px;
+  height:55px;
+  top:0;
+  right: 20px;
+  
+}
+
+.HearImg{
+  margin-top:20px;
+  width:100%;
+  height:150px;
+}
+
+.mmImg{
+  margin:auto;
+  width:312px;
+  height:251px;
+}
+
+
+.mmText{
+  text-align: center;
+  font-size:30px;
+}
+
+.HearList{
+  background:#f2f2f2;
+  width:695px;
+  margin-top:-1px;
+  padding:0 0 30px 0;
+  border-radius: 0 0 20px 20px;
+  // border:1px solid red;
+}
+.title{
+  padding:20px;
+}
+.gTitle{
+  float:left;
+  font-weight: bold;
+}
+.gInfo{
+  color:$color-default;
+  margin-left:10px;
+}
+.gline{
+  float:left;
+  padding:0 5px;
+  color:#e5e5e5;
+}
+
+.gLi{
+  position: relative;
+  width:656px;
+  height:167px;
+  background:$color-white;
+  margin:auto;
+  border-radius: 10px;
+  margin-bottom:10px;
+}
+
+.gAddr{
+  font-size:35px;
+  margin-top:30px;
+  padding:0 0 0 20px;
+ 
+}
+.gAddr_{
+  font-size:25px;
+  margin-top:20px;
+  padding:0 0 0 20px;
+  
+}
+
+.goodsList{
+  height:450px;
+  overflow:scroll;
+  overflow-y:scroll;
+
+}
+.machBigImg{
+  width:100px;
+  height:100px;
+  float:left;
+  margin:40px 0 0 20px
+}
+
+.yyzh{
+  width:62px;
+  height:60px;
+  position: absolute;
+  right:0;
+  top:0;
+}
+
+.clickBtn{
+  padding:20px 0 0 0;
+  text-align:center;
+  font-size:25px;
+  color:#b5b6b6;
+}
+
+.gdetail{
+  position: absolute;
+  right:20px;
+  font-size:15px;
+  width:98px;
+  height:30px;
+  line-height:30px;
+  top:50px;
+  border-radius: 30px;
+  border:0;
+  background:$color-default;
+  color:$color-white;
+
+}
+
+.gdist{
+   float:left;
+   width:30px;
+   height:30px;
+}
+.gdist1{
+  float:left;
+ 
+}
+.gdistDiv{
+  position:absolute;
+  right:10px;
+  font-size:25px;
+}
+
+.HearDiv1{
+  position: absolute;
+  top:50%;
+  margin-top:-450px;
+  width:563px;
+  padding:0 0 0px 0;
+  margin-left:-281px;
+  left:50%;
+  border-radius: 10px;
+  z-index:10001;
+  // border:1px solid red;
+}
+
+.hearList{
+  margin:auto;
+  width:500px;
+  height:300px;
+  // border:1px solid red;
+  overflow: scroll;
+  margin-bottom:10px;
+
+}
+.hearLi{
+  padding-bottom:40px;
+  border:1px solid dashed;
+}
+
+.hearli{
+  height:80px;
+  // border:1px solid red;
+}
+.bgColor{
+  width:561px;
+  margin:auto;
+  margin-top:-1px;
+  background:$color-white;
+}
+
+
+
+.userInfo{
+  float:left;
+  width:65px;
+  height:65px;
+  border-radius: 65px;
+  // border:1px solid red;
+}
+.CVFloat{
+  float:left;
+  width:86%;
+  // border:1px solid red;
+  font-size:25px;
+}
+.cvtitle{
+  float:left;
+  line-height: 44px;
+  word-wrap: break-word;  //只对英文起作用，以单词作为换行依据。
+    word-break: normal; 
+}
+.cvcallback{
+  clear: both;
+  float:left;
+  color:$color-orgent1;
+  line-height: 44px;
+}
+.checkInfo{
+  float:right;
+  padding:5px;
+  background:$color-brown;
+  color:$color-brown1;
+  border-radius: 5px;
+}
+
+.myhear{
+   position: absolute;
+   width:130px;
+   height: 130px;
+   left:50%;
+   margin-left:-65px;
+   top:50%;
+   margin-top:-62px;
+  //  border:1px solid red;  
+}
+

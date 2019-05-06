@@ -1,0 +1,64 @@
+
+$color-white:#fff;
+
+$color-default:#ff7700;
+
+
+.severDiv{
+    position: absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    width:100%;
+    height:100%;
+    // border:1px solid red;
+    background:$color-white;
+    
+}
+.main{
+    background-color: $color-white;
+    width: 100%;
+    padding-bottom: 100%;
+    
+}
+.box{
+    width: 30%;
+    height:210px;
+    border:0.5px solid $color-default; 
+    background-color:$color-white;
+    border-radius: 3%;
+    float: left;
+    margin: 1%;
+    position: relative;
+}
+
+.boxtitle{
+    position: absolute;
+    width:100%;
+    bottom:10px;
+    font-size:30px;
+    text-align: center;
+}
+
+.serverTitle{
+    padding:10px 0;
+    text-align: center;
+    font-size:35px;
+}
+
+.serverImg{
+    width:90px;
+    height:90px;
+    margin:auto 0;
+    position:absolute;
+    left:50%;
+    margin-left:-45px;
+    top:50%;
+    margin-top:-65px;
+    // border:1px solid red;
+}
+
+.loginBtn{
+    bottom:20px;
+}

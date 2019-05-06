@@ -1,0 +1,100 @@
+<block>
+    <view>
+        <map class="mb-map" id="mymap" show-location="{{showLocation}}" subkey="{{mapKey}}" latitude="{{latitude}}" longitude="{{longitude}}" scale="{{scale}}" controls="{{controls}}" onControlTap="onControlTap"></map>
+        <cover-view class="menus_avator">
+            <cover-image class="menus_user" src="{{zm}}"></cover-image>
+        </cover-view>
+        <block>
+            <block a:if="{{markBoolean}}">
+                <cover-view class="mark" hidden="{{markBoolean}}"></cover-view>
+            </block>
+            <block a:else>
+                <cover-view></cover-view>
+            </block>
+        </block>
+        <block>
+            <block a:if="{{posBoolean}}">
+                <cover-view class="boxInfo" catchTap="onInfo" hidden="{{posBoolean}}">
+                    <cover-image class="posImg" src="{{dw}}"></cover-image>
+                    <cover-view class="info">亲！{{systemUser}}找不到您的位置...</cover-view>
+                    <cover-view class="btnOpen" catchTap="onClosePos">打开定位权限</cover-view>
+                </cover-view>
+            </block>
+            <block a:else>
+                <cover-view></cover-view>
+            </block>
+        </block>
+        <block>
+            <block a:if="{{unpayBoolean}}">
+                <cover-view class="unpayOrder">
+                    <cover-image src="{{unpayImg}}"></cover-image>
+                    <cover-image class="unprice" src="{{unpriceImg}}"></cover-image>
+                    <cover-view class="textOne">本次</cover-view>
+                    <cover-view class="textTwo">应付款(元)</cover-view>
+                    <cover-view class="textPrice">{{anonymousState__temp}}</cover-view>
+                    <cover-view class="textshi">Wa! 这里有未付订单！</cover-view>
+                    <cover-view class="unpayList">
+                        <cover-view class="orderList">
+                            <cover-view class="orderInfo">
+                                <cover-view class="goodstate">未付知码订单</cover-view>
+                                <cover-view class="time">2019/11/10 23:00</cover-view>
+                            </cover-view>
+                            <cover-image class="goodsImg" src="{{tempImg}}"></cover-image>
+                            <cover-view class="goodsInfos">
+                                <cover-view>
+                                    <cover-image class="del" src="{{del}}"></cover-image>
+                                    <cover-view class="total">共5件商品</cover-view>
+                                </cover-view>
+                                <cover-view class="goodsInfoDetail">[脉动300mlx1瓶] 丰台区南四环</cover-view>
+                            </cover-view>
+                        </cover-view>
+                        <button class="BtnOne" onTap="onPay">支付</button>
+                    </cover-view>
+                </cover-view>
+            </block>
+            <block a:else>
+                <cover-view></cover-view>
+            </block>
+        </block>
+        <block>
+            <block a:if="{{bool}}">
+                <cover-view class="menus">
+                    <cover-image class="menusImg" src="{{menus}}"></cover-image>
+                    <cover-image class="menuscreen" onTap="onScreen" src="{{screen}}"></cover-image>
+                    <cover-image class="menusBtnRight" onTap="onRight" src="{{user}}"></cover-image>
+                    <cover-image class="menusBtnLeft" onTap="onLeft" src="{{person}}"></cover-image>
+                    <block>
+                        <block a:if="{{machineBoolean}}">
+                            <cover-view class="machineInfo">
+                                <cover-view>sss</cover-view>
+                                <cover-view>sss</cover-view>
+                                <cover-view>sss</cover-view>
+                                <cover-view>sss</cover-view>
+                                <cover-view>sss</cover-view>
+                                <cover-view>sss</cover-view>
+                                <cover-view>sss</cover-view>
+                                <cover-view>sss</cover-view>
+                                <cover-view>sss</cover-view>
+                                <cover-view>sss</cover-view>
+                                <cover-view>sss</cover-view>
+                                <cover-view>sss</cover-view>
+                                <cover-view>sss</cover-view>
+                                <cover-view>sss</cover-view>
+                                <cover-view>sss</cover-view>
+                                <cover-view>sss</cover-view>
+                                <cover-view>sss</cover-view>
+                                <cover-view>sss</cover-view>
+                            </cover-view>
+                        </block>
+                        <block a:else>
+                            <cover-view></cover-view>
+                        </block>
+                    </block>
+                </cover-view>
+            </block>
+            <block a:else>
+                <cover-view></cover-view>
+            </block>
+        </block>
+    </view>
+</block>
