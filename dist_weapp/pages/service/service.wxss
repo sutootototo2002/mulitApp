@@ -19,12 +19,16 @@
 .box {
   width: 30%;
   height: 210rpx;
-  border: 0.5rpx solid #ff7700;
+  border: 0.5rpx solid #ccc;
   background-color: #fff;
   border-radius: 3%;
   float: left;
   margin: 1%;
   position: relative;
+}
+
+.select {
+  border: 0.5rpx solid #ff7700;
 }
 
 .boxtitle {

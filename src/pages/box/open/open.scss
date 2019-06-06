@@ -1,0 +1,141 @@
+
+$color-white:#fff;
+$color-white1:#f3f3f3;
+$color-default:#ff7700;
+$color-orgent:#ff4e00;
+$color-gray:#eeeceb;
+$color-gray1:#919191;
+$color-orgent1:#ff3b3b;
+$color-orgent2:#e64307;
+$color-brown:#e1cda9;
+$color-brown1:#633226;
+.loader{
+    width:396px;
+    height:396px;
+    // border:3px solid #ee751a;
+    position: absolute;
+    left:50%;
+    margin-left:-198px;
+    top:50%;
+    margin-top:-298px;
+    text-align: center;
+    line-height: 396px;
+    border-radius: 999px;
+    color:#fff;
+    font-size:45px;
+    z-index:9999;
+
+}
+
+.fail{
+    position: absolute;
+    width:100%;
+    height:auto;
+    font-size:30px;
+    bottom:400px;
+    text-align: center;
+    color:#ccc;
+}
+.bottominfo{
+    position: absolute;
+    width:100%;
+    height:auto;
+    font-size:30px;
+    color:#ccc;
+    bottom:150px;
+    text-align: center;
+}
+.btns{
+    position: absolute;
+    width:90%;
+    left:50%;
+    margin-left:-45%;
+    height:auto;
+    font-size:35px;
+    bottom:250px;
+    text-align: center;
+}
+.navigator{
+    position: absolute;
+    width:100%;
+    height:auto;
+    font-size:30px;
+    bottom:100px;
+    text-align: center;
+    color:#ccc;
+}
+
+.openlock{
+    position: absolute;
+    width:100%;
+    height:auto;
+    font-size:35px;
+    bottom:300px;
+    text-align: center;
+    color:#000;
+}
+
+.loadImg{
+    width:396px;
+    height:396px;
+    position: absolute;
+    left:50%;
+    margin-left:-196px;
+    top:50%;
+    margin-top:-297px;
+    z-index:9;
+}
+
+//免密提示框
+.boxInfo{
+    position:absolute;
+    top:50%;
+    margin-top:-300rpx;
+    width:530rpx;
+    height:376rpx;
+    margin-left:-275rpx;
+    left:50%;
+    padding:0 10rpx;
+    background:#fff;
+    border-radius:10rpx;
+    z-index:10001;
+    border:1px solid #ccc;
+
+  }
+  .info{
+    position: absolute;
+    top:60%;
+    height:40px;
+    margin-top:0px;
+    font-size:25px;
+    text-align: center;
+    left:20%;
+   
+  }
+  .btnOpen{
+    position: absolute;
+    bottom:20px;
+    width:250px;
+    height:60px;
+    padding:10px 0;
+    line-height: 60px;
+    left:50%;
+    margin-left:-125px;
+    border-radius: 45px;
+    background:$color-default;
+    color:$color-white;
+    text-align: center;
+    font-size:30px;
+    // font-size:20px;
+    z-index: 100001;
+  }
+
+  .posImg{
+    width:312px;
+    height:215px;
+    position: absolute;
+    left:50%;
+    margin-left:-156px;
+    top:50%;
+    margin-top:-140px;
+  }

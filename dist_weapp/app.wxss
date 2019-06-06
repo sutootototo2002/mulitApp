@@ -16,6 +16,102 @@ button[type=default] {
   background-color: #FF7700;
 }
 
+.mhh {
+  width: 100%;
+  height: 409rpx;
+}
+
+.mhhImages {
+  width: 100%;
+  height: 409rpx;
+}
+
+.boxOne {
+  width: 145rpx;
+  height: 145rpx;
+  position: absolute;
+  left: 50%;
+  margin-left: -72.5rpx;
+  border-radius: 72.5rpx;
+  top: 130rpx;
+  z-index: 99;
+}
+
+.boxOne1 {
+  width: 145rpx;
+  height: 145rpx;
+  position: absolute;
+  left: 50%;
+  margin-left: -72.5rpx;
+  border-radius: 72.5rpx;
+  top: 60rpx;
+  z-index: 99;
+}
+
+.main {
+  background-color: #fff;
+  width: 100%;
+  padding-bottom: 100%;
+}
+
+.box {
+  width: 30%;
+  height: 210rpx;
+  border: 0.5rpx solid #ff7700;
+  background-color: #fff;
+  border-radius: 3%;
+  display: inline-block;
+  margin: 1%;
+  position: relative;
+}
+
+.box1 {
+  width: 31%;
+  height: 119rpx;
+  background-color: #fff;
+  border-radius: 3%;
+  display: inline-block;
+  margin: 1%;
+  position: relative;
+  overflow: hidden;
+}
+
+.main1 {
+  width: 100%;
+  position: absolute;
+  top: 449rpx;
+}
+
+.price {
+  font-size: 30rpx;
+  margin-top: 5rpx;
+  color: #878787;
+  font-weight: bold;
+}
+
+.prices {
+  font-size: 20rpx;
+  position: absolute;
+  color: #878787;
+  left: 10rpx;
+  padding: 0 0 20rpx 0;
+}
+
+.pro {
+  position: absolute;
+  width: 75rpx;
+  height: 80rpx;
+  top: -2rpx;
+  right: -5rpx;
+}
+
+.btn {
+  font-size: 30rpx;
+  width: 90%;
+  margin: auto;
+  margin-top: 20rpx;
+}
+
 @charset "UTF-8";
 /* 改变主题变量，具体变量名可查看 taro-ui/dist/style/variables/default.scss 文件 */
 /**

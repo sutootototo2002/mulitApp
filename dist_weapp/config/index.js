@@ -3,6 +3,10 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.set = set;
+exports.get = get;
+
+
 /** 
  * 线上环境
  * 为了方便测试，使用的是聚合数据免费接口
@@ -11,17 +15,17 @@ Object.defineProperty(exports, "__esModule", {
   HOST_WEBSOCKET: 'wss://t.wemall.com.cn/socket/',
  */
 
-var BASE_URL = exports.BASE_URL = 'https://t.wemall.com.cn/clientapi/';
+var BASE_URL = exports.BASE_URL = 'https://testo.wemall.com.cn/clientapi/';
 
 /** 
  * 测试环境
  */
-var HOST_URL = exports.HOST_URL = 'https://t.wemall.com.cn/';
+var HOST_URL = exports.HOST_URL = 'https://testo.wemall.com.cn/';
 
 /*
  * WEBSOCKET
  */
-var HOST_WEBSOCKET = exports.HOST_WEBSOCKET = 'wss://t.wemall.com.cn/socket/';
+var HOST_WEBSOCKET = exports.HOST_WEBSOCKET = 'wss://testo.wemall.com.cn/socket/';
 /** 
  * 线上mock
  */
@@ -54,5 +58,14 @@ var globalData = exports.globalData = {
   isshopping: 0,
   needrefresh: false,
   requestcount: 0,
-  timerTem: {}
+  timerTem: 0,
+  intervalPapayTemp: null
 };
+
+function set(key, val) {
+  globalData[key] = val;
+}
+
+function get(key) {
+  return globalData[key];
+}

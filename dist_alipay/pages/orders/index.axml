@@ -1,3 +1,5 @@
 <block>
-    <view>订单详情页</view>
+    <view>
+        <view id="svg-c"></view>
+    </view>
 </block>

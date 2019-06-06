@@ -1,0 +1,298 @@
+$color-white:#fff;
+$color-white1:#f3f3f3;
+$color-white2:#f2f2f2;
+$color-default:#ff7700;
+$color-orgent1:#ff3b3b;
+$color-orgent2:#e64307;
+$color-orgent3:#f38f00;
+$color-orgent4:#ffa300;
+$color-orgent:#ff4e00;
+$color-gray:#eeeceb;
+$color-gray1:#919191;
+$color-gray2:#969696;
+$color-brown:#e1cda9;
+$color-brown1:#633226;
+$color-red:#d80a17;
+body{
+    background:#fff;
+}
+.myrecharge{
+    position: absolute;
+    top:0;
+    right:0;
+    left:0;
+    bottom:0;
+    // border:1px solid red;
+    width:100%;
+    height:100%;
+    background:$color-white;
+}
+
+.myvator{
+    position: absolute;
+    width:100px;
+    height:100px;
+    border:5px solid $color-orgent4;
+    border-radius: 999px;
+    left:50%;
+    top:50%;
+    margin-top:-50px;
+    margin-left:-50px;
+    background:$color-white;
+    overflow:hidden;
+}
+
+.rinfos{
+    position: absolute;
+    top:48%;
+    width:100%;
+    // border:1px solid red;
+    text-align: center;
+    color:#fff;
+
+}
+
+.price0{
+    display:inline-block;
+}
+.price1{
+    display:inline-block;
+    font-size:80px;
+}
+
+.mhhword{
+    font-size:25px;
+}
+.btnword{
+    width:200px;
+    height:44px;
+    margin:auto;
+    font-size:25px;
+    line-height:44px;
+    background:#e1e1e1;
+    border-radius: 99px;
+    color:#a1a1a1;
+    text-align: center;
+    position: absolute;
+    left:50%;
+    margin-left:-100px;
+    margin-top:-35px;
+    z-index:999;
+
+    
+
+}
+
+.ad{
+    position: absolute;
+    top:740px;
+    width:703px;
+    height:152px;
+    margin-left:-351px;
+    left:50%;
+}
+
+.mingxi{
+    // position: absolute;
+    // top:750px;
+    width:100%;
+    z-index:996;
+    padding:10px 0;
+    background:#f2f2f2;
+}
+.mxTitle{
+    
+    color:#696969;
+    font-size:30px;
+    text-align: center;
+    width:100%;
+    padding:5px 0;
+   
+}
+.mxList{
+    width:100%;
+    overflow-y:scroll;
+    
+}
+
+.mxli{
+    width:100%;
+    height:149px;
+    border-bottom:1px solid #ccc;
+    position: relative;
+}
+
+.xmname{
+    font-size:35px;
+    padding:10px;
+}
+.xmtime{
+    font-size:25px;
+    padding:10px;
+}
+.xmprice{
+    position: absolute;
+    top:30%;
+    right:50px;
+    font-size:30px;
+}
+
+.select{
+    border:1px solid $color-default;
+    border-radius: 3%;
+}
+
+.payvalue{
+    width:656px;
+    // height:778px;
+    // border:1px solid red;
+    position: absolute;
+    left:50%;
+    margin-left:-328px;
+    top:50%;
+    margin-top:-389px;
+    z-index:999;
+    // border-radius:20px;
+}
+
+.payclose{
+    position: absolute;
+    width:60px;
+    height:60px;
+    right:0;
+    top:0;
+    // border:1px solid red;
+}
+
+.payContent{
+    width:100%;
+    height:678px;
+    background:#fff;
+    border-radius: 20px;
+    // border:1px solid red;
+    margin-top:100px;
+    position: relative;
+}
+
+.payanswer{
+    position: absolute;
+    width:60px;
+    height:60px;
+    right:5px;
+    top:5px;
+}
+
+.payTitle{
+    width:100%;
+    padding:5px;
+    text-align: center;
+    font-size:40px;
+    margin-top:20px;
+    color:#000;
+}
+
+.payTitle1{
+    width:100%;
+    padding:5px;
+    text-align: center;
+    font-size:30px;
+    margin-top:40px;
+    color:#000;
+}
+
+.disfee{
+    margin-top:70px;
+    text-align: center;
+}
+
+.price_fee{
+    display: inline-block;
+    font-size:80px;
+}
+.pricefh{
+    display: inline-block;
+}
+
+.payinfo{
+    margin-top:40px;
+    font-size:30px;
+    padding:0 20px;
+}
+
+.pinfo1{
+    float:left;
+    color:#a1a1a1;
+   
+}
+.pinfo2{
+    float: right;
+    color:#000;
+}
+.btn1{
+    position: absolute;
+    bottom:20px;
+    color:#fff;
+}
+
+.ts{
+    clear: both;
+    font-size: 20px;
+    // border:1px solid red;
+    margin-top:250px;
+    padding:0 20px;
+}
+.ts1{
+    color:#e64307;
+}
+.ts2{
+    color:#a1a1a1;
+}
+
+.mmImg{
+    margin:auto;
+    width:312px;
+    height:251px;
+    margin-top:60px;
+  }
+  
+  
+  .mmText{
+    text-align: center;
+    font-size:30px;
+  }
+
+  .mark{
+
+    position: absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    width:100%;
+    height:100%;
+    background:rgba(0, 0, 0, 0.6);
+    z-index:997;
+
+  }
+
+  .priceDiv{
+    position:absolute;
+    width:100%;
+    top:200px;
+    text-align:center;
+    color:#fff;
+
+}
+
+.main1{
+    // background:#f2f2f2;
+    width:100%;
+    // position:absolute;
+    // top:400rpx;
+    padding:0rpx 0;
+    overflow:hidden;
+}
+
+.main_{
+    padding:20px 0 0 0;
+}

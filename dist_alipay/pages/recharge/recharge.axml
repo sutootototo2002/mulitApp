@@ -1,0 +1,13 @@
+<block>
+    <view>
+        <view class="myrecharge">
+            <view class="mhh">
+                <image class="mhhImages" src="{{mhhImg}}"></image>
+            </view>
+            <image class="boxOne" src="{{avator}}"></image>
+            <view>￥0.00</view>
+            <view>账户余额</view>
+            <view>请选择充值金额</view>
+        </view>
+    </view>
+</block>

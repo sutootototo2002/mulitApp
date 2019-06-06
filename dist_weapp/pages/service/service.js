@@ -12,7 +12,11 @@ var _class, _temp2;
 
 var _index = require("../../npm/@tarojs/taro-weapp/index.js");
 
-var _index2 = require("../../config/index.js");
+var _index2 = _interopRequireDefault(_index);
+
+var _index3 = require("../../config/index.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -39,8 +43,8 @@ var Login = (_temp2 = _class = function (_BaseComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Login.__proto__ || Object.getPrototypeOf(Login)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["loginImg", "serverImg1", "serverImg2", "serverImg3", "serverImg4"], _this.config = {
-      navigationBarTitleText: '会员注册'
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Login.__proto__ || Object.getPrototypeOf(Login)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["loopArray0", "loginImg", "serverImg1", "serverImg2", "serverImg3", "serverImg4", "id_", "server"], _this.config = {
+      navigationBarTitleText: '联系客服'
     }, _this.$$refs = [], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
@@ -57,11 +61,13 @@ var Login = (_temp2 = _class = function (_BaseComponent) {
        */
 
       this.state = {
-        loginImg: _index2.PATH + '/mImages/loginImg.png',
-        serverImg1: _index2.PATH + '/mImages/lxkf-1.png',
-        serverImg2: _index2.PATH + '/mImages/lxkf-2.png',
-        serverImg3: _index2.PATH + '/mImages/lxkf-3.png',
-        serverImg4: _index2.PATH + '/mImages/lxkf-4.png'
+        loginImg: _index3.PATH + '/mImages/loginImg.png',
+        serverImg1: _index3.PATH + '/mImages/lxkf-1.png',
+        serverImg2: _index3.PATH + '/mImages/lxkf-2.png',
+        serverImg3: _index3.PATH + '/mImages/lxkf-3.png',
+        serverImg4: _index3.PATH + '/mImages/lxkf-4.png',
+        id_: 0,
+        server: [{ id: 0, img: _index3.PATH + '/mImages/lxkf-1.png', name: '订单计算错误' }, { id: 1, img: _index3.PATH + '/mImages/lxkf-2.png', name: '账号储值问题' }, { id: 2, img: _index3.PATH + '/mImages/lxkf-3.png', name: '货柜门打不开' }, { id: 3, img: _index3.PATH + '/mImages/lxkf-4.png', name: '货柜门无法锁上' }]
       };
     }
   }, {
@@ -83,19 +89,51 @@ var Login = (_temp2 = _class = function (_BaseComponent) {
     // 请勿修改此函数
 
   }, {
+    key: "turnFn",
+    value: function turnFn(e) {
+      console.log(e.currentTarget.dataset.id);
+      var id = e.currentTarget.dataset.id;
+      this.setState({
+        id_: id
+      });
+    }
+  }, {
+    key: "gohome",
+    value: function gohome() {
+      _index2.default.redirectTo({
+        url: '/pages/index/index'
+      });
+    }
+  }, {
     key: "_createData",
     value: function _createData() {
+      var _this2 = this;
+
       this.__state = arguments[0] || this.state || {};
       this.__props = arguments[1] || this.props || {};
       var __isRunloopRef = arguments[2];
       ;
-      Object.assign(this.__state, {});
+
+      var loopArray0 = this.__state.server.map(function (item, index) {
+        item = {
+          $original: (0, _index.internal_get_original)(item)
+        };
+        var $loopState__temp2 = _this2.__state.id_ == Number(item.$original.id) ? 'box select' : 'box';
+        return {
+          $loopState__temp2: $loopState__temp2,
+          $original: item.$original
+        };
+      });
+
+      Object.assign(this.__state, {
+        loopArray0: loopArray0
+      });
       return this.__state;
     }
   }]);
 
   return Login;
-}(_index.Component), _class.properties = {}, _class.$$events = [], _temp2);
+}(_index.Component), _class.properties = {}, _class.$$events = ["turnFn", "gohome"], _temp2);
 exports.default = Login;
 
 Component(require('../../npm/@tarojs/taro-weapp/index.js').default.createComponent(Login, true));

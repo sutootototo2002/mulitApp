@@ -1,0 +1,89 @@
+
+.loader {
+  width: 396rpx;
+  height: 396rpx;
+  position: absolute;
+  left: 50%;
+  margin-left: -198rpx;
+  top: 50%;
+  margin-top: -298rpx;
+  text-align: center;
+  line-height: 396rpx;
+  border-radius: 999rpx;
+  color: #fff;
+  font-size: 45rpx;
+  z-index: 9999;
+}
+
+.fail {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  font-size: 30rpx;
+  bottom: 200rpx;
+  text-align: center;
+  color: #ccc;
+}
+
+.bottominfo {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  font-size: 30rpx;
+  bottom: 150rpx;
+  text-align: center;
+  color: #ccc;
+}
+
+.btns {
+  position: absolute;
+  width: 90%;
+  left: 50%;
+  margin-left: -45%;
+  height: auto;
+  font-size: 35rpx;
+  bottom: 250rpx;
+  text-align: center;
+}
+
+.navigator {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  font-size: 35rpx;
+  bottom: 100rpx;
+  text-align: center;
+  color: #ccc;
+}
+
+.openlock {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  font-size: 30rpx;
+  bottom: 400rpx;
+  text-align: center;
+  color: #ccc;
+}
+
+.loadImg {
+  width: 396rpx;
+  height: 396rpx;
+  position: absolute;
+  left: 50%;
+  margin-left: -196rpx;
+  top: 50%;
+  margin-top: -390rpx;
+  z-index: 9;
+}
+
+.btnopen {
+  position: absolute;
+  width: 70%;
+  left: 50%;
+  margin-left: -35%;
+  height: auto;
+  font-size: 35rpx;
+  bottom: 250rpx;
+  text-align: center;
+}

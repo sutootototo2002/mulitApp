@@ -1,0 +1,11 @@
+require('@alipay/appx-compiler/lib/sjsEnvInit');
+require('./config$');
+require('../../npm/taro-ui/dist/weapp/components/input/index');
+require('../../npm/taro-ui/dist/weapp/components/loading/index');
+require('../../npm/taro-ui/dist/weapp/components/button/index');
+require('../../pages/index/index');
+require('../../pages/orders/index');
+require('../../pages/wish/myheart');
+require('../../pages/login/login');
+require('../../pages/service/service');
+require('../../pages/recharge/recharge');

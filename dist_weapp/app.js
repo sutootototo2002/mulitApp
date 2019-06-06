@@ -12,12 +12,6 @@ var _index = require("./npm/@tarojs/taro-weapp/index.js");
 
 var _index2 = _interopRequireDefault(_index);
 
-var _index3 = require("./npm/@tarojs/redux/index.js");
-
-var _index4 = require("./store/index.js");
-
-var _index5 = _interopRequireDefault(_index4);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -32,9 +26,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 // if (process.env.NODE_ENV !== 'production' && process.env.TARO_ENV === 'h5')  {
 //   require('nerv-devtools')
 // }
-var store = (0, _index5.default)();
-(0, _index3.setStore)(store);
-
 var _App = function (_BaseComponent) {
   _inherits(_App, _BaseComponent);
 
@@ -52,13 +43,18 @@ var _App = function (_BaseComponent) {
 
 
     _this.config = {
-      pages: ['pages/index/index', 'pages/orders/index', 'pages/wish/myheart', 'pages/login/login', 'pages/service/service'],
+      pages: ['pages/index/index', 'pages/personal/index', 'pages/recharge/recharge', 'pages/wish/likes/myheart', 'pages/login/login', 'pages/service/service', 'pages/box/open/open', 'pages/index/shopping/index', 'pages/index/cgshopping/index', 'pages/box/qropen/qropen', 'pages/orders/orderdetail/orderdetail', 'pages/orders/orderlist/orderlist', 'pages/box/boxdetail/boxdetail', 'pages/card/bindcard', 'pages/refund/refund'],
       window: {
-        disableScroll: true,
         backgroundTextStyle: 'light',
         navigationBarBackgroundColor: '#ff9409',
         navigationBarTitleText: 'WeChat',
         navigationBarTextStyle: 'black'
+      },
+      "navigateToMiniProgramAppIdList": ["wxbd687630cd02ce1d", "wx9b0e57d73efd4ba1"],
+      "permission": {
+        "scope.userLocation": {
+          "desc": "你的位置信息将用于帮您寻找附近的机柜"
+        }
       }
     };
     return _this;

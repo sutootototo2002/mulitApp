@@ -1,0 +1,206 @@
+.shopImg{
+    width:203px;
+    height:151px;
+    margin:auto;
+}
+.shopDiv{
+    text-align: center;
+    padding-top:76px;
+    padding-bottom:150px;
+    background:#fff;
+   
+
+}
+.shoptitle{
+    text-align: center;
+    font-size:35px;
+    padding:10px 0;
+}
+.shopInfo{
+    text-align: center;
+    font-size:30px;
+    color:#ff7700;
+    padding:0 100px;
+    margin-top:10px;
+    
+}
+.toSever{
+    width:150px;
+    height:40px;
+    border-radius: 40px;
+    font-size:17px;
+    line-height: 40px;
+    margin:20px 0;
+    float: right;
+    border:0;
+    background:#ff7700;
+    color:#fff;  
+    margin-right:10px;  
+    background: linear-gradient(right,#ff9204,#ff6138);
+}
+.toSever1{
+    position: absolute;
+    top:50%;
+    margin-top:-40px;
+    right:10px;
+   
+    width:150px;
+    height:40px;
+    border-radius: 40px;
+    font-size:17px;
+    line-height: 40px;
+    
+    float: right;
+    border:0;
+    background:#ff7700;
+    color:#fff;  
+    margin-right:10px;  
+    background: linear-gradient(right,#ff9204,#ff6138);
+}
+.selBtn{
+    width:150px;
+    height:40px;
+    line-height: 40px;
+    border-radius: 40px;
+    font-size:18px;
+    float: right;
+    margin-top:25px;
+    border:2px solid #ff7700;
+    color:#ff7700;  
+    background: #fff;
+}
+.toRight{
+    text-align: right;
+    overflow:hidden;
+    width:100%;
+    padding:0 20px 0 0;
+}
+
+.addr{
+    border:1px solid #d5d5d5;
+    background:#fff;
+    overflow:hidden;
+    position: relative;
+    height:133px;
+    border-radius: 20px;
+    width:90%;
+    margin:auto;
+    margin-top:-60px;
+}
+
+.smain{
+    position: absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    bottom:0;
+    right:0;
+    left:0;
+    background:#f2f2f2;
+}
+.addricon{
+    float:left;
+    width:80px;
+    height:80px;
+    // border:1px solid red;
+    margin-top:30px;
+    margin-left:10px;
+}
+.addr1{
+    font-size: 30px;
+    margin-top:30px;
+    padding:0 30px;
+}
+.addr2{
+    font-size: 25px;
+}
+
+.seltitle{
+    float:left;
+    font-size:30px;
+}
+.seltotal{
+    float:right;
+    font-size:30px;
+}
+.seDiv{
+    border-radius: 20px;
+    width:90%;
+    margin:auto;
+    background:#fff;
+    margin:auto;
+    // border:1px solid red;
+    margin-top:20px;
+    padding-bottom:30px;
+    overflow:hidden;
+}
+.selectDiv{
+    height:90px;
+    line-height:90px;
+    border-bottom:1px solid #ccc;
+    padding:0 30px;
+}
+
+.goodsImg{
+    float:left;
+    width:100px;
+    height:100px;
+    // border:1px solid red;
+    margin:20px 20px 0 20px;
+}
+
+
+.goodsInfo{
+    float:left;
+    font-size:30px;
+    width:70%;
+    // border:1px solid red;
+}
+.line1{
+    width:100%;
+    overflow:hidden;
+    // border:1px solid red;
+}
+.goodsName{
+    
+    font-size:30px;
+}
+.goodsPrice{
+    float:left;
+    font-size:30px;
+ }
+ .acount{
+    float:right;
+    padding:0 0 0 20px;
+}
+.goodsge{
+    float:left;
+}
+
+.total{
+    float:right;
+    padding:0 0 0 20px;
+}
+
+.glist{
+    padding:20px 0;
+}
+
+.orderdetail{
+    width:90%;
+    margin:auto;
+    border-radius: 20px;
+    background:#fff;
+    margin-top:20px;
+    padding:30px 10px;
+}
+.seltInfo{
+    padding:20px;
+    font-size:28px;
+    color:#b3b3b3;
+}
+.promotionInfo{
+    margin:30px 0 30px 0;
+    padding:0 40px;
+    font-size:30px;
+}

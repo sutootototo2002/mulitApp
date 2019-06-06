@@ -1,0 +1,161 @@
+.boxLi{
+    width:95%;
+    margin:auto;
+    border-radius: 20px;
+    background:#fff;
+    box-shadow: 1px 1px #ccc;
+    // border:1px solid red;
+    overflow:hidden;
+    padding:10px 5px;
+    margin-top:10px;
+    margin-bottom:20px;
+    padding:15px;
+}
+.addr{
+    float:left;
+    font-size:30px;
+}
+.ctime{
+    float: right;
+    font-size:25px;
+    color:#ccc;
+}
+.addr{
+    font-size:28px;
+    color:#454545;
+}
+.goodsum{
+    clear: both;
+    width:100%;
+    text-align: right;
+    font-size:30px;
+    color:#525252;
+    padding:5px 0;
+}
+.addimg{
+    width:33px;
+    height:33px;
+    // border:1px solid red;
+    float:left;
+    margin-right:20px;
+}
+.Btns{
+    float:right;
+    width:100%;
+    text-align: right;
+}
+.btn{
+    float:right;
+    width:30%;
+    border:0;
+    border-radius:45px;
+    margin:0 5px;
+   
+   
+}
+.at-button__wxbutton{
+    border-radius:45px;
+}
+.at-button{
+    border-radius:999px;
+    font-size:28px;
+    padding:0;
+    height:60px;
+    line-height:60px;
+   
+    margin-right:10px;
+    border:1px solid #8d8d8d;
+    color:#8d8d8d;
+    
+
+}
+.at-button--secondary{
+    border-radius:999px;
+    font-size:28px;
+    padding:0;
+    height:60px;
+    line-height:60px;
+   
+    margin-right:10px;
+    border:1px solid #ff7700;
+    color:#ff7700;
+    
+
+}
+
+
+.gslist{
+    clear: both;
+    width:100%;
+    padding:40px 0;
+}
+
+.gImg{
+    float: left;
+    width:140px;
+    height:140px;
+    border-radius: 10px;
+    border:1px solid #ccc;
+}
+
+.gUL{
+    overflow:hidden;
+    width:100%;
+    padding:10px 5px;
+    // border:1px solid red;
+}
+.fLeft{
+    float:left;
+    width:75%;
+}
+
+.boxline{
+    overflow:hidden;
+    float:left;
+    width:100%;
+    // border:1px solid red;
+    font-size:30px;
+    color:#525252;
+    margin-bottom:5px;
+    margin-left:20px;
+}
+.gname{
+    float:left;
+}
+.gprice{
+    float: right;
+}
+.total{
+    clear: both;
+    font-size:30px;
+    text-align: right
+}
+
+.dragUpdataPage{bottom:0;top:0;left:0;right:0;height:90vh;width:100%;position: relative;overflow: hidden;
+	.downDragBox{
+	    width: 100%;
+	    top: 0px;
+	    display: flex;
+	    overflow: hidden;
+	    justify-content: center;
+	    align-items: center;
+	    font-size: 30px;
+	    position: absolute;
+	}
+	.upDragBox{
+	    bottom: 0px;
+	    width: 100%;
+	    display: flex;
+	    overflow: hidden;
+	    justify-content: center;
+	    align-items: center;
+	    font-size: 30px;
+	    position: absolute;
+	}
+	.dragUpdata{height: 100%;width: 100%;position: absolute;}
+	.downText{margin-left: 20px;}
+}
+
+
+
+

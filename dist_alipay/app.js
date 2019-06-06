@@ -52,13 +52,22 @@ var _App = function (_BaseComponent) {
 
 
     _this.config = {
-      pages: ['pages/index/index', 'pages/orders/index'],
+      pages: ['pages/recharge/recharge', 'pages/wish/myheart', 'pages/index/index', 'pages/orders/index', 'pages/login/login', 'pages/service/service'],
       window: {
         disableScroll: true,
         backgroundTextStyle: 'light',
         navigationBarBackgroundColor: '#ff9409',
         navigationBarTitleText: 'WeChat',
         navigationBarTextStyle: 'black'
+      },
+      "navigateToMiniProgramAppIdList": ["wxbd687630cd02ce1d", "wx9b0e57d73efd4ba1"],
+      "permission": {
+        "scope.userLocation": {
+          "desc": "你的位置信息将用于帮您寻找附近的机柜"
+        },
+        "scope.userInfo": {
+          "desc": "您的头像将出现在我们的地图上"
+        }
       }
     };
     return _this;

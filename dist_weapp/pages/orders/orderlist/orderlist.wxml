@@ -1,0 +1,264 @@
+<block>
+    <view style="background:#f2f2f2">
+        <at-tabs current="{{current}}" __triggerObserer="{{ _triggerObserer }}" tabList="{{tabList}}" bindonclick="handleClick" __fn_onClick="{{true}}" data-e-onclick-so="this">
+            <at-tabs-pane current="{{current}}" __triggerObserer="{{ _triggerObserer }}" index="{{0}}">
+                <view class="dragUpdataPage">
+                    <view class="downDragBox" style="{{anonymousState__temp}}">
+                        <at-activity-indicator __triggerObserer="{{ _triggerObserer }}"></at-activity-indicator><text class="downText">{{downText}}</text>
+                    </view>
+                    <scroll-view style="{{anonymousState__temp2}}" bindtouchmove="touchmove" bindtouchend="touchEnd" bindtouchstart="touchStart" bindscrolltoupper="ScrollToUpper" bindscrolltolower="ScrollToLower" class="dragUpdata" scroll-y="{{scrollY}}" scroll-with-animation="{{true}}">
+                        <view>
+                            <view>
+                                <view class="boxLi" wx:for="{{goodsList}}" wx:for-item="item" wx:for-index="index">
+                                    <view>
+                                        <block>
+                                            <block wx:if="{{item.location}}">
+                                                <view class="addr">
+                                                    <image class="addimg" src="{{addrimg ? addrimg : ''}}"></image>{{item.location}}{{item.dailaddress}}</view>
+                                            </block>
+                                            <block wx:else>
+                                                <view class="addr">
+                                                    <image class="addimg" src="{{addrimg}}"></image>知码开门售货柜</view>
+                                            </block>
+                                        </block>
+                                        <view class="ctime">{{item.createtime}}</view>
+                                    </view>
+                                    <block>
+                                        <block wx:if="{{item.goods.length}}">
+                                            <view class="gslist">
+                                                <view class="gUL" wx:key="" wx:for="{{item.goods}}" wx:for-item="item_" wx:for-index="index">
+                                                    <image class="gImg" src="{{item_.picurl}}"></image>
+                                                    <view class="fLeft">
+                                                        <view class="boxline">
+                                                            <view class="gname">{{item_.goodsname}}</view>
+                                                            <view class="gprice">￥{{item_.unitfee / 100}}</view>
+                                                        </view>
+                                                        <view class="boxline">
+                                                            <view class="gname">{{item_.spec}}</view>
+                                                            <view class="gprice">X{{item_.amount}}</view>
+                                                        </view>
+                                                    </view>
+                                                </view>
+                                                <view class="total">共{{item.goods.length}}件商品 合计：￥{{item.payfee / 100}}</view>
+                                            </view>
+                                        </block>
+                                        <block wx:else>
+                                            <view class="goodsum">
+                                                <view>共{{item.goods.length}}件商品 合计：￥{{item.payfee / 100}}</view>
+                                            </view>
+                                        </block>
+                                    </block>
+                                    <view class="Btns">
+                                        <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" data-orderid="{{item.orderid}}" bindonclick="toOrderDetail" __fn_onClick="{{true}}" data-e-onclick-so="this" data-e-onclick-a-a="{{item.orderid}}">订单详情</at-button>
+                                        <block wx:if="{{item.orderstatus == 1}}">
+                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">购物中</at-button>
+                                        </block>
+                                        <block wx:if="{{item.orderstatus == 2}}">
+                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">待结账</at-button>
+                                        </block>
+                                        <block wx:if="{{item.orderstatus == 3}}">
+                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">已取消</at-button>
+                                        </block>
+                                        <block wx:if="{{item.orderstatus == 4}}">
+                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">待支付</at-button>
+                                        </block>
+                                        <block wx:if="{{item.orderstatus == 5}}">
+                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">已付款</at-button>
+                                        </block>
+                                        <block wx:if="{{item.orderstatus == 6}}">
+                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">已欠费</at-button>
+                                        </block>
+                                        <block wx:if="{{item.orderstatus == 7}}">
+                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">转退款</at-button>
+                                        </block>
+                                        <block wx:if="{{item.orderstatus == 8}}">
+                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">已完成</at-button>
+                                        </block>
+                                        <block wx:if="{{item.orderstatus == 9}}">
+                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">异常订单</at-button>
+                                        </block>
+                                    </view>
+                                </view>
+                            </view>
+                        </view>
+                    </scroll-view>
+                    <view class="upDragBox" style="{{anonymousState__temp3}}">
+                        <at-activity-indicator __triggerObserer="{{ _triggerObserer }}"></at-activity-indicator><text class="downText">{{pullText}}</text>
+                    </view>
+                </view>
+            </at-tabs-pane>
+            <at-tabs-pane current="{{current}}" __triggerObserer="{{ _triggerObserer }}" index="{{1}}">
+                <view class="dragUpdataPage">
+                    <view class="downDragBox" style="{{anonymousState__temp4}}">
+                        <at-activity-indicator __triggerObserer="{{ _triggerObserer }}"></at-activity-indicator><text class="downText">{{downText}}</text>
+                    </view>
+                    <scroll-view style="{{anonymousState__temp5}}" bindtouchmove="touchmove" bindtouchend="touchEnd" bindtouchstart="touchStart" bindscrolltoupper="ScrollToUpper" bindscrolltolower="ScrollToLower" class="dragUpdata" scroll-y="{{scrollY}}" scroll-with-animation="{{true}}">
+                        <view>
+                            <view>
+                                <view class="boxLi" wx:for="{{goodsList}}" wx:for-item="item" wx:for-index="index">
+                                    <view>
+                                        <block>
+                                            <block wx:if="{{item.location}}">
+                                                <view class="addr">
+                                                    <image class="addimg" src="{{addrimg ? addrimg : ''}}"></image>{{item.location}}{{item.dailaddress}}</view>
+                                            </block>
+                                            <block wx:else>
+                                                <view class="addr">
+                                                    <image class="addimg" src="{{addrimg}}"></image>知码开门售货柜</view>
+                                            </block>
+                                        </block>
+                                        <view class="ctime">{{item.createtime}}</view>
+                                    </view>
+                                    <block>
+                                        <block wx:if="{{item.goods.length}}">
+                                            <view class="gslist">
+                                                <view class="gUL" wx:key="" wx:for="{{item.goods}}" wx:for-item="item_" wx:for-index="index">
+                                                    <image class="gImg" src="{{item_.picurl}}"></image>
+                                                    <view class="fLeft">
+                                                        <view class="boxline">
+                                                            <view class="gname">{{item_.goodsname}}</view>
+                                                            <view class="gprice">￥{{item_.unitfee / 100}}</view>
+                                                        </view>
+                                                        <view class="boxline">
+                                                            <view class="gname">{{item_.spec}}</view>
+                                                            <view class="gprice">X{{item_.amount}}</view>
+                                                        </view>
+                                                    </view>
+                                                </view>
+                                                <view class="total">共{{item.goods.length}}件商品 合计：￥{{item.payfee / 100}}</view>
+                                            </view>
+                                        </block>
+                                        <block wx:else>
+                                            <view class="goodsum">
+                                                <view>共{{item.goods.length}}件商品 合计：￥{{item.payfee / 100}}</view>
+                                            </view>
+                                        </block>
+                                    </block>
+                                    <view class="Btns">
+                                        <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" data-orderid="{{item.orderid}}" bindonclick="toOrderDetail" __fn_onClick="{{true}}" data-e-onclick-so="this" data-e-onclick-a-a="{{item.orderid}}">订单详情</at-button>
+                                        <block wx:if="{{item.orderstatus == 1}}">
+                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">购物中</at-button>
+                                        </block>
+                                        <block wx:if="{{item.orderstatus == 2}}">
+                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">待结账</at-button>
+                                        </block>
+                                        <block wx:if="{{item.orderstatus == 3}}">
+                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">已取消</at-button>
+                                        </block>
+                                        <block wx:if="{{item.orderstatus == 4}}">
+                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">待支付</at-button>
+                                        </block>
+                                        <block wx:if="{{item.orderstatus == 5}}">
+                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">已付款</at-button>
+                                        </block>
+                                        <block wx:if="{{item.orderstatus == 6}}">
+                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">已欠费</at-button>
+                                        </block>
+                                        <block wx:if="{{item.orderstatus == 7}}">
+                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">转退款</at-button>
+                                        </block>
+                                        <block wx:if="{{item.orderstatus == 8}}">
+                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">已完成</at-button>
+                                        </block>
+                                        <block wx:if="{{item.orderstatus == 9}}">
+                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">异常订单</at-button>
+                                        </block>
+                                    </view>
+                                </view>
+                            </view>
+                        </view>
+                    </scroll-view>
+                    <view class="upDragBox" style="{{anonymousState__temp6}}">
+                        <at-activity-indicator __triggerObserer="{{ _triggerObserer }}"></at-activity-indicator><text class="downText">{{pullText}}</text>
+                    </view>
+                </view>
+            </at-tabs-pane>
+            <at-tabs-pane current="{{current}}" __triggerObserer="{{ _triggerObserer }}" index="{{2}}">
+                <view class="dragUpdataPage">
+                    <view class="downDragBox" style="{{anonymousState__temp7}}">
+                        <at-activity-indicator __triggerObserer="{{ _triggerObserer }}"></at-activity-indicator><text class="downText">{{downText}}</text>
+                    </view>
+                    <scroll-view style="{{anonymousState__temp8}}" bindtouchmove="touchmove" bindtouchend="touchEnd" bindtouchstart="touchStart" bindscrolltoupper="ScrollToUpper" bindscrolltolower="ScrollToLower" class="dragUpdata" scroll-y="{{scrollY}}" scroll-with-animation="{{true}}">
+                        <view>
+                            <view>
+                                <view class="boxLi" wx:for="{{goodsList}}" wx:for-item="item" wx:for-index="index">
+                                    <view>
+                                        <block>
+                                            <block wx:if="{{item.location}}">
+                                                <view class="addr">
+                                                    <image class="addimg" src="{{addrimg ? addrimg : ''}}"></image>{{item.location}}{{item.dailaddress}}</view>
+                                            </block>
+                                            <block wx:else>
+                                                <view class="addr">
+                                                    <image class="addimg" src="{{addrimg}}"></image>知码开门售货柜</view>
+                                            </block>
+                                        </block>
+                                        <view class="ctime">{{item.createtime}}</view>
+                                    </view>
+                                    <block>
+                                        <block wx:if="{{item.goods.length}}">
+                                            <view class="gslist">
+                                                <view class="gUL" wx:key="" wx:for="{{item.goods}}" wx:for-item="item_" wx:for-index="index">
+                                                    <image class="gImg" src="{{item_.picurl}}"></image>
+                                                    <view class="fLeft">
+                                                        <view class="boxline">
+                                                            <view class="gname">{{item_.goodsname}}</view>
+                                                            <view class="gprice">￥{{item_.unitfee / 100}}</view>
+                                                        </view>
+                                                        <view class="boxline">
+                                                            <view class="gname">{{item_.spec}}</view>
+                                                            <view class="gprice">X{{item_.amount}}</view>
+                                                        </view>
+                                                    </view>
+                                                </view>
+                                                <view class="total">共{{item.goods.length}}件商品 合计：￥{{item.payfee / 100}}</view>
+                                            </view>
+                                        </block>
+                                        <block wx:else>
+                                            <view class="goodsum">
+                                                <view>共{{item.goods.length}}件商品 合计：￥{{item.payfee / 100}}</view>
+                                            </view>
+                                        </block>
+                                    </block>
+                                    <view class="Btns">
+                                        <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" data-orderid="{{item.orderid}}" bindonclick="toOrderDetail" __fn_onClick="{{true}}" data-e-onclick-so="this" data-e-onclick-a-a="{{item.orderid}}">订单详情</at-button>
+                                        <block wx:if="{{item.orderstatus == 1}}">
+                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">购物中</at-button>
+                                        </block>
+                                        <block wx:if="{{item.orderstatus == 2}}">
+                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">待结账</at-button>
+                                        </block>
+                                        <block wx:if="{{item.orderstatus == 3}}">
+                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">已取消</at-button>
+                                        </block>
+                                        <block wx:if="{{item.orderstatus == 4}}">
+                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">待支付</at-button>
+                                        </block>
+                                        <block wx:if="{{item.orderstatus == 5}}">
+                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">已付款</at-button>
+                                        </block>
+                                        <block wx:if="{{item.orderstatus == 6}}">
+                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">已欠费</at-button>
+                                        </block>
+                                        <block wx:if="{{item.orderstatus == 7}}">
+                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">转退款</at-button>
+                                        </block>
+                                        <block wx:if="{{item.orderstatus == 8}}">
+                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">已完成</at-button>
+                                        </block>
+                                        <block wx:if="{{item.orderstatus == 9}}">
+                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">异常订单</at-button>
+                                        </block>
+                                    </view>
+                                </view>
+                            </view>
+                        </view>
+                    </scroll-view>
+                    <view class="upDragBox" style="{{anonymousState__temp9}}">
+                        <at-activity-indicator __triggerObserer="{{ _triggerObserer }}"></at-activity-indicator><text class="downText">{{pullText}}</text>
+                    </view>
+                </view>
+            </at-tabs-pane>
+        </at-tabs>
+    </view>
+</block>

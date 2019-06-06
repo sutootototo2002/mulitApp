@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -10,7 +10,7 @@ var _get = function get(object, property, receiver) { if (object === null) objec
 
 var _class, _temp2;
 
-var _index = require("../../npm/_tarojs/taro-alipay/index.js");
+var _index = require('../../npm/_tarojs/taro-alipay/index.js');
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -37,43 +37,43 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Index.__proto__ || Object.getPrototypeOf(Index)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = [], _this.$$refs = [], _temp), _possibleConstructorReturn(_this, _ret);
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Index.__proto__ || Object.getPrototypeOf(Index)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = [], _this.config = {
+      navigationBarTitleText: '订单页'
+    }, _this.$$refs = [], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(Index, [{
-    key: "_constructor",
-    value: function _constructor(props) {
-      _get(Index.prototype.__proto__ || Object.getPrototypeOf(Index.prototype), "_constructor", this).call(this, props);
+    key: '_constructor',
+    value: function _constructor() {
+      _get(Index.prototype.__proto__ || Object.getPrototypeOf(Index.prototype), '_constructor', this).apply(this, arguments);
+      /**
+       * 指定config的类型声明为: Taro.Config
+       *
+       * 由于 typescript 对于 object 类型推导只能推出 Key 的基本类型
+       * 对于像 navigationBarTextStyle: 'black' 这样的推导出的类型是 string
+       * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
+       */
     }
-
-    /**
-     * 指定config的类型声明为: Taro.Config
-     *
-     * 由于 typescript 对于 object 类型推导只能推出 Key 的基本类型
-     * 对于像 navigationBarTextStyle: 'black' 这样的推导出的类型是 string
-     * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
-     */
-
   }, {
-    key: "componentWillMount",
+    key: 'componentWillMount',
     value: function componentWillMount() {}
   }, {
-    key: "componentDidMount",
+    key: 'componentDidMount',
     value: function componentDidMount() {}
   }, {
-    key: "componentDidShow",
+    key: 'componentDidShow',
     value: function componentDidShow() {}
   }, {
-    key: "componentDidHide",
+    key: 'componentDidHide',
     value: function componentDidHide() {}
   }, {
-    key: "componentDidCatchError",
+    key: 'componentDidCatchError',
     value: function componentDidCatchError() {}
     // 在 App 类中的 render() 函数没有实际作用
     // 请勿修改此函数
 
   }, {
-    key: "_createData",
+    key: '_createData',
     value: function _createData() {
       this.__state = arguments[0] || this.state || {};
       this.__props = arguments[1] || this.props || {};

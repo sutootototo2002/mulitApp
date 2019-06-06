@@ -1,0 +1,105 @@
+.boxdetail{
+    width:100%;
+    margin:32px 0 0 0;
+    padding:43px 0;
+    overflow:hidden;
+    border-top:1px solid #b5b5b6;
+    border-bottom:1px solid #b5b5b6;
+}
+.boxTitle{
+    font-size:35px;
+    color:#3e3a39;
+    padding:0 0 0 10px;
+}
+
+.imagesDiv{
+    width:100%;
+    height:190px;
+    padding:10px;
+    overflow:hidden;
+    overflow-x:auto;
+    white-space:nowrap;
+}
+.imgDiv{
+    // float:left;
+    width:242px;
+    // height:184px;
+    border-radius: 5px;
+    // border:1px solid red;
+    margin-right:20px;
+}
+.addr{
+    font-size:30px;
+    padding:20px;
+    color:#727171;
+}
+.addr1{
+    width:38px;
+    height:40px;
+    margin-top:10px;
+}
+
+.addr2{
+    float:left;
+    width:48px;
+    height:50px;
+    margin-left:50px;
+}
+.goodsName{
+    padding:20px;
+    font-size:35px;
+}
+.gdul{
+    border-top:1px solid #b5b5b6;
+    padding:25px;
+}
+
+.gliName{
+    float:left;
+    width:180px;
+    height:180px;
+    margin:0 0 0 20px;
+}
+.gliInfo{
+    float:left;
+    width:70%;
+    padding:0 0 0 10px;
+    // border:1px solid red;
+}
+.gName{
+    font-size:35px;
+}
+.gName1{
+    font-size:28px;
+}
+.ginfo{
+    overflow:hidden;
+    width:100%;
+}
+.kcun{
+    float: right;
+    font-size:24px;
+    border:2px solid #ccc;
+    border-radius: 5px;
+    padding:10px;
+    color:#ccc;
+}
+.price{
+    float: left;
+}
+.moregoods{
+    clear: both;
+    // position: absolute;
+    padding:0 0 20px 0;
+    width:100%;
+    text-align: center;
+    font-size:35px;
+    color:#ccc;
+}
+.gli{
+    border-bottom:1px dashed #b5b5b6;
+    overflow:hidden;
+}
+.pric{
+    color:#ff612f;
+}

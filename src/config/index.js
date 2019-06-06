@@ -1,3 +1,5 @@
+import { number } from "prop-types";
+
 /** 
  * 线上环境
  * 为了方便测试，使用的是聚合数据免费接口
@@ -10,17 +12,17 @@
 
 
 
-export const BASE_URL='https://t.wemall.com.cn/clientapi/'
+export const BASE_URL='https://testo.wemall.com.cn/clientapi/'
 
 /** 
  * 测试环境
  */
-export const HOST_URL= 'https://t.wemall.com.cn/'
+export const HOST_URL= 'https://testo.wemall.com.cn/'
 
 /*
  * WEBSOCKET
  */
-export const HOST_WEBSOCKET= 'wss://t.wemall.com.cn/socket/'
+export const HOST_WEBSOCKET= 'wss://testo.wemall.com.cn/socket/'
 /** 
  * 线上mock
  */
@@ -53,5 +55,15 @@ export const globalData={
   isshopping:0,
   needrefresh:false,
   requestcount:0,
-  timerTem:{}
+  timerTem:0,
+  intervalPapayTemp:null
 }
+
+export function set (key, val) {
+  globalData[key] = val
+}
+
+export function get (key) {
+  return globalData[key]
+}
+

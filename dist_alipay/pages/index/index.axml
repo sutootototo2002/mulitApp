@@ -3,10 +3,66 @@
         <map class="mb-map" id="mymap" show-location="{{showLocation}}" subkey="{{mapKey}}" latitude="{{latitude}}" longitude="{{longitude}}" scale="{{scale}}" controls="{{controls}}" onControlTap="onControlTap"></map>
         <cover-view class="menus_avator">
             <cover-image class="menus_user" src="{{zm}}"></cover-image>
+            <block>
+                <block a:if="{{befee > 0}}">
+                    <cover-view class="fee">{{befee}}元</cover-view>
+                </block>
+                <block a:else>
+                    <cover-view class="fee" onTap="onStored">储值有优惠</cover-view>
+                </block>
+            </block>
         </cover-view>
         <block>
             <block a:if="{{markBoolean}}">
-                <cover-view class="mark" hidden="{{markBoolean}}"></cover-view>
+                <cover-view class="mark"></cover-view>
+            </block>
+            <block a:else>
+                <cover-view></cover-view>
+            </block>
+        </block>
+        <block>
+            <block a:if="{{singinBoolean}}">
+                <cover-view class="singin">
+                    <cover-image class="singinImg" onTouchStart="closeSingin" src="{{singinImg}}"></cover-image>
+                    <cover-view class="singDiv">
+                        <cover-view class="wzcDiv">
+                            <block>
+                                <block a:if="{{setp1}}">
+                                    <cover-image class="wzc10" src="{{wzc11}}"></cover-image>
+                                </block>
+                                <block a:else>
+                                    <cover-image class="wzc10" src="{{wzc10}}"></cover-image>
+                                </block>
+                            </block>
+                            <block>
+                                <block a:if="{{setp2}}">
+                                    <cover-image class="wzc10" src="{{wzc33}}"></cover-image>
+                                </block>
+                                <block a:else>
+                                    <cover-image class="wzc10" src="{{wzc30}}"></cover-image>
+                                </block>
+                            </block>
+                            <block>
+                                <block a:if="{{setp3}}">
+                                    <cover-image class="wzc10" src="{{wzc22}}"></cover-image>
+                                </block>
+                                <block a:else>
+                                    <cover-image class="wzc10" src="{{wzc20}}"></cover-image>
+                                </block>
+                            </block>
+                        </cover-view>
+                        <cover-view class="sinfo">亲！{{systemUser}}恭候您多时啦...</cover-view>
+                        <block a:if="{{setp1}}">
+                            <button class="singBtn" open-type="getPhoneNumber" onGetPhoneNumber="getPhoneNumber" data-e-onGetPhoneNumber-so="this">我去注册</button>
+                        </block>
+                        <block a:if="{{setp2}}">
+                            <button class="singBtn" onTap="gotoPapay">我去免密</button>
+                        </block>
+                        <block a:if="{{setp3}}">
+                            <button class="singBtn" onTap="goshoping">我去购物</button>
+                        </block>
+                    </cover-view>
+                </cover-view>
             </block>
             <block a:else>
                 <cover-view></cover-view>
@@ -14,7 +70,7 @@
         </block>
         <block>
             <block a:if="{{posBoolean}}">
-                <cover-view class="boxInfo" catchTap="onInfo" hidden="{{posBoolean}}">
+                <cover-view class="boxInfo" catchTap="onInfo">
                     <cover-image class="posImg" src="{{dw}}"></cover-image>
                     <cover-view class="info">亲！{{systemUser}}找不到您的位置...</cover-view>
                     <cover-view class="btnOpen" catchTap="onClosePos">打开定位权限</cover-view>
@@ -57,6 +113,131 @@
             </block>
         </block>
         <block>
+            <block a:if="{{DensityFree}}">
+                <cover-view class="desityFree">
+                    <cover-image class="mmImg" src="{{mm}}"></cover-image>
+                    <cover-view class="mmText">无需输入支付密码，快速购物！</cover-view>
+                    <button class="BtnTwo" onTap="gotoPapay">开启免密 愉快购物</button>
+                </cover-view>
+            </block>
+            <block a:else>
+                <cover-view></cover-view>
+            </block>
+        </block>
+        <block>
+            <block a:if="{{HearlistBoolean}}">
+                <cover-view class="HearDiv1">
+                    <cover-image src="{{xydd}}"></cover-image>
+                    <cover-image src="{{closebtn}}" onTouchStart="onCloseHeardlist" class="closeBtn"></cover-image>
+                    <cover-view class="myhear" onTouchStart="onSetheart" hover-start-time="{{10}}"></cover-view>
+                    <cover-view class="bgColor">
+                        <cover-view class="hearList">
+                            <cover-view class="hearLi">
+                                <cover-image class="userInfo" src="{{zm}}"></cover-image>
+                                <cover-view class="CVFloat">
+                                    <cover-view class="cvtitle">用户小怪兽大胖子111点赞了您的心愿</cover-view>
+                                    <cover-view class="cvcallback">点赞心愿：百事可乐</cover-view>
+                                    <cover-view class="checkInfo">查看消息</cover-view>
+                                </cover-view>
+                            </cover-view>
+                            <cover-view class="hearLi">
+                                <cover-image class="userInfo" src="{{zm}}"></cover-image>
+                                <cover-view class="CVFloat">
+                                    <cover-view class="cvtitle">用户小怪兽大胖子111点赞了您的心愿</cover-view>
+                                    <cover-view class="cvcallback">点赞心愿：百事可乐</cover-view>
+                                    <cover-view class="checkInfo">查看消息</cover-view>
+                                </cover-view>
+                            </cover-view>
+                            <cover-view class="hearLi">
+                                <cover-image class="userInfo" src="{{zm}}"></cover-image>
+                                <cover-view class="CVFloat">
+                                    <cover-view class="cvtitle">用户小怪兽大胖子111点赞了您的心愿</cover-view>
+                                    <cover-view class="cvcallback">点赞心愿：百事可乐</cover-view>
+                                    <cover-view class="checkInfo">查看消息</cover-view>
+                                </cover-view>
+                            </cover-view>
+                            <cover-view class="hearLi">
+                                <cover-image class="userInfo" src="{{zm}}"></cover-image>
+                                <cover-view class="CVFloat">
+                                    <cover-view class="cvtitle">用户小怪兽大胖子111点赞了您的心愿</cover-view>
+                                    <cover-view class="cvcallback">点赞心愿：百事可乐</cover-view>
+                                    <cover-view class="checkInfo">查看消息</cover-view>
+                                </cover-view>
+                            </cover-view>
+                        </cover-view>
+                    </cover-view>
+                </cover-view>
+            </block>
+            <block a:else>
+                <cover-view></cover-view>
+            </block>
+        </block>
+        <block>
+            <block a:if="{{HearBoolean}}">
+                <cover-view class="HearDiv">
+                    <cover-image class="HearImg" src="{{HearHead}}"></cover-image>
+                    <cover-image src="{{closebtn}}" onTouchStart="onCloseHeard" class="closeBtn"></cover-image>
+                    <cover-view class="HearList">
+                        <cover-view class="title">
+                            <cover-view class="gTitle">零度可乐</cover-view>
+                            <cover-view class="gline">|</cover-view>
+                            <cover-view class="gInfo">这些货柜都能找到</cover-view>
+                        </cover-view>
+                        <cover-view class="goodsList">
+                            <cover-view class="gLi">
+                                <cover-image class="machBigImg" src="{{heardImg}}"></cover-image>
+                                <cover-image class="yyzh" src="{{yyzh}}"></cover-image>
+                                <cover-view class="gAddr">富海国际港1层大厅3号柜</cover-view>
+                                <cover-view class="gAddr_">北京市海淀区大柳树北路17号</cover-view>
+                                <button class="gdetail">查看详情</button>
+                                <cover-view class="gdistDiv">
+                                    <cover-image class="gdist" src="{{addr}}"></cover-image>
+                                    <cover-view class="gdist1">距离您1.2m</cover-view>
+                                </cover-view>
+                            </cover-view>
+                            <cover-view class="gLi">
+                                <cover-image class="machBigImg" src="{{heardImg}}"></cover-image>
+                                <cover-image class="yyzh" src="{{dyzh}}"></cover-image>
+                                <cover-view class="gAddr">富海国际港1层大厅3号柜</cover-view>
+                                <cover-view class="gAddr_">北京市海淀区大柳树北路17号</cover-view>
+                                <button class="gdetail">查看详情</button>
+                                <cover-view class="gdistDiv">
+                                    <cover-image class="gdist" src="{{addr}}"></cover-image>
+                                    <cover-view class="gdist1">距离您1.2m</cover-view>
+                                </cover-view>
+                            </cover-view>
+                            <cover-view class="gLi">
+                                <cover-image class="machBigImg" src="{{heardImg}}"></cover-image>
+                                <cover-image class="yyzh" src="{{yyzh}}"></cover-image>
+                                <cover-view class="gAddr">富海国际港1层大厅3号柜</cover-view>
+                                <cover-view class="gAddr_">北京市海淀区大柳树北路17号</cover-view>
+                                <button class="gdetail">查看详情</button>
+                                <cover-view class="gdistDiv">
+                                    <cover-image class="gdist" src="{{addr}}"></cover-image>
+                                    <cover-view class="gdist1">距离您1.2m</cover-view>
+                                </cover-view>
+                            </cover-view>
+                            <cover-view class="gLi">
+                                <cover-image class="machBigImg" src="{{heardImg}}"></cover-image>
+                                <cover-image class="yyzh" src="{{yyzh}}"></cover-image>
+                                <cover-view class="gAddr">富海国际港1层大厅3号柜</cover-view>
+                                <cover-view class="gAddr_">北京市海淀区大柳树北路17号</cover-view>
+                                <button class="gdetail">查看详情</button>
+                                <cover-view class="gdistDiv">
+                                    <cover-image class="gdist" src="{{addr}}"></cover-image>
+                                    <cover-view class="gdist1">距离您1.2m</cover-view>
+                                </cover-view>
+                            </cover-view>
+                        </cover-view>
+                        <cover-view class="clickBtn">点击加载更多</cover-view>
+                    </cover-view>
+                </cover-view>
+            </block>
+            <block a:else>
+                <cover-view></cover-view>
+            </block>
+        </block>
+        <block>
             <block a:if="{{bool}}">
                 <cover-view class="menus">
                     <cover-image class="menusImg" src="{{menus}}"></cover-image>
@@ -66,24 +247,24 @@
                     <block>
                         <block a:if="{{machineBoolean}}">
                             <cover-view class="machineInfo">
-                                <cover-view>sss</cover-view>
-                                <cover-view>sss</cover-view>
-                                <cover-view>sss</cover-view>
-                                <cover-view>sss</cover-view>
-                                <cover-view>sss</cover-view>
-                                <cover-view>sss</cover-view>
-                                <cover-view>sss</cover-view>
-                                <cover-view>sss</cover-view>
-                                <cover-view>sss</cover-view>
-                                <cover-view>sss</cover-view>
-                                <cover-view>sss</cover-view>
-                                <cover-view>sss</cover-view>
-                                <cover-view>sss</cover-view>
-                                <cover-view>sss</cover-view>
-                                <cover-view>sss</cover-view>
-                                <cover-view>sss</cover-view>
-                                <cover-view>sss</cover-view>
-                                <cover-view>sss</cover-view>
+                                <cover-image class="pos_" src="{{pos_}}"></cover-image>
+                                <cover-image class="openImg" src="{{open}}"></cover-image>
+                                <cover-view class="addrDiv">
+                                    <cover-image class="addr" src="{{mach}}"></cover-image>
+                                    <cover-view class="address">车道沟北方地产大厦楼西侧</cover-view>
+                                </cover-view>
+                                <cover-view class="addrDiv_">
+                                    <cover-image class="addr_" src="{{addr}}"></cover-image>
+                                    <cover-view class="address_">地址：北京市海淀区紫竹院路81号</cover-view>
+                                    <cover-view class="dist">| 距您步行539m</cover-view>
+                                    <cover-view class="goodType">
+                                        <cover-view class="goodli">
+                                            <cover-image class="goodImg" src="{{tempImg}}"></cover-image>
+                                            <cover-view class="goodsName">水果</cover-view>
+                                        </cover-view>
+                                    </cover-view>
+                                    <cover-view class="zhanweifu"></cover-view>
+                                </cover-view>
                             </cover-view>
                         </block>
                         <block a:else>

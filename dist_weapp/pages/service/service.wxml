@@ -3,24 +3,13 @@
         <view class="severDiv">
             <view class="main clearfix">
                 <view class="serverTitle">请选择服务类型</view>
-                <view class="box">
-                    <image class="serverImg" src="{{serverImg1}}"></image>
-                    <view class="boxtitle">订单计算错误</view>
-                </view>
-                <view class="box">
-                    <image class="serverImg" src="{{serverImg2}}"></image>
-                    <view class="boxtitle">账号储值问题</view>
-                </view>
-                <view class="box">
-                    <image class="serverImg" src="{{serverImg3}}"></image>
-                    <view class="boxtitle">货柜门打不开</view>
-                </view>
-                <view class="box">
-                    <image class="serverImg" src="{{serverImg4}}"></image>
-                    <view class="boxtitle">货柜门无法锁上</view>
+                <view class="{{item.$loopState__temp2}}" data-id="{{index}}" bindtap="turnFn" wx:for="{{loopArray0}}" wx:for-item="item" wx:for-index="index">
+                    <image class="serverImg" src="{{item.$original.img}}"></image>
+                    <view class="boxtitle">{{item.$original.name}}</view>
                 </view>
             </view>
-            <button type="default" class="loginBtn Btn">提交</button>
+            <button type="default" open-type="contact" class="loginBtn Btn">提交</button>
+            <button type="default" class="Btn" style="bottom:60px;" bindtap="gohome">返回</button>
         </view>
     </view>
 </block>

@@ -21,9 +21,9 @@ $color-brown1:#633226;
     height:78px;
     left:50%;
     margin-left:-45%;
-    border:0;
+    border:1;
     box-shadow: 1px 1px 1px #888888;
-    border-radius: 999px;
+    border-radius: 99px;
     background:$color-white;
     top:46px;
     z-index:999;
@@ -33,6 +33,22 @@ $color-brown1:#633226;
   height:78px;
   border-radius: 39px;
 }
+.fee{
+  color:#000;
+  float:right;
+  height:78px;
+  width:200px;
+  // border:1px solid red;
+  position: absolute;
+  right:10px;
+  top:0;
+  font-size:30px;
+  line-height: 78px;
+  text-decoration: underline;
+  color:$color-default;
+  text-align: right;
+
+}
 //menus样式
 .menus{
   position: absolute;
@@ -40,7 +56,7 @@ $color-brown1:#633226;
   height:266px;
   bottom:0;
   margin-top:-200px;
-  // background:rgba(255, 255, 255, 0.000001);
+  background:rgba(0, 0, 0, 0);
   z-index:1;
   overflow: visible;
 }
@@ -86,14 +102,15 @@ $color-brown1:#633226;
     position: absolute;
     top:50%;
     margin-top:-180px;
-    width:563px;
+    width:530px;
     height:376px;
-    margin-left:-40%;
+    margin-left:-275px;
     left:50%;
-    padding:10px;
+    padding:0 10px;
     background:$color-white;
     border-radius: 10px;
     z-index:10001;
+    // border:1px solid red;
   }
   
   .closeInfo{
@@ -112,7 +129,7 @@ $color-brown1:#633226;
     width:100%;
     height:100%;
     background:rgba(0, 0, 0, 0.6);
-    z-index:10000;
+    z-index:1000;
 
   }
 
@@ -341,15 +358,14 @@ $color-brown1:#633226;
 
 .machineInfo{
   width:634px;
-  height:240px;
-  overflow-y:scroll;
-  overflow-x:scroll;
+  height:auto;
+  overflow:hidden;
   background:$color-white;
   padding:20px 0;
   position: absolute;
   left:50%;
   margin-left:-317px;
-  bottom:-20px;
+  bottom:0px;
   border-radius: 20px;
   z-index:9999999999999;
 }
@@ -402,37 +418,40 @@ $color-brown1:#633226;
  
   float:left;
   font-size:25px;
-  padding:0 0 0 10px;
+  // border:1px solid red;
   color:#7d7d7d;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
 }
 .dist{
   float:left;
   font-size:25px;
-  padding:0 0 0 10px;
+  margin:0 0 0 55px;
   color:#7d7d7d;
 }
 
 .goodType{
   clear:both;
-  padding:10px;
+  padding:20px 10px 10px 10px;
 }
 .goodli{
-  width:90px;
+  display:inline-block;
   
 }
 .goodImg{
-  width:90px;
-  height:90px;
+  width:70px;
+  height:70px;
   background:#eceded;
   border-radius: 45px;
   border:1px solid #eceded;
   overflow:hidden;
+  margin:0 15px;
 }
 
 .goodsName{
   text-align: center;
-  font-size:25px;
+  font-size:24px;
   color:#b0afaf;
+  margin-top:5px;
 }
 
 .zhanweifu{
@@ -682,5 +701,90 @@ $color-brown1:#633226;
    top:50%;
    margin-top:-62px;
   //  border:1px solid red;  
+}
+
+.singin{
+  position:absolute;
+  z-index:9999;
+  width:566px;
+  height:518px;
+  // border:1px solid red;
+  top:50%;
+  margin-top:-309px;
+  left:50%;
+  margin-left:-283px;
+
+}
+.singinImg{
+  position: absolute;
+  width:56px;
+  height:56px;
+  right:0;
+  top:0;
+  // border:1px solid red;
+}
+.singDiv{
+  width:100%;
+  margin-top:87px;
+  height:432px;
+  border-radius: 20px;
+  background:$color-white;
+}
+
+.singBtn{
+  width:271px;
+  height:69px;
+  line-height: 69px;
+  font-size:35px;
+  position: absolute;
+  bottom:30px;
+  left:50%;
+  margin-left:-135.5px;
+  color:$color-white;
+  background:$color-default;
+}
+.sinfo{
+  // border:1px solid red;
+  position: absolute;
+  width:100%;
+  text-align: center;
+  font-size:30px;
+  bottom:135px;
+}
+
+.wzc10{
+  width:100px;
+  height:134px;
+  display:inline-block;
+  margin:0 15px;
+  // border:1px solid red;
+}
+.wzc11{
+  width:100px;
+  height:134px;
+  display:inline-block;
+  margin:0 8px;
+}
+.wzcDiv{
+  width:100%;
+  // border:1px solid red;
+  margin-top:80px;
+  text-align: center;
+}
+
+.thumbups{
+  position: absolute;
+  // border:1px solid red;
+  width:25px;
+  height:25px;
+  line-height:25px;
+  border-radius: 999px;
+  background:#ff7700;
+  right:35px;
+  bottom:645px;
+  text-align: center;
+  color:#fff;
+  // border:1px solid red;
+  font-size:18px;
 }
 

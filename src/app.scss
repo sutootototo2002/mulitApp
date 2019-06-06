@@ -1,4 +1,21 @@
 $default-btn-color:#FF7700;
+$color-white:#fff;
+$color-white1:#f3f3f3;
+$color-white2:#f2f2f2;
+$color-default:#ff7700;
+$color-orgent1:#ff3b3b;
+$color-orgent2:#e64307;
+$color-orgent3:#f38f00;
+$color-orgent4:#ffa300;
+$color-orgent:#ff4e00;
+$color-gray:#eeeceb;
+$color-gray1:#919191;
+$color-gray2:#969696;
+$color-brown:#e1cda9;
+$color-brown1:#633226;
+$color-red:#d80a17;
+
+
 .Btn{
     position:absolute;
     width:90%;
@@ -11,7 +28,110 @@ $default-btn-color:#FF7700;
     margin-left:-45%;
 
 }
+
 button[type=default] {
     color:#FFF;
     background-color:$default-btn-color;
     }
+
+
+//储值心愿单公共部分
+.mhh{
+    // position: absolute;
+    width:100%;
+    height: 409px;
+}
+
+.mhhImages{
+    width:100%;
+    height:409px;
+}
+
+.boxOne{
+    width:145px;
+    height: 145px;
+    position: absolute;
+    left:50%;
+    margin-left:-72.5px;
+    border-radius: 72.5px;
+    top:130px;
+    z-index:99;
+}
+
+.boxOne1{
+    width:145px;
+    height: 145px;
+    position: absolute;
+    left:50%;
+    margin-left:-72.5px;
+    border-radius: 72.5px;
+    top:60px;
+    z-index:99;
+}
+
+//九宫格
+.main{
+    background-color: $color-white;
+    width: 100%;
+    padding-bottom: 100%;
+    
+}
+.box{
+    width: 30%;
+    height:210px;
+    border:0.5px solid $color-default; 
+    background-color:$color-white;
+    border-radius: 3%;
+    display:inline-block;
+    margin: 1%;
+    position: relative;
+}
+.box1{
+    width: 31%;
+    height:119px;
+    background-color:$color-white;
+    border-radius: 3%;
+    display:inline-block;
+    margin: 1%;
+    position: relative;
+    overflow:hidden;
+}
+.main1{
+    
+    width:100%;
+    position:absolute;
+    top:449px;
+    // border:1px solid red;
+}
+
+.price{
+    font-size:30px;
+    margin-top:5px;
+    color:#878787;
+    font-weight: bold;
+}
+.prices{
+    font-size:20px;
+    position: absolute;    
+    color:#878787;
+    left:10px;
+    // bottom:10px;
+    padding:0 0 20px 0;
+
+}
+
+.pro{
+    position: absolute;
+    width:75px;
+    height:80px;
+    top:-2px;
+    right:-5px;
+}
+
+.btn{
+    font-size:30px;
+    width:90%;
+    margin:auto;
+    margin-top:20px;
+}
+

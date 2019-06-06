@@ -1,0 +1,26 @@
+<block>
+    <view>
+        <view class="severDiv">
+            <view class="main clearfix">
+                <view class="serverTitle">请选择服务类型</view>
+                <view class="box">
+                    <image class="serverImg" src="{{serverImg1}}"></image>
+                    <view class="boxtitle">订单计算错误</view>
+                </view>
+                <view class="box">
+                    <image class="serverImg" src="{{serverImg2}}"></image>
+                    <view class="boxtitle">账号储值问题</view>
+                </view>
+                <view class="box">
+                    <image class="serverImg" src="{{serverImg3}}"></image>
+                    <view class="boxtitle">货柜门打不开</view>
+                </view>
+                <view class="box">
+                    <image class="serverImg" src="{{serverImg4}}"></image>
+                    <view class="boxtitle">货柜门无法锁上</view>
+                </view>
+            </view>
+            <button type="default" open-type="contact" class="loginBtn Btn">提交</button>
+        </view>
+    </view>
+</block>

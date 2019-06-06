@@ -1,9 +1,7 @@
 
 $color-white:#fff;
-
 $color-default:#ff7700;
-
-
+$color-default1:#ccc;
 .severDiv{
     position: absolute;
     top:0;
@@ -14,23 +12,25 @@ $color-default:#ff7700;
     height:100%;
     // border:1px solid red;
     background:$color-white;
-    
 }
 .main{
     background-color: $color-white;
     width: 100%;
     padding-bottom: 100%;
-    
 }
 .box{
     width: 30%;
     height:210px;
-    border:0.5px solid $color-default; 
+    border:0.5px solid $color-default1; 
     background-color:$color-white;
     border-radius: 3%;
     float: left;
     margin: 1%;
     position: relative;
+}
+
+.select{
+    border:0.5px solid $color-default; 
 }
 
 .boxtitle{
@@ -62,3 +62,4 @@ $color-default:#ff7700;
 .loginBtn{
     bottom:20px;
 }
+

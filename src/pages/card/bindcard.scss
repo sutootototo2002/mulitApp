@@ -1,0 +1,212 @@
+$color-white:#fff;
+$color-white1:#f3f3f3;
+$color-white2:#f2f2f2;
+$color-default:#ff7700;
+$color-orgent1:#ff3b3b;
+$color-orgent2:#e64307;
+$color-orgent3:#f38f00;
+$color-orgent:#ff4e00;
+$color-gray:#eeeceb;
+$color-gray1:#919191;
+$color-gray2:#969696;
+$color-brown:#e1cda9;
+$color-brown1:#633226;
+$color-red:#d80a17;
+
+.myheartView{
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    background:$color-white2;
+}
+.header{
+    width:750px;
+    height:750px;
+    border-radius: -375px;
+    position:absolute;
+    top:-370px;
+    left:50%;
+    margin-left:-375px;
+    background:$color-white;
+}
+
+.mhh{
+  // border:1px solid red;
+  position: absolute;
+  top:0;
+}
+
+.unbingdDiv{
+    width:681px;
+    height:375px;
+    // border:1px solid red;
+    margin:auto;
+    margin-bottom:10px;
+    text-align:center;
+    position: relative;
+
+   
+}
+.unbingdDivOne{
+    width:681px;
+    height:375px;
+    // border:1px solid red;
+    margin:auto;
+    margin-bottom:10px;
+    margin-top:95px;
+}
+.boxDiv{
+    width:100%;
+    top:0;
+    bottom:0;
+    overflow:hidden;
+    // border:1px solid green;
+    position: absolute;
+    overflow:hidden;
+    overflow-y:auto;
+}
+.ubDOne{
+    width:681px;
+    height:375px;
+}
+.Imgs{
+    float:left;
+    width:52px;
+    height:53px;
+    line-height:53px;
+    
+}
+.Info_{
+    float:left;
+    font-size:30px;
+    padding:7px 0 0 0;
+    color:#ccc;
+    
+   
+}
+.tishi{
+    padding:0px 0 0 40px;
+    line-height:44px;
+    // border:1px solid red;
+    overflow:hidden;
+}
+
+
+.setps{
+    position: absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    background:#fff;
+    z-index:999;
+    
+    
+}
+
+.headDiv{
+    overflow:hidden;
+    // border:1px solid red;
+    text-align: center;
+    
+}
+
+.header{
+    overflow:hidden;
+    // border:1px solid blue;
+    width:100%;
+    text-align: center;
+}
+
+.headImg{
+    // border:1px solid red;
+    width:654px;
+    height:204px;
+    margin:auto;
+    
+}
+
+.cards{
+    width:494px;
+    height:494px;
+    margin:auto;
+    margin-top:50px;
+}
+
+.cword{
+    font-size:35px;
+    font-size:#000;
+}
+
+.btns{
+    position: absolute;
+    bottom:0;
+    width:100%;
+    text-align: center;
+    padding:0 0 30px 0;
+}
+.btnFresh{
+    width:60%;
+    font-size:30px;
+    margin-bottom:20px;
+}
+.concelFn{
+    width:60%;
+    font-size:30px; 
+    margin-bottom:20px;
+}
+
+.mycard{
+    width:656px;
+    height:370px;
+    // border:1px solid red;
+}
+.cardNO{
+    position: absolute;
+    width:60%;
+    font-size:25px;
+    bottom:80px;
+    left:0;
+    text-align: left;
+    color:#ccc;
+    padding:0 0 0 30px;
+    // border:1px solid red;
+}
+
+.cardTimer{
+    position: absolute;
+    width:60%;
+    font-size:25px;
+    bottom:45px;
+    left:0;
+    text-align: left;
+    color:#ccc;
+    padding:0 0 0 30px;
+    // border:1px solid red;
+}
+.cardetail{
+    position: absolute;
+    width:60%;
+    font-size:25px;
+    bottom:45px;
+    left:60%;
+    text-align: left;
+    color:#ccc;
+    padding:0 0 0 30px;
+}
+.uncard{
+    position: absolute;
+    width:60%;
+    font-size:25px;
+    bottom:45px;
+    left:75%;
+    text-align: left;
+    color:#ccc;
+    padding:0 0 0 30px;
+}

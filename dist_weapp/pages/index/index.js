@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -10,11 +10,15 @@ var _get = function get(object, property, receiver) { if (object === null) objec
 
 var _class, _temp2;
 
-var _index = require("../../npm/@tarojs/taro-weapp/index.js");
+var _index = require('../../npm/@tarojs/taro-weapp/index.js');
 
 var _index2 = _interopRequireDefault(_index);
 
-var _index3 = require("../../config/index.js");
+var _index3 = require('../../config/index.js');
+
+var _util = require('../../utils/util.js');
+
+var _order = require('../../utils/order.js');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -24,10 +28,22 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-//图片修改
+var intervalPapayTemp;
+var intervalOrderStatus;
+var tsFeedback = '2099-12-31'; //时间界限
+var tsWish = '2099-12-31'; //时间界限
+var feedbacks = [];
+var thumbups_;
+var hasMore = false;
+var machineid = '';
+var data = [];
+var count = 0;
+var timer = 0;
+
 var location = "/assets/images/location.png";
 var wishImg = "/assets/images/syxytb.png";
 var juan = "/assets/images/juan.png";
+var flag = "/assets/images/jgtb.png";
 
 var Index = (_temp2 = _class = function (_BaseComponent) {
   _inherits(Index, _BaseComponent);
@@ -43,14 +59,11 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Index.__proto__ || Object.getPrototypeOf(Index)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "unpayList", "systemUser", "mapKey", "latitude", "longitude", "scale", "menus", "screen", "user", "person", "zm", "searchImg", "dw", "unpayImg", "unpriceImg", "pos_", "tempImg", "del", "open", "addr", "mach", "mm", "HearHead", "closebtn", "heardImg", "yyzh", "dyzh", "xydd", "controls", "isOpened", "mapObj", "showLocation", "markers", "allMarkers", "bool", "menuright", "token", "checkPapay", "commonCode", "markBoolean", "posBoolean", "unpayBoolean", "machineBoolean", "DensityFree", "HearBoolean", "HearlistBoolean", "payName"], _this.config = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Index.__proto__ || Object.getPrototypeOf(Index)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "markerDetail", "unpayList", "feedbackslist", "systemUser", "showModalStatus", "showopen", "papayPressed", "qrurl", "showlogin", "showpapay", "isnopasspay", "havearrears", "formid", "isweapp", "mapKey", "latitude", "longitude", "scale", "menus", "screen", "user", "person", "zm", "avatar", "zmdefault", "searchImg", "dw", "unpayImg", "unpriceImg", "pos_", "tempImg", "del", "open", "addr", "mach", "mm", "HearHead", "closebtn", "heardImg", "yyzh", "dyzh", "xydd", "singinImg", "wzc10", "wzc11", "wzc20", "wzc22", "wzc30", "wzc33", "clear", "setp1", "setp2", "setp3", "controls", "isOpened", "mapObj_", "showLocation", "markers", "allMarkers", "bool", "booladdr", "menuright", "token", "checkPapay", "commonCode", "markBoolean", "posBoolean", "unpayBoolean", "machineBoolean", "DensityFree", "HearBoolean", "HearlistBoolean", "singinBoolean", "thumbups", "fee", "befee", "payName", "haslogin", "intervalPapay", "unpayorder", "cartTips", "orderid", "machineid", "orderno", "recogmode", "haveShopping", "Carting", "timerTem"], _this.config = {
       navigationBarTitleText: '首页'
     }, _this.onHeard = function () {
       console.log('心愿单开启');
-      _this.setState({
-        HearlistBoolean: true,
-        markBoolean: true
-      });
+      _this.wishBranch();
     }, _this.onInfo = function (e) {
       e.stopPropagation();
       console.log('onInfo');
@@ -60,34 +73,40 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
       console.log(e);
       console.log('onInfo1111');
       _this.setState({
-        markBoolean: true,
-        posBoolean: true
+        markBoolean: false,
+        posBoolean: false
       });
+      _this.onsub();
     }, _this.$$refs = [], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(Index, [{
-    key: "_constructor",
+    key: '_constructor',
     value: function _constructor(props) {
-      _get(Index.prototype.__proto__ || Object.getPrototypeOf(Index.prototype), "_constructor", this).call(this, props);
-      /**
-      * 指定config的类型声明为: Taro.Config
-      *
-      * 由于 typescript 对于 object 类型推导只能推出 Key 的基本类型
-      * 对于像 navigationBarTextStyle: 'black' 这样的推导出的类型是 string
-      * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
-      */
+      _get(Index.prototype.__proto__ || Object.getPrototypeOf(Index.prototype), '_constructor', this).call(this, props);
 
       this.state = {
+        showModalStatus: false,
+        showopen: false,
+        papayPressed: false,
+        qrurl: "",
+        showlogin: false,
+        showpapay: false,
+        isnopasspay: 0,
+        havearrears: 0,
+        formid: '',
+        isweapp: false,
         mapKey: 'CFOBZ-IOJKX-TGG4T-ZZM75-EXWF2-OHFAP',
         latitude: 39.908823,
         longitude: 116.397470,
         scale: 16,
         menus: _index3.PATH + '/mImages/menus.png',
-        screen: _index3.PATH + '/mImages/screen.png',
+        screen: _index3.PATH + '/mImages/tytb-3.png',
         user: _index3.PATH + '/mImages/tytb-6.png',
         person: _index3.PATH + '/mImages/tytb-22.png',
         zm: _index3.PATH + '/mImages/zm2.png',
+        avatar: '',
+        zmdefault: _index3.PATH + '/mImages/zm2.png',
         searchImg: _index3.PATH + '/mImages/searchImg.png',
         dw: _index3.PATH + '/mImages/dw.png',
         unpayImg: _index3.PATH + '/mImages/wfk-11.png',
@@ -105,13 +124,25 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         yyzh: _index3.PATH + '/mImages/yyz_f.png',
         dyzh: _index3.PATH + '/mImages/dyz_f.png',
         xydd: _index3.PATH + '/mImages/xyd_img.png',
+        singinImg: _index3.PATH + '/mImages/gban.png',
+        wzc10: _index3.PATH + '/mImages/wzc-10.png',
+        wzc11: _index3.PATH + '/mImages/wzc-11.png',
+        wzc20: _index3.PATH + '/mImages/wzc-20.png',
+        wzc22: _index3.PATH + '/mImages/wzc-22.png',
+        wzc30: _index3.PATH + '/mImages/wzc-30.png?' + Math.random(),
+        wzc33: _index3.PATH + '/mImages/wzc-33.png?' + Math.random(),
+        clear: _index3.PATH + '/mImages/clear.png',
+        setp1: true,
+        setp2: false,
+        setp3: false,
         controls: [],
         isOpened: false,
-        mapObj: {},
+        mapObj_: {},
         showLocation: true,
         markers: [],
         allMarkers: [],
-        bool: true,
+        bool: false,
+        booladdr: false,
         menuright: [],
         token: '',
         checkPapay: false,
@@ -123,86 +154,349 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         DensityFree: false,
         HearBoolean: false,
         HearlistBoolean: false,
+        singinBoolean: true,
+        thumbups: 0,
+        fee: true,
+        befee: 0,
         payName: 0.00,
-        unpayList: [{
-          'name': 'suxiaoyan',
-          "order": 5.00,
-          "time": '2019-01-03',
-          "goods": [{ 'goodsname': '脉动1', 'Gl': 'ml', 'amount': 99, 'address': '丰台区南智能机柜11', 'url': "http://filetest.wemall.com.cn/de0aa02f4a0f49171149beab583c826b.jpg" }, { 'goodsname': '脉动2', 'Gl': 'ml', 'amount': 99, 'address': '丰台区南智能机柜22', 'url': "http://filetest.wemall.com.cn/de0aa02f4a0f49171149beab583c826b.jpg" }, { 'goodsname': '脉动3', 'Gl': 'ml', 'amount': 99, 'address': '丰台区南智能机柜33', 'url': "http://filetest.wemall.com.cn/de0aa02f4a0f49171149beab583c826b.jpg" }]
-        }]
+        unpayList: [],
+        haslogin: false,
+        intervalPapay: {},
+        unpayorder: [],
+        cartTips: '',
+        orderid: '',
+        machineid: '',
+        orderno: '',
+        recogmode: '',
+        haveShopping: false,
+        Carting: false,
+        feedbackslist: [],
+        markerDetail: [],
+        timerTem: "0"
       };
     }
   }, {
-    key: "componentWillReceiveProps",
+    key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
       console.log(this.props, nextProps);
     }
   }, {
-    key: "componentWillMount",
+    key: 'componentWillMount',
     value: function componentWillMount() {
-      console.log('获取getApp:');
-      // console.log(app)
-      console.log('---onLaunch---项目运行时触发');
-      console.log('获取用户信息:');
-      this.mapObj = _index2.default.createMapContext("mymap");
+      console.log('---onLoad---');
+      if (_index2.default.getEnv() == "ALIPAY") {
+        _index3.globalData.isweapp = false;
+        //console.log('**支付宝端(isweapp为false)**'+globalData.isweapp)
+      }
+      if (_index2.default.getEnv() == "WEAPP") {
+        _index3.globalData.isweapp = true;
+        //console.log('**微信端(isweapp为true)**'+globalData.isweapp)
+      }
+      this.mapObj = _index2.default.createMapContext("mymap"); //获取地图控件
       var that = this;
-      //拿到系统信息
-      _index2.default.getSystemInfo({
-        success: function success(res) {
-          console.log('获取用户的手机信息（屏幕宽高等）');
-          console.log(JSON.stringify(res));
-          console.log('存储用户信息到缓存store中');
-          var store = _index2.default.setStorageSync("userInfo", res);
-          var data = _index2.default.getStorageSync('userInfo');
-          console.log("data中是否有用户信息：");
-          console.log(data);
-          that.setState({
-            controls: [{
-              id: 1,
-              iconPath: location,
-              position: {
-                width: 55,
-                height: 55,
-                left: (res.windowWidth - 55) / 2,
-                top: (res.windowHeight - 115) / 2
-              },
-              clickable: true
-            }, {
-              id: 2,
-              iconPath: wishImg,
-              position: {
-                width: 100,
-                height: 100,
-                left: res.windowWidth - 90,
-                top: (res.windowHeight - 115) / 2
-              },
-              clickable: true
-            }, {
-              id: 3,
-              iconPath: juan,
-              position: {
-                width: 80,
-                height: 80,
-                left: res.windowWidth - 80,
-                top: (res.windowHeight - 115) / 2 + 90
-              },
-              clickable: true
-            }]
+      //获取系统信息
+      //console.log('获取系统信息:')
+      _index2.default.getSystemInfo({}).then(function (res) {
+        console.log(JSON.stringify(res));
+        console.log('存储系统信息到缓存store中');
+        _index2.default.setStorageSync("userInfo", res);
+        data = _index2.default.getStorageSync('userInfo'); //**重要信息
+        console.log("检查缓存中是否有系统信息");
+        console.log(data);
+        console.log("res.windowWidth");
+        console.log(res.windowWidth);
+        //中心店插入旗帜
+        // that.setState({
+        //   controls: [{
+        //     id: 1,
+        //     iconPath: location,
+        //     position: {
+        //       width: 55,
+        //       height: 55,
+        //       left: (data.windowWidth - 55) / 2,
+        //       top: (data.windowHeight - 115) / 2
+        //     },
+        //     clickable: true
+        //   }]
+        // })
+      }).catch(function (error) {
+        console.log('请检查网络！' + error);
+      });
+      //检查登录情况
+      //console.log('检查位置情况:')
+      //请求授权位置
+      this.ongetPost();
+      //检查用户情况
+      //console.log('检查用户登录情况')
+      //console.log('---onload-finished---')
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      clearInterval(timer);
+    }
+  }, {
+    key: 'componentDidShow',
+    value: function componentDidShow() {
+      console.log('---onshow---');
+      // console.log('---免密首先检查免密开通情况---')
+      console.log(this.state.setp2);
+      //var intervalPapayTemp = {};
+      var that = this;
+      if (this.state.singinBoolean == true && this.state.setp1 == false && this.state.setp2 == true) {
+        _index2.default.showLoading({
+          title: '免密开通中'
+        });
+        intervalPapayTemp = setInterval(function () {
+          console.log('---循环执行代码 ---');
+          that.checkPapay();
+        }, 2000);
+        setTimeout(function () {
+          clearInterval(intervalPapayTemp);
+          _index2.default.hideLoading();
+          _index2.default.reLaunch({
+            url: '/pages/index/index'
           });
+        }.bind(this), 6000);
+      } else {
+        this.checkToken();
+      }
+    }
+  }, {
+    key: 'componentDidHide',
+    value: function componentDidHide() {
+      clearInterval(timer);
+    }
+    //setp1 点击获取手机号码授权
+
+  }, {
+    key: 'getPhoneNumber',
+    value: function getPhoneNumber(e) {
+      console.log(e.detail.errMsg);
+      var that = this;
+      if (e.detail.errMsg == 'getPhoneNumber:ok') {
+        var that = this;
+        _index2.default.login().then(function (res) {
+          console.log(res);
+          var code = res.code; //获取code
+          console.log('开始登录:' + code);
+          function succeeded(res) {
+            _index2.default.showToast({
+              title: '登陆成功',
+              icon: 'success',
+              duration: 500
+            });
+            that.setState({
+              showlogin: false,
+              showpapay: true,
+              showopen: false,
+              setp1: true,
+              setp2: true
+            });
+            // that.gotoPapay();
+          }
+          ;
+          function failed(res) {
+            _index2.default.showToast({
+              title: '登陆失败,请再按一下',
+              icon: 'fail',
+              duration: 500
+            });
+          }
+          ;
+          (0, _util.login)(code, e.detail.encryptedData, e.detail.iv, succeeded, failed);
+        }).catch(function (error) {
+          console.log(error);
+        });
+      }
+    }
+  }, {
+    key: 'checkPapay',
+    value: function checkPapay() {
+      console.log('----checkpapay----');
+      var that = this;
+      var data1 = _index2.default.getStorageSync('userInfo');
+      _index2.default.request({
+        url: _index3.BASE_URL + 'user/detail',
+        data: {},
+        header: {
+          'content-type': 'application/json',
+          'token': _index3.globalData.token
+        },
+        success: function success(res) {
+          if (res.data.code == 200) {
+            console.log('---免密 ---');
+            var isnopasspay = res.data.data.isnopasspay;
+            if (isnopasspay == "0") {
+              //未开通免密支付
+              // that.paytipsmodal('open')
+              console.log('没开通111');
+              that.setState({
+                setp2: true
+              });
+            } else {
+              console.log('开通2222');
+              console.log('---停止循环执行代码 ---');
+              console.log(res.data);
+              //还原
+              that.setState({
+                setp1: true,
+                setp2: false,
+                singinBoolean: false,
+                bool: true,
+                controls: [{
+                  id: 1,
+                  iconPath: location,
+                  position: {
+                    width: 55,
+                    height: 55,
+                    left: (data.windowWidth - 55) / 2,
+                    top: (data.windowHeight - 115) / 2
+                  },
+                  clickable: true
+                }, {
+                  id: 2,
+                  iconPath: wishImg,
+                  position: {
+                    width: 100,
+                    height: 100,
+                    left: data.windowWidth - 90,
+                    top: (data.windowHeight - 115) / 2
+                  },
+                  clickable: true
+                }, {
+                  id: 3,
+                  iconPath: juan,
+                  position: {
+                    width: 80,
+                    height: 80,
+                    left: data.windowWidth - 80,
+                    top: (data.windowHeight - 115) / 2 + 90
+                  },
+                  clickable: true
+                }]
+              });
+              clearInterval(intervalPapayTemp);
+              _index2.default.hideLoading();
+              //that.loadButtons();
+            }
+          }
         }
       });
-      //得到位置
-      _index2.default.getLocation({
-        type: 'gcj02',
-        success: function success(res) {
-          console.log("获取用户定位成功：");
-          var data = _index2.default.getStorageSync('userInfo');
+    }
+    //setp2 开通免密
+    //开通免密支付
+
+  }, {
+    key: 'gotoPapay',
+    value: function gotoPapay() {
+      console.log('开启免密');
+      var that = this;
+      _index2.default.request({
+        method: 'POST',
+        url: _index3.BASE_URL + 'pay/getPapayExtraData',
+        data: {},
+        header: {
+          'content-type': 'application/json',
+          'token': _index3.globalData.token
+        }
+      }).then(function (res) {
+        console.log('免密返回参数');
+        console.log(res);
+        _index2.default.navigateToMiniProgram({
+          appId: 'wxbd687630cd02ce1d',
+          path: 'pages/index/index',
+          extraData: {
+            appid: res.data.appid,
+            contract_code: res.data.contract_code,
+            contract_display_account: res.data.contract_display_account,
+            mch_id: res.data.mch_id,
+            notify_url: res.data.notify_url,
+            plan_id: res.data.plan_id,
+            request_serial: res.data.request_serial,
+            timestamp: res.data.timestamp,
+            sign: res.data.sign
+          }
+        }).then(function (res) {
+          console.log("成功跳转");
           console.log(res);
-          console.log(res.city);
-          console.log(data);
-          that.setState({
-            latitude: res.latitude,
-            longitude: res.longitude,
+          that.getUserDetail();
+        }).catch(function (error) {
+          console.log('错误');
+          console.log(error);
+        });
+      }).catch(function (error) {
+        console.log('免密信息失败');
+      });
+    }
+    //得到用户信心
+
+  }, {
+    key: 'getUserDetail',
+    value: function getUserDetail() {
+      var _this2 = this;
+
+      console.log("--进入用户详细信息界面--");
+      var that = this;
+      _index2.default.showLoading({
+        'title': ''
+      });
+      _index2.default.request({
+        url: _index3.BASE_URL + 'user/detail',
+        data: {},
+        header: {
+          'content-type': 'application/json',
+          'token': _index3.globalData.token
+        }
+      }).then(function (res) {
+        _index2.default.hideLoading();
+        _index2.default.setStorageSync("userDetail", res);
+        var data1 = _index2.default.getStorageSync('userInfo');
+        console.log('data1:');
+        console.log(data1);
+        if (res.data.code == 200) {
+          console.log('获取用户状态信息');
+          console.log(res);
+          _index3.globalData.haslogin = true;
+          //是否开通免密
+          var $setp1 = true;
+          var $setp2 = true;
+          var $singinBoolean = true;
+          var $fee = 0;
+          var $avatarUrl = res.data.data.avatar;
+          _index3.globalData.avatar = $avatarUrl;
+          _index3.globalData.fee = res.data.data.fee;
+          _index3.globalData.nickname = res.data.data.nickname;
+          console.log("res.data.data.isnopasspay");
+          console.log(res.data.data.isnopasspay);
+          if (res.data.data.isnopasspay == "1") {
+            console.log('开通');
+            $singinBoolean = false;
+            var userid = res.data.data.userid;
+            console.log('userid:' + userid);
+            if (userid) {
+              that.fetchWishCount();
+            }
+          } else {
+            console.log('没开通');
+            $singinBoolean = true;
+          }
+          if (res.data.data.havearrears == "1") {
+            console.log('---有未结订单11111---');
+            //singinBoolean
+            that.getUnpayOrder();
+          } else {
+            console.log('没有未结订单！');
+          }
+          if (res.data.data.fee) {
+            $fee = res.data.data.fee;
+          }
+          _this2.setState({
+            setp1: $setp1,
+            setp2: $setp2,
+            singinBoolean: $singinBoolean,
+            befee: $fee,
+            bool: true,
             controls: [{
               id: 1,
               iconPath: location,
@@ -233,18 +527,283 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
                 top: (data.windowHeight - 115) / 2 + 90
               },
               clickable: true
-            }]
+            }],
+            zm: $avatarUrl !== null ? $avatarUrl : _this2.state.zmdefault
           });
-          console.log(that.mapObj);
-          that.mapObj.moveToLocation();
-          console.log("res.latitude,res.longitude");
-          console.log(res.latitude, res.longitude);
-          that.getNearbyMachines(res.latitude, res.longitude);
+        } else {
+          console.log('---有其他问题---');
+          _index2.default.removeStorageSync('token');
+          _index3.globalData.haslogin = false;
+        }
+      }).catch(function (error) {
+        console.log(error);
+      });
+    }
+    //付支付订单
+
+  }, {
+    key: 'getUnpayOrder',
+    value: function getUnpayOrder() {
+      var that = this;
+      _index2.default.request({
+        url: _index3.BASE_URL + 'order/unpayorder',
+        data: {},
+        header: {
+          'content-type': 'application/json',
+          'token': _index3.globalData.token
         },
-        fail: function fail(res) {
-          console.log("获取用户定位失败111：");
-          console.log(res); //请确定定位相关权限已开启
-          //console.log(res.errCode)
+        success: function success(res) {
+          console.log(res);
+          if (res.data.code == 200) {
+            console.log('----未结订单数据----');
+            console.log(res.data.data);
+            _index2.default.setStorageSync("orderid", res.data.data.orderid);
+            that.setState({
+              unpayorder: res.data.data,
+              singinBoolean: false,
+              unpayBoolean: true,
+              markBoolean: true
+            });
+          }
+        }
+      });
+    }
+    // 提取心愿回复数
+
+  }, {
+    key: 'fetchWishCount',
+    value: function fetchWishCount() {
+      var _this3 = this;
+
+      _index2.default.request({
+        url: _index3.BASE_URL + 'wishlist/n',
+        data: {
+          // userid: this.data.userid
+        },
+        header: {
+          'content-type': 'application/json',
+          'token': _index3.globalData.token
+        },
+        success: function success(res) {
+          console.log('thumbups:');
+          console.log(res);
+          _this3.setState({
+            thumbups: res.data.data
+          });
+          thumbups_ = res.data.data;
+        },
+        fail: function fail(err) {
+          _this3.setState({
+            thumbups: 0
+          });
+          thumbups_ = 0;
+        }
+      });
+    }
+    //setp3 去购物
+
+  }, {
+    key: 'goshoping',
+    value: function goshoping() {
+      console.log('去购物');
+      this.getUserDetail();
+      var data = _index2.default.getStorageSync("userDetail");
+      var data1 = _index2.default.getStorageSync('userInfo');
+      var that = this;
+      if (data.data.data.havearrears == 0) {
+        that.setState({
+          singinBoolean: false,
+          markBoolean: false,
+          bool: true,
+          befee: data.data.data.fee,
+          controls: [{
+            id: 1,
+            iconPath: location,
+            position: {
+              width: 55,
+              height: 55,
+              left: (data1.windowWidth - 55) / 2,
+              top: (data1.windowHeight - 115) / 2
+            },
+            clickable: true
+          }, {
+            id: 2,
+            iconPath: wishImg,
+            position: {
+              width: 100,
+              height: 100,
+              left: data1.windowWidth - 90,
+              top: (data1.windowHeight - 115) / 2
+            },
+            clickable: true
+          }, {
+            id: 3,
+            iconPath: juan,
+            position: {
+              width: 80,
+              height: 80,
+              left: data1.windowWidth - 80,
+              top: (data1.windowHeight - 115) / 2 + 90
+            },
+            clickable: true
+          }]
+        });
+      }
+      if (data.data.data.havearrears == 1) {
+        that.setState({
+          singinBoolean: false,
+          markBoolean: false
+        });
+        //拉取订单
+      }
+    }
+  }, {
+    key: 'onStored',
+    value: function onStored() {
+      //储值
+      _index2.default.navigateTo({
+        url: '/pages/recharge/recharge?avatar=' + _index3.globalData.avatar + '&nickname=' + _index3.globalData.nickname + '&fee=' + _index3.globalData.fee
+      });
+    }
+  }, {
+    key: 'closeSingin',
+    value: function closeSingin() {
+      this.setState({
+        singinBoolean: false,
+        markBoolean: false
+      });
+    }
+  }, {
+    key: 'ongetUserInfo',
+    value: function ongetUserInfo() {
+      _index2.default.getSetting({
+        success: function success(res) {
+          console.log(JSON.stringify(res));
+          if (res.authSetting['scope.userInfo']) {
+            // 已经授权，可以直接调用 getUserInfo 获取头像昵称
+            _index2.default.getUserInfo().then(function (res) {
+              console.log("获取头像昵称");
+              console.log(res);
+              console.log(res.userInfo);
+            }).catch(function (error) {
+              console.log("用户没有授权");
+              console.log(error);
+            });
+          } else {
+            console.log('用户未授权');
+            _index2.default.authorize({
+              scope: 'scope.userInfo'
+            }).then(function (res) {
+              console.log('用户授权信息：');
+              console.log(res);
+            }).catch(function (error) {
+              console.log('error');
+            });
+          }
+        }
+      });
+    }
+  }, {
+    key: 'ongetPost',
+    value: function ongetPost() {
+      var _this4 = this;
+
+      //请求授权位置
+      //console.log('请求授权位置');
+      _index2.default.getSetting({
+        success: function success(res) {
+          //console.log(JSON.stringify(res))
+          // res.authSetting['scope.userLocation'] == undefined    表示 初始化进入该页面
+          // res.authSetting['scope.userLocation'] == false    表示 非初始化进入该页面,且未授权
+          // res.authSetting['scope.userLocation'] == true    表示 地理位置授权
+          if (res.authSetting['scope.userLocation'] != undefined && res.authSetting['scope.userLocation'] != true) {
+            _index2.default.showModal({
+              title: '请求授权当前位置',
+              content: '需要获取您的地理位置，请确认授权',
+              success: function success(res) {
+                if (res.cancel) {
+                  _index2.default.showToast({
+                    title: '拒绝授权',
+                    icon: 'none',
+                    duration: 1000
+                  });
+                } else if (res.confirm) {
+                  _index2.default.openSetting({
+                    success: function success(dataAu) {
+                      if (dataAu.authSetting["scope.userLocation"] == true) {
+                        _index2.default.showToast({
+                          title: '授权成功',
+                          icon: 'success',
+                          duration: 1000
+                        });
+                        //再次授权，调用wx.getLocation的API
+                      } else {
+                        _index2.default.showToast({
+                          title: '授权失败',
+                          icon: 'none',
+                          duration: 1000
+                        });
+                      }
+                    }
+                  });
+                }
+              }
+            });
+          } else if (res.authSetting['scope.userLocation'] == undefined) {
+            //调用wx.getLocation的API
+            var that = _this4;
+            that.ongetLocation();
+          } else {
+            //调用wx.getLocation的API
+            var that = _this4;
+            that.ongetLocation();
+          }
+        }
+      });
+    }
+    //定位到中心点
+
+  }, {
+    key: 'moveToCenter',
+    value: function moveToCenter() {
+      _index2.default.createMapContext("mymap").moveToLocation();
+    }
+  }, {
+    key: 'ongetLocation',
+    value: function ongetLocation() {
+      var that = this;
+      _index2.default.getLocation({
+        type: 'gcj02' //wgs84 gcj02
+      }).then(function (res) {
+        console.log("获取用户定位：");
+        console.log(res);
+        var data = _index2.default.getStorageSync('userInfo');
+        console.log(data);
+        _index3.globalData.lastLon = res.latitude;
+        _index3.globalData.longitude = res.longitude;
+        console.log("latitude:" + _index3.globalData.lastLon);
+        console.log("longitude:" + _index3.globalData.longitude);
+        that.setState({
+          latitude: res.latitude,
+          longitude: res.longitude
+        });
+        console.log(that.mapObj);
+        that.mapObj.moveToLocation();
+        console.log("res.latitude,res.longitude");
+        console.log(res.latitude, res.longitude);
+        console.log('添加地图周围机柜信息');
+        that.getNearbyMachines(res.latitude, res.longitude);
+        //that.getNearbyMachines(res.latitude,res.longitude);
+      }).catch(function (res) {
+        console.log("获取用户定位失败111：");
+        console.log(res); //请确定定位相关权限已开启
+        //console.log(res.errCode)
+        if (_index3.globalData.isweapp == true) {
+          that.setState({
+            posBoolean: true,
+            markBoolean: true
+          });
+        } else {
           _index2.default.showModal({
             title: '提示',
             content: '系统找不到您的位置！',
@@ -263,23 +822,10 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         }
       });
     }
-  }, {
-    key: "componentWillUnmount",
-    value: function componentWillUnmount() {}
-  }, {
-    key: "componentDidShow",
-    value: function componentDidShow() {
-      console.log('---onshow---');
-      console.log('---免密首先检查免密开通情况---');
-      console.log('---此处需要将来要改为支付分---');
-    }
-  }, {
-    key: "componentDidHide",
-    value: function componentDidHide() {}
     //设置定位关闭
 
   }, {
-    key: "oncancel",
+    key: 'oncancel',
     value: function oncancel() {
       //调用用户信息
       var data = _index2.default.getStorageSync('userInfo');
@@ -317,23 +863,10 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         }]
       });
     }
-    //免密是否开通验证
-
-  }, {
-    key: "checkPapay",
-    value: function checkPapay() {
-      console.log('******检查是否开通免密*****');
-      if (_index2.default.getEnv() == "ALIPAY") {
-        console.log('**支付宝是否开通免密**');
-      }
-      if (_index2.default.getEnv() == "WEAPP") {
-        console.log('**微信是否开通免密**');
-      }
-    }
     //验证token是否有效
 
   }, {
-    key: "verifyToken",
+    key: 'verifyToken',
     value: function verifyToken() {
       console.log("********token是否有效********");
       _index2.default.request({
@@ -351,7 +884,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
     //1支付宝获取授权code临时码
 
   }, {
-    key: "myGetAuthCode",
+    key: 'myGetAuthCode',
     value: function myGetAuthCode() {
       var that = this;
       my.getAuthCode({
@@ -370,7 +903,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
     //2微信获取授权code临时码
 
   }, {
-    key: "wxGetAuthCode",
+    key: 'wxGetAuthCode',
     value: function wxGetAuthCode() {
       var that = this;
       _index2.default.login().then(function (res) {
@@ -385,7 +918,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
     //检查用户是否登录
 
   }, {
-    key: "checkLogin",
+    key: 'checkLogin',
     value: function checkLogin() {
       //判断端（支付宝/微信）
       if (_index2.default.getEnv() == "ALIPAY") {
@@ -400,42 +933,383 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
     //获取小程序token值
 
   }, {
-    key: "checkToken",
+    key: 'checkToken',
     value: function checkToken() {
-      this.checkLogin();
+      _index2.default.showLoading({
+        title: ''
+      });
+      var that = this;
+      _index2.default.getStorage({
+        key: 'token'
+      }).then(function (res) {
+        console.log(res);
+        _index2.default.hideLoading();
+        var token = res.data;
+        console.log('token');
+        console.log(token);
+        if (token == null || token == '' || token == 'undefined') {
+          console.log('*********不存在token*尝试自动登录**********');
+          that.checkUser();
+        } else {
+          console.log('*********存在token:检查登录是否有效***********');
+          _index2.default.request({
+            url: _index3.BASE_URL + 'token/verifyToken',
+            data: {
+              'token': token
+            },
+            header: {
+              'content-type': 'application/json',
+              'token': token
+            }
+          }).then(function (res) {
+            //判断token是否有效
+            if (res.data.code == 200) {
+              console.log('-----token 有效----');
+              console.log(res);
+              _index3.globalData.token = token;
+              that.getUserDetail();
+              that.checkShopping();
+            } else if (res.data.code == 215) {
+              console.log('-----token 无效----');
+              _index2.default.removeStorageSync('token');
+              _index2.default.removeStorageSync('userInfo');
+              // Taro.removeStorageSync('userDetail');
+              that.checkUser();
+            }
+          }).catch(function (err) {
+            console.log('*********不存在token***********2');
+            that.checkUser();
+          });
+        }
+      }).catch(function (error) {
+        _index2.default.hideLoading();
+        console.log('*********不存在token***********清除');
+        console.log(error);
+        that.checkUser();
+      });
+    }
+    //更新用户心思
+
+  }, {
+    key: 'updateuserinfo',
+    value: function updateuserinfo() {}
+    //更新用户信息
+
+    //检查是否购买过商品
+
+  }, {
+    key: 'checkShopping',
+    value: function checkShopping() {
+      var that = this;
+      (0, _order.shoppingorder)(function successed(result) {
+        // 如果有购物中订单，设置页面状态，并开启轮询
+        var orderid = result.orderid;
+        var machineid = result.machineid;
+        var orderno = result.orderno;
+        var recogmode = result.recogmode;
+        _index2.default.setStorageSync('goodsResult', result);
+        that.setState({
+          cartTips: '您有一张订单正在购物中',
+          orderid: orderid,
+          machineid: machineid,
+          orderno: orderno,
+          recogmode: recogmode,
+          haveShopping: true
+        });
+        timer = setInterval(function () {
+          (0, _order.requestorderstatus)(orderid, function succeeded(res) {
+            // that.gotoPapay();
+            console.log('-----orderstatus 开始-----');
+            console.log(res);
+            console.log('-----orderstatus 结束-----');
+            if (res.data.code == 200) {
+              console.log('返回成功！');
+              console.log(timer);
+              //clearInterval(globalData.timerTem)
+              var orderstatus = res.data.data.orderstatus;
+              console.log("------orderstatus:------");
+              console.log(orderstatus);
+              var doorstatus = res.data.data.doorstatus;
+              if (doorstatus == "4") {
+                //已关柜
+                if (orderstatus == "5" || orderstatus == "3" || orderstatus == "8" || orderstatus == "9") {
+                  //5已付款 3已取消 8已完成 9 错误
+                  console.log('执行这里-----------');
+                  clearInterval(timer);
+                  _index2.default.redirectTo({
+                    url: '/pages/orders/orderdetail/orderdetail?orderid=' + orderid
+                  });
+                } else if (orderstatus == "6") {
+                  clearInterval(timer);
+                  that.requestPay(orderid);
+                }
+              }
+            } else {
+              var doorstatus = res.data.data.doorstatus;
+              console.log('门锁状态:,一直轮询中。。' + doorstatus);
+              console.log(doorstatus);
+              if (doorstatus == "3" || doorstatus == "4") {
+                clearInterval(timer);
+                that.setState({
+                  cartTips: '您有一张订单正在结算中',
+                  Carting: true,
+                  bool: false,
+                  markBoolean: true
+                });
+              }
+              //跳到购物中页面
+              //that.gotoCart(orderid, machineid, orderno, recogmode);
+            }
+          });
+        }, 1000);
+      });
+    }
+    //购物中订单
+
+  }, {
+    key: 'gotoCart',
+    value: function gotoCart(e) {
+      console.log("e.currentTarget.dataset:");
+      console.log(e.currentTarget.dataset);
+      var that = this;
+      var orderid = e.currentTarget.dataset.orderid;
+      var machineid = e.currentTarget.dataset.machineid;
+      var orderno = e.currentTarget.dataset.orderno;
+      var recogmode = e.currentTarget.dataset.recogmode;
+      console.log("orderid: " + orderid);
+      //
+      if (recogmode == 3) {
+        //重力柜
+        _index2.default.setStorageSync("orderid", orderid);
+        _index2.default.redirectTo({
+          url: '/pages/index/shopping/index?orderid=' + orderid + '&machineid=' + machineid + '&orderno=' + orderno + '&from=index'
+        });
+      } else {
+        _index2.default.setStorageSync("orderid", orderid);
+        _index2.default.redirectTo({
+          url: '/pages/index/cgshopping/index?orderid=' + orderid + '&machineid=' + machineid + '&orderno=' + orderno
+        });
+      }
+    }
+    //发起支付
+
+  }, {
+    key: 'requestPay',
+    value: function requestPay(orderid) {
+      var that = this;
+      _index2.default.showLoading({
+        title: ''
+      });
+      _index2.default.request({
+        method: 'POST',
+        data: {
+          'orderid': orderid
+        },
+        url: _index3.BASE_URL + 'pay/getPreGoodsOrder',
+        header: {
+          'Accept': 'application/json',
+          'content-type': 'application/x-www-form-urlencoded',
+          'token': _index3.globalData.token
+        },
+        success: function success(res) {
+          _index2.default.hideLoading();
+          if (res.data.code == 200) {
+            _index2.default.requestPayment({
+              'timeStamp': res.data.data.timeStamp,
+              'nonceStr': res.data.data.nonceStr,
+              'package': res.data.data.package,
+              'signType': res.data.data.signType,
+              'paySign': res.data.data.paySign,
+              'success': function success(res) {
+                console.log('success', res);
+                // wx.showModal({
+                //   title: '提示',
+                //   content: '支付成功',
+                //   showCancel: false,
+                //   success: function (res) {
+                //     if (res.confirm) {
+                //       that.queryPayStatus(orderid);
+                //     }
+                //   }
+                // });
+                that.queryPayStatus(orderid);
+              },
+              'fail': function fail(res) {
+                console.log('fail', res);
+                //edit at 0606
+                _index2.default.showModal({
+                  title: '提示',
+                  content: '支付失败，请重新支付',
+                  showCancel: false,
+                  success: function success(res) {
+                    // if (res.confirm) {
+                    //   that.updatePayStatus(0, orderid);
+                    //   that.getUnpayOrder();
+                    // }
+                  }
+                });
+              }
+            });
+          } else {
+            _index2.default.showModal({
+              title: '提示',
+              content: res.data.msg,
+              showCancel: false
+            });
+          }
+        }
+      });
+    }
+    //支付接口
+
+  }, {
+    key: 'queryPayStatus',
+    value: function queryPayStatus(orderid) {
+      var that = this;
+      _index2.default.showLoading({
+        title: '等待支付结果...'
+      });
+      //查询订单状态
+      intervalOrderStatus = setInterval(function () {
+        _index2.default.request({
+          method: 'POST',
+          data: {
+            'orderid': orderid
+          },
+          url: _index3.BASE_URL + 'order/paystatus',
+          header: {
+            'Accept': 'application/json',
+            'token': _index3.globalData.token
+          },
+          success: function success(res) {
+            console.log(res.data.data);
+            if (res.data.data.orderstatus == 5) {
+              console.log('----payed---');
+              clearInterval(intervalOrderStatus);
+              _index2.default.hideLoading();
+              that.setState({
+                unpayBoolean: false,
+                markBoolean: false,
+                singinBoolean: true
+              });
+              that.getUserDetail();
+            }
+          }
+        });
+      }, 2000); //循环时间2秒
+    }
+    //检查用户是否登录
+
+  }, {
+    key: 'checkUser',
+    value: function checkUser() {
+      var that = this;
+      _index2.default.login().then(function (res) {
+        console.log('得到code');
+        var code = res.code;
+        console.log(code);
+        _index2.default.request({
+          url: _index3.BASE_URL + 'token/checkUser',
+          data: {
+            'code': code
+          },
+          header: {
+            'content-type': 'application/json',
+            'token': _index3.globalData.token
+          },
+          method: 'GET'
+        }).then(function (res) {
+          console.log(res);
+          if (res.data.code == 200) {
+            console.log('服务器登录成功');
+            _index2.default.setStorage({
+              key: "token",
+              data: res.data.data
+            });
+            _index3.globalData.token = res.data.data;
+            _index3.globalData.haslogin = true;
+            that.setState({
+              setp1: true,
+              setp2: true,
+              setp3: false
+            });
+            console.log('globalData.token');
+            console.log(_index3.globalData.token);
+            console.log('检查用户是否已经注册过：用户存在');
+          } else if (res.data.code == 216) {
+            console.log('检查用户是否已经注册过：用户不存在');
+            console.log('页面停留在登录界面第一步');
+            that.setState({
+              setp1: true,
+              setp2: false,
+              setp3: false
+            });
+          }
+        }).catch(function (error) {
+          console.log("得到code错误信息");
+          console.log(error);
+        });
+      });
     }
     //获取机柜的经纬度坐标，必须获取token才可以拿到
 
   }, {
-    key: "getNearbyMachines",
+    key: 'getNearbyMachines',
     value: function getNearbyMachines(latitude, longitude) {
-      console.log("globalData.token");
-      console.log(_index3.globalData.token);
-      if (latitude == 0 && longitude) {
+      //throw new Error("Method not implemented.");
+      if (latitude == 0 && longitude == 0) {
         return;
       }
       var that = this;
       _index2.default.request({
         url: _index3.BASE_URL + 'machine/nearbymachines',
         data: {
-          lon: latitude,
-          lat: longitude,
+          lon: longitude,
+          lat: latitude,
           distance: 1000
         },
         header: {
           'content-type': 'application/json',
-          'token': "011OMTMu0t0sBj1ozQJu0ckyMu0OMTMg"
+          'token': _index3.globalData.token
         },
         success: function success(res) {
-          console.log('获取附近机柜:[]');
-          console.log(res);
+          console.log('附近获取机柜信息：');
+          console.log(res.data);
+          var data1 = _index2.default.getStorageSync('userInfo');
+          var markers = [];
+          var temps = res.data.data;
+          markers = temps.map(function (item, index) {
+            item.iconPath = flag;
+            item.width = 40;
+            item.height = 40;
+            item.latitude = res.data.data[index].lat;
+            item.longitude = res.data.data[index].lon;
+            item.id = res.data.data[index].machineid;
+            return item;
+          });
+          console.log('markers:');
+          console.log(markers);
+          // for (var i = 0; i < res.data.data.length; i++) {
+          //   var marker:object = {};
+          //   marker.iconPath = "../../assets/images/jgtb.png";
+          //   marker.id = res.data.data[i].machineid;
+          //   marker.width = 40;
+          //   marker.height = 40;
+          //   marker.latitude = res.data.data[i].lat;
+          //   marker.longitude = res.data.data[i].lon;
+          //   markers.push(marker);
+          // }
+          that.setState({
+            markers: markers,
+            allMarkers: res.data.data
+          });
         }
       });
     }
     //确定按钮
 
   }, {
-    key: "onsub",
+    key: 'onsub',
     value: function onsub() {
       //选择定位地点
       console.log('选择定位地点');
@@ -450,6 +1324,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
             longitude: res.longitude
           });
           that.mapObj.moveToLocation();
+          that.getNearbyMachines(res.latitude, res.longitude);
         },
         fail: function fail(res) {
           //不允许打开定位
@@ -460,21 +1335,144 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
       });
     }
   }, {
-    key: "onconcel",
+    key: 'onconcel',
     value: function onconcel() {
       console.log('取消操作');
     }
   }, {
-    key: "onControlTap",
+    key: 'onControlTap',
     value: function onControlTap(e) {
       //点击地图菜单项，点击那个就返回哪个的controlId
       console.log(e.controlId);
       if (e.controlId == 2) {
+        //开启心愿单
         this.onHeard();
       }
     }
+    //心愿单页面跳转
+
   }, {
-    key: "onRight",
+    key: 'myWishList',
+    value: function myWishList() {
+      this.hideFeedbackAndThumbups();
+      console.log("latitude:" + _index3.globalData.lastLon);
+      console.log("longitude:" + _index3.globalData.longitude);
+      _index2.default.navigateTo({
+        url: "../wish/likes/myheart?avatar=" + _index3.globalData.avatarUrl + "&lon=" + _index3.globalData.lastLon + "&lat=" + _index3.globalData.longitude
+      });
+    }
+    //重置
+
+  }, {
+    key: 'resetWishParam',
+    value: function resetWishParam() {
+      tsFeedback = '2099-12-31';
+      tsWish = '2099-12-31';
+      feedbacks = [];
+    }
+    //隐藏心愿面板
+
+  }, {
+    key: 'hideFeedbackAndThumbups',
+    value: function hideFeedbackAndThumbups() {
+      this.setState({
+        HearlistBoolean: false
+      });
+    }
+    //判断是否有回复，如果没有就跳入心愿单页面
+
+  }, {
+    key: 'wishBranch',
+    value: function wishBranch() {
+      if (thumbups_ == 0) {
+        this.myWishList();
+      } else if (thumbups_ > 0) {
+        this.resetWishParam();
+        this.showFeedbackAndThumbups();
+      } else {
+        // TODO
+        this.resetWishParam();
+        this.showFeedbackAndThumbups();
+      }
+    }
+    //得到心愿回复
+
+  }, {
+    key: 'showFeedbackAndThumbups',
+    value: function showFeedbackAndThumbups() {
+      var _this5 = this;
+
+      _index2.default.showLoading({
+        title: ''
+      });
+      _index2.default.request({
+        url: _index3.BASE_URL + 'wishlist/getWishAndFeedBack',
+        data: {
+          // userid: this.data.userid,
+          pageSize: 10,
+          tsFeedback: tsFeedback,
+          tsWish: tsWish
+        },
+        header: {
+          'content-type': 'application/json',
+          'token': _index3.globalData.token
+        },
+        success: function success(res) {
+          console.log('getWishAndFeedBack:');
+          console.log(res.data.rows);
+          var rows = res.data.rows;
+          _this5.updateWishTimeStamp(rows);
+          _this5.addRows(rows);
+          _index2.default.hideLoading();
+          _this5.setState({
+            machineBoolean: false,
+            HearlistBoolean: true,
+            feedbackslist: feedbacks
+          });
+          //feedbacks = this.data.feedbacks
+          hasMore = res.data.hasMore;
+        },
+        fail: function fail(err) {
+          _index2.default.hideLoading();
+          _index2.default.showToast({
+            title: '请求失败',
+            icon: 'fail',
+            duration: 2000
+          });
+        }
+      });
+    }
+  }, {
+    key: 'addRows',
+    value: function addRows(rows) {
+      for (var i = 0; i < rows.length; i++) {
+        if (rows[i].type == 'f') {
+          feedbacks.splice(0, 0, rows[i]);
+        } else {
+          feedbacks.push(rows[i]);
+        }
+      }
+      console.log("feedbacks:");
+      console.log(feedbacks);
+    }
+  }, {
+    key: 'updateWishTimeStamp',
+    value: function updateWishTimeStamp(rows) {
+      tsFeedback = rows.map(function (item, index) {
+        if (item.type == 'f') {
+          return item.ts;
+        }
+      });
+      tsWish = rows.map(function (item, index) {
+        if (item.type !== 'f') {
+          return item.ts;
+        }
+      });
+      console.log('tsFeedback:' + tsFeedback);
+      console.log('tsWish:' + tsWish);
+    }
+  }, {
+    key: 'onRight',
     value: function onRight() {
       console.log('微信客服');
       _index2.default.navigateTo({
@@ -482,25 +1480,148 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
       });
     }
   }, {
-    key: "onLeft",
-    value: function onLeft() {
-      console.log('个人中心');
+    key: 'ongotopersonal',
+    value: function ongotopersonal() {
       _index2.default.navigateTo({
-        url: '/pages/login/login'
+        url: '/pages/personal/index'
+      });
+    }
+    //去登陆
+
+  }, {
+    key: 'ongotologin',
+    value: function ongotologin() {
+      _index2.default.navigateTo({
+        url: '/pages/personal/index'
       });
     }
   }, {
-    key: "onScreen",
+    key: 'onLeft',
+    value: function onLeft() {
+      console.log('个人中心');
+      this.ongotologin();
+    }
+  }, {
+    key: 'paytipsmodal',
+    value: function paytipsmodal(currentStatu) {
+      //关闭  
+      // if (currentStatu == "close") {
+      //   this.setData({
+      //     showPayModalStatus: false
+      //   });
+      // }
+      // 显示  
+      // if (currentStatu == "open") {
+      //   this.setData({
+      //     showPayModalStatus: true
+      //   });
+      // }
+    }
+  }, {
+    key: 'requestOpen',
+    value: function requestOpen(qrurl) {
+      _index2.default.showLoading({
+        title: ''
+      });
+      var that = this;
+      _index2.default.request({
+        url: _index3.BASE_URL + 'device/requestopen',
+        data: {
+          qrurl: qrurl
+        },
+        header: {
+          'content-type': 'application/json',
+          'token': _index3.globalData.token
+        },
+        method: "POST",
+        success: function success(res) {
+          _index2.default.hideLoading();
+          //检测是否可以开门
+          console.log("检测是否可以开门");
+          console.log(res);
+          if (res.data.code == 200) {
+            var machineid = res.data.data.machineid;
+            var lockid = res.data.data.lockid;
+            _index2.default.reLaunch({
+              url: '../box/open/open?machineid=' + machineid + '&lockid=' + lockid + '&formid='
+            });
+          } else if (!(res.data.code == 206)) {
+            _index2.default.showModal({
+              title: '提示',
+              content: res.data.msg,
+              showCancel: false,
+              success: function success(res) {
+                if (res.confirm) {}
+              }
+            });
+          }
+        },
+        fail: function fail(e) {
+          _index2.default.showToast({
+            title: '请求失败',
+            icon: 'fail',
+            duration: 2000
+          });
+        }
+      });
+    }
+  }, {
+    key: 'onScreen',
     value: function onScreen() {
       console.log('扫码开门');
+      //未支付订单判断还没有写
+      var that = this;
+      _index2.default.showLoading({
+        title: ''
+      });
+      _index2.default.request({
+        url: _index3.BASE_URL + 'device/checkscan',
+        data: {},
+        header: {
+          'content-type': 'application/json',
+          'token': _index3.globalData.token
+        },
+        method: "POST"
+      }).then(function (res) {
+        console.log("扫码是否成功：");
+        console.log(res);
+        _index2.default.hideLoading();
+        if (res.data.code == 200) {
+          //扫码二维码
+          _index2.default.scanCode().then(function (res) {
+            //扫码二维码结果
+            console.log(res);
+            console.log(res.result);
+            that.requestOpen(res.result);
+          }).catch(function (res) {
+            console.log(res);
+          });
+        }
+        if (res.data.code == 201) {
+          console.log('您有未结订单');
+        }
+        if (res.data.code == 202) {
+          console.log('您已被加入黑名单');
+        }
+        if (res.data.code == 205) {
+          console.log('用户未登录');
+        }
+        if (res.data.code == 206) {
+          console.log('请开通免密');
+          that.setState({
+            singinBoolean: true,
+            setp2: true,
+            setp3: false
+          });
+        }
+      });
     }
+    // onMM() {
+    //   console.log('开启免密')
+    // }
+
   }, {
-    key: "onMM",
-    value: function onMM() {
-      console.log('开启免密');
-    }
-  }, {
-    key: "onCloseHeard",
+    key: 'onCloseHeard',
     value: function onCloseHeard() {
       console.log('关闭心愿单');
       this.setState({
@@ -509,7 +1630,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
       });
     }
   }, {
-    key: "onCloseHeardlist",
+    key: 'onCloseHeardlist',
     value: function onCloseHeardlist() {
       console.log('关闭心愿单列表');
       this.setState({
@@ -518,15 +1639,15 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
       });
     }
   }, {
-    key: "onSetheart",
+    key: 'onSetheart',
     value: function onSetheart() {
       console.log('进入心愿单中心');
       _index2.default.navigateTo({
-        url: '/pages/wish/myheart'
+        url: '/pages/wish/likes/myheart'
       });
     }
   }, {
-    key: "onPay",
+    key: 'onPay',
     value: function onPay() {
       console.log('订单明细页面');
       _index2.default.navigateTo({
@@ -534,16 +1655,139 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
       });
     }
   }, {
-    key: "_createData",
+    key: 'payOrder',
+    value: function payOrder() {
+      var orderid = _index2.default.getStorageSync("orderid");
+      //var orderid = this.data.unpayorder.orderid;
+      this.setState({
+        orderid: orderid
+      });
+      this.requestPay(orderid);
+    }
+  }, {
+    key: 'gotoCartFn',
+    value: function gotoCartFn() {
+      var result = _index2.default.getStorageSync('goodsResult');
+      var orderid = result.orderid;
+      var machineid = result.machineid;
+      var orderno = result.orderno;
+      var recogmode = result.recogmode;
+      this.gotoCart(orderid, machineid, orderno, recogmode);
+    }
+  }, {
+    key: 'closeCarting',
+    value: function closeCarting() {
+      this.setState({
+        Carting: false,
+        markBoolean: false
+      });
+    }
+  }, {
+    key: 'regionchange',
+    value: function regionchange(e) {
+      console.log('e:' + e);
+      console.log(e);
+      var that = this;
+      that.setState({
+        machineBoolean: false
+      });
+      if (e.type == 'end') {
+        if (this.mapContext) {
+          this.mapContext.getCenterLocation({
+            success: function success(res) {
+              // that.setData({
+              //   latitude: res.latitude,
+              //   longitude: res.longitude
+              // });
+              console.log('------');
+              that.getNearbyMachines(res.latitude, res.longitude);
+            }
+          });
+        }
+      }
+    }
+  }, {
+    key: 'markertap',
+    value: function markertap(e) {
+      var that = this;
+      var curmachineid = '';
+      for (var i = 0; i < this.state.markers.length; i++) {
+        if (e.markerId == this.state.markers[i].id) {
+          curmachineid = this.state.allMarkers[i].machineid;
+        }
+      }
+      if (curmachineid != '') {
+        _index2.default.getLocation({
+          type: 'wgs84',
+          success: function success(res) {
+            var latitude = res.latitude;
+            var longitude = res.longitude;
+            _index2.default.request({
+              url: _index3.BASE_URL + 'machine/indexmachinedetail',
+              data: {
+                lon: longitude,
+                lat: latitude,
+                machineid: curmachineid
+              },
+              header: {
+                'content-type': 'application/json',
+                'token': _index3.globalData.token
+              },
+              success: function success(res) {
+                // that.showBottomModal();
+                console.log('res:');
+                console.log(res);
+                that.setState({
+                  markerDetail: res.data.data,
+                  machineBoolean: true
+                });
+                machineid = res.data.data.machineid;
+              }
+            });
+          },
+          fail: function fail(res) {
+            _index2.default.openSetting({
+              //重新请求获取定位
+              success: function success(res) {
+                if (res.authSetting["scope.userLocation"]) {}
+              }
+            });
+          }
+        });
+      }
+    }
+  }, {
+    key: 'hideModal',
+    value: function hideModal() {
+      // this.setState({
+      //   machineBoolean: false
+      // })
+      _index2.default.navigateTo({
+        url: "../box/boxdetail/boxdetail?machineid=" + machineid
+      });
+    }
+  }, {
+    key: 'topersonfn',
+    value: function topersonfn() {
+      console.log('个人主页');
+      _index2.default.navigateTo({
+        url: '/pages/personal/index'
+      });
+    }
+  }, {
+    key: '_createData',
     value: function _createData() {
       this.__state = arguments[0] || this.state || {};
       this.__props = arguments[1] || this.props || {};
       var __isRunloopRef = arguments[2];
       ;
 
-      var unpayList = this.__state.unpayList;
+      var _state = this.__state,
+          unpayList = _state.unpayList,
+          feedbackslist = _state.feedbackslist,
+          markerDetail = _state.markerDetail;
 
-      var anonymousState__temp = this.__state.unpayBoolean ? this.__state.payName.toFixed(2) : null;
+      var anonymousState__temp = this.__state.unpayBoolean ? (this.__state.unpayorder.payfee / 100).toFixed(2) : null;
       Object.assign(this.__state, {
         anonymousState__temp: anonymousState__temp,
         systemUser: _index3.systemUser
@@ -553,7 +1797,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
   }]);
 
   return Index;
-}(_index.Component), _class.properties = {}, _class.$$events = ["onControlTap", "onInfo", "onClosePos", "onPay", "onMM", "onCloseHeardlist", "onSetheart", "onCloseHeard", "onScreen", "onRight", "onLeft"], _temp2);
+}(_index.Component), _class.properties = {}, _class.$$events = ["onControlTap", "markertap", "regionchange", "topersonfn", "onStored", "getPhoneNumber", "gotoPapay", "onInfo", "gotoCart", "onClosePos", "payOrder", "gotoCartFn", "onCloseHeardlist", "onSetheart", "onScreen", "onRight", "onLeft", "hideModal"], _temp2);
 // #region 导出注意
 //
 // 经过上面的声明后需要将导出的 Taro.Component 子类修改为子类本身的 props 属性

@@ -1,0 +1,43 @@
+<block>
+    <view>
+        <block wx:if="{{islogin}}">
+            <view>
+                <image class="loadImg" src="{{loadImg1}}"></image>
+                <form>
+                    <button type="default" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" class="Btn btnopen" data-e-getphonenumber-so="this">去注册</button>
+                </form>
+            </view>
+        </block>
+        <block>
+            <block wx:if="{{!openfailed}}">
+                <view>
+                    <image class="loadImg" src="{{loadImg}}"></image>
+                    <view class="openlock">开锁中，听到开锁声便可取货购物</view>
+                    <block>
+                        <block wx:if="{{pay}}">
+                            <form>
+                                <button type="default" bindtap="gotoPapay" class="Btn btnopen">开启微信免密支付</button>
+                            </form>
+                        </block>
+                        <block wx:else>
+                            <form bindsubmit="submitInfo" report-submit="true">
+                                <button type="default" form-type="submit" class="Btn btnopen">点击开门</button>
+                            </form>
+                        </block>
+                    </block>
+                </view>
+            </block>
+            <block wx:else>
+                <view>
+                    <image class="loadImg" src="{{loadImg1}}"></image>
+                    <view class="fail">开柜失败</view>
+                    <form bindsubmit="submitInfo" report-submit="true">
+                        <button type="default" form-type="submit" class="Btn btnopen">请重试</button>
+                    </form>
+                    <view class="bottominfo">取出商品后请手动关门结算</view>
+                    <navigator class="navigator" url="/page/navigate/navigate?title=navigate" hover-class="navigator-hover">反馈异常</navigator>
+                </view>
+            </block>
+        </block>
+    </view>
+</block>

@@ -60,6 +60,7 @@
     "eslint-plugin-import": "^2.12.0",
     "eslint-plugin-react": "^7.8.2",
     "eslint-plugin-taro": "1.2.26",
+    "qs": "^6.7.0",
     "taro-ui": "^2.1.0",
     "typescript": "^3.0.1"
   }

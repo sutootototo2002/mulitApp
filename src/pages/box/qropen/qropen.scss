@@ -1,0 +1,87 @@
+
+.loader{
+    width:396px;
+    height:396px;
+    // border:3px solid #ee751a;
+    position: absolute;
+    left:50%;
+    margin-left:-198px;
+    top:50%;
+    margin-top:-298px;
+    text-align: center;
+    line-height: 396px;
+    border-radius: 999px;
+    color:#fff;
+    font-size:45px;
+    z-index:9999;
+
+}
+
+.fail{
+    position: absolute;
+    width:100%;
+    height:auto;
+    font-size:30px;
+    bottom:200px;
+    text-align: center;
+    color:#ccc;
+}
+.bottominfo{
+    position: absolute;
+    width:100%;
+    height:auto;
+    font-size:30px;
+    bottom:150px;
+    text-align: center;
+    color:#ccc;
+}
+.btns{
+    position: absolute;
+    width:90%;
+    left:50%;
+    margin-left:-45%;
+    height:auto;
+    font-size:35px;
+    bottom:250px;
+    text-align: center;
+}
+.navigator{
+    position: absolute;
+    width:100%;
+    height:auto;
+    font-size:35px;
+    bottom:100px;
+    text-align: center;
+    color:#ccc;
+}
+
+.openlock{
+    position: absolute;
+    width:100%;
+    height:auto;
+    font-size:30px;
+    bottom:400px;
+    text-align: center;
+    color:#ccc;
+}
+
+.loadImg{
+    width:396px;
+    height:396px;
+    position: absolute;
+    left:50%;
+    margin-left:-196px;
+    top:50%;
+    margin-top:-390px;
+    z-index:9;
+}
+.btnopen{
+    position: absolute;
+    width:70%;
+    left:50%;
+    margin-left:-35%;
+    height:auto;
+    font-size:35px;
+    bottom:250px;
+    text-align: center;
+}

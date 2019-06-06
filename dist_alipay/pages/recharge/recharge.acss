@@ -1,0 +1,25 @@
+
+.myrecharge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background: #f2f2f2;
+}
+
+.myvator {
+  position: absolute;
+  width: 100rpx;
+  height: 100rpx;
+  border: 5rpx solid #ffa300;
+  border-radius: 999rpx;
+  left: 50%;
+  top: 50%;
+  margin-top: -50rpx;
+  margin-left: -50rpx;
+  background: #fff;
+  overflow: hidden;
+}
