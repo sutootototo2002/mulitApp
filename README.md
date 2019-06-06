@@ -93,4 +93,11 @@
 
       Taro.openSetting 改为： Taro.chooseLocation 具体接口见文档
 
+
+### 10、小程序测试 ###
+
+
+   ![](https://i.imgur.com/WHTqj1e.png)
+
+
     
