@@ -23,6 +23,7 @@ class App extends Component {
 
   config: Config = {
     pages: [
+     
       'pages/index/index',
       'pages/personal/index',
       'pages/recharge/recharge',
@@ -32,11 +33,11 @@ class App extends Component {
       'pages/box/open/open',
       'pages/index/shopping/index',
       'pages/index/cgshopping/index',
-      'pages/box/qropen/qropen',
       'pages/orders/orderdetail/orderdetail',
       'pages/orders/orderlist/orderlist',
       'pages/box/boxdetail/boxdetail',
       'pages/card/bindcard',
+      'pages/box/qropen/qropen',
       'pages/refund/refund'
     ],
     window: {

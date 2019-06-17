@@ -129,8 +129,8 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         wzc11: _index3.PATH + '/mImages/wzc-11.png',
         wzc20: _index3.PATH + '/mImages/wzc-20.png',
         wzc22: _index3.PATH + '/mImages/wzc-22.png',
-        wzc30: _index3.PATH + '/mImages/wzc-30.png?' + Math.random(),
-        wzc33: _index3.PATH + '/mImages/wzc-33.png?' + Math.random(),
+        wzc30: _index3.PATH + '/mImages/wzc-30.png',
+        wzc33: _index3.PATH + '/mImages/wzc-33.png',
         clear: _index3.PATH + '/mImages/clear.png',
         setp1: true,
         setp2: false,
@@ -975,6 +975,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
               _index2.default.removeStorageSync('userInfo');
               // Taro.removeStorageSync('userDetail');
               that.checkUser();
+              that.getUserDetail();
             }
           }).catch(function (err) {
             console.log('*********不存在token***********2');

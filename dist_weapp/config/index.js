@@ -49,7 +49,7 @@ var SHAREINFO = exports.SHAREINFO = {
   'path': '路径',
   'imageUrl': '图片'
 };
-var PATH = exports.PATH = "http://shoptestapp.wemall.com.cn";
+var PATH = exports.PATH = "https://shoptestapp.wemall.com.cn";
 var systemUser = exports.systemUser = '知码小蜜';
 
 var globalData = exports.globalData = {

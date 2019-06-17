@@ -394,9 +394,7 @@
   position: absolute;
   right: 20rpx;
   font-size: 15rpx;
-  width: 98rpx;
-  height: 30rpx;
-  line-height: 30rpx;
+  padding: 2rpx 20rpx;
   top: 50rpx;
   border-radius: 30rpx;
   border: 0;

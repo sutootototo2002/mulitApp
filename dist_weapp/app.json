@@ -9,11 +9,11 @@
     "pages/box/open/open",
     "pages/index/shopping/index",
     "pages/index/cgshopping/index",
-    "pages/box/qropen/qropen",
     "pages/orders/orderdetail/orderdetail",
     "pages/orders/orderlist/orderlist",
     "pages/box/boxdetail/boxdetail",
     "pages/card/bindcard",
+    "pages/box/qropen/qropen",
     "pages/refund/refund"
   ],
   "window": {
@@ -30,5 +30,6 @@
     "scope.userLocation": {
       "desc": "你的位置信息将用于帮您寻找附近的机柜"
     }
-  }
+  },
+  "sitemapLocation": "sitemap.json"
 }

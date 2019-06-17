@@ -51,7 +51,7 @@ var Qropen = (_temp2 = _class = function (_BaseComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Qropen.__proto__ || Object.getPrototypeOf(Qropen)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["formid", "lockid", "machineid", "orderid", "openfailed", "requestfailed", "pay", "num", "tag", "qrurl", "haslogin", "showlogin", "showpapay", "showopen", "papayPressed", "showModalStatus", "unpayorder", "loadImg", "loadImg1", "islogin"], _this.config = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Qropen.__proto__ || Object.getPrototypeOf(Qropen)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "formid", "lockid", "machineid", "orderid", "openfailed", "requestfailed", "pay", "num", "tag", "qrurl", "haslogin", "showlogin", "showpapay", "showopen", "papayPressed", "showModalStatus", "unpayorder", "loadImg", "loadImg1", "loadImg2", "unpayImg", "unpriceImg", "islogin", "markBoolean", "open", "unpay"], _this.config = {
       navigationBarTitleText: '打开柜子'
     }, _this.$$refs = [], _temp), _possibleConstructorReturn(_this, _ret);
   }
@@ -88,7 +88,13 @@ var Qropen = (_temp2 = _class = function (_BaseComponent) {
         unpayorder: [],
         loadImg: _index3.PATH + '/mImages/openouter.png',
         loadImg1: _index3.PATH + '/mImages/smks-wzc.png',
-        islogin: false
+        loadImg2: _index3.PATH + '/mImages/car.png',
+        unpayImg: _index3.PATH + '/mImages/wfk-11.png',
+        unpriceImg: _index3.PATH + '/mImages/wfk.png',
+        islogin: true,
+        markBoolean: false,
+        open: false,
+        unpay: false
       };
     }
   }, {
@@ -106,7 +112,7 @@ var Qropen = (_temp2 = _class = function (_BaseComponent) {
         title: ''
       });
       var qrurl = decodeURIComponent(this.$router.params.q);
-      //var qrurl = 'https://t.wemall.com.cn/clientapi?id=XX2121901170001&lockid=1-1-1';
+      //var qrurl = 'https://testo.wemall.com.cn/clientapi?id=QT3111804100002&lockid=1-1-1';
       that.setState({
         qrurl: qrurl
       });
@@ -133,22 +139,16 @@ var Qropen = (_temp2 = _class = function (_BaseComponent) {
             } else {
               _index2.default.hideLoading();
               console.log('*********token 过期***********1');
-              try {
-                _index2.default.removeStorageSync('token');
-              } catch (e) {}
               // Do something when catch error
-
-              //that.showLoginModal();
-              that.setState({
-                islogin: true,
-                openfailed: true //点击开门
-              });
+              _index2.default.removeStorageSync('token');
+              that.checkUser();
             }
           }
         });
       }).catch(function (error) {
         _index2.default.hideLoading();
         console.log('*********不存在token***********');
+        console.log('----checkUser----');
         that.checkUser();
       });
     }
@@ -190,8 +190,7 @@ var Qropen = (_temp2 = _class = function (_BaseComponent) {
               duration: 500
             });
             that.setState({
-              islogin: false,
-              openfailed: false
+              islogin: false
             });
             // that.gotoPapay();
           }
@@ -239,7 +238,7 @@ var Qropen = (_temp2 = _class = function (_BaseComponent) {
             },
             header: {
               'content-type': 'application/json',
-              'token': _index3.globalData.token11
+              'token': _index3.globalData.token
             },
             method: 'GET',
             success: function success(res) {
@@ -255,33 +254,13 @@ var Qropen = (_temp2 = _class = function (_BaseComponent) {
                   _index3.globalData.token = res.data.data;
                   _index3.globalData.haslogin = true;
                   that.getUserDetail();
-                  that.setState({
-                    islogin: true,
-                    openfailed: true //点击开门
-                  });
-                } else {
-                  //that.showLoginModal();
-                  that.setState({
-                    islogin: false,
-                    openfailed: false //隐藏
-                  });
                 }
-              } else {
-                //that.showLoginModal();
-                that.setState({
-                  islogin: true,
-                  openfailed: true
-                });
               }
             }
           });
         },
         fail: function fail(e) {
           //that.showLoginModal();
-          that.setState({
-            islogin: true,
-            openfailed: true
-          });
         }
       });
     }
@@ -306,24 +285,24 @@ var Qropen = (_temp2 = _class = function (_BaseComponent) {
           if (res.data.code == 200) {
             //已经注册过
             _index3.globalData.haslogin = true;
+            that.setState({
+              islogin: false
+            });
             //
             var isnopasspay = res.data.data.isnopasspay;
             var havearrears = res.data.data.havearrears;
             if (havearrears == "1") {
               that.getUnpayOrder();
-              that.setState({
-                // showlogin: false,
-                // showpapay: false,
-                // showopen: false,
-                pay: true
-              });
             }
             if (isnopasspay == "1") {
               console.log('---已开通免密open---');
               that.setState({
-                pay: false
+                islogin: false,
+                pay: false,
+                open: true
               });
             } else {
+              console.log('---未开通免密open---');
               that.setState({
                 pay: true
               });
@@ -396,6 +375,8 @@ var Qropen = (_temp2 = _class = function (_BaseComponent) {
         success: function success(res) {
           if (res.data.code == 200) {
             that.setState({
+              unpay: true,
+              markBoolean: true,
               unpayorder: res.data.data
             });
             //that.unpayorderLayer('open');
@@ -597,7 +578,7 @@ var Qropen = (_temp2 = _class = function (_BaseComponent) {
         },
         fail: function fail(e) {
           that.setState({
-            openfailed: true
+            openfailed: false
           });
         }
       });
@@ -722,6 +703,122 @@ var Qropen = (_temp2 = _class = function (_BaseComponent) {
       });
     }
   }, {
+    key: 'payOrder',
+    value: function payOrder() {
+      var orderid = _index2.default.getStorageSync("orderid");
+      //var orderid = this.data.unpayorder.orderid;
+      this.setState({
+        orderid: orderid
+      });
+      this.requestPay(orderid);
+    }
+    //发起支付
+
+  }, {
+    key: 'requestPay',
+    value: function requestPay(orderid) {
+      var that = this;
+      _index2.default.showLoading({
+        title: ''
+      });
+      _index2.default.request({
+        method: 'POST',
+        data: {
+          'orderid': orderid
+        },
+        url: _index3.BASE_URL + 'pay/getPreGoodsOrder',
+        header: {
+          'Accept': 'application/json',
+          'content-type': 'application/x-www-form-urlencoded',
+          'token': _index3.globalData.token
+        },
+        success: function success(res) {
+          _index2.default.hideLoading();
+          if (res.data.code == 200) {
+            _index2.default.requestPayment({
+              'timeStamp': res.data.data.timeStamp,
+              'nonceStr': res.data.data.nonceStr,
+              'package': res.data.data.package,
+              'signType': res.data.data.signType,
+              'paySign': res.data.data.paySign,
+              'success': function success(res) {
+                console.log('success', res);
+                // wx.showModal({
+                //   title: '提示',
+                //   content: '支付成功',
+                //   showCancel: false,
+                //   success: function (res) {
+                //     if (res.confirm) {
+                //       that.queryPayStatus(orderid);
+                //     }
+                //   }
+                // });
+                that.queryPayStatus(orderid);
+              },
+              'fail': function fail(res) {
+                console.log('fail', res);
+                //edit at 0606
+                _index2.default.showModal({
+                  title: '提示',
+                  content: '支付失败，请重新支付',
+                  showCancel: false,
+                  success: function success(res) {
+                    // if (res.confirm) {
+                    //   that.updatePayStatus(0, orderid);
+                    //   that.getUnpayOrder();
+                    // }
+                  }
+                });
+              }
+            });
+          } else {
+            _index2.default.showModal({
+              title: '提示',
+              content: res.data.msg,
+              showCancel: false
+            });
+          }
+        }
+      });
+    }
+    //支付接口
+
+  }, {
+    key: 'queryPayStatus',
+    value: function queryPayStatus(orderid) {
+      var that = this;
+      _index2.default.showLoading({
+        title: '等待支付结果...'
+      });
+      //查询订单状态
+      intervalOrderStatus = setInterval(function () {
+        _index2.default.request({
+          method: 'POST',
+          data: {
+            'orderid': orderid
+          },
+          url: _index3.BASE_URL + 'order/paystatus',
+          header: {
+            'Accept': 'application/json',
+            'token': _index3.globalData.token
+          },
+          success: function success(res) {
+            console.log(res.data.data);
+            if (res.data.data.orderstatus == 5) {
+              console.log('----payed---');
+              clearInterval(intervalOrderStatus);
+              _index2.default.hideLoading();
+              that.setState({
+                unpay: false,
+                markBoolean: false
+              });
+              that.getUserDetail();
+            }
+          }
+        });
+      }, 2000); //循环时间2秒
+    }
+  }, {
     key: 'gotoPapay',
     value: function gotoPapay() {
       var that = this;
@@ -776,13 +873,16 @@ var Qropen = (_temp2 = _class = function (_BaseComponent) {
       this.__props = arguments[1] || this.props || {};
       var __isRunloopRef = arguments[2];
       ;
-      Object.assign(this.__state, {});
+      var anonymousState__temp = this.__state.unpay ? (this.__state.unpayorder.payfee / 100).toFixed(2) : null;
+      Object.assign(this.__state, {
+        anonymousState__temp: anonymousState__temp
+      });
       return this.__state;
     }
   }]);
 
   return Qropen;
-}(_index.Component), _class.properties = {}, _class.$$events = ["getPhoneNumber", "gotoPapay", "submitInfo"], _temp2);
+}(_index.Component), _class.properties = {}, _class.$$events = ["getPhoneNumber", "gotoPapay", "submitInfo", "payOrder"], _temp2);
 exports.default = Qropen;
 
 Component(require('../../../npm/@tarojs/taro-weapp/index.js').default.createComponent(Qropen, true));

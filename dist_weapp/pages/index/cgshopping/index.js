@@ -404,7 +404,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
           },
           success: function success(res) {
             console.log(res.data.data);
-            if (res.data.data.orderstatus == 5) {
+            if (res.data.data.orderstatus == 5 || res.data.data.orderstatus == 8 || res.data.data.orderstatus == 9) {
               console.log('----payed---');
               clearInterval(intervalOrderStatus);
               clearInterval(intervalRefresh);

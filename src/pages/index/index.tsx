@@ -175,8 +175,8 @@ export default class Index extends Component<{}, IState>{
       wzc11:PATH+'/mImages/wzc-11.png',
       wzc20:PATH+'/mImages/wzc-20.png',
       wzc22:PATH+'/mImages/wzc-22.png',
-      wzc30:PATH+'/mImages/wzc-30.png?'+Math.random(),
-      wzc33:PATH+'/mImages/wzc-33.png?'+Math.random(),
+      wzc30:PATH+'/mImages/wzc-30.png',
+      wzc33:PATH+'/mImages/wzc-33.png',
       clear:PATH+'/mImages/clear.png',
       setp1:true,
       setp2:false,
@@ -1054,6 +1054,7 @@ export default class Index extends Component<{}, IState>{
             // Taro.removeStorageSync('userDetail');
 
             that.checkUser();
+            that.getUserDetail();
           }
 
 

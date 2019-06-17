@@ -175,8 +175,8 @@ class Boxdetail extends Component<{}, IState>{
                {$pics}
                </View>
             
-              <View className='addr'>地址：<Image className='addr1' src={this.state.addr}/> {this.state.machine.location}-{this.state.machine.dailaddress}| 距您555km</View>
-              <Image className='addr2' onTouchStart={this.viewlocation} src={this.state.addr}/>
+              <View className='addr'>地址：<Image className='addr1' src={this.state.addr}/> {this.state.machine.location}-{this.state.machine.dailaddress}| 距您555km<Image className='addr2' onTouchStart={this.viewlocation} src={this.state.addr}/></View>
+              
             </View>
             <View>
                 <View className='goodsName'>当前商品</View>

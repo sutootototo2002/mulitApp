@@ -42,10 +42,9 @@
 }
 
 .addr2 {
-  float: left;
   width: 48rpx;
   height: 50rpx;
-  margin-left: 50rpx;
+  margin-left: 20rpx;
 }
 
 .goodsName {

@@ -1,4 +1,28 @@
 
+$color-white:#fff;
+$color-white1:#f3f3f3;
+$color-default:#ff7700;
+$color-orgent:#ff4e00;
+$color-gray:#eeeceb;
+$color-gray1:#919191;
+$color-orgent1:#ff3b3b;
+$color-orgent2:#e64307;
+$color-brown:#e1cda9;
+$color-brown1:#633226;
+
+.mark{
+
+    position: absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    width:100%;
+    height:100%;
+    background:rgba(0, 0, 0, 0.6);
+    z-index:1000;
+
+  }
 .loader{
     width:396px;
     height:396px;
@@ -84,4 +108,232 @@
     font-size:35px;
     bottom:250px;
     text-align: center;
+    color:#fff;
 }
+
+.infoZm{
+    position:absolute;
+    bottom:360px;
+    text-align:center;
+    width:100%;
+    font-size:30px;
+
+}
+.infoZm11{
+    position:absolute;
+    top:50%;
+    margin-top:20px;
+    text-align:center;
+    width:100%;
+    font-size:45px;
+    color:#ee751a
+}
+.infoZm22{
+    position:absolute;
+    top:50%;
+    margin-top:80px;
+    text-align:center;
+    width:100%;
+    font-size:30px;
+}
+
+.opens{
+    width:40%;
+    margin:auto;
+    border-radius: 999px;
+    background:#fff;
+    border:1px solid #ee751a;
+    margin-left:-20%;
+
+}
+
+.unpayOrder{
+    width:563px;
+    position:absolute;
+    top:10%;
+    left:50%;
+    margin-left:-281px;
+    border-radius: 20px;
+    z-index: 99999;
+
+  }
+
+
+  .unpayList{
+    width:563px;
+    left:50%;
+    margin-left:-281px;
+    margin:auto;
+    background:$color-white1;
+    margin-top:-1px;
+    padding:33px 0;
+  }
+
+  .unprice{
+    position: absolute;
+    width:332px;
+    height:324px;
+    top:10px;
+    left:50%;
+    margin-left:-166px;
+    z-index:9;
+    text-align:center;
+  }
+  .textOne{
+    position: absolute;
+    top:45px;
+    width:100%;
+    text-align: center;
+    font-size:25px;
+    z-index:9999;
+    color:$color-orgent;
+
+  }
+
+  .textTwo{
+    position: absolute;
+    top:100px;
+    width:100%;
+    text-align: center;
+    font-size:25px;
+    z-index:9999;
+    color:$color-orgent;
+  }
+  .textPrice{
+     font-size:33px;
+     position: absolute;
+     top:150px;
+     width:100%;
+     text-align: center;
+     font-size:50px;
+     z-index:9999;
+     color:$color-orgent;
+  }
+  .textshi{
+    font-size:33px;
+    position: absolute;
+    top:420px;
+    width:100%;
+    text-align: center;
+    font-size:35px;
+    z-index:9999;
+    color:$color-white;
+  }
+
+  .textPrice{
+    font-size:33px;
+    position: absolute;
+    top:150px;
+    width:100%;
+    text-align: center;
+    font-size:50px;
+    z-index:9999;
+    color:$color-orgent;
+ }
+ .textshi{
+   font-size:33px;
+   position: absolute;
+   top:420px;
+   width:100%;
+   text-align: center;
+   font-size:35px;
+   z-index:9999;
+   color:$color-white;
+ }
+
+ .BtnOne{
+   color:$color-white;
+   background:color-default;
+   line-height:64px;
+   border:0;
+   width:95%;
+
+   margin:auto;
+   
+ }
+
+ .BtnTwo{
+   color:$color-white;
+   background:$color-default;
+   line-height:64px;
+   border:0;
+   width:95%;
+   font-size:30px;
+   margin:auto;
+   margin-top:20px;
+   
+ }
+
+ .orderList{
+   width:90%;
+   margin:auto;
+   padding:5px 20px 20px 20px;
+   background:$color-gray;
+   border-radius: 10px;
+   margin-bottom:20px;
+ }
+
+ .clist{
+   background:$color-gray;
+   margin-bottom:10px;
+   padding:10px 5px;
+ }
+
+.canme{float:left;}
+.ctime{float: right;}
+.goodsCV{
+ 
+}
+.goods{
+ clear:both;
+ float:left;
+ // border:1px solid red;
+ top:40px;
+ width:100%;
+ font-size:25px;
+ top:0;
+ background:$color-white;
+ // height:200px
+}
+.gImg{
+ float:left;
+ width:100px;
+ height:100px;
+ // border:1px solid red;
+}
+.gName{
+ float:left;
+ padding:0 0 0 20px;
+ 
+}
+
+.goodsImg{
+ float:left;
+ width:65px;
+ height:65px;
+ border-radius: 10px;
+ background:$color-white;
+}
+.goodsInfos{
+ float:left;
+ margin-left:20px;
+}
+.del{
+ float:left;
+ width:31px;
+ height:31px;
+ margin-top:2px;
+ margin:5px 10px 0 0;
+ color:$color-orgent2;
+ font-size:25px;
+}
+.total{
+ float:left;
+ color:$color-orgent2;
+ font-size:30px;
+}
+.goodsInfoDetail{
+ font-size:30px;
+ color:$color-gray1;
+}
+

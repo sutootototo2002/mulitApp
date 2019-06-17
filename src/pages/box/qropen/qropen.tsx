@@ -24,6 +24,7 @@ interface IState {
     requestfailed:boolean
     loadImg:string,
     loadImg1:string,
+    loadImg2:string,
     pay:boolean,
     qrurl:string,
     haslogin:boolean,
@@ -33,6 +34,11 @@ interface IState {
     papayPressed:boolean,
     showModalStatus:boolean,
     islogin:boolean,
+    open:boolean,
+    unpayImg:string,
+    unpriceImg:string,
+    markBoolean: boolean,
+    unpay:boolean,
     unpayorder:Array<object>
 }
 
@@ -76,7 +82,13 @@ class Qropen extends Component<{}, IState>{
         unpayorder:[],
         loadImg:PATH+'/mImages/openouter.png',
         loadImg1:PATH+'/mImages/smks-wzc.png',
-        islogin:false,
+        loadImg2:PATH+'/mImages/car.png',
+        unpayImg: PATH + '/mImages/wfk-11.png',
+        unpriceImg: PATH + '/mImages/wfk.png',
+        islogin:true,
+        markBoolean:false,
+        open:false,
+        unpay:false
 
     }
 }
@@ -94,7 +106,7 @@ class Qropen extends Component<{}, IState>{
       title: '',
     });
     var qrurl = decodeURIComponent(this.$router.params.q);
-    //var qrurl = 'https://t.wemall.com.cn/clientapi?id=XX2121901170001&lockid=1-1-1';
+    //var qrurl = 'https://testo.wemall.com.cn/clientapi?id=QT3111804100002&lockid=1-1-1';
     that.setState({
       qrurl: qrurl
     });
@@ -121,16 +133,11 @@ class Qropen extends Component<{}, IState>{
             } else {
               Taro.hideLoading();
               console.log('*********token 过期***********1');
-              try {
-                Taro.removeStorageSync('token');
-              } catch (e) {
                 // Do something when catch error
-              }
-              //that.showLoginModal();
-              that.setState({
-                islogin:true, //已登录
-                openfailed:true //点击开门
-              })
+                Taro.removeStorageSync('token');
+                that.checkUser();
+              
+             
 
             }
           }
@@ -138,6 +145,7 @@ class Qropen extends Component<{}, IState>{
     }).catch((error)=>{
         Taro.hideLoading();
         console.log('*********不存在token***********')
+        console.log('----checkUser----')
         that.checkUser();
     })
     
@@ -175,8 +183,8 @@ class Qropen extends Component<{}, IState>{
             duration: 500
           })
           that.setState({
-            islogin:false,
-            openfailed:false
+            islogin:false
+            
           })
          
           // that.gotoPapay();
@@ -220,7 +228,7 @@ class Qropen extends Component<{}, IState>{
           },
           header: {
             'content-type': 'application/json',
-            'token': globalData.token11
+            'token': globalData.token
           },
           method: 'GET',
           success: function (res) {
@@ -236,25 +244,16 @@ class Qropen extends Component<{}, IState>{
                 globalData.token = res.data.data;
                 globalData.haslogin = true;
                 that.getUserDetail();
-                that.setState({
-                  islogin:true, //已登录
-                  openfailed:true //点击开门
-                })
+               
               } else {
                 //that.showLoginModal();
-                that.setState({
-                  islogin:false, //未登录
-                  openfailed:false //隐藏
-                })
+                
                
               }
 
             } else {
               //that.showLoginModal();
-              that.setState({
-                islogin:true,
-                openfailed:true
-              })
+             
             }
 
           }
@@ -262,10 +261,7 @@ class Qropen extends Component<{}, IState>{
       },
       fail: function (e) {
         //that.showLoginModal();
-        that.setState({
-          islogin:true,
-          openfailed:true
-        })
+       
       }
     })
   }
@@ -289,27 +285,26 @@ class Qropen extends Component<{}, IState>{
         if (res.data.code == 200) {
           //已经注册过
           globalData.haslogin = true;
+          that.setState({
+            islogin:false
+          })
           //
           var isnopasspay = res.data.data.isnopasspay;
           var havearrears = res.data.data.havearrears;
           if (havearrears == "1") {
             that.getUnpayOrder();
-            that.setState({
-              // showlogin: false,
-              // showpapay: false,
-              // showopen: false,
-              pay:true
-            });
+            
           }
             if (isnopasspay == "1") {
               console.log('---已开通免密open---')
               that.setState({
+                islogin:false,
                 pay:false,
-                // showlogin: false,
-                // showpapay: false,
-                // showopen: true
+                open:true
+               
               });
             } else {
+              console.log('---未开通免密open---')
               that.setState({
                 pay:true
               });
@@ -386,6 +381,8 @@ class Qropen extends Component<{}, IState>{
       success: function (res) {
         if (res.data.code == 200) {
           that.setState({
+            unpay:true,
+            markBoolean:true,
             unpayorder: res.data.data
           });
           //that.unpayorderLayer('open');
@@ -593,7 +590,7 @@ class Qropen extends Component<{}, IState>{
       },
       fail: function (e) {
         that.setState({
-          openfailed: true
+          openfailed: false
         });
       }
     })
@@ -715,6 +712,122 @@ class Qropen extends Component<{}, IState>{
       }
     })
   }
+  payOrder(){
+    var orderid = Taro.getStorageSync("orderid");
+    //var orderid = this.data.unpayorder.orderid;
+    this.setState({
+      orderid: orderid
+    });
+    this.requestPay(orderid);
+
+  }
+    //发起支付
+    requestPay(orderid){
+      var that = this;
+      Taro.showLoading({
+        title: '',
+      })
+      Taro.request({
+        method: 'POST',
+        data: {
+          'orderid': orderid
+        },
+  
+        url: BASE_URL + 'pay/getPreGoodsOrder',
+        header: {
+          'Accept': 'application/json',
+          'content-type': 'application/x-www-form-urlencoded',
+          'token': globalData.token
+        },
+        success: function (res) {
+          Taro.hideLoading();
+          if (res.data.code == 200) {
+            Taro.requestPayment({
+              'timeStamp': res.data.data.timeStamp,
+              'nonceStr': res.data.data.nonceStr,
+              'package': res.data.data.package,
+              'signType': res.data.data.signType,
+              'paySign': res.data.data.paySign,
+              'success': function (res) {
+                console.log('success', res);
+                // wx.showModal({
+                //   title: '提示',
+                //   content: '支付成功',
+                //   showCancel: false,
+                //   success: function (res) {
+                //     if (res.confirm) {
+                //       that.queryPayStatus(orderid);
+                //     }
+                //   }
+                // });
+                that.queryPayStatus(orderid);
+              },
+              'fail': function (res) {
+                console.log('fail', res);
+                //edit at 0606
+                Taro.showModal({
+                  title: '提示',
+                  content: '支付失败，请重新支付',
+                  showCancel: false,
+                  success: function (res) {
+                    // if (res.confirm) {
+                    //   that.updatePayStatus(0, orderid);
+                    //   that.getUnpayOrder();
+                    // }
+                  }
+                })
+              }
+            })
+          } else {
+            Taro.showModal({
+              title: '提示',
+              content: res.data.msg,
+              showCancel: false
+            })
+          }
+  
+  
+        }
+      })
+    }
+    //支付接口
+    queryPayStatus(orderid) {
+      var that = this;
+      Taro.showLoading({
+        title: '等待支付结果...',
+      });
+      //查询订单状态
+      intervalOrderStatus = setInterval(function () {
+        Taro.request({
+          method: 'POST',
+          data: {
+            'orderid': orderid
+          },
+  
+          url: BASE_URL + 'order/paystatus',
+          header: {
+            'Accept': 'application/json',
+            'token': globalData.token
+          },
+          success: function (res) {
+            console.log(res.data.data);
+            if (res.data.data.orderstatus == 5) {
+              console.log('----payed---');
+              clearInterval(intervalOrderStatus)
+              Taro.hideLoading();
+              that.setState({
+                unpay:false,
+                markBoolean:false,
+              });
+              that.getUserDetail();
+            } else {
+  
+            }
+          }
+        })
+  
+      }, 2000); //循环时间2秒
+    }
   gotoPapay(){
     var that = this;
     that.setState({
@@ -769,48 +882,86 @@ class Qropen extends Component<{}, IState>{
   }
   render () {
     return (
+      <View>
+        {this.state.islogin?
         <View>
-          {this.state.islogin?
-          <View>
-            <Image className='loadImg' src={this.state.loadImg1}/>
-              <Form>
-                <Button type="default" open-type="getPhoneNumber" onGetPhoneNumber={this.getPhoneNumber.bind(this) className='Btn btnopen'> 去注册 </Button>
-              </Form>
-          </View>
-          :
-          ""
-          }
-          
-          {!this.state.openfailed?
-          <View>
-              <Image className='loadImg' src={this.state.loadImg}/>
-              <View className='openlock'>开锁中，听到开锁声便可取货购物</View>
-              {this.state.pay?
-               <Form >
-                  <Button type="default" onClick={this.gotoPapay} className='Btn btnopen'> 开启微信免密支付 </Button>
-               </Form>
-              :
-              <Form onSubmit={this.submitInfo} report-submit='true' >
-              <Button type="default" form-type="submit" className='Btn btnopen'> 点击开门 </Button>
-              </Form>
-              }
-              
-          
-          </View>
-          :
-          <View>
-            <Image className='loadImg' src={this.state.loadImg1}/>
-          <View className='fail'>开柜失败</View>
-          <Form onSubmit={this.submitInfo} report-submit='true' >
-          <Button type="default" form-type="submit" className='Btn btnopen'> 请重试 </Button>
+          <Image className='loadImg' src={this.state.loadImg1}/>
+          <View className='infoZm'>小主,还没有注册没办法购物哦!</View>
+          <Form>
+            <Button open-type="getPhoneNumber" onGetPhoneNumber={this.getPhoneNumber.bind(this)} className='Btn btnopen'>注册</Button>
           </Form>
-          <View className='bottominfo'>取出商品后请手动关门结算</View>
-          <Navigator className='navigator' url="/page/navigate/navigate?title=navigate" hover-class="navigator-hover" >反馈异常</Navigator>
-          </View>
-        
-          }
-
         </View>
+        :
+        ''
+        }
+        {this.state.pay?
+          <View>
+             <Image className='loadImg' src={this.state.loadImg}/>
+             <View className='infoZm'>扫码即可支付哦！</View>
+            <Form >
+            <Button type="default" onClick={this.gotoPapay} className='Btn btnopen'> 开启微信免密支付 </Button>
+            </Form>
+          </View>
+          :
+          ''
+        }
+        {this.state.open?
+         <View>
+           <Image className='loadImg' src={this.state.loadImg2}/>
+           <View className='infoZm11'>Waaaaaaaaa!</View>
+           <View className='infoZm22'>热门商品等着您</View>
+           <Form onSubmit={this.submitInfo} report-submit='true' >
+             <Button type="default" form-type="submit" className='Btn btnopen opens'> 点击开门 </Button>
+           </Form>
+         </View>
+         :
+         ''
+        }
+
+          {/* 遮罩层 */}
+          {this.state.markBoolean ?
+          <View className='mark'></View>
+          :
+          <View></View>}
+
+         {/*未付订单*/}
+         {this.state.unpay ?
+          <View className='unpayOrder'>
+
+            <CoverImage src={this.state.unpayImg} />
+            <CoverImage className='unprice' src={this.state.unpriceImg} />
+            <CoverView className='textOne'>本次</CoverView>
+            <CoverView className='textTwo'>应付款(元)</CoverView>
+            <CoverView className='textPrice'>{(this.state.unpayorder.payfee/100).toFixed(2)}</CoverView>
+            <CoverView className='textshi'>Wa!  这里有未付订单！</CoverView>
+            <CoverView className='unpayList'>
+              <CoverView className='orderList'>
+                <CoverView className='orderInfo'>
+                  <CoverView className='goodstate'>未付知码订单</CoverView>
+                  <CoverView className='time'>{this.state.unpayorder.createtime}</CoverView>
+                </CoverView>
+                <CoverImage className='goodsImg' src={this.state.unpayorder.goods[0].picurl} />
+                <CoverView className='goodsInfos'>
+                  <CoverView>
+                    {/* <CoverImage className='del' src={this.state.del} /> */}
+                    <CoverView className='total'>共{this.state.unpayorder.goodsnum}件商品</CoverView>
+                  </CoverView>
+                  <CoverView className='goodsInfoDetail'>
+                    [{this.state.unpayorder.goods[0].goodsname}x{this.state.unpayorder.goodsnum}瓶] {this.state.unpayorder.goods[0].location}
+                   </CoverView>
+                </CoverView>
+              </CoverView>
+              <Button className='BtnOne' type='default' onClick={this.payOrder}>支付</Button>
+            </CoverView>
+
+          </View>
+          :
+          <View></View>}
+
+
+
+        
+      </View>
     )
   }
 }

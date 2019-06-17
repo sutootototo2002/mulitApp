@@ -6,8 +6,9 @@
                 <image class="imgDiv" src="{{item.url ? item.url : ''}}" wx:for="{{machine.pics}}" wx:for-item="item" wx:for-index="index"></image>
             </view>
             <view class="addr">地址：
-                <image class="addr1" src="{{addr}}"></image>{{machine.location}}-{{machine.dailaddress}}| 距您555km</view>
-            <image class="addr2" bindtouchstart="viewlocation" src="{{addr}}"></image>
+                <image class="addr1" src="{{addr}}"></image>{{machine.location}}-{{machine.dailaddress}}| 距您555km
+                <image class="addr2" bindtouchstart="viewlocation" src="{{addr}}"></image>
+            </view>
         </view>
         <view>
             <view class="goodsName">当前商品</view>
