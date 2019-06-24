@@ -18,7 +18,7 @@
                                             </block>
                                             <block wx:else>
                                                 <view class="addr">
-                                                    <image class="addimg" src="{{addrimg}}"></image>知码开门售货柜</view>
+                                                    <image class="addimg" src="{{addrimg}}"></image>{{globalData.sysTitle}}</view>
                                             </block>
                                         </block>
                                         <view class="ctime">{{item.createtime}}</view>
@@ -104,7 +104,7 @@
                                             </block>
                                             <block wx:else>
                                                 <view class="addr">
-                                                    <image class="addimg" src="{{addrimg}}"></image>知码开门售货柜</view>
+                                                    <image class="addimg" src="{{addrimg}}"></image>{{globalData.sysTitle}}</view>
                                             </block>
                                         </block>
                                         <view class="ctime">{{item.createtime}}</view>
@@ -190,7 +190,7 @@
                                             </block>
                                             <block wx:else>
                                                 <view class="addr">
-                                                    <image class="addimg" src="{{addrimg}}"></image>知码开门售货柜</view>
+                                                    <image class="addimg" src="{{addrimg}}"></image>{{globalData.sysTitle}}</view>
                                             </block>
                                         </block>
                                         <view class="ctime">{{item.createtime}}</view>

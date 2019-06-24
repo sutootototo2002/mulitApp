@@ -24,6 +24,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var order = require("../../../utils/order.js");
 var Orderdetail = (_temp2 = _class = function (_BaseComponent) {
   _inherits(Orderdetail, _BaseComponent);
 
@@ -104,7 +105,14 @@ var Orderdetail = (_temp2 = _class = function (_BaseComponent) {
     value: function componentDidShow() {}
   }, {
     key: "componentDidHide",
-    value: function componentDidHide() {}
+    value: function componentDidHide() {
+      //order.stopInterval();
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      order.stopInterval();
+    }
   }, {
     key: "componentDidCatchError",
     value: function componentDidCatchError() {}
@@ -112,9 +120,9 @@ var Orderdetail = (_temp2 = _class = function (_BaseComponent) {
     key: "getDetail",
     value: function getDetail() {
       var routerinfo = _index2.default.getStorageSync('routerinfo');
-      _index2.default.showLoading({
-        title: ''
-      });
+      // Taro.showLoading({
+      //   title: '',
+      // });
       var that = this;
       _index2.default.request({
         url: _index3.BASE_URL + 'order/detail',
@@ -214,9 +222,14 @@ var Orderdetail = (_temp2 = _class = function (_BaseComponent) {
     key: "gotoBack",
     value: function gotoBack() {
       //回到首页
-      _index2.default.navigateTo({
-        url: '/pages/index/index'
-      });
+      console.log(this.state.whereis + "---" + 111);
+      if (this.state.whereis == 'weight' || this.state.whereis == 'cgshop' || this.state.whereis == 'all') {
+        _index2.default.navigateTo({
+          url: '/pages/index/index'
+        });
+      } else {
+        _index2.default.navigateBack({});
+      }
     }
   }, {
     key: "ontoAnswer",

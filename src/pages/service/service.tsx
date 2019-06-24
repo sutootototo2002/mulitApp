@@ -77,8 +77,9 @@ class Login extends Component<{}, IState>{
 
   }
   gohome(){
-    Taro.redirectTo({
-      url: '/pages/index/index'
+    // 
+    Taro.navigateBack({
+
     })
   }
   render () {
@@ -115,7 +116,8 @@ class Login extends Component<{}, IState>{
                    </View> */}
                </View>
                <Button type='default' open-type="contact" className='loginBtn Btn'>提交</Button>
-               <Button type='default' className='Btn' style='bottom:60px;' onClick={this.gohome}>返回</Button>
+               <View></View>
+               <Button type='default' className='Btn' style='bottom:10%;' onClick={this.gohome}>返回</Button>
                               
            </View> 
         </View>

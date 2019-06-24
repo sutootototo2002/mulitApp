@@ -113,6 +113,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
     key: 'componentWillUpdate',
     value: function componentWillUpdate() {
       console.log('componentWillUpdate');
+      console.log('---------sususu----------');
     }
   }, {
     key: 'componentDidHide',
@@ -128,11 +129,12 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
     key: 'getOrders',
     value: function getOrders() {
       var that = this;
-      var page = curPage + 1;
+      var page = 0;
+      page = 1;
       // this.setState({
       //   curPage: page
       // })
-      curPage = page;
+      //curPage = page;
       _index2.default.showLoading({
         title: ''
       });
@@ -174,22 +176,22 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         },
         success: function success(res) {
           //var fee = res.data.data.fee;
-          console.log("查看用户信息：");
+          console.log("查看用户信息：1111");
           console.log(res);
           var avatar = true;
           if (res.data.data.avatar !== null) {
-            avatar = false;
+            _index3.globalData.fee = res.data.data.fee;
+            _index3.globalData.nickName = res.data.data.nickname;
+            that.setState({
+              userInfoList: res.data.data,
+              isuserInfo: false
+            });
+          } else {
+            that.setState({
+              userInfoList: res.data.data,
+              isuserInfo: true
+            });
           }
-          _index3.globalData.fee = res.data.data.fee;
-          that.setState({
-            userInfoList: res.data.data,
-            isuserInfo: avatar
-            // money: fee,
-            // avatarUrl: res.data.data.avatar == null ? '../../../images/default.png' : res.data.data.avatar,
-            // nickName: res.data.data.nickname == null ? '' : res.data.data.nickname,
-            // mobile: res.data.data.mobile == null ? '' : res.data.data.mobile,
-            // isnopasspay: res.data.data.isnopasspay == 0 ? false : true
-          });
         }
       });
     }
@@ -283,8 +285,10 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
       var temp = this.state.userInfoList;
       temp.avatar = res.detail.userInfo.avatarUrl;
       _index3.globalData.avatar = temp.avatar;
-      temp.nickName = res.detail.userInfo.nickName;
+      temp.nickName = res.detail.userInfo.nickname || res.detail.userInfo.nickName;
       _index3.globalData.nickName = temp.nickName;
+      console.log("globalData.nickName");
+      console.log(_index3.globalData.nickName);
       this.setState({
         userInfoList: temp
       });
@@ -326,8 +330,8 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
       });
     }
   }, {
-    key: 'toHome',
-    value: function toHome() {
+    key: 'gohome',
+    value: function gohome() {
       _index2.default.navigateTo({
         url: '/pages/index/index'
       });
@@ -421,19 +425,39 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         }
         if (res.data.code == 201) {
           console.log('您有未结订单');
-          that.toHome();
+          _index2.default.showToast({
+            title: '您有未结订单',
+            icon: 'fail',
+            duration: 2000
+          });
+          that.gohome();
         }
         if (res.data.code == 202) {
           console.log('您已被加入黑名单');
-          that.toHome();
+          _index2.default.showToast({
+            title: '您的帐号异常！',
+            icon: 'fail',
+            duration: 2000
+          });
+          that.gohome();
         }
         if (res.data.code == 205) {
           console.log('用户未登录');
-          that.toHome();
+          _index2.default.showToast({
+            title: '用户未登录',
+            icon: 'fail',
+            duration: 2000
+          });
+          that.gohome();
         }
         if (res.data.code == 206) {
           console.log('请开通免密');
-          that.toHome();
+          _index2.default.showToast({
+            title: '请开通免密',
+            icon: 'fail',
+            duration: 2000
+          });
+          that.gohome();
           // that.setState({
           //   singinBoolean:true,
           //   setp2:true,
@@ -465,7 +489,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
   }]);
 
   return Index;
-}(_index.Component), _class.properties = {}, _class.$$events = ["userInfoHandler", "goRecharge", "goheart", "gobingcart", "toOrders", "toOrders1", "toOrders2", "toOrders3", "onScreen", "toHome", "toSever"], _temp2);
+}(_index.Component), _class.properties = {}, _class.$$events = ["userInfoHandler", "goRecharge", "goheart", "gobingcart", "toOrders", "toOrders1", "toOrders2", "toOrders3", "onScreen", "gohome", "toSever"], _temp2);
 exports.default = Index;
 
 Component(require('../../npm/@tarojs/taro-weapp/index.js').default.createComponent(Index, true));

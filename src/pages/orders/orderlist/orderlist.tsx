@@ -117,11 +117,7 @@ class Orderlist extends Component<{}, IState>{
   getOrdersup() {
     var that = this;
     var page = curPage + 1;
-    // this.setState({
-    //   curPage: page
-    // })
-    curPage = page;
-
+   
     Taro.showLoading({
       title: '',
     })
@@ -381,7 +377,7 @@ touchStart(e) {
                      {item.location?
                       <View className='addr'><Image className='addimg' src={this.state.addrimg?this.state.addrimg:''}/>{item.location} {item.dailaddress}</View>
                       :
-                      <View className='addr'><Image className='addimg' src={this.state.addrimg}/>知码开门售货柜</View>
+                      <View className='addr'><Image className='addimg' src={this.state.addrimg}/>{globalData.sysTitle}</View>
                      }
                     
                      <View className='ctime'>{item.createtime}</View>

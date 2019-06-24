@@ -40,17 +40,14 @@ $color-red:#d80a17;
 
 
 .yhdBox{
-    position: absolute;
+    
     width:90%;
     height:260px;
-    left:50%;
-    margin-left:-45%;
     padding:10px 0;
     background:$color-white;
     border-radius: 20px;
-    top:50%;
-    margin-top:-386px;
     padding:40px 0 0 0;
+    margin:auto;
 }
 
 .xhdTitle{
@@ -76,16 +73,14 @@ $color-red:#d80a17;
 }
 
 .otherBox{
-    position: absolute;
     width:90%;
     height:600px;
-    margin-left:-45%;
-    left:50%;
-    top:525px;
     border-radius: 20px;
     background:$color-white;
     overflow-y:scroll;
     padding:20px 0 0 0;
+    margin:auto;
+    margin-top:10px;
 }
 
 .xhdvator_{
@@ -256,13 +251,23 @@ $color-red:#d80a17;
     float:right;
     font-size:20px;
     position: absolute;
-    bottom:5px;
-    right:10px;
+    bottom:0;
+    right:0;
+    
     
 }
 
+.addgoods1{
+  float:right;
+  font-size:20px;
+  position: absolute;
+  bottom:0;
+  right:110px;
+  
+  
+}
+
 .yhdBox1{
-    
     position:absolute;
     width:90%;
     margin-left:-45%;
@@ -275,7 +280,6 @@ $color-red:#d80a17;
     top:50%;
     margin-top:-400px;
     box-shadow:0px 0px 1px #ccc;
-   
 }
 
 .HearDiv{
@@ -468,4 +472,10 @@ $color-red:#d80a17;
     position: absolute;
     right:-10px;
     top:-10px;
+  }
+  .BoxDiv{
+    overflow:hidden;
+    margin-top:-60px;
+    position: relative;
+
   }

@@ -6,6 +6,7 @@ var intervalRefresh;
 var intervalOrder;
 var intervalOrderStatus;
 var timer = 0;
+var timerList = [];
 var count = 0; 
 
 import Taro, { Component, Config, MapContext } from '@tarojs/taro'
@@ -15,7 +16,7 @@ import { Map, CoverView,Canvas,View,Image,CoverImage,Button,Text } from '@tarojs
 import {BASE_URL,globalData,PATH,HOST_WEBSOCKET,HOST_URL,systemUser} from '../../../config/index.js'; 
 
 //import {} from '../../../utils/util.js';
-import {orderstatus,stopInterval,closeSocket,requestorderstatus} from '../../../utils/order.js';
+var order = require("../../../utils/order.js");
 
 import './index.scss'
 import { number } from 'prop-types';
@@ -58,7 +59,7 @@ class Index extends Component<{}, IState>{
    * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
    */
   config = {
-    navigationBarTitleText:'知码开门购物柜(视频、标签柜)'
+    navigationBarTitleText:globalData.sysTitle
   }
   constructor (props: {} | undefined) {
     super(props)
@@ -119,24 +120,25 @@ class Index extends Component<{}, IState>{
  console.log("*******orderid*******" + routerinfo.orderid);
  var orderid_ = routerinfo.orderid;
 
-
-
-        timer = setInterval(()=>{
-        
-         requestorderstatus(orderid, function succeeded(res) {
+         order.startqueryorderstatus(orderid, function succeeded(res) {
             console.log('-----orderstatus-----');
             console.log(res);
+            var orderstatus = res.data.data.orderstatus;
+            var doorstatus = res.data.data.doorstatus;
             if (res.data.code == 200) {
-              var orderstatus = res.data.data.orderstatus;
-              var doorstatus = res.data.data.doorstatus;
-              if (doorstatus == 4) { //已关柜
-                if (orderstatus == 5 || orderstatus == 3 || orderstatus == 8 || orderstatus == 9) { //5已付款 3已取消 8已完成 9 错误
-                  clearInterval(timer)
-                  Taro.redirectTo({
-                    url: '/pages/orders/orderdetail/orderdetail?orderid=' + orderid + '&whereis=cgshop'
-                  })
-                } else if (orderstatus == 6) { //6已欠费
-                  clearInterval(timer)
+              
+                if (orderstatus == "5" || orderstatus == "3" || orderstatus == "7" || orderstatus == "8" || orderstatus == "9") { //5已付款 3已取消 8已完成 9 错误
+                  console.log('---走这里---')
+                  
+                  order.stopInterval();
+                    setTimeout(() => {
+                      Taro.redirectTo({
+                        url: '/pages/orders/orderdetail/orderdetail?orderid=' + orderid + '&whereis=cgshop'
+                      })
+                    },2000)
+                 
+                } else if (orderstatus == "6") { //6已欠费
+                  order.stopInterval();
                   //拉起支付
                   that.requestPay(routerinfo.orderid);
                 } else {
@@ -145,23 +147,11 @@ class Index extends Component<{}, IState>{
                     cartTips2: '稍后给您推送结算账单'
                   });
                 }
-              } else {
-
-              }
-            } else {
-              var doorstatus = res.data.data.doorstatus;
-              if (doorstatus == 3 || doorstatus == 4) {
-                //clearInterval(timer)
-                that.setState({
-                  cartTips1: '柜门已关闭，订单正在结算中',
-                  cartTips2: '稍后给您推送结算账单'
-                });
-              }
-            }
+              
+            } 
           });
            
-      },1000)
-
+    
     
 
 
@@ -171,15 +161,21 @@ class Index extends Component<{}, IState>{
   componentDidShow () {}
 
   componentDidHide () {
-    clearInterval(timer)
+    order.stopInterval();
   }
+  componentWillUnmount() {
+    
+    order.stopInterval();
+
+  }
+
 
   componentDidCatchError () {}
 
   // 在 App 类中的 render() 函数没有实际作用
   //获取促销商品
   tapRefresh() {
-    stopInterval();
+    order.stopInterval();
     Taro.redirectTo({
       url: '/pages/index/index',
     })
@@ -246,6 +242,13 @@ class Index extends Component<{}, IState>{
       }
     })
   }
+    //转到客服
+    goKefu(){
+      console.log('微信客服')
+      Taro.navigateTo({
+        url: '/pages/service/service'
+      })
+    }
   //获取机柜货台布局
   getShelfs() {
     var that = this;
@@ -305,7 +308,7 @@ class Index extends Component<{}, IState>{
                 success: function (res) {
                   if (res.confirm) {
                     Taro.redirectTo({
-                      url: '/pages/orders/orderdetail/orderdetail?orderid=' + routerinfo.orderid + '&whereis=weight'
+                      url: '/pages/orders/orderdetail/orderdetail?orderid=' + routerinfo.orderid + '&whereis=cgshop'
                     })
                   }
                 }
@@ -324,7 +327,7 @@ class Index extends Component<{}, IState>{
                 success: function (res) {
                   if (res.confirm) {
                     Taro.redirectTo({
-                      url: '/pages/orders/orderdetail/orderdetail?orderid=' +routerinfo.orderid + '&whereis=weight'
+                      url: '/pages/orders/orderdetail/orderdetail?orderid=' +routerinfo.orderid + '&whereis=cgshop'
                     })
                   }
                 }
@@ -336,7 +339,7 @@ class Index extends Component<{}, IState>{
            
             Taro.hideLoading();
             Taro.redirectTo({
-              url: '/pages/orders/orderdetail/orderdetail?orderid=' + routerinfo.orderid + '&whereis=weight'
+              url: '/pages/orders/orderdetail/orderdetail?orderid=' + routerinfo.orderid + '&whereis=cgshop'
             })
           }else{
             
@@ -389,7 +392,7 @@ class Index extends Component<{}, IState>{
           },
           success: function(res) {
             console.log(res.data.data);
-            if (res.data.data.orderstatus == 5 || res.data.data.orderstatus == 8|| res.data.data.orderstatus == 9) {
+            if (res.data.data.orderstatus == "5" ||res.data.data.orderstatus == "3" || res.data.data.orderstatus == "8"|| res.data.data.orderstatus == "9") {
               console.log('----payed---');
               clearInterval(intervalOrderStatus)
               clearInterval(intervalRefresh);
@@ -452,6 +455,12 @@ class Index extends Component<{}, IState>{
         }
       })
     }
+    gotoBack() {
+      //回到首页
+      Taro.navigateTo({
+        url: '/pages/index/index'
+      })
+    }
   render () {
     const { cartgoods } = this.state;
     const goodsitem =  cartgoods.map((item) => {
@@ -490,13 +499,16 @@ class Index extends Component<{}, IState>{
                 <Image className='addricon' src={this.state.icon1}/>
                 <View className='addr1'>{this.state.machine.machinename}</View>
                 <View className='addr2'>{this.state.machine.location}{this.state.machine.dailaddress}</View>
-                <Button className='toSever1'>联系客服</Button>
+                <Button className='toSever1' onClick={this.goKefu}>联系客服</Button>
           </View>
           {this.state.promotions>0?
           <View className='promotionInfo'>本次购物会在结算时享受优惠活动，请关门后查看</View>
           :
           <View></View>
           }
+          <View>
+          <Button type="default" className='btn' onClick={this.gotoBack}> 收起 </Button>
+          </View>
           
           <View className='seDiv' hidden={true}>
              <View className='selectDiv'>

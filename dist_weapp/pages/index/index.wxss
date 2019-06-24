@@ -29,7 +29,6 @@
   color: #000;
   float: right;
   height: 78rpx;
-  width: 200rpx;
   position: absolute;
   right: 10rpx;
   top: 0;
@@ -763,7 +762,8 @@
   border-radius: 999rpx;
   background: #ff7700;
   right: 35rpx;
-  bottom: 645rpx;
+  top: 50%;
+  margin-top: -60rpx;
   text-align: center;
   color: #fff;
   font-size: 18rpx;

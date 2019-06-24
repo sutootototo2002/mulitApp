@@ -56,6 +56,7 @@ export const globalData={
   needrefresh:false,
   requestcount:0,
   timerTem:0,
+  sysTitle:'知码开门售货柜',
   intervalPapayTemp:null
 }
 

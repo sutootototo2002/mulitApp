@@ -48,8 +48,8 @@ var Open = (_temp2 = _class = function (_BaseComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Open.__proto__ || Object.getPrototypeOf(Open)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["formid", "lockid", "machineid", "orderid", "openfailed", "requestfailed", "num", "tag", "isfind", "dw", "loadImg"], _this.config = {
-      navigationBarTitleText: '会员注册'
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Open.__proto__ || Object.getPrototypeOf(Open)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["formid", "lockid", "machineid", "orderid", "openfailed", "requestfailed", "num", "tag", "infine", "isfind", "dw", "loadImg"], _this.config = {
+      navigationBarTitleText: ''
     }, _this.$$refs = [], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
@@ -74,6 +74,7 @@ var Open = (_temp2 = _class = function (_BaseComponent) {
         requestfailed: true,
         num: 0,
         tag: 0,
+        infine: '设备故障',
         isfind: false,
         dw: _index3.PATH + '/mImages/dw.png',
         loadImg: _index3.PATH + '/mImages/open.png'
@@ -210,7 +211,7 @@ var Open = (_temp2 = _class = function (_BaseComponent) {
         //循环执行代码 
         if (requestfailed) {
           console.log('---循环执行代码 ---');
-          that.openStatus();
+          //that.openStatus();
         } else {
           console.log('---停止循环执行代码 ---');
           that.setState({
@@ -256,12 +257,18 @@ var Open = (_temp2 = _class = function (_BaseComponent) {
             //   key: "orderid",
             //   data: that.data.orderid
             // });
-            _index2.default.reLaunch({
-              url: '../../index/index'
-            });
+            // Taro.reLaunch({
+            //   url: '../../index/index'
+            // })
           } else if (res.data.code == 211) {
             that.setState({
-              isfind: true
+              isfind: true,
+              infine: res.data.msg
+            });
+            _index2.default.showToast({
+              title: res.data.msg,
+              icon: 'fail',
+              duration: 2000
             });
             requestfailed = false;
             // Taro.showModal({
@@ -279,7 +286,16 @@ var Open = (_temp2 = _class = function (_BaseComponent) {
             that.setState({
               requestfailed: true
             });
+            _index2.default.showToast({
+              title: res.data.msg,
+              icon: 'fail',
+              duration: 2000
+            });
             requestfailed = false;
+            that.setState({
+              isfind: true,
+              infine: res.data.msg
+            });
           }
         },
         fail: function fail(e) {
@@ -311,14 +327,24 @@ var Open = (_temp2 = _class = function (_BaseComponent) {
             requestfailed = false;
             var orderstatus = res.data.data.orderstatus;
             var doorstatus = res.data.data.doorstatus;
+            if (orderstatus == "5" || orderstatus == "3" || orderstatus == "7" || orderstatus == "8" || orderstatus == "9") {
+              //5已付款 3已取消 8已完成 9 错误
+              _index2.default.redirectTo({
+                url: '/pages/orders/orderdetail/orderdetail?orderid=' + orderid + '&whereis=all'
+              });
+            } else {
+              _index2.default.redirectTo({
+                url: '../../index/index'
+              });
+            }
             //Taro.setStorageSync("orderid", that.state.orderid);
             // wx.setStorage({
             //   key: "orderid",
             //   data: orderid
             // });
-            _index2.default.redirectTo({
-              url: '../../index/index'
-            });
+            // Taro.redirectTo({
+            //   url: '../../index/index'
+            // })
           } else {
             that.setState({
               openfailed: true

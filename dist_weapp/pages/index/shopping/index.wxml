@@ -42,6 +42,9 @@
                 </view>
             </view>
         </view>
+        <view>
+            <button type="default" class="btn" bindtap="gotoBack">收起</button>
+        </view>
         <view class="orderdetail" hidden="{{true}}">
             <view class="selectDiv">
                 <view class="seltitle">订单信息</view>

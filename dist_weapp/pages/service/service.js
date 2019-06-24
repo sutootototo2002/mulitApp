@@ -100,9 +100,8 @@ var Login = (_temp2 = _class = function (_BaseComponent) {
   }, {
     key: "gohome",
     value: function gohome() {
-      _index2.default.redirectTo({
-        url: '/pages/index/index'
-      });
+      // 
+      _index2.default.navigateBack({});
     }
   }, {
     key: "_createData",

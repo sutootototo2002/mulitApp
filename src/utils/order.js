@@ -2,6 +2,8 @@
 //var count=0;
 // import { BASE_URL, globalData} from '../config/index.js';
 
+var ArrayList = [];
+
 import { BASE_URL,globalData} from '../config/index.js';
 
 // eslint-disable-next-line import/first
@@ -12,12 +14,15 @@ module.exports = {
   orderstatus: orderstatus,
   shoppingorder: shoppingorder,
   stopInterval: stopInterval,
+  startqueryorderstatus:startqueryorderstatus,
   requestorderstatus:requestorderstatus
 }
 //停止销毁轮询
 function stopInterval(){
-  console.log("stopInterval:")
-  clearInterval(globalData.timerTem);
+  
+  ArrayList.forEach((item,index)=>{ clearInterval(item) });
+  ArrayList = [];
+  globalData.timerTem = 0; 
 
 }
 
@@ -27,7 +32,7 @@ function stopInterval(){
  
 function orderstatus(orderid, succeeded) {
 
-  startqueryorderstatus(orderid,succeeded);
+     startqueryorderstatus(orderid,succeeded);
 
 }
 
@@ -42,6 +47,12 @@ function startqueryorderstatus(orderid,succeeded) {
       console.log(new Date() + '_' + globalData.requestcount);
 
   }, 2000)
+
+  ArrayList.push(globalData.timerTem)
+
+
+
+
   console.log("globalData.timerTem00000000000000000000000")
   console.log(globalData.timerTem)
 
@@ -60,6 +71,7 @@ function shoppingorder(succeeded) {
       'content-type': 'application/json', // 默认值
       'token': globalData.token
     },
+    timeout:1000,
     success: function(res) {
       if (res.data.code == 200) {
         var result = res.data.data;
@@ -82,6 +94,7 @@ function requestorderstatus(orderid, succeeded) {
       orderid: orderid,
       times: globalData.requestcount
     },
+    timeout:1000,
     header: {
       'content-type': 'application/json', // 默认值
       'token': globalData.token

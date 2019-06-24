@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -10,13 +10,11 @@ var _get = function get(object, property, receiver) { if (object === null) objec
 
 var _class, _temp2;
 
-var _index = require('../../../npm/@tarojs/taro-weapp/index.js');
+var _index = require("../../../npm/@tarojs/taro-weapp/index.js");
 
 var _index2 = _interopRequireDefault(_index);
 
-var _index3 = require('../../../config/index.js');
-
-var _order = require('../../../utils/order.js');
+var _index3 = require("../../../config/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -33,9 +31,11 @@ var intervalRefresh;
 var intervalOrder;
 var intervalOrderStatus;
 var timer = 0;
+var timerList = [];
 var count = 0;
-//import {} from '../../../utils/util.js';
 
+//import {} from '../../../utils/util.js';
+var order = require("../../../utils/order.js");
 
 // 如果需要在 h5 环境中开启 React Devtools
 // 取消以下注释：
@@ -57,14 +57,14 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
     }
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Index.__proto__ || Object.getPrototypeOf(Index)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["cartgoods", "systemUser", "formid", "lockid", "machineid", "machine", "shelfs", "orderno", "orderid", "openfailed", "state1", "icon1", "socketMsgQueue", "socketOpen", "totalfee", "promotions", "cartTips1", "cartTips2", "needRequestOrder", "isRefreshingOrder"], _this.config = {
-      navigationBarTitleText: '知码开门购物柜(视频、标签柜)'
+      navigationBarTitleText: _index3.globalData.sysTitle
     }, _this.$$refs = [], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(Index, [{
-    key: '_constructor',
+    key: "_constructor",
     value: function _constructor(props) {
-      _get(Index.prototype.__proto__ || Object.getPrototypeOf(Index.prototype), '_constructor', this).call(this, props);
+      _get(Index.prototype.__proto__ || Object.getPrototypeOf(Index.prototype), "_constructor", this).call(this, props);
       /**
        * 指定config的类型声明为: Taro.Config
        *
@@ -96,7 +96,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
       };
     }
   }, {
-    key: 'componentWillMount',
+    key: "componentWillMount",
     value: function componentWillMount() {
       console.log('视频柜数据');
       console.log(this.$router.params);
@@ -127,73 +127,67 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
       }
       console.log("*******orderid*******" + routerinfo.orderid);
       var orderid_ = routerinfo.orderid;
-      timer = setInterval(function () {
-        (0, _order.requestorderstatus)(orderid, function succeeded(res) {
-          console.log('-----orderstatus-----');
-          console.log(res);
-          if (res.data.code == 200) {
-            var orderstatus = res.data.data.orderstatus;
-            var doorstatus = res.data.data.doorstatus;
-            if (doorstatus == 4) {
-              //已关柜
-              if (orderstatus == 5 || orderstatus == 3 || orderstatus == 8 || orderstatus == 9) {
-                //5已付款 3已取消 8已完成 9 错误
-                clearInterval(timer);
-                _index2.default.redirectTo({
-                  url: '/pages/orders/orderdetail/orderdetail?orderid=' + orderid + '&whereis=cgshop'
-                });
-              } else if (orderstatus == 6) {
-                //6已欠费
-                clearInterval(timer);
-                //拉起支付
-                that.requestPay(routerinfo.orderid);
-              } else {
-                that.setState({
-                  cartTips1: '柜门已关闭，订单正在结算中',
-                  cartTips2: '稍后给您推送结算账单'
-                });
-              }
-            }
-          } else {
-            var doorstatus = res.data.data.doorstatus;
-            if (doorstatus == 3 || doorstatus == 4) {
-              //clearInterval(timer)
-              that.setState({
-                cartTips1: '柜门已关闭，订单正在结算中',
-                cartTips2: '稍后给您推送结算账单'
+      order.startqueryorderstatus(orderid, function succeeded(res) {
+        console.log('-----orderstatus-----');
+        console.log(res);
+        var orderstatus = res.data.data.orderstatus;
+        var doorstatus = res.data.data.doorstatus;
+        if (res.data.code == 200) {
+          if (orderstatus == "5" || orderstatus == "3" || orderstatus == "7" || orderstatus == "8" || orderstatus == "9") {
+            //5已付款 3已取消 8已完成 9 错误
+            console.log('---走这里---');
+            order.stopInterval();
+            setTimeout(function () {
+              _index2.default.redirectTo({
+                url: '/pages/orders/orderdetail/orderdetail?orderid=' + orderid + '&whereis=cgshop'
               });
-            }
+            }, 2000);
+          } else if (orderstatus == "6") {
+            //6已欠费
+            order.stopInterval();
+            //拉起支付
+            that.requestPay(routerinfo.orderid);
+          } else {
+            that.setState({
+              cartTips1: '柜门已关闭，订单正在结算中',
+              cartTips2: '稍后给您推送结算账单'
+            });
           }
-        });
-      }, 1000);
+        }
+      });
     }
   }, {
-    key: 'componentDidMount',
+    key: "componentDidMount",
     value: function componentDidMount() {}
   }, {
-    key: 'componentDidShow',
+    key: "componentDidShow",
     value: function componentDidShow() {}
   }, {
-    key: 'componentDidHide',
+    key: "componentDidHide",
     value: function componentDidHide() {
-      clearInterval(timer);
+      order.stopInterval();
     }
   }, {
-    key: 'componentDidCatchError',
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      order.stopInterval();
+    }
+  }, {
+    key: "componentDidCatchError",
     value: function componentDidCatchError() {}
     // 在 App 类中的 render() 函数没有实际作用
     //获取促销商品
 
   }, {
-    key: 'tapRefresh',
+    key: "tapRefresh",
     value: function tapRefresh() {
-      (0, _order.stopInterval)();
+      order.stopInterval();
       _index2.default.redirectTo({
         url: '/pages/index/index'
       });
     }
   }, {
-    key: 'getPromotions',
+    key: "getPromotions",
     value: function getPromotions(machineid) {
       //console.log('aaa')
       var that = this;
@@ -235,7 +229,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
     // 请勿修改此函数
 
   }, {
-    key: 'getMachineDetail',
+    key: "getMachineDetail",
     value: function getMachineDetail() {
       var routerinfo = _index2.default.getStorageSync('routerinfo');
       var that = this;
@@ -257,10 +251,20 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         }
       });
     }
+    //转到客服
+
+  }, {
+    key: "goKefu",
+    value: function goKefu() {
+      console.log('微信客服');
+      _index2.default.navigateTo({
+        url: '/pages/service/service'
+      });
+    }
     //获取机柜货台布局
 
   }, {
-    key: 'getShelfs',
+    key: "getShelfs",
     value: function getShelfs() {
       var that = this;
       var routerinfo = _index2.default.getStorageSync('routerinfo');
@@ -285,7 +289,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
     //
 
   }, {
-    key: 'requestPay',
+    key: "requestPay",
     value: function requestPay(orderid) {
       var routerinfo = _index2.default.getStorageSync('routerinfo');
       var that = this;
@@ -321,7 +325,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
                   success: function success(res) {
                     if (res.confirm) {
                       _index2.default.redirectTo({
-                        url: '/pages/orders/orderdetail/orderdetail?orderid=' + routerinfo.orderid + '&whereis=weight'
+                        url: '/pages/orders/orderdetail/orderdetail?orderid=' + routerinfo.orderid + '&whereis=cgshop'
                       });
                     }
                   }
@@ -338,7 +342,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
                   success: function success(res) {
                     if (res.confirm) {
                       _index2.default.redirectTo({
-                        url: '/pages/orders/orderdetail/orderdetail?orderid=' + routerinfo.orderid + '&whereis=weight'
+                        url: '/pages/orders/orderdetail/orderdetail?orderid=' + routerinfo.orderid + '&whereis=cgshop'
                       });
                     }
                   }
@@ -349,7 +353,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
             if (res.data.msg = '该订单已支付') {
               _index2.default.hideLoading();
               _index2.default.redirectTo({
-                url: '/pages/orders/orderdetail/orderdetail?orderid=' + routerinfo.orderid + '&whereis=weight'
+                url: '/pages/orders/orderdetail/orderdetail?orderid=' + routerinfo.orderid + '&whereis=cgshop'
               });
             } else {
               _index2.default.hideLoading();
@@ -366,7 +370,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
     //获取购物筐
 
   }, {
-    key: 'open',
+    key: "open",
     value: function open() {
       //取消
       _index2.default.navigateTo({
@@ -374,7 +378,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
       });
     }
   }, {
-    key: 'phonecall',
+    key: "phonecall",
     value: function phonecall() {
       _index2.default.makePhoneCall({
         phoneNumber: '400889959'
@@ -383,7 +387,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
     // 轮询订单支付状态
 
   }, {
-    key: 'queryPayStatus',
+    key: "queryPayStatus",
     value: function queryPayStatus(orderid) {
       var routerinfo = _index2.default.getStorageSync('routerinfo');
       var that = this;
@@ -404,7 +408,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
           },
           success: function success(res) {
             console.log(res.data.data);
-            if (res.data.data.orderstatus == 5 || res.data.data.orderstatus == 8 || res.data.data.orderstatus == 9) {
+            if (res.data.data.orderstatus == "5" || res.data.data.orderstatus == "3" || res.data.data.orderstatus == "8" || res.data.data.orderstatus == "9") {
               console.log('----payed---');
               clearInterval(intervalOrderStatus);
               clearInterval(intervalRefresh);
@@ -417,7 +421,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
       }, 2000); //循环时间2秒
     }
   }, {
-    key: 'syncRfidOrder',
+    key: "syncRfidOrder",
     value: function syncRfidOrder() {
       var that = this;
       var routerinfo = _index2.default.getStorageSync('routerinfo');
@@ -469,7 +473,15 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
       });
     }
   }, {
-    key: '_createData',
+    key: "gotoBack",
+    value: function gotoBack() {
+      //回到首页
+      _index2.default.navigateTo({
+        url: '/pages/index/index'
+      });
+    }
+  }, {
+    key: "_createData",
     value: function _createData() {
       this.__state = arguments[0] || this.state || {};
       this.__props = arguments[1] || this.props || {};
@@ -486,7 +498,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
   }]);
 
   return Index;
-}(_index.Component), _class.properties = {}, _class.$$events = [], _temp2);
+}(_index.Component), _class.properties = {}, _class.$$events = ["goKefu", "gotoBack"], _temp2);
 exports.default = Index;
 
 Component(require('../../../npm/@tarojs/taro-weapp/index.js').default.createComponent(Index, true));
