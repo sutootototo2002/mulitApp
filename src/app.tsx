@@ -23,7 +23,7 @@ class App extends Component {
 
   config: Config = {
     pages: [
-     
+      
       'pages/index/index',
       'pages/personal/index',
       'pages/recharge/recharge',

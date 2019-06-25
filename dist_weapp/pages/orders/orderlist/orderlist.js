@@ -49,7 +49,7 @@ var Orderlist = (_temp2 = _class = function (_BaseComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Orderlist.__proto__ || Object.getPrototypeOf(Orderlist)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "anonymousState__temp2", "anonymousState__temp3", "anonymousState__temp4", "anonymousState__temp5", "anonymousState__temp6", "anonymousState__temp7", "anonymousState__temp8", "anonymousState__temp9", "goodsList", "tabList", "current", "addrimg", "dargStyle", "downDragStyle", "downText", "upDragStyle", "pullText", "start_p", "scrollY", "dargState"], _this.config = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Orderlist.__proto__ || Object.getPrototypeOf(Orderlist)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "anonymousState__temp2", "anonymousState__temp3", "anonymousState__temp4", "anonymousState__temp5", "anonymousState__temp6", "anonymousState__temp7", "anonymousState__temp8", "anonymousState__temp9", "goodsList", "globalData", "tabList", "current", "addrimg", "dargStyle", "downDragStyle", "downText", "upDragStyle", "pullText", "start_p", "scrollY", "dargState"], _this.config = {
       navigationBarTitleText: '订单列表页',
       onReachBottomDistance: 50
     }, _this.$$refs = [], _temp), _possibleConstructorReturn(_this, _ret);
@@ -143,10 +143,6 @@ var Orderlist = (_temp2 = _class = function (_BaseComponent) {
     value: function getOrdersup() {
       var that = this;
       var page = curPage + 1;
-      // this.setState({
-      //   curPage: page
-      // })
-      curPage = page;
       _index2.default.showLoading({
         title: ''
       });
@@ -427,6 +423,7 @@ var Orderlist = (_temp2 = _class = function (_BaseComponent) {
         anonymousState__temp7: anonymousState__temp7,
         anonymousState__temp8: anonymousState__temp8,
         anonymousState__temp9: anonymousState__temp9,
+        globalData: _index3.globalData,
         tabList: tabList
       });
       return this.__state;

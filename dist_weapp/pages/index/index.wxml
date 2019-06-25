@@ -1,11 +1,11 @@
 <block>
     <view>
-        <map class="mb-map" id="mymap" show-location="{{showLocation}}" subkey="{{mapKey}}" latitude="{{latitude}}" longitude="{{longitude}}" scale="{{scale}}" markers="{{markers}}" controls="{{controls}}" bindcontroltap="onControlTap" bindmarkertap="markertap" bindregionchange="regionchange"></map>
+        <map class="mb-map" id="mymap" show-location="{{showLocation}}" latitude="{{latitude}}" longitude="{{longitude}}" scale="{{scale}}" markers="{{markers}}" controls="{{controls}}" bindcontroltap="onControlTap" bindmarkertap="markertap" bindregionchange="regionchange"></map>
         <cover-view class="menus_avator">
             <cover-image class="menus_user" bindtouchstart="topersonfn" src="{{zm}}"></cover-image>
             <block>
                 <block wx:if="{{befee > 0}}">
-                    <cover-view class="fee" bindtap="onStored">{{befee / 100}}元</cover-view>
+                    <cover-view class="fee" bindtap="onStored">当前余额:{{befee / 100}}元</cover-view>
                 </block>
                 <block wx:else>
                     <cover-view class="fee" bindtap="onStored">储值有优惠</cover-view>
@@ -92,7 +92,7 @@
                     <cover-view class="unpayList">
                         <cover-view class="orderList">
                             <cover-view class="orderInfo">
-                                <cover-view class="goodstate">未付知码订单</cover-view>
+                                <cover-view class="goodstate">订单号：[{{unpayorder.orderno}}]</cover-view>
                                 <cover-view class="time">{{unpayorder.createtime}}</cover-view>
                             </cover-view>
                             <cover-image class="goodsImg" src="{{unpayorder.goods[0].picurl}}"></cover-image>
@@ -101,7 +101,7 @@
                                     <cover-image class="del" src="{{del}}"></cover-image>
                                     <cover-view class="total">共{{unpayorder.goodsnum}}件商品</cover-view>
                                 </cover-view>
-                                <cover-view class="goodsInfoDetail">[{{unpayorder.goods[0].goodsname}}x{{unpayorder.goodsnum}}瓶] {{unpayorder.goods[0].location}}</cover-view>
+                                <cover-view class="goodsInfoDetail">[{{unpayorder.goods[0].goodsname}}等...] {{unpayorder.goods[0].location}}</cover-view>
                             </cover-view>
                         </cover-view>
                         <button class="BtnOne" type="default" bindtap="payOrder">支付</button>

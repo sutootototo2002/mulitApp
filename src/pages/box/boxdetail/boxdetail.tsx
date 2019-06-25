@@ -169,13 +169,13 @@ class Boxdetail extends Component<{}, IState>{
         <View>
            <View className='boxdetail'>
                
-              <View className='boxTitle'>{this.state.machine.machinename?this.state.machine.machinename:'知码开门智能机柜'}</View>
+              <View className='boxTitle'>{this.state.machine.machinename?this.state.machine.machinename:globalData.sysTitle}</View>
               
                <View className='imagesDiv'>
                {$pics}
                </View>
             
-              <View className='addr'>地址：<Image className='addr1' src={this.state.addr}/> {this.state.machine.location}-{this.state.machine.dailaddress}| 距您555km<Image className='addr2' onTouchStart={this.viewlocation} src={this.state.addr}/></View>
+              <View className='addr'><Image className='addr1' src={this.state.addr}/> 地址： {this.state.machine.location}-{this.state.machine.dailaddress}| 距您555km<Image className='addr2' onTouchStart={this.viewlocation} src={this.state.addr}/></View>
               
             </View>
             <View>

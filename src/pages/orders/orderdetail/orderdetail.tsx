@@ -6,6 +6,7 @@ import { BASE_URL, globalData, PATH, systemUser } from '../../../config/index.js
 
 import './index.scss'
 import Path from 'src/cax/render/display/shape/path.js';
+var order = require("../../../utils/order.js");
 
 // 如果需要在 h5 环境中开启 React Devtools
 // 取消以下注释：
@@ -93,15 +94,22 @@ class Orderdetail extends Component<{}, IState>{
 
   componentDidShow() { }
 
-  componentDidHide() { }
+  componentDidHide () {
+    //order.stopInterval();
+  }
+  componentWillUnmount() {
+    
+    order.stopInterval();
+
+  }
 
   componentDidCatchError() { }
 
   getDetail() {
     const routerinfo = Taro.getStorageSync('routerinfo');
-    Taro.showLoading({
-      title: '',
-    });
+    // Taro.showLoading({
+    //   title: '',
+    // });
     var that = this;
     Taro.request({
       url: BASE_URL + 'order/detail',
@@ -200,9 +208,16 @@ class Orderdetail extends Component<{}, IState>{
   }
   gotoBack() {
     //回到首页
-    Taro.navigateTo({
-      url: '/pages/index/index'
-    })
+    console.log(this.state.whereis+"---"+111)
+    if (this.state.whereis == 'weight' || this.state.whereis == 'cgshop' || this.state.whereis == 'all'){
+      Taro.navigateTo({
+        url: '/pages/index/index'
+      })
+    }else{
+      Taro.navigateBack({
+
+      })
+    }
   }
   ontoAnswer(e) {
     console.log('订单编号：')

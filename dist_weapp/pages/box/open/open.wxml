@@ -22,7 +22,7 @@
             <block wx:if="{{isfind}}">
                 <cover-view class="boxInfo">
                     <cover-image class="posImg" src="{{dw}}"></cover-image>
-                    <cover-view class="info">设备睡着了，请联系客服</cover-view>
+                    <cover-view class="info">设备睡着了,请联系客服({{infine}})</cover-view>
                     <cover-view class="btnOpen" bindtap="onClosePos">确定</cover-view>
                 </cover-view>
             </block>

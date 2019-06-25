@@ -102,6 +102,7 @@ class Index extends Component<{}, IState>{
 
   componentWillUpdate(){
     console.log('componentWillUpdate')
+    console.log('---------sususu----------')
   }
 
   componentDidHide () {
@@ -114,11 +115,12 @@ class Index extends Component<{}, IState>{
 
   getOrders() {
     var that = this;
-    var page = curPage + 1;
+    var page = 0;
+    page = curPage + 1;
     // this.setState({
     //   curPage: page
     // })
-    curPage = page;
+    //curPage = page;
 
     Taro.showLoading({
       title: '',
@@ -162,24 +164,24 @@ class Index extends Component<{}, IState>{
       },
       success: function (res) {
         //var fee = res.data.data.fee;
-        console.log("查看用户信息：")
+        console.log("查看用户信息：1111")
         console.log(res)
         var avatar = true ;
         if(res.data.data.avatar!==null){
-          avatar = false;
+          globalData.fee = res.data.data.fee;
+          globalData.nickName = res.data.data.nickname;
+          that.setState({
+            userInfoList:res.data.data,
+            isuserInfo:false
+          });
+        }else{
+          that.setState({
+            userInfoList:res.data.data,
+            isuserInfo:true
+          });
         }
-        globalData.fee = res.data.data.fee;
-        that.setState({
-          userInfoList:res.data.data,
-          isuserInfo:avatar
-
-          
-          // money: fee,
-          // avatarUrl: res.data.data.avatar == null ? '../../../images/default.png' : res.data.data.avatar,
-          // nickName: res.data.data.nickname == null ? '' : res.data.data.nickname,
-          // mobile: res.data.data.mobile == null ? '' : res.data.data.mobile,
-          // isnopasspay: res.data.data.isnopasspay == 0 ? false : true
-        });
+        
+       
       }
     })
   }
@@ -260,8 +262,10 @@ class Index extends Component<{}, IState>{
     var temp = this.state.userInfoList;
     temp.avatar = res.detail.userInfo.avatarUrl;
     globalData.avatar = temp.avatar;
-    temp.nickName = res.detail.userInfo.nickName;
+    temp.nickName = res.detail.userInfo.nickname||res.detail.userInfo.nickName;
     globalData.nickName = temp.nickName;
+    console.log("globalData.nickName")
+    console.log(globalData.nickName)
     
     this.setState({
       userInfoList:temp
@@ -305,7 +309,7 @@ class Index extends Component<{}, IState>{
       url: '/pages/recharge/recharge?avatar=' + globalData.avatar + '&nickname=' + globalData.nickname+'&fee='+globalData.fee
     })
   }
-  toHome(){
+  gohome(){
     Taro.navigateTo({
       url: '/pages/index/index'
     })
@@ -402,20 +406,43 @@ class Index extends Component<{}, IState>{
        }
        if(res.data.code==201){ 
           console.log('您有未结订单')
-          that.toHome();
+          Taro.showToast({
+            title: '您有未结订单',
+            icon: 'fail',
+            duration: 2000
+          })
+         
+          that.gohome();
+          
        }
        if(res.data.code==202){ 
         console.log('您已被加入黑名单')
-        that.toHome();
+        Taro.showToast({
+          title: '您的帐号异常！',
+          icon: 'fail',
+          duration: 2000
+        })
+
+        that.gohome();
       }
       if(res.data.code==205){ 
         console.log('用户未登录')
-        that.toHome();
+        Taro.showToast({
+          title: '用户未登录',
+          icon: 'fail',
+          duration: 2000
+        })
+        that.gohome();
       }
       if(res.data.code==206){ 
          
         console.log('请开通免密')
-        that.toHome();
+        Taro.showToast({
+          title: '请开通免密',
+          icon: 'fail',
+          duration: 2000
+        })
+        that.gohome();
         // that.setState({
         //   singinBoolean:true,
         //   setp2:true,
@@ -446,15 +473,15 @@ class Index extends Component<{}, IState>{
                   {this.state.isuserInfo?
                   <Button className='boxName' open-type="getUserInfo" ongetUserInfo={this.userInfoHandler.bind(this)} >点击更新信息</Button>
                   :
-                  <View className='boxName'>{globalData.nickName?globalData.nickName:''}</View>
+                  <View className='boxName'>{globalData.nickName}</View>
                   }
-                  <Button className='boxInfo' onClick={this.goRecharge}>开通/充值&gt;</Button>
+                  <Button className='boxInfo' onClick={this.goRecharge}>充值优惠</Button>
                   <View className='boxUl'>
-                     <View className='uli'>
+                     <View className='uli' onClick={this.goRecharge}>
                        <View className='wordb'>￥{price_format(this.state.userInfoList.fee)}</View>
                        <View className='wordz'>余额</View>
                      </View>
-                     <View className='line'>|</View>
+                     <View className='line' >|</View>
                      <View className='uli' onClick={this.goheart}>
                        <View className='wordb'>{this.state.wishes.length}</View>
                        <View className='wordz'>心愿</View>
@@ -534,7 +561,7 @@ class Index extends Component<{}, IState>{
              </View>
              <View className='footerDiv'>
                <View className='icon1'>
-                 <Image className='iconImg1' onTouchStart={this.toHome} src={this.state.iconImg1}/>
+                 <Image className='iconImg1' onTouchStart={this.gohome} src={this.state.iconImg1}/>
                </View>
                <View className='icon2'>
                <Image className='iconImg2' onTouchStart={this.toSever} src={this.state.iconImg2}/>

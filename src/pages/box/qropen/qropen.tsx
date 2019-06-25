@@ -937,7 +937,7 @@ class Qropen extends Component<{}, IState>{
             <CoverView className='unpayList'>
               <CoverView className='orderList'>
                 <CoverView className='orderInfo'>
-                  <CoverView className='goodstate'>未付知码订单</CoverView>
+                  <CoverView className='goodstate'>订单号：[{this.state.unpayorder.orderno}等...]</CoverView>
                   <CoverView className='time'>{this.state.unpayorder.createtime}</CoverView>
                 </CoverView>
                 <CoverImage className='goodsImg' src={this.state.unpayorder.goods[0].picurl} />
@@ -947,7 +947,7 @@ class Qropen extends Component<{}, IState>{
                     <CoverView className='total'>共{this.state.unpayorder.goodsnum}件商品</CoverView>
                   </CoverView>
                   <CoverView className='goodsInfoDetail'>
-                    [{this.state.unpayorder.goods[0].goodsname}x{this.state.unpayorder.goodsnum}瓶] {this.state.unpayorder.goods[0].location}
+                    [{this.state.unpayorder.goods[0].goodsname}等...] {this.state.unpayorder.goods[0].location}
                    </CoverView>
                 </CoverView>
               </CoverView>

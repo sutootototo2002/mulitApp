@@ -43,7 +43,7 @@ var Myheart = (_temp2 = _class = function (_BaseComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Myheart.__proto__ || Object.getPrototypeOf(Myheart)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["myheartList", "searLists", "otherWishes", "machines", "mhhImg", "avator", "imgs", "imgs1", "zmkm", "clear", "value", "bool", "HearBoolean", "HearHead", "closebtn", "markBoolean", "heardImg", "addr", "dyzh", "yyzh", "hashOtherWishes", "pageNo", "pageSize", "hasMore", "isDel", "wish", "wishname"], _this.config = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Myheart.__proto__ || Object.getPrototypeOf(Myheart)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["myheartList", "searLists", "otherWishes", "machines", "globalData", "mhhImg", "avator", "imgs", "imgs1", "zmkm", "clear", "value", "bool", "HearBoolean", "HearHead", "closebtn", "markBoolean", "heardImg", "addr", "dyzh", "yyzh", "hashOtherWishes", "pageNo", "pageSize", "hasMore", "isDel", "wish", "wishname"], _this.config = {
       navigationBarTitleText: '心愿单'
     }, _this.$$refs = [], _temp), _possibleConstructorReturn(_this, _ret);
   }
@@ -322,11 +322,27 @@ var Myheart = (_temp2 = _class = function (_BaseComponent) {
       console.log('form');
     }
   }, {
+    key: "onGoback",
+    value: function onGoback() {
+      this.setState({
+        value: '',
+        bool: false
+      });
+    }
+  }, {
     key: "onInput",
     value: function onInput(value) {
       console.log();
       console.log('添加。。');
       console.log(value);
+      if (!value) {
+        _index2.default.showToast({
+          title: '请添加心愿',
+          icon: 'fail',
+          duration: 2000
+        });
+        return;
+      }
       this.adda(value);
     }
   }, {
@@ -355,7 +371,8 @@ var Myheart = (_temp2 = _class = function (_BaseComponent) {
           if (res.data.status == 200) {
             console.log('添加成功！');
             that.setState({
-              bool: false
+              bool: false,
+              value: ''
             });
             that.ongetHeartList();
           } else {
@@ -639,13 +656,15 @@ var Myheart = (_temp2 = _class = function (_BaseComponent) {
           otherWishes = _state.otherWishes,
           machines = _state.machines;
 
-      Object.assign(this.__state, {});
+      Object.assign(this.__state, {
+        globalData: _index3.globalData
+      });
       return this.__state;
     }
   }]);
 
   return Myheart;
-}(_index.Component), _class.properties = {}, _class.$$events = ["ondelFn", "addWishFn", "unlikeit", "likeit", "oncheckdetail", "toBoxdetail", "onModify", "addgoods", "onSearchHandler", "onInput", "onCloseHeard"], _temp2);
+}(_index.Component), _class.properties = {}, _class.$$events = ["ondelFn", "addWishFn", "unlikeit", "likeit", "oncheckdetail", "toBoxdetail", "onModify", "addgoods", "onSearchHandler", "onInput", "onGoback", "onCloseHeard"], _temp2);
 exports.default = Myheart;
 
 Component(require('../../../npm/@tarojs/taro-weapp/index.js').default.createComponent(Myheart, true));

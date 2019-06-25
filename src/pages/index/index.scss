@@ -37,7 +37,7 @@ $color-brown1:#633226;
   color:#000;
   float:right;
   height:78px;
-  width:200px;
+  // width:200px;
   // border:1px solid red;
   position: absolute;
   right:10px;
@@ -774,14 +774,14 @@ $color-brown1:#633226;
 
 .thumbups{
   position: absolute;
-  // border:1px solid red;
   width:25px;
   height:25px;
   line-height:25px;
   border-radius: 999px;
   background:#ff7700;
   right:35px;
-  bottom:645px;
+  top:50%;
+  margin-top:-60px;
   text-align: center;
   color:#fff;
   // border:1px solid red;

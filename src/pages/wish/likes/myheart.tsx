@@ -314,10 +314,24 @@ class Myheart extends Component<{}, IState>{
     console.log(e)
     console.log('form')
   }
+  onGoback(){
+    this.setState({
+      value:'',
+      bool:false
+    })
+  }
   onInput(value){
     console.log();
     console.log('添加。。')
     console.log(value);
+    if(!value){
+      Taro.showToast({
+        title:'请添加心愿',
+        icon: 'fail',
+        duration: 2000
+      })
+      return;
+    }
     this.adda(value);
     
   }
@@ -348,7 +362,8 @@ class Myheart extends Component<{}, IState>{
          
            console.log('添加成功！')
            that.setState({
-            bool:false
+            bool:false,
+            value:''
            })
            that.ongetHeartList();
 
@@ -681,7 +696,7 @@ addWishFn(e){
                    <Image className='yyzh' src={this.state.dyzh}/>
                    }
                    
-                   <View className='gAddr'>{item.location?item.location:'知码开门售货柜'}</View>
+                   <View className='gAddr'>{item.location?item.location:globalData.sysTitle}</View>
                    {/* <View className='gAddr_'>{item.phystate}</View> */}
                    <Button className='gdetail' data-machineid="{{item.machineid}}" onClick={this.toBoxdetail} >查看详情</Button>
                    <View className='gdistDiv'>
@@ -697,6 +712,7 @@ addWishFn(e){
           <Image className='mhhImages' src={this.state.mhhImg}/>
           </View>
           <Image className='boxOne' src={this.state.avator}/>
+          <View className='BoxDiv'>
           <View className="yhdBox">
             <Text className='xhdTitle'>我的心愿单</Text>
             <View className='viewUl'>
@@ -716,6 +732,7 @@ addWishFn(e){
 
              </View>
           </View>
+          </View>
           {/* <Button className='callback' type='default'>返回</Button> */}
           {this.state.bool?
           <View className='yhdBox1'>
@@ -734,7 +751,8 @@ addWishFn(e){
                 <View>
                   {searList}
                 </View>
-                <AtButton type='primary' size='small' className='addgoods' onClick={this.onInput.bind(this,this.state.value)} >添加</AtButton>
+                <AtButton type='primary' size='small' className='addgoods1' onClick={this.onInput.bind(this,this.state.value)} >添加</AtButton>
+                <AtButton type='primary' size='small' className='addgoods' onClick={this.onGoback.bind(this,this.state.value)} >返回</AtButton>
               </View>
             </View>
          :

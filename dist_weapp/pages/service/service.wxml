@@ -9,7 +9,8 @@
                 </view>
             </view>
             <button type="default" open-type="contact" class="loginBtn Btn">提交</button>
-            <button type="default" class="Btn" style="bottom:60px;" bindtap="gohome">返回</button>
+            <view></view>
+            <button type="default" class="Btn" style="bottom:10%;" bindtap="gohome">返回</button>
         </view>
     </view>
 </block>

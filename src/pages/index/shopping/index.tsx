@@ -1,7 +1,8 @@
 var socketOpen = false;
 var shoudReconnet = false;
 var socketMsgQueue = [];
-var timer = 0;
+var timer1 = 0;
+var timerList = [];
 
 import Taro, { Component, Config, MapContext } from '@tarojs/taro'
 
@@ -10,7 +11,7 @@ import { Map, CoverView,Canvas,View,Image,CoverImage,Button,Text } from '@tarojs
 import {BASE_URL,globalData,PATH,HOST_WEBSOCKET,HOST_URL,systemUser} from '../../../config/index.js'; 
 
 //import {} from '../../../utils/util.js';
-import {orderstatus,stopInterval,requestorderstatus} from '../../../utils/order.js';
+var order = require("../../../utils/order.js");
 
 import './index.scss'
 import { number } from 'prop-types';
@@ -51,7 +52,7 @@ class Index extends Component<{}, IState>{
    * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
    */
   config = {
-    navigationBarTitleText:'知码开门购物柜'
+    navigationBarTitleText:globalData.sysTitle
   }
   constructor (props: {} | undefined) {
     super(props)
@@ -100,22 +101,24 @@ class Index extends Component<{}, IState>{
     this.cartitems();
     //获取订单状态
     //var orderid = that.data.orderid;
-    timer= setInterval(()=>{
-        
-      requestorderstatus(orderid, function succeeded(res) {
+      
+    order.startqueryorderstatus(orderid, function succeeded(res) {
          console.log('-----orderstatus-----');
          console.log(res);
+         var orderstatus = res.data.data.orderstatus;
+         var doorstatus = res.data.data.doorstatus;
          if (res.data.code == 200) {
-           var orderstatus = res.data.data.orderstatus;
-           var doorstatus = res.data.data.doorstatus;
-           if (doorstatus == 4) { //已关柜
-             if (orderstatus == 5 || orderstatus == 3 || orderstatus == 8 || orderstatus == 9) { //5已付款 3已取消 8已完成 9 错误
-               clearInterval(timer)
-               Taro.redirectTo({
-                 url: '/pages/orders/orderdetail/orderdetail?orderid=' + orderid + '&whereis=cgshop'
-               })
-             } else if (orderstatus == 6) { //6已欠费
-              clearInterval(timer)
+              
+             if (orderstatus == "5" || orderstatus == "3" || orderstatus == "7"||orderstatus == "8" || orderstatus == "9") { //5已付款 3已取消 8已完成 9 错误
+              order.stopInterval();
+               setTimeout(() => {
+                Taro.redirectTo({
+                  url: '/pages/orders/orderdetail/orderdetail?orderid=' + orderid + '&whereis=weight'
+                })
+               }, 2000);
+              
+             } else if (orderstatus == "6") { //6已欠费
+              order.stopInterval();
                //拉起支付
                that.requestPay(routerinfo.orderid);
              } else {
@@ -124,23 +127,12 @@ class Index extends Component<{}, IState>{
                  cartTips2: '稍后给您推送结算账单'
                });
              }
-           } else {
-
-           }
-         } else {
-           var doorstatus = res.data.data.doorstatus;
-           if (doorstatus == 3 || doorstatus == 4) {
-            //clearInterval(timer)
-             that.setState({
-               cartTips1: '柜门已关闭，订单正在结算中',
-               cartTips2: '稍后给您推送结算账单'
-             });
-           }
+           
          }
        });
         
-   },1000)
-
+   
+  
 
   }
   componentDidMount () {}
@@ -148,7 +140,12 @@ class Index extends Component<{}, IState>{
   componentDidShow () {}
 
   componentDidHide () {
-    clearInterval(timer)
+    order.stopInterval();
+  }
+  componentWillUnmount() {
+    
+    order.stopInterval();
+
   }
 
   componentDidCatchError () {}
@@ -482,8 +479,8 @@ class Index extends Component<{}, IState>{
           } else if (par.op == 'order') {
             console.log('收到关门订单');
             var orderstatus = par.orderstatus;
-            if (orderstatus == 5 || orderstatus == 3 || orderstatus == 8) {//5已付款 3已取消 8已完成
-              stopInterval();
+            if (orderstatus == "5" || orderstatus == "3" || orderstatus == "8") {//5已付款 3已取消 8已完成
+              order.stopInterval();
               socketOpen = false;
               shoudReconnet = false;
               Taro.closeSocket();
@@ -499,7 +496,7 @@ class Index extends Component<{}, IState>{
               Taro.closeSocket();
               
             } else if (orderstatus == 6) {//6已欠费
-              stopInterval();
+              order.stopInterval();
               socketOpen = false;
               shoudReconnet = false;
               Taro.closeSocket();
@@ -516,6 +513,12 @@ class Index extends Component<{}, IState>{
     
   }
 
+  gotoBack() {
+    //回到首页
+    Taro.navigateTo({
+      url: '/pages/index/index'
+    })
+  }
 
   render () {
     const { cartgoods } = this.state;
@@ -563,6 +566,7 @@ class Index extends Component<{}, IState>{
           <View></View>
           }
           
+          
           <View className='seDiv'>
              <View className='selectDiv'>
                <View className='seltitle'>所选商品</View>
@@ -572,6 +576,11 @@ class Index extends Component<{}, IState>{
                {goodsitem}
              </View>
           </View>
+          
+          <View>
+          <Button type="default" className='btn' onClick={this.gotoBack}> 收起 </Button>
+          </View>
+
           <View className='orderdetail' hidden={true}>
             <View className='selectDiv'>
             <View className='seltitle'>订单信息</View>

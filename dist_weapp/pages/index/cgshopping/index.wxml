@@ -9,7 +9,7 @@
             <image class="addricon" src="{{icon1}}"></image>
             <view class="addr1">{{machine.machinename}}</view>
             <view class="addr2">{{machine.location}}{{machine.dailaddress}}</view>
-            <button class="toSever1">联系客服</button>
+            <button class="toSever1" bindtap="goKefu">联系客服</button>
         </view>
         <block>
             <block wx:if="{{promotions > 0}}">
@@ -19,6 +19,9 @@
                 <view></view>
             </block>
         </block>
+        <view>
+            <button type="default" class="btn" bindtap="gotoBack">收起</button>
+        </view>
         <view class="seDiv" hidden="{{true}}">
             <view class="selectDiv">
                 <view class="seltitle">所选商品</view>

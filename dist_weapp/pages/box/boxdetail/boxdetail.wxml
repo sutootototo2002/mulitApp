@@ -1,12 +1,12 @@
 <block>
     <view>
         <view class="boxdetail">
-            <view class="boxTitle">{{machine.machinename ? machine.machinename : '知码开门智能机柜'}}</view>
+            <view class="boxTitle">{{machine.machinename ? machine.machinename : globalData.sysTitle}}</view>
             <view class="imagesDiv">
                 <image class="imgDiv" src="{{item.url ? item.url : ''}}" wx:for="{{machine.pics}}" wx:for-item="item" wx:for-index="index"></image>
             </view>
-            <view class="addr">地址：
-                <image class="addr1" src="{{addr}}"></image>{{machine.location}}-{{machine.dailaddress}}| 距您555km
+            <view class="addr">
+                <image class="addr1" src="{{addr}}"></image>地址： {{machine.location}}-{{machine.dailaddress}}| 距您555km
                 <image class="addr2" bindtouchstart="viewlocation" src="{{addr}}"></image>
             </view>
         </view>

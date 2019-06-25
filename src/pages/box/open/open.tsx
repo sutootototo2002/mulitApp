@@ -26,7 +26,8 @@ interface IState {
     requestfailed:boolean
     loadImg:string,
     isfind:boolean,
-    dw:string
+    dw:string,
+    infine:string
 }
 
 // 如果需要在 h5 环境中开启 React Devtools
@@ -45,7 +46,7 @@ class Open extends Component<{}, IState>{
    * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
    */
   config = {
-    navigationBarTitleText:'会员注册'
+    navigationBarTitleText:''
   }
   constructor (props: {} | undefined) {
     super(props)
@@ -58,6 +59,7 @@ class Open extends Component<{}, IState>{
         requestfailed:true,
         num:0,
         tag:0,
+        infine:'设备故障',
         isfind:false,
         dw: PATH + '/mImages/dw.png',
         loadImg:PATH+'/mImages/open.png'
@@ -186,7 +188,7 @@ class Open extends Component<{}, IState>{
       //循环执行代码 
       if (requestfailed) {
         console.log('---循环执行代码 ---');
-        that.openStatus();
+        //that.openStatus();
       } else {
         console.log('---停止循环执行代码 ---');
         that.setState({
@@ -231,13 +233,19 @@ class Open extends Component<{}, IState>{
           //   key: "orderid",
           //   data: that.data.orderid
           // });
-          Taro.reLaunch({
-            url: '../../index/index'
-          })
+          // Taro.reLaunch({
+          //   url: '../../index/index'
+          // })
         } else if (res.data.code == 211) {
           that.setState({
-            isfind: true
+            isfind: true,
+            infine:res.data.msg
           });
+          Taro.showToast({
+            title: res.data.msg,
+            icon: 'fail',
+            duration: 2000
+          })
           requestfailed = false
           // Taro.showModal({
           //   title: '提示',
@@ -255,7 +263,16 @@ class Open extends Component<{}, IState>{
           that.setState({
             requestfailed: true
           });
+          Taro.showToast({
+            title: res.data.msg,
+            icon: 'fail',
+            duration: 2000
+          })
           requestfailed = false
+          that.setState({
+            isfind: true,
+            infine:res.data.msg
+          });
         }
       },
       fail: function (e) {
@@ -285,15 +302,33 @@ class Open extends Component<{}, IState>{
           requestfailed = false;
           var orderstatus = res.data.data.orderstatus;
           var doorstatus = res.data.data.doorstatus;
+          
+          if (orderstatus == "5" || orderstatus == "3" || orderstatus == "7"||orderstatus == "8" || orderstatus == "9") { //5已付款 3已取消 8已完成 9 错误
+           
+              Taro.redirectTo({
+                url: '/pages/orders/orderdetail/orderdetail?orderid=' + orderid + '&whereis=all'
+              })
+            
+           } else {
+
+            Taro.redirectTo({
+
+            url: '../../index/index'
+
+            })
+
+           }
+
+
 
           //Taro.setStorageSync("orderid", that.state.orderid);
           // wx.setStorage({
           //   key: "orderid",
           //   data: orderid
           // });
-          Taro.redirectTo({
-            url: '../../index/index'
-          })
+          // Taro.redirectTo({
+          //   url: '../../index/index'
+          // })
         } else {
           that.setState({
             openfailed: true
@@ -334,7 +369,7 @@ class Open extends Component<{}, IState>{
          {this.state.isfind?
           <CoverView className='boxInfo'>
             <CoverImage className='posImg' src={this.state.dw} />
-            <CoverView className='info'>设备睡着了，请联系客服</CoverView>
+            <CoverView className='info'>设备睡着了,请联系客服({this.state.infine})</CoverView>
             <CoverView className='btnOpen' onClick={this.onClosePos}>确定</CoverView>
             
           </CoverView>
