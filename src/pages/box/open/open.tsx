@@ -69,6 +69,9 @@ class Open extends Component<{}, IState>{
 
 
   componentWillMount(){
+    Taro.setNavigationBarTitle({
+      title:globalData.sysTitle
+    })
     console.log(this.$router.params)
     this.setState({
         formid:this.$router.params.formid,

@@ -51,7 +51,6 @@ var SHAREINFO = exports.SHAREINFO = {
 };
 var PATH = exports.PATH = "https://shoptestapp.wemall.com.cn";
 var systemUser = exports.systemUser = '知码小蜜';
-
 var globalData = exports.globalData = {
   token: '',
   haslogin: false,

@@ -52,7 +52,7 @@ class Index extends Component<{}, IState>{
    * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
    */
   config = {
-    navigationBarTitleText:globalData.sysTitle
+    navigationBarTitleText:''
   }
   constructor (props: {} | undefined) {
     super(props)
@@ -80,6 +80,9 @@ class Index extends Component<{}, IState>{
 
 
   componentWillMount(){
+    Taro.setNavigationBarTitle({
+      title:globalData.sysTitle
+    })
     console.log('重力柜数据')
     console.log(this.$router.params)
     const machineid = this.$router.params.machineid;

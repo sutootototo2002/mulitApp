@@ -52,7 +52,7 @@ var Qropen = (_temp2 = _class = function (_BaseComponent) {
     }
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Qropen.__proto__ || Object.getPrototypeOf(Qropen)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "formid", "lockid", "machineid", "orderid", "openfailed", "requestfailed", "pay", "num", "tag", "qrurl", "haslogin", "showlogin", "showpapay", "showopen", "papayPressed", "showModalStatus", "unpayorder", "loadImg", "loadImg1", "loadImg2", "unpayImg", "unpriceImg", "islogin", "markBoolean", "open", "unpay"], _this.config = {
-      navigationBarTitleText: '打开柜子'
+      navigationBarTitleText: ''
     }, _this.$$refs = [], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
@@ -91,7 +91,7 @@ var Qropen = (_temp2 = _class = function (_BaseComponent) {
         loadImg2: _index3.PATH + '/mImages/car.png',
         unpayImg: _index3.PATH + '/mImages/wfk-11.png',
         unpriceImg: _index3.PATH + '/mImages/wfk.png',
-        islogin: true,
+        islogin: false,
         markBoolean: false,
         open: false,
         unpay: false
@@ -101,6 +101,9 @@ var Qropen = (_temp2 = _class = function (_BaseComponent) {
     key: 'componentWillMount',
     value: function componentWillMount() {
       console.log('---onLoad---');
+      _index2.default.setNavigationBarTitle({
+        title: _index3.globalData.sysTitle
+      });
       console.log(this.$router.params);
       this.setState({
         formid: this.$router.params.formid,
@@ -162,7 +165,7 @@ var Qropen = (_temp2 = _class = function (_BaseComponent) {
       var that = this;
       setTimeout(function () {
         that.getUserDetail();
-      }, 2000);
+      }, 1000);
     }
   }, {
     key: 'componentDidHide',
@@ -190,7 +193,8 @@ var Qropen = (_temp2 = _class = function (_BaseComponent) {
               duration: 500
             });
             that.setState({
-              islogin: false
+              islogin: false,
+              pay: true
             });
             // that.gotoPapay();
           }
@@ -310,6 +314,9 @@ var Qropen = (_temp2 = _class = function (_BaseComponent) {
             that.getShoppingOrder();
           } else {
             console.log('*********用户不存在***********1');
+            that.setState({
+              islogin: true
+            });
             try {
               _index2.default.removeStorageSync('token');
             } catch (e) {
@@ -407,6 +414,7 @@ var Qropen = (_temp2 = _class = function (_BaseComponent) {
   }, {
     key: 'deviceOpen',
     value: function deviceOpen(machineid, lockid) {
+      console.log('machined:' + this.state.machineid + "lockid:" + lockid + 'formid:' + this.state.formid);
       _index2.default.showLoading({
         title: ''
       });
@@ -852,6 +860,9 @@ var Qropen = (_temp2 = _class = function (_BaseComponent) {
             }
           }).then(function (res) {
             console.log(res);
+            that.setState({
+              pay: false
+            });
             that.getUserDetail();
           }).catch(function (error) {
             console.log(error);

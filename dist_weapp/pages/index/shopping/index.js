@@ -53,7 +53,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
     }
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Index.__proto__ || Object.getPrototypeOf(Index)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["cartgoods", "systemUser", "formid", "lockid", "machineid", "machine", "shelfs", "orderno", "orderid", "openfailed", "state1", "icon1", "socketMsgQueue", "socketOpen", "totalfee", "promotions", "cartTips1", "cartTips2"], _this.config = {
-      navigationBarTitleText: _index3.globalData.sysTitle
+      navigationBarTitleText: ''
     }, _this.$$refs = [], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
@@ -92,6 +92,9 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
   }, {
     key: "componentWillMount",
     value: function componentWillMount() {
+      _index2.default.setNavigationBarTitle({
+        title: _index3.globalData.sysTitle
+      });
       console.log('重力柜数据');
       console.log(this.$router.params);
       var machineid = this.$router.params.machineid;
