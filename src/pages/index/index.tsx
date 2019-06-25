@@ -1843,7 +1843,7 @@ getNearbyMachines(latitude: Number, longitude: Number) {
                    </CoverView>
                 </CoverView>
               </CoverView>
-              <Button className='BtnOne' type='default' onClick={this.payOrder}>支付</Button>
+              <Button className='BtnOne' type='default' onClick={this.payOrder}>支付111</Button>
             </CoverView>
 
           </CoverView>
