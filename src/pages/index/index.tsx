@@ -225,7 +225,7 @@ export default class Index extends Component<{}, IState>{
   }
 
   config: Config = {
-    navigationBarTitleText: '首页'
+    navigationBarTitleText: '首页1111'
   }
 
   componentWillReceiveProps(nextProps: any) {
