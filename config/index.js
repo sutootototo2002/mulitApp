@@ -1,5 +1,5 @@
 'use strict';
-
+var branch = 'payfen'
 var config = {
   projectName: 'mulitApp',
   date: '2019-4-20',
@@ -10,7 +10,7 @@ var config = {
     '828': 0.905
   },
   sourceRoot: 'src',
-  outputRoot: 'dist_' + process.env.npm_lifecycle_event.split(':')[1],
+  outputRoot: 'dist_' + branch+"_"+process.env.npm_lifecycle_event.split(':')[1],
   plugins: {
     babel: {
       sourceMap: true,
