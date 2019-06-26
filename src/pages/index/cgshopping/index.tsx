@@ -80,7 +80,7 @@ class Index extends Component<{}, IState>{
         cartgoods:[],
         promotions:0,
         cartTips1:'正在购物中',
-        cartTips2:'小主,拿到满意商品后，要关门哦！',
+        cartTips2:'小主,拿到满意商品后,要关门哦！',
         needRequestOrder:false,
         isRefreshingOrder:false
 
