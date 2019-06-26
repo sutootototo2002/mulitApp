@@ -79,7 +79,11 @@ class Login extends Component<{}, IState>{
   gohome(){
     // 
     Taro.navigateBack({
-
+    }).catch((error)=>{
+      console.log('既然没有上一页，我就返回首页了哦！')
+      Taro.navigateTo({
+        url: '/pages/index/index'
+      })
     })
   }
   render () {
@@ -117,7 +121,8 @@ class Login extends Component<{}, IState>{
                </View>
                <Button type='default' open-type="contact" className='loginBtn Btn'>提交</Button>
                <View></View>
-               <Button type='default' className='Btn' style='bottom:10%;' onClick={this.gohome}>返回</Button>
+               <Button type='default' className='goback' style='bottom:10%;' onClick={this.gohome}>返回</Button>
+               
                               
            </View> 
         </View>

@@ -10,7 +10,7 @@
             </view>
             <button type="default" open-type="contact" class="loginBtn Btn">提交</button>
             <view></view>
-            <button type="default" class="Btn" style="bottom:10%;" bindtap="gohome">返回</button>
+            <button type="default" class="goback" style="bottom:10%;" bindtap="gohome">返回</button>
         </view>
     </view>
 </block>

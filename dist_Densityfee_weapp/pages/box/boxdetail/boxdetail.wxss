@@ -1,1 +1,115 @@
-.boxdetail{width:100%;margin:32rpx 0 0;padding:43rpx 0;overflow:hidden;border-top:1rpx solid #b5b5b6;border-bottom:1rpx solid #b5b5b6}.boxTitle{font-size:35rpx;color:#3e3a39;padding:0 0 0 10rpx}.imagesDiv{width:100%;height:190rpx;padding:10rpx;overflow:hidden;overflow-x:auto;white-space:nowrap}.imgDiv{width:242rpx;border-radius:5rpx;margin-right:20rpx}.addr{font-size:30rpx;padding:20rpx;color:#727171}.addr1{width:38rpx;height:40rpx;margin-top:10rpx}.addr2{width:48rpx;height:50rpx;margin-left:20rpx}.goodsName{padding:20rpx;font-size:35rpx}.gdul{border-top:1rpx solid #b5b5b6;padding:25rpx}.gliName{float:left;width:180rpx;height:180rpx;margin:0 0 0 20rpx}.gliInfo{float:left;width:70%;padding:0 0 0 10rpx}.gName{font-size:35rpx}.gName1{font-size:28rpx}.ginfo{overflow:hidden;width:100%}.kcun{float:right;font-size:24rpx;border:2rpx solid #ccc;border-radius:5rpx;padding:10rpx;color:#ccc}.price{float:left}.moregoods{clear:both;padding:0 0 20rpx;width:100%;text-align:center;font-size:35rpx;color:#ccc}.gli{border-bottom:1rpx dashed #b5b5b6;overflow:hidden}.pric{color:#ff612f}
+
+.boxdetail {
+  width: 100%;
+  margin: 32rpx 0 0 0;
+  padding: 43rpx 0;
+  overflow: hidden;
+  border-top: 1rpx solid #b5b5b6;
+  border-bottom: 1rpx solid #b5b5b6;
+}
+
+.boxTitle {
+  font-size: 35rpx;
+  color: #3e3a39;
+  padding: 0 0 0 10rpx;
+}
+
+.imagesDiv {
+  width: 100%;
+  height: 190rpx;
+  padding: 10rpx;
+  overflow: hidden;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.imgDiv {
+  width: 242rpx;
+  border-radius: 5rpx;
+  margin-right: 20rpx;
+}
+
+.addr {
+  font-size: 30rpx;
+  padding: 20rpx;
+  color: #727171;
+}
+
+.addr1 {
+  width: 38rpx;
+  height: 40rpx;
+  margin-top: 10rpx;
+}
+
+.addr2 {
+  width: 48rpx;
+  height: 50rpx;
+  margin-left: 20rpx;
+}
+
+.goodsName {
+  padding: 20rpx;
+  font-size: 35rpx;
+}
+
+.gdul {
+  border-top: 1rpx solid #b5b5b6;
+  padding: 25rpx;
+}
+
+.gliName {
+  float: left;
+  width: 180rpx;
+  height: 180rpx;
+  margin: 0 0 0 20rpx;
+}
+
+.gliInfo {
+  float: left;
+  width: 70%;
+  padding: 0 0 0 10rpx;
+}
+
+.gName {
+  font-size: 35rpx;
+}
+
+.gName1 {
+  font-size: 28rpx;
+}
+
+.ginfo {
+  overflow: hidden;
+  width: 100%;
+}
+
+.kcun {
+  float: right;
+  font-size: 24rpx;
+  border: 2rpx solid #ccc;
+  border-radius: 5rpx;
+  padding: 10rpx;
+  color: #ccc;
+}
+
+.price {
+  float: left;
+}
+
+.moregoods {
+  clear: both;
+  padding: 0 0 20rpx 0;
+  width: 100%;
+  text-align: center;
+  font-size: 35rpx;
+  color: #ccc;
+}
+
+.gli {
+  border-bottom: 1rpx dashed #b5b5b6;
+  overflow: hidden;
+}
+
+.pric {
+  color: #ff612f;
+}
