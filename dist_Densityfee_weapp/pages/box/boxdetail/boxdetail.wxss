@@ -62,6 +62,7 @@
   width: 180rpx;
   height: 180rpx;
   margin: 0 0 0 20rpx;
+  border-radius: 10rpx;
 }
 
 .gliInfo {
@@ -106,7 +107,6 @@
 }
 
 .gli {
-  border-bottom: 1rpx dashed #b5b5b6;
   overflow: hidden;
 }
 

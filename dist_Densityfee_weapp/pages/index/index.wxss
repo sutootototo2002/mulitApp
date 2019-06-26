@@ -404,6 +404,8 @@
   float: left;
   font-size: 25rpx;
   color: #7d7d7d;
+  width: 80%;
+  margin-top: 10rpx;
   white-space: nowrap;
   overflow: hidden;
   -o-text-overflow: ellipsis;
