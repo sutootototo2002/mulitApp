@@ -128,8 +128,8 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         wzc11: _index3.PATH + '/mImages/wzc-11.png',
         wzc20: _index3.PATH + '/mImages/wzc-20.png',
         wzc22: _index3.PATH + '/mImages/wzc-22.png',
-        wzc30: _index3.PATH + '/mImages/wzc-30.png',
-        wzc33: _index3.PATH + '/mImages/wzc-33.png',
+        wzc30: _index3.PATH + '/mImages/wzc-zf1.png?' + Math.random(),
+        wzc33: _index3.PATH + '/mImages/wzc-zf2.png?' + Math.random(),
         clear: _index3.PATH + '/mImages/clear.png',
         setp1: true,
         setp2: false,
@@ -222,7 +222,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
       var that = this;
       if (this.state.singinBoolean == true && this.state.setp1 == false && this.state.setp2 == true) {
         _index2.default.showLoading({
-          title: '免密开通中'
+          title: '支付分开通中'
         });
         if (intervalPapayTemp) {
           clearInterval(intervalPapayTemp);
@@ -301,8 +301,8 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         },
         success: function success(res) {
           if (res.data.code == 200) {
-            var isnopasspay = res.data.data.isnopasspay;
-            if (isnopasspay == "0") {
+            var isscorepay = res.data.data.isscorepay;
+            if (isscorepay == "0") {
               that.setState({
                 setp2: true
               });
@@ -340,6 +340,27 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
             }
           }
         }
+      });
+    }
+    //开启支付分
+
+  }, {
+    key: 'gotopayfen',
+    value: function gotopayfen() {
+      console.log('开启支付分');
+      var that = this;
+      console.log('判断是是否可以开通');
+      _index2.default.request({
+        method: 'POST',
+        url: _index3.BASE_URL + '/user/checkUserStatus',
+        data: {},
+        header: {
+          'content-type': 'application/json',
+          'token': _index3.globalData.token
+        }
+      }).then(function (res) {
+        console.log('开通结果：');
+        console.log(res);
       });
     }
     //setp2 开通免密
@@ -1488,9 +1509,9 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
           //that.gohome();
         }
         if (res.data.code == 206) {
-          console.log('请开通免密');
+          console.log('请开通支付分');
           _index2.default.showToast({
-            title: '请开通免密',
+            title: '请开通支付分',
             icon: 'fail',
             duration: 2000
           });
@@ -1679,7 +1700,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
   }]);
 
   return Index;
-}(_index.Component), _class.properties = {}, _class.$$events = ["onControlTap", "markertap", "regionchange", "topersonfn", "onStored", "getPhoneNumber", "gotoPapay", "onInfo", "gotoCart", "onClosePos", "payOrder", "gotoCartFn", "onCloseHeardlist", "onSetheart", "onScreen", "onRight", "onLeft", "hideModal"], _temp2);
+}(_index.Component), _class.properties = {}, _class.$$events = ["onControlTap", "markertap", "regionchange", "topersonfn", "onStored", "getPhoneNumber", "gotopayfen", "onInfo", "gotoCart", "onClosePos", "payOrder", "gotoPapay", "gotoCartFn", "onCloseHeardlist", "onSetheart", "onScreen", "onRight", "onLeft", "hideModal"], _temp2);
 // #region 导出注意
 //
 // 经过上面的声明后需要将导出的 Taro.Component 子类修改为子类本身的 props 属性

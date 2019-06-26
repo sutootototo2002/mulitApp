@@ -47,7 +47,7 @@
                             <button class="singBtn" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" data-e-getphonenumber-so="this">我去注册</button>
                         </block>
                         <block wx:if="{{setp2}}">
-                            <button class="singBtn" bindtap="gotoPapay">我去免密</button>
+                            <button class="singBtn" bindtap="gotopayfen">开通支付分</button>
                         </block>
                     </cover-view>
                 </cover-view>
@@ -104,7 +104,18 @@
                                 <cover-view class="goodsInfoDetail">[{{unpayorder.goods[0].goodsname}}等...] {{unpayorder.goods[0].location}}</cover-view>
                             </cover-view>
                         </cover-view>
-                        <button class="BtnOne" type="default" bindtap="payOrder">支付</button>
+                        <block>
+                            <block wx:if="{{unpayorder.score == 0}}">
+                                <button class="BtnOne" type="default" bindtap="payOrder">支付</button>
+                            </block>
+                            <block wx:else>
+                                <cover-view>
+                                    <cover-view class="paynewDiv">
+                                        <cover-view class="tishiDiv">提示</cover-view>请到微信支付分中进行支付</cover-view>
+                                    <cover-view class="tsDiv">*请进入微信支付>钱包>微信支付分>订单详情中进行支付！</cover-view>
+                                </cover-view>
+                            </block>
+                        </block>
                     </cover-view>
                 </cover-view>
             </block>

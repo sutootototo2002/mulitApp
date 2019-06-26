@@ -768,3 +768,33 @@
   color: #fff;
   font-size: 18rpx;
 }
+
+.paynewDiv {
+  position: relative;
+  padding: 20rpx;
+  border-radius: 20rpx;
+  background: #ff7700;
+  margin: 0 20rpx;
+  color: #fff;
+  font-size: 30rpx;
+  text-align: right;
+}
+
+.tishiDiv {
+  background: #fff;
+  color: #ff7700;
+  width: 100rpx;
+  text-align: center;
+  float: left;
+  font-size: 20rpx;
+  border-radius: 10rpx;
+  position: absolute;
+  top: 25%;
+  padding: 8rpx;
+}
+
+.tsDiv {
+  font-size: 20rpx;
+  text-align: center;
+  padding: 10rpx;
+}

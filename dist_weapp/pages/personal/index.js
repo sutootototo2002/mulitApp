@@ -451,18 +451,13 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
           that.gohome();
         }
         if (res.data.code == 206) {
-          console.log('请开通免密');
+          console.log('请开通支付分');
           _index2.default.showToast({
-            title: '请开通免密',
+            title: '请开通支付分',
             icon: 'fail',
             duration: 2000
           });
           that.gohome();
-          // that.setState({
-          //   singinBoolean:true,
-          //   setp2:true,
-          //   setp3:false
-          // })
         }
       });
     }
