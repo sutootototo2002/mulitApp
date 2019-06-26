@@ -124,6 +124,11 @@
 
 .addr2 {
   font-size: 25rpx;
+  width: 80%;
+  -o-text-overflow: ellipsis;
+     text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .seltitle {

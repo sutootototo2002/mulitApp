@@ -59,6 +59,7 @@
     width:180px;
     height:180px;
     margin:0 0 0 20px;
+    border-radius: 10px;
 }
 .gliInfo{
     float:left;
@@ -97,7 +98,7 @@
     color:#ccc;
 }
 .gli{
-    border-bottom:1px dashed #b5b5b6;
+    // border-bottom:1px dashed #b5b5b6;
     overflow:hidden;
 }
 .pric{

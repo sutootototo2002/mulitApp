@@ -47,8 +47,7 @@ export const SHAREINFO = {
   'imageUrl': '图片'
 }
 export const PATH ="https://shoptestapp.wemall.com.cn"
-export const systemUser='知码小蜜'
-
+export const systemUser='知码小蜜';
 export const globalData={
   token: '',
   haslogin:false,

@@ -1,0 +1,16 @@
+{
+  "miniprogramRoot": "./",
+  "projectname": "mulitApp",
+  "description": "",
+  "appid": "wx77f8c472de03db9b",
+  "setting": {
+    "urlCheck": true,
+    "es6": false,
+    "postcss": false,
+    "minified": false
+  },
+  "compileType": "miniprogram",
+  "simulatorType": "wechat",
+  "simulatorPluginLibVersion": {},
+  "condition": {}
+}

@@ -29,6 +29,18 @@ $color-red:#d80a17;
 
 }
 
+.goback{
+    position:absolute;
+    width:90%;
+    background-color:$color-gray;
+    height:90rpx;
+    line-height:90rpx;
+    font-weight:normal;
+    font-size:30rpx;
+    left:50%;
+    margin-left:-45%;
+}
+
 button[type=default] {
     color:#FFF;
     background-color:$default-btn-color;

@@ -9,6 +9,19 @@ $color-orgent1:#ff3b3b;
 $color-orgent2:#e64307;
 $color-brown:#e1cda9;
 $color-brown1:#633226;
+
+.mark{
+    position: absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    width:100%;
+    height:100%;
+    background:rgba(0, 0, 0, 0.6);
+    z-index:1000;
+  }
+
 .loader{
     width:396px;
     height:396px;

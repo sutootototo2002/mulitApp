@@ -7,7 +7,7 @@ import Taro, { Component, Config, MapContext } from '@tarojs/taro'
 
 import { Map, CoverView,Canvas,View,Image,CoverImage,Button,Text,Navigator, Form } from '@tarojs/components'
 
-import {BASE_URL,globalData,PATH,systemUser} from '../../../config/index.js'; 
+import {BASE_URL,globalData,PATH,systemUser,sysTitle} from '../../../config/index.js'; 
 
 import {login} from '../../../utils/util.js';
 
@@ -58,7 +58,7 @@ class Qropen extends Component<{}, IState>{
    * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
    */
   config = {
-    navigationBarTitleText:'打开柜子'
+    navigationBarTitleText:''
   }
   constructor (props: {} | undefined) {
     super(props)
@@ -85,7 +85,7 @@ class Qropen extends Component<{}, IState>{
         loadImg2:PATH+'/mImages/car.png',
         unpayImg: PATH + '/mImages/wfk-11.png',
         unpriceImg: PATH + '/mImages/wfk.png',
-        islogin:true,
+        islogin:false,
         markBoolean:false,
         open:false,
         unpay:false
@@ -95,6 +95,9 @@ class Qropen extends Component<{}, IState>{
 
   componentWillMount(){
     console.log('---onLoad---')
+    Taro.setNavigationBarTitle({
+      title:globalData.sysTitle
+    })
     console.log(this.$router.params)
     this.setState({
         formid:this.$router.params.formid,
@@ -157,7 +160,7 @@ class Qropen extends Component<{}, IState>{
     var that = this;
     setTimeout(()=>{
       that.getUserDetail();
-    },2000)
+    },1000)
     
 
   }
@@ -183,9 +186,12 @@ class Qropen extends Component<{}, IState>{
             duration: 500
           })
           that.setState({
-            islogin:false
+            islogin:false,
+            pay:true
             
           })
+          
+          
          
           // that.gotoPapay();
         };
@@ -314,6 +320,9 @@ class Qropen extends Component<{}, IState>{
           that.getShoppingOrder();
         } else {
           console.log('*********用户不存在***********1');
+          that.setState({
+            islogin:true
+          })
           try {
             Taro.removeStorageSync('token');
           } catch (e) {
@@ -417,9 +426,10 @@ class Qropen extends Component<{}, IState>{
   }
 
   deviceOpen(machineid, lockid) {
+    console.log('machined:'+this.state.machineid+"lockid:"+lockid+'formid:'+this.state.formid)
     Taro.showLoading({
       title: '',
-    });
+    })
     var that = this;
     Taro.request({
       url: BASE_URL + 'device/open',
@@ -863,6 +873,9 @@ class Qropen extends Component<{}, IState>{
         
         }).then((res)=>{
             console.log(res);
+            that.setState({
+              pay:false
+            });
             that.getUserDetail();
             
 

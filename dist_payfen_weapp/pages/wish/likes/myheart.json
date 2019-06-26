@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "at-input": "../../../npm/taro-ui/dist/weapp/components/input/index",
+    "at-button": "../../../npm/taro-ui/dist/weapp/components/button/index"
+  },
+  "navigationBarTitleText": "心愿单"
+}

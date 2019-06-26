@@ -27,7 +27,8 @@ interface IState {
     loadImg:string,
     isfind:boolean,
     dw:string,
-    infine:string
+    infine:string,
+    markBoolean:boolean
 }
 
 // 如果需要在 h5 环境中开启 React Devtools
@@ -57,6 +58,7 @@ class Open extends Component<{}, IState>{
         orderid:'',
         openfailed:false,
         requestfailed:true,
+        markBoolean:false,
         num:0,
         tag:0,
         infine:'设备故障',
@@ -69,6 +71,9 @@ class Open extends Component<{}, IState>{
 
 
   componentWillMount(){
+    Taro.setNavigationBarTitle({
+      title:globalData.sysTitle
+    })
     console.log(this.$router.params)
     this.setState({
         formid:this.$router.params.formid,
@@ -139,7 +144,8 @@ class Open extends Component<{}, IState>{
         } else {
           that.setState({
             openfailed: true,
-            isfind:true
+            isfind:true,
+            markBoolean:true
           });
           // Taro.showModal({
           //   title: '提示111',
@@ -350,6 +356,12 @@ class Open extends Component<{}, IState>{
   render () {
     return (
         <View>
+           {/* 遮罩层 */}
+        {this.state.markBoolean ?
+          <CoverView className='mark'></CoverView>
+          :
+          <CoverView></CoverView>}
+
           {!this.state.openfailed?
           <View>
          <View className="loader">{this.state.tag}%</View>

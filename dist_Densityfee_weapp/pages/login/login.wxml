@@ -1,0 +1,12 @@
+<block>
+    <view>
+        <view class="loginDiv">
+            <image class="loginImg" src="{{loginImg}}"></image>
+            <view class="loginWord">不用记，不怕忘，快速登录直接点击!</view>
+            <button type="default" class="Btn loginBtn">微信用户快速登录</button>
+            <view class="logintk">点击登录，及表示已阅读并同意
+                <view class="tk">《机柜服务条款》</view>
+            </view>
+        </view>
+    </view>
+</block>

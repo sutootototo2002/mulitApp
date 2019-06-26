@@ -83,6 +83,9 @@ var Open = (_temp2 = _class = function (_BaseComponent) {
   }, {
     key: 'componentWillMount',
     value: function componentWillMount() {
+      _index2.default.setNavigationBarTitle({
+        title: _index3.globalData.sysTitle
+      });
       console.log(this.$router.params);
       this.setState({
         formid: this.$router.params.formid,

@@ -1,0 +1,85 @@
+<block>
+    <view class="personalCenter">
+        <view class="mhh">
+            <image class="mhhImages" src="{{mhhImg}}"></image>
+        </view>
+        <view class="personDiv">
+            <view class="contents">
+                <view class="personBox">
+                    <image class="avator" src="{{userInfoList.avatar ? userInfoList.avatar : avator}}"></image>
+                    <image class="boxBottom" src="{{perbox}}"></image>
+                    <block>
+                        <block a:if="{{isuserInfo}}">
+                            <button class="boxName" open-type="getUserInfo" onget-user-info="userInfoHandler" data-e-ongetUserInfo-so="this">点击更新信息</button>
+                        </block>
+                        <block a:else>
+                            <view class="boxName">{{globalData.nickName}}</view>
+                        </block>
+                    </block>
+                    <button class="boxInfo" onTap="goRecharge">充值优惠</button>
+                    <view class="boxUl">
+                        <view class="uli" onTap="goRecharge">
+                            <view class="wordb">￥{{anonymousState__temp}}</view>
+                            <view class="wordz">余额</view>
+                        </view>
+                        <view class="line">|</view>
+                        <view class="uli" onTap="goheart">
+                            <view class="wordb">{{wishes.length}}</view>
+                            <view class="wordz">心愿</view>
+                        </view>
+                        <view class="line">|</view>
+                        <view class="uli" onTap="gobingcart">
+                            <view class="wordb">0</view>
+                            <view class="wordz">亲情卡</view>
+                        </view>
+                    </view>
+                </view>
+                <view class="mysever">
+                    <view class="titleSever">
+                        <view class="myordertitle">我的订单</view>
+                        <view class="mychecked" onTap="toOrders">查看全部订单></view>
+                    </view>
+                    <view class="orderDiv">
+                        <view class="iconLi" onTap="toOrders1">
+                            <block>
+                                <block a:if="{{total <= 0}}">
+                                    <image class="iconb" src="{{iconB2}}"></image>
+                                </block>
+                                <block a:else>
+                                    <view>
+                                        <view class="totalDiv">{{total}}</view>
+                                        <image class="iconb" src="{{iconB21}}"></image>
+                                    </view>
+                                </block>
+                            </block>
+                            <view class="iconw">已完成</view>
+                        </view>
+                        <view class="iconLi" onTap="toOrders2">
+                            <image class="iconb" src="{{iconB1}}"></image>
+                            <view class="iconw">待支付</view>
+                        </view>
+                        <view class="iconLi" onTap="toOrders3">
+                            <image class="iconb" src="{{iconB3}}"></image>
+                            <view class="iconw">转退款</view>
+                        </view>
+                    </view>
+                    <view></view>
+                </view>
+                <view class="temp"></view>
+            </view>
+        </view>
+        <view class="footer">
+            <view class="zmkm">
+                <image class="zmkmImg" onTouchStart="onScreen" src="{{tytb33}}"></image>
+            </view>
+            <view class="footerDiv">
+                <view class="icon1">
+                    <image class="iconImg1" onTouchStart="gohome" src="{{iconImg1}}"></image>
+                </view>
+                <view class="icon2">
+                    <image class="iconImg2" onTouchStart="toSever" src="{{iconImg2}}"></image>
+                </view>
+            </view>
+        </view>
+    </view>
+</block>
