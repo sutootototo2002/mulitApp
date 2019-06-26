@@ -99,14 +99,15 @@ class Boxdetail extends Component<{}, IState>{
       data: {
         machineid: machineid,
         salesort: that.state.salesort,
-        page: curPage,
-        rows:10
+        page: page,
+        rows:5
       },
       header: {
         'content-type': 'application/json',
         'token': globalData.token
       },
       success: function (res) {
+        console.log("更加商品；；；");
         console.log(res);
         var page = res.data.data.page;
         var total = res.data.data.total;
@@ -179,9 +180,15 @@ class Boxdetail extends Component<{}, IState>{
               
             </View>
             <View>
+                
                 <View className='goodsName'>当前商品</View>
                 {glist}
-                <View className='moregoods'>更多商品</View>
+                {this.state.hasnext?
+                <View className='moregoods' onClick={this.getGoods}>更多商品</View>
+                :
+                <View className='moregoods' >没有更多商品</View>
+                }
+                
             </View>
         </View>
     )

@@ -8,9 +8,9 @@
                     <view class="boxtitle">{{item.$original.name}}</view>
                 </view>
             </view>
-            <button type="default" open-type="contact" class="loginBtn Btn">提交</button>
+            <button type="default" open-type="contact" class="Btn" style="bottom:10%;">提交</button>
             <view></view>
-            <button type="default" class="goback" style="bottom:10%;" bindtap="gohome">返回</button>
+            <button class="loginBtn goback" bindtap="gohome">返回</button>
         </view>
     </view>
 </block>

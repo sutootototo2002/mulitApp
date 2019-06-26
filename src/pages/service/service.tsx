@@ -119,9 +119,9 @@ class Login extends Component<{}, IState>{
                     <View className='boxtitle'>货柜门无法锁上</View>
                    </View> */}
                </View>
-               <Button type='default' open-type="contact" className='loginBtn Btn'>提交</Button>
+               <Button type='default' open-type="contact" className='Btn' style='bottom:10%;'>提交</Button>
                <View></View>
-               <Button type='default' className='goback' style='bottom:10%;' onClick={this.gohome}>返回</Button>
+               <Button className='loginBtn goback' onClick={this.gohome}>返回</Button>
                
                               
            </View> 

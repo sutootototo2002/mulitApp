@@ -25,7 +25,14 @@
                     </view>
                 </view>
             </view>
-            <view class="moregoods">更多商品</view>
+            <block>
+                <block wx:if="{{hasnext}}">
+                    <view class="moregoods" bindtap="getGoods">更多商品</view>
+                </block>
+                <block wx:else>
+                    <view class="moregoods">没有更多商品</view>
+                </block>
+            </block>
         </view>
     </view>
 </block>

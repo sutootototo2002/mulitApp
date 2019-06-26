@@ -133,14 +133,15 @@ var Boxdetail = (_temp2 = _class = function (_BaseComponent) {
         data: {
           machineid: machineid,
           salesort: that.state.salesort,
-          page: curPage,
-          rows: 10
+          page: page,
+          rows: 5
         },
         header: {
           'content-type': 'application/json',
           'token': _index3.globalData.token
         },
         success: function success(res) {
+          console.log("更加商品；；；");
           console.log(res);
           var page = res.data.data.page;
           var total = res.data.data.total;
@@ -195,7 +196,7 @@ var Boxdetail = (_temp2 = _class = function (_BaseComponent) {
   }]);
 
   return Boxdetail;
-}(_index.Component), _class.properties = {}, _class.$$events = ["viewlocation"], _temp2);
+}(_index.Component), _class.properties = {}, _class.$$events = ["viewlocation", "getGoods"], _temp2);
 exports.default = Boxdetail;
 
 Component(require('../../../npm/@tarojs/taro-weapp/index.js').default.createComponent(Boxdetail, true));
