@@ -79,8 +79,8 @@ class Index extends Component<{}, IState>{
         totalfee:0,
         cartgoods:[],
         promotions:0,
-        cartTips1:'正在购物中...',
-        cartTips2:'请在取出商品后关闭柜门',
+        cartTips1:'正在购物中',
+        cartTips2:'拿到满意商品后，要关门哦！',
         needRequestOrder:false,
         isRefreshingOrder:false
 
@@ -146,8 +146,8 @@ class Index extends Component<{}, IState>{
                   that.requestPay(routerinfo.orderid);
                 } else {
                   that.setState({
-                    cartTips1: '柜门已关闭，订单正在结算中',
-                    cartTips2: '稍后给您推送结算账单'
+                    cartTips1: '正在购物中',
+                    cartTips2: '正在快速核算订单,请耐心等候哦！'
                   });
                 }
               
