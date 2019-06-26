@@ -6,13 +6,13 @@
     "pages/wish/likes/myheart",
     "pages/login/login",
     "pages/service/service",
-    "pages/box/open/open",
     "pages/index/shopping/index",
     "pages/index/cgshopping/index",
     "pages/orders/orderdetail/orderdetail",
     "pages/orders/orderlist/orderlist",
     "pages/box/boxdetail/boxdetail",
     "pages/card/bindcard",
+    "pages/box/open/open",
     "pages/box/qropen/qropen",
     "pages/refund/refund"
   ],
@@ -30,6 +30,5 @@
     "scope.userLocation": {
       "desc": "你的位置信息将用于帮您寻找附近的机柜"
     }
-  },
-  "sitemapLocation": "sitemap.json"
+  }
 }

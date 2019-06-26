@@ -1,15 +1,16 @@
 {
-	"projectname": "mulitApp",
-	"description": "",
-	"appid": "wx9b0e57d73efd4ba1",
-	"setting": {
-		"urlCheck": true,
-		"es6": false,
-		"postcss": false,
-		"minified": false
-	},
-	"compileType": "miniprogram",
-	"simulatorType": "wechat",
-	"simulatorPluginLibVersion": {},
-	"condition": {}
+  "miniprogramRoot": "./",
+  "projectname": "mulitApp",
+  "description": "",
+  "appid": "wx77f8c472de03db9b",
+  "setting": {
+    "urlCheck": true,
+    "es6": false,
+    "postcss": false,
+    "minified": false
+  },
+  "compileType": "miniprogram",
+  "simulatorType": "wechat",
+  "simulatorPluginLibVersion": {},
+  "condition": {}
 }

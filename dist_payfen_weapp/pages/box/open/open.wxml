@@ -1,6 +1,14 @@
 <block>
     <view>
         <block>
+            <block wx:if="{{markBoolean}}">
+                <cover-view class="mark"></cover-view>
+            </block>
+            <block wx:else>
+                <cover-view></cover-view>
+            </block>
+        </block>
+        <block>
             <block wx:if="{{!openfailed}}">
                 <view>
                     <view class="loader">{{tag}}%</view>
