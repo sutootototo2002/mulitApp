@@ -788,3 +788,35 @@ $color-brown1:#633226;
   font-size:18px;
 }
 
+//支付分
+.paynewDiv{
+  position: relative;
+  // border:1px solid red;
+  padding:20px;
+  border-radius: 20px;
+  background:#ff7700;
+  margin:0 20px;
+  color:#fff;
+  font-size:30px;
+  text-align: right;
+}
+.tishiDiv{
+   
+   background:#fff;
+   color:#ff7700;
+   width:100px;
+   text-align: center;
+   float:left;
+   font-size:20px;
+   border-radius: 10px;
+   position: absolute;
+   top:25%;
+   padding:8px;
+
+}
+.tsDiv{
+  font-size:20px;
+  text-align: center;
+  padding:10px;
+}
+

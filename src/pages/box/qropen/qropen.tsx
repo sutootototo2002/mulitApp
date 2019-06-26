@@ -951,7 +951,15 @@ class Qropen extends Component<{}, IState>{
                    </CoverView>
                 </CoverView>
               </CoverView>
-              <Button className='BtnOne' type='default' onClick={this.payOrder}>支付</Button>
+              {/* <Button className='BtnOne' type='default' onClick={this.payOrder}>支付</Button> */}
+              {this.state.unpayorder.score == 0?
+                <Button className='BtnOne' type='default' onClick={this.payOrder}>支付</Button>
+                :
+                <CoverView>
+                  <CoverView className='paynewDiv'><CoverView className='tishiDiv'>提示</CoverView>请到微信支付分中进行支付</CoverView>
+                  <CoverView className='tsDiv'>*请进入微信支付>钱包>微信支付分>订单详情中进行支付！</CoverView>
+                </CoverView>
+              }
             </CoverView>
 
           </View>

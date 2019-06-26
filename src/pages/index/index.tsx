@@ -177,8 +177,8 @@ export default class Index extends Component<{}, IState>{
       wzc11:PATH+'/mImages/wzc-11.png',
       wzc20:PATH+'/mImages/wzc-20.png',
       wzc22:PATH+'/mImages/wzc-22.png',
-      wzc30:PATH+'/mImages/wzc-30.png',
-      wzc33:PATH+'/mImages/wzc-33.png',
+      wzc30:PATH+'/mImages/wzc-zf1.png?'+Math.random(),
+      wzc33:PATH+'/mImages/wzc-zf2.png?'+Math.random(),
       clear:PATH+'/mImages/clear.png',
       setp1:true,
       setp2:false,
@@ -267,7 +267,7 @@ export default class Index extends Component<{}, IState>{
     var that = this;
     if(this.state.singinBoolean== true && this.state.setp1==false && this.state.setp2==true){
       Taro.showLoading({
-        title: '免密开通中',
+        title: '支付分开通中',
       })
       if (intervalPapayTemp) {
         clearInterval(intervalPapayTemp);
@@ -344,8 +344,8 @@ export default class Index extends Component<{}, IState>{
       },
       success: function (res) {
         if (res.data.code == 200) {
-          var isnopasspay = res.data.data.isnopasspay;
-          if (isnopasspay == "0") {
+          var isscorepay = res.data.data.isscorepay;
+          if (isscorepay == "0") {
             that.setState({
               setp2:true
             })
@@ -388,6 +388,27 @@ export default class Index extends Component<{}, IState>{
       }
     })
   }
+  //开启支付分
+  gotopayfen(){
+    console.log('开启支付分')
+    var that = this;
+    console.log('判断是是否可以开通');
+    Taro.request({
+      method: 'POST',
+      url: BASE_URL + '/user/checkUserStatus',
+      data: {
+
+      },
+      header: {
+        'content-type': 'application/json', // 默认值
+        'token':globalData.token
+      }
+    }).then((res)=>{
+       console.log('开通结果：');
+       console.log(res);
+    })
+
+ }
   //setp2 开通免密
   gotoPapay(){
     var that = this;
@@ -1518,9 +1539,9 @@ getNearbyMachines(latitude: Number, longitude: Number) {
       }
       if(res.data.code==206){ 
          
-        console.log('请开通免密')
+        console.log('请开通支付分')
         Taro.showToast({
-          title: '请开通免密',
+          title: '请开通支付分',
           icon: 'fail',
           duration: 2000
         })
@@ -1782,7 +1803,7 @@ getNearbyMachines(latitude: Number, longitude: Number) {
              <Button className='singBtn' open-type="getPhoneNumber" onGetPhoneNumber={this.getPhoneNumber.bind(this)} >我去注册</Button>
              }
               {this.state.setp2 && 
-             <Button className='singBtn' onClick={this.gotoPapay} >我去免密</Button>
+             <Button className='singBtn' onClick={this.gotopayfen} >开通支付分</Button>
               //  <Button className='singBtn' onClick={this.gotopayfen} >开通支付分</Button>
              }
              
@@ -1843,7 +1864,15 @@ getNearbyMachines(latitude: Number, longitude: Number) {
                    </CoverView>
                 </CoverView>
               </CoverView>
-              <Button className='BtnOne' type='default' onClick={this.payOrder}>支付111</Button>
+              {/* <Button className='BtnOne' type='default' onClick={this.payOrder}>支付</Button> */}
+              {this.state.unpayorder.score == 0?
+                <Button className='BtnOne' type='default' onClick={this.payOrder}>支付</Button>
+                :
+                <CoverView>
+                  <CoverView className='paynewDiv'><CoverView className='tishiDiv'>提示</CoverView>请到微信支付分中进行支付</CoverView>
+                  <CoverView className='tsDiv'>*请进入微信支付>钱包>微信支付分>订单详情中进行支付！</CoverView>
+                </CoverView>
+              }
             </CoverView>
 
           </CoverView>

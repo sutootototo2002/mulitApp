@@ -436,18 +436,13 @@ class Index extends Component<{}, IState>{
       }
       if(res.data.code==206){ 
          
-        console.log('请开通免密')
+        console.log('请开通支付分')
         Taro.showToast({
-          title: '请开通免密',
+          title: '请开通支付分',
           icon: 'fail',
           duration: 2000
         })
         that.gohome();
-        // that.setState({
-        //   singinBoolean:true,
-        //   setp2:true,
-        //   setp3:false
-        // })
           
       }
 
