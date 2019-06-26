@@ -3,7 +3,7 @@
         <view class="shopDiv">
             <image class="shopImg" src="{{state1}}"></image>
             <view class="shoptitle">{{cartTips1}}</view>
-            <view class="shopInfo">小主！{{systemUser}}{{cartTips2}}</view>
+            <view class="shopInfo">{{cartTips2}}</view>
         </view>
         <view class="addr">
             <image class="addricon" src="{{icon1}}"></image>

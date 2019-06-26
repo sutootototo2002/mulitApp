@@ -80,7 +80,7 @@ class Index extends Component<{}, IState>{
         cartgoods:[],
         promotions:0,
         cartTips1:'正在购物中',
-        cartTips2:'拿到满意商品后，要关门哦！',
+        cartTips2:'小主,拿到满意商品后，要关门哦！',
         needRequestOrder:false,
         isRefreshingOrder:false
 
@@ -147,7 +147,7 @@ class Index extends Component<{}, IState>{
                 } else {
                   that.setState({
                     cartTips1: '正在购物中',
-                    cartTips2: '正在快速核算订单,请耐心等候哦！'
+                    cartTips2:'小主,'+systemUser+'正在快速核算订单,请耐心等候哦！'
                   });
                 }
               
@@ -491,7 +491,7 @@ class Index extends Component<{}, IState>{
           <View className='shopDiv'>
             <Image className='shopImg' src={this.state.state1}/>
             <View className='shoptitle'>{this.state.cartTips1}</View>
-            <View className='shopInfo'>小主！{systemUser}{this.state.cartTips2}</View>
+            <View className='shopInfo'>{this.state.cartTips2}</View>
             {/* <View className='toRight'>
             <Button className='toSever'>联系客服</Button>
             </View> */}
