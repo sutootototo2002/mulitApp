@@ -209,22 +209,22 @@ class Orderdetail extends Component<{}, IState>{
   gotoBack() {
     //回到首页
     // console.log(this.state.whereis+"---"+111)
-    // if (this.state.whereis == 'weight' || this.state.whereis == 'cgshop' || this.state.whereis == 'all'){
-    //   Taro.navigateTo({
-    //     url: '/pages/index/index'
-    //   })
-    // }else{
-    //   Taro.navigateBack({
-
-    //   })
-    // }
-    Taro.navigateBack({
-    }).catch((error)=>{
-      console.log('既然没有上一页，我就返回首页了哦！')
+    if (this.state.whereis == 'weight' || this.state.whereis == 'cgshop' || this.state.whereis == 'all'){
       Taro.navigateTo({
         url: '/pages/index/index'
       })
-    })
+    }else{
+      Taro.navigateBack({
+
+      })
+    }
+    // Taro.navigateBack({
+    // }).catch((error)=>{
+    //   console.log('既然没有上一页，我就返回首页了哦！')
+    //   Taro.navigateTo({
+    //     url: '/pages/index/index'
+    //   })
+    // })
   }
   ontoAnswer(e) {
     console.log('订单编号：')
