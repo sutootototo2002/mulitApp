@@ -1,0 +1,16 @@
+<block>
+    <view>
+        <view class="severDiv">
+            <view class="main clearfix">
+                <view class="serverTitle">请选择服务类型</view>
+                <view class="{{item.$loopState__temp2}}" data-id="{{index}}" onTap="turnFn" a:for="{{loopArray0}}" a:for-item="item" a:for-index="index">
+                    <image class="serverImg" src="{{item.$original.img}}"></image>
+                    <view class="boxtitle">{{item.$original.name}}</view>
+                </view>
+            </view>
+            <button type="default" open-type="contact" class="loginBtn Btn">提交</button>
+            <view></view>
+            <button type="default" class="Btn" style="bottom:10%;" onTap="gohome">返回</button>
+        </view>
+    </view>
+</block>

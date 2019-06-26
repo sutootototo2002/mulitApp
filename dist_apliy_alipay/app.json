@@ -18,8 +18,8 @@
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#ff9409",
-    "navigationBarTitleText": "WeChat",
+    "titleBarColor": "#ff9409",
+    "defaultTitle": "WeChat",
     "navigationBarTextStyle": "black"
   },
   "navigateToMiniProgramAppIdList": [
@@ -30,6 +30,5 @@
     "scope.userLocation": {
       "desc": "你的位置信息将用于帮您寻找附近的机柜"
     }
-  },
-  "sitemapLocation": "sitemap.json"
+  }
 }

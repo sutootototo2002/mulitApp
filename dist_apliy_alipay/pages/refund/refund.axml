@@ -1,0 +1,23 @@
+<block>
+    <view class="answerDiv">
+        <view class="answerTitle">请选择问题类型</view>
+        <view class="answerInfo">
+            <image class="machineInfo" src="{{machineImg}}"></image>
+            <at-button class="{{item.$loopState__temp2}}" __triggerObserer="{{ _triggerObserer }}" type="secondary" id="{{item.$loopState__temp4}}" onClick="selectNav" a:for="{{loopArray0}}" a:for-item="item" a:for-index="index" data-e-onClick-so="this" data-e-onClick-a-a="{{item.$original.id}}">{{item.$original.reason}}</at-button>
+        </view>
+        <view class="texDiv">
+            <at-textarea value="{{value}}" __triggerObserer="{{ _triggerObserer }}" onChange="handleChange" maxLength="{{200}}" placeholder="请输入吐槽意见，您的意见是我们前进的动力!" data-e-onChange-so="this"></at-textarea>
+        </view>
+        <view>
+            <view class="img1" onTap="chooseImage">
+                <image class="img" src="{{temp}}"></image>
+            </view>
+            <view class="imgsDiv">
+                <image class="imgsss" src="{{item}}" a:for="{{pics}}" a:for-item="item" a:for-index="index"></image>
+            </view>
+        </view>
+        <view>
+            <at-button className="btnsubmit" __triggerObserer="{{ _triggerObserer }}" onClick="submitRefund">立即提交</at-button>
+        </view>
+    </view>
+</block>
