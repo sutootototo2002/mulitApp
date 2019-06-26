@@ -12,17 +12,17 @@ import { number } from "prop-types";
 
 
 
-export const BASE_URL='https://testo.wemall.com.cn/clientapi/'
+export const BASE_URL='https://t.wemall.com.cn/clientapi/'
 
 /** 
  * 测试环境
  */
-export const HOST_URL= 'https://testo.wemall.com.cn/'
+export const HOST_URL= 'https://t.wemall.com.cn/'
 
 /*
  * WEBSOCKET
  */
-export const HOST_WEBSOCKET= 'wss://testo.wemall.com.cn/socket/'
+export const HOST_WEBSOCKET= 'wss://t.wemall.com.cn/socket/'
 /** 
  * 线上mock
  */
