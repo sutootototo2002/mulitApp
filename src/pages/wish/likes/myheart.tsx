@@ -660,7 +660,7 @@ addWishFn(e){
             <View className='xhdCtent'>我想要 <Text className='gtype'>{item.wishname}</Text></View>
             <View>
               <Image className='sumheart' src={this.state.imgs}/>
-              <View className='sumcount'>{item.status}</View>
+              <View className='sumcount'>{item.likes}</View>
             </View>
             <View className='clickOk'>
               {item.extra=='1'?
