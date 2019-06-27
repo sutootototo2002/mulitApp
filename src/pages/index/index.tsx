@@ -399,25 +399,38 @@ export default class Index extends Component<{}, IState>{
       }
     })
   }
+  start(){
+    Taro.request({
+      url: BASE_URL+'user/startOpenSmartPay',
+      data: '',
+      method: 'GET',
+      dataType: 'json',
+      success: function(res) {
+        console.log(res);
+        let extraData= {
+          mch_id: res.data.data.mch_id,
+          service_id: res.data.data.service_id,
+          out_request_no: res.data.data.out_request_no,
+          timestamp: res.data.data.timestamp,
+          nonce_str: res.data.data.nonce_str,
+          sign_type: res.data.data.sign_type,
+          sign: res.data.data.sign,
+
+        }
+        console.log(extraData);
+        wx.openBusinessView({
+          businessType: 'wxpayScoreEnable',
+          extraData: extraData,
+          envVersion: 'release'
+        })
+      },
+    })
+    
+  }
   //开启支付分
   gotopayfen(){
     console.log('开启支付分')
-    var that = this;
-    console.log('判断是是否可以开通');
-    Taro.request({
-      method: 'POST',
-      url: BASE_URL + '/user/checkUserStatus',
-      data: {
-
-      },
-      header: {
-        'content-type': 'application/json', // 默认值
-        'token':globalData.token
-      }
-    }).then((res)=>{
-       console.log('开通结果：');
-       console.log(res);
-    })
+    this.start();
 
  }
   //setp2 开通免密
@@ -487,7 +500,8 @@ export default class Index extends Component<{}, IState>{
            globalData.avatar = $avatarUrl;
            globalData.fee = res.data.data.fee;
            globalData.nickname = res.data.data.nickname;
-           if(res.data.data.isnopasspay=="1"){
+           if(res.data.data.isscorepay=="1"){
+                  console.log('')
                   $singinBoolean = false;
                   $markBoolean = false;
                   var userid = res.data.data.userid;
@@ -1872,7 +1886,7 @@ getNearbyMachines(latitude: Number, longitude: Number) {
                 <CoverImage className='goodsImg' src={this.state.unpayorder.goods[0].picurl} />
                 <CoverView className='goodsInfos'>
                   <CoverView>
-                    <CoverImage className='del' src={this.state.del} />
+                    {/* <CoverImage className='del' src={this.state.del} /> */}
                     <CoverView className='total'>共{this.state.unpayorder.goodsnum}件商品</CoverView>
                   </CoverView>
                   <CoverView className='goodsInfoDetail'>
