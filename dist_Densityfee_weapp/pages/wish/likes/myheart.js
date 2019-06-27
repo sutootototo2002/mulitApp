@@ -485,8 +485,8 @@ var Myheart = (_temp2 = _class = function (_BaseComponent) {
             temp.map(function (item, index) {
               if (item.wishlistid == wishlistid) {
                 item.extra = '0';
+                item.likes = res.data.n;
               }
-              return item;
             });
             var lists = that.state.myheartList;
             lists.splice(index_, 1);
@@ -545,7 +545,7 @@ var Myheart = (_temp2 = _class = function (_BaseComponent) {
             var temp = _this4.state.otherWishes;
             temp.map(function (item, index) {
               if (item.wishlistid == wishid) {
-                item.extra = '0';
+                item.extra = '0', item.likes = res.data.n;
               }
               return item;
             });
@@ -609,6 +609,7 @@ var Myheart = (_temp2 = _class = function (_BaseComponent) {
           temp.map(function (item, index) {
             if (index == idx) {
               item.extra = '1';
+              item.likes = res.data.n;
             }
             return item;
           });

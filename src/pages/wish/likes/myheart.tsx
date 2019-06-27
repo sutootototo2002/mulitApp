@@ -474,9 +474,9 @@ ondelFn(e){
           let temp = that.state.otherWishes;
           temp.map((item,index)=>{
             if(item.wishlistid == wishlistid ){
-              item.extra = '0'
+              item.extra = '0';
+              item.likes = res.data.n;
            }
-           return item;
         })
         var lists = that.state.myheartList;
         lists.splice(index_,1);
@@ -532,7 +532,8 @@ unlikeit(e){
           let temp = this.state.otherWishes;
           temp.map((item,index)=>{
             if(item.wishlistid == wishid ){
-              item.extra = '0'
+              item.extra = '0',
+              item.likes = res.data.n;
            }
            return item;
       })
@@ -594,7 +595,8 @@ likeit(e){
       let temp = this.state.otherWishes;
       temp.map((item,index)=>{
         if(index == idx ){
-          item.extra = '1'
+          item.extra = '1';
+          item.likes = res.data.n;
         }
         return item;
       })
