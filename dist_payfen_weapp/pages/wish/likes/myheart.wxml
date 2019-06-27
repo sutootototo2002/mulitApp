@@ -51,6 +51,14 @@
                         </block>
                     </view>
                 </view>
+                <block>
+                    <block wx:if="{{hasMore}}">
+                        <view class="moreViews" bindtap="fetchMoreLikes">更多心愿</view>
+                    </block>
+                    <block wx:else>
+                        <view class="moreViews">没有更多了</view>
+                    </block>
+                </block>
             </view>
         </view>
         <block>

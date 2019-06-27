@@ -56,7 +56,11 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
       args[_key] = arguments[_key];
     }
 
+<<<<<<< HEAD
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Index.__proto__ || Object.getPrototypeOf(Index)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["cartgoods", "systemUser", "formid", "lockid", "machineid", "machine", "shelfs", "orderno", "orderid", "openfailed", "state1", "icon1", "socketMsgQueue", "socketOpen", "totalfee", "promotions", "cartTips1", "cartTips2", "needRequestOrder", "isRefreshingOrder"], _this.config = {
+=======
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Index.__proto__ || Object.getPrototypeOf(Index)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["cartgoods", "formid", "lockid", "machineid", "machine", "shelfs", "orderno", "orderid", "openfailed", "state1", "icon1", "socketMsgQueue", "socketOpen", "totalfee", "promotions", "cartTips1", "cartTips2", "needRequestOrder", "isRefreshingOrder"], _this.config = {
+>>>>>>> 0309acd... 微信小程序免密版--心愿单
       navigationBarTitleText: ''
     }, _this.$$refs = [], _temp), _possibleConstructorReturn(_this, _ret);
   }
@@ -89,8 +93,13 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         totalfee: 0,
         cartgoods: [],
         promotions: 0,
+<<<<<<< HEAD
         cartTips1: '正在购物中...',
         cartTips2: '请在取出商品后关闭柜门',
+=======
+        cartTips1: '正在购物中',
+        cartTips2: '小主,拿到满意商品后,要关门哦！',
+>>>>>>> 0309acd... 微信小程序免密版--心愿单
         needRequestOrder: false,
         isRefreshingOrder: false
       };
@@ -152,8 +161,13 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
             that.requestPay(routerinfo.orderid);
           } else {
             that.setState({
+<<<<<<< HEAD
               cartTips1: '柜门已关闭，订单正在结算中',
               cartTips2: '稍后给您推送结算账单'
+=======
+              cartTips1: '正在购物中',
+              cartTips2: '小主,' + _index3.systemUser + '正在快速核算订单,请耐心等候哦！'
+>>>>>>> 0309acd... 微信小程序免密版--心愿单
             });
           }
         }
@@ -493,9 +507,13 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
 
       var cartgoods = this.__state.cartgoods;
 
+<<<<<<< HEAD
       Object.assign(this.__state, {
         systemUser: _index3.systemUser
       });
+=======
+      Object.assign(this.__state, {});
+>>>>>>> 0309acd... 微信小程序免密版--心愿单
       return this.__state;
     }
   }]);

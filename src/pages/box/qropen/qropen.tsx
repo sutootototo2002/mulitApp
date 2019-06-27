@@ -160,7 +160,7 @@ class Qropen extends Component<{}, IState>{
     var that = this;
     setTimeout(()=>{
       that.getUserDetail();
-    },1000)
+    },2000)
     
 
   }

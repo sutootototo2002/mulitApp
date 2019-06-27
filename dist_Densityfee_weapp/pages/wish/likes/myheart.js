@@ -120,6 +120,16 @@ var Myheart = (_temp2 = _class = function (_BaseComponent) {
     key: "componentDidCatchError",
     value: function componentDidCatchError() {}
   }, {
+<<<<<<< HEAD
+=======
+    key: "fetchMoreLikes",
+    value: function fetchMoreLikes() {
+      if (this.state.hasMore) {
+        this.loadOtherWishes();
+      }
+    }
+  }, {
+>>>>>>> 0309acd... 微信小程序免密版--心愿单
     key: "loadOtherWishes",
     value: function loadOtherWishes() {
       var _this2 = this;
@@ -146,11 +156,23 @@ var Myheart = (_temp2 = _class = function (_BaseComponent) {
             hash[next.wishlistid] ? "" : hash[next.wishlistid] = item.push(next);
             return item;
           }, []);
+<<<<<<< HEAD
           console.log(chatList);
           _index2.default.hideLoading();
           _this2.setState({
             otherWishes: chatList,
             hasMore: res.data.hasMore
+=======
+          console.log("chatList：");
+          console.log(chatList);
+          _index2.default.hideLoading();
+          console.log("pageNo:");
+          console.log(res.data.pageNo);
+          _this2.setState({
+            otherWishes: _this2.state.otherWishes.concat(chatList),
+            hasMore: res.data.hasMore,
+            pageNo: res.data.pageNo
+>>>>>>> 0309acd... 微信小程序免密版--心愿单
           });
         },
         fail: function fail(err) {
@@ -664,7 +686,11 @@ var Myheart = (_temp2 = _class = function (_BaseComponent) {
   }]);
 
   return Myheart;
+<<<<<<< HEAD
 }(_index.Component), _class.properties = {}, _class.$$events = ["ondelFn", "addWishFn", "unlikeit", "likeit", "oncheckdetail", "toBoxdetail", "onModify", "addgoods", "onSearchHandler", "onInput", "onGoback", "onCloseHeard"], _temp2);
+=======
+}(_index.Component), _class.properties = {}, _class.$$events = ["ondelFn", "addWishFn", "unlikeit", "likeit", "oncheckdetail", "toBoxdetail", "onModify", "addgoods", "fetchMoreLikes", "onSearchHandler", "onInput", "onGoback", "onCloseHeard"], _temp2);
+>>>>>>> 0309acd... 微信小程序免密版--心愿单
 exports.default = Myheart;
 
 Component(require('../../../npm/@tarojs/taro-weapp/index.js').default.createComponent(Myheart, true));

@@ -58,7 +58,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Index.__proto__ || Object.getPrototypeOf(Index)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "markerDetail", "unpayList", "feedbackslist", "systemUser", "showModalStatus", "showopen", "papayPressed", "qrurl", "showlogin", "showpapay", "isnopasspay", "havearrears", "formid", "isweapp", "mapKey", "latitude", "longitude", "scale", "menus", "screen", "user", "person", "zm", "avatar", "zmdefault", "searchImg", "dw", "unpayImg", "unpriceImg", "pos_", "tempImg", "del", "open", "addr", "mach", "mm", "HearHead", "closebtn", "heardImg", "yyzh", "dyzh", "xydd", "singinImg", "wzc10", "wzc11", "wzc20", "wzc22", "wzc30", "wzc33", "clear", "setp1", "setp2", "setp3", "controls", "isOpened", "mapObj_", "showLocation", "markers", "allMarkers", "bool", "booladdr", "menuright", "token", "checkPapay", "commonCode", "markBoolean", "posBoolean", "unpayBoolean", "machineBoolean", "DensityFree", "HearBoolean", "HearlistBoolean", "singinBoolean", "thumbups", "fee", "befee", "payName", "haslogin", "intervalPapay", "unpayorder", "cartTips", "orderid", "machineid", "orderno", "recogmode", "haveShopping", "Carting", "timerTem"], _this.config = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Index.__proto__ || Object.getPrototypeOf(Index)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "markerDetail", "unpayList", "feedbackslist", "systemUser", "showModalStatus", "showopen", "papayPressed", "qrurl", "showlogin", "showpapay", "isnopasspay", "havearrears", "formid", "isweapp", "mapKey", "latitude", "longitude", "scale", "menus", "screen", "user", "person", "zm", "avatar", "zmdefault", "searchImg", "dw", "unpayImg", "unpriceImg", "pos_", "tempImg", "del", "open", "addr", "mach", "mm", "HearHead", "closebtn", "heardImg", "yyzh", "dyzh", "xydd", "singinImg", "wzc10", "wzc11", "wzc20", "wzc22", "wzc30", "wzc33", "clear", "setp1", "setp2", "setp3", "controls", "isOpened", "mapObj_", "showLocation", "markers", "allMarkers", "bool", "booladdr", "menuright", "token", "checkPapay", "commonCode", "markBoolean", "posBoolean", "unpayBoolean", "machineBoolean", "DensityFree", "HearBoolean", "HearlistBoolean", "singinBoolean", "thumbups", "fee", "befee", "payName", "haslogin", "intervalPapay", "unpayorder", "cartTips", "orderid", "hasMore", "machineid", "orderno", "recogmode", "haveShopping", "Carting", "timerTem"], _this.config = {
       navigationBarTitleText: '首页 payfen'
     }, _this.onHeard = function () {
       console.log('心愿单开启');
@@ -164,6 +164,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         unpayorder: [],
         cartTips: '',
         orderid: '',
+        hasMore: true,
         machineid: '',
         orderno: '',
         recogmode: '',
@@ -214,11 +215,21 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
       order.stopInterval();
     }
   }, {
+    key: 'fetchMoreLikes',
+    value: function fetchMoreLikes() {
+      if (this.state.hasMore) {
+        this.showFeedbackAndThumbups();
+      }
+    }
+  }, {
     key: 'componentDidShow',
     value: function componentDidShow() {
       var _this2 = this;
 
       console.log('---onshow---');
+      this.setState({
+        HearlistBoolean: false
+      });
       var that = this;
       if (this.state.singinBoolean == true && this.state.setp1 == false && this.state.setp2 == true) {
         _index2.default.showLoading({
@@ -1270,6 +1281,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
     value: function showFeedbackAndThumbups() {
       var _this5 = this;
 
+      var that = this;
       _index2.default.showLoading({
         title: ''
       });
@@ -1298,7 +1310,9 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
             feedbackslist: feedbacks
           });
           //feedbacks = this.data.feedbacks
-          hasMore = res.data.hasMore;
+          that.setState({
+            hasMore: res.data.hasMore
+          });
         },
         fail: function fail(err) {
           _index2.default.hideLoading();
@@ -1326,14 +1340,14 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
   }, {
     key: 'updateWishTimeStamp',
     value: function updateWishTimeStamp(rows) {
-      tsFeedback = rows.map(function (item, index) {
+      rows.map(function (item, index) {
         if (item.type == 'f') {
-          return item.ts;
+          tsFeedback = item.ts;
         }
       });
-      tsWish = rows.map(function (item, index) {
+      rows.map(function (item, index) {
         if (item.type !== 'f') {
-          return item.ts;
+          tsWish = item.ts;
         }
       });
       console.log('tsFeedback:' + tsFeedback);
@@ -1700,7 +1714,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
   }]);
 
   return Index;
-}(_index.Component), _class.properties = {}, _class.$$events = ["onControlTap", "markertap", "regionchange", "topersonfn", "onStored", "getPhoneNumber", "gotopayfen", "onInfo", "gotoCart", "onClosePos", "payOrder", "gotoPapay", "gotoCartFn", "onCloseHeardlist", "onSetheart", "onScreen", "onRight", "onLeft", "hideModal"], _temp2);
+}(_index.Component), _class.properties = {}, _class.$$events = ["onControlTap", "markertap", "regionchange", "topersonfn", "onStored", "getPhoneNumber", "gotopayfen", "onInfo", "gotoCart", "onClosePos", "payOrder", "gotoPapay", "gotoCartFn", "onCloseHeardlist", "onSetheart", "fetchMoreLikes", "onScreen", "onRight", "onLeft", "hideModal"], _temp2);
 // #region 导出注意
 //
 // 经过上面的声明后需要将导出的 Taro.Component 子类修改为子类本身的 props 属性

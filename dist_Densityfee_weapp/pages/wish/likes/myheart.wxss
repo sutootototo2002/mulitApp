@@ -451,4 +451,13 @@
   overflow: hidden;
   margin-top: -60rpx;
   position: relative;
+<<<<<<< HEAD
+=======
+}
+
+.moreViews {
+  text-align: center;
+  font-size: 30rpx;
+  width: 100%;
+>>>>>>> 0309acd... 微信小程序免密版--心愿单
 }

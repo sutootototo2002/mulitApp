@@ -452,3 +452,9 @@
   margin-top: -60rpx;
   position: relative;
 }
+
+.moreViews {
+  text-align: center;
+  font-size: 30rpx;
+  width: 100%;
+}

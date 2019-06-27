@@ -165,7 +165,7 @@ var Qropen = (_temp2 = _class = function (_BaseComponent) {
       var that = this;
       setTimeout(function () {
         that.getUserDetail();
-      }, 1000);
+      }, 2000);
     }
   }, {
     key: 'componentDidHide',

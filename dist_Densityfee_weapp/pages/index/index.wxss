@@ -769,4 +769,13 @@
   text-align: center;
   color: #fff;
   font-size: 18rpx;
+<<<<<<< HEAD
+=======
+}
+
+.moreadd {
+  width: 100%;
+  text-align: center;
+  font-size: 30rpx;
+>>>>>>> 0309acd... 微信小程序免密版--心愿单
 }

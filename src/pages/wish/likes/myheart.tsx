@@ -125,6 +125,12 @@ class Myheart extends Component<{}, IState>{
 
   componentDidCatchError () {}
 
+  fetchMoreLikes() {
+    
+    if(this.state.hasMore)
+      this.loadOtherWishes();
+  }
+
   loadOtherWishes() {
     Taro.showLoading({
       title: '',
@@ -150,12 +156,15 @@ class Myheart extends Component<{}, IState>{
           }, [])
         
         
+        console.log("chatList：");
         console.log(chatList);
         Taro.hideLoading();
+        console.log("pageNo:")
+        console.log(res.data.pageNo)
         this.setState({
-          otherWishes: chatList,
+          otherWishes:this.state.otherWishes.concat(chatList),
           hasMore: res.data.hasMore,
-          //pageNo: res.data.pageNo,
+          pageNo: res.data.pageNo
         })
       },
       fail: (err) => {
@@ -731,6 +740,12 @@ addWishFn(e){
             
 
              </View>
+             {this.state.hasMore?
+              <View className='moreViews' onClick={this.fetchMoreLikes}>更多心愿</View>
+              :
+              <View className='moreViews'>没有更多了</View>
+             }
+             
           </View>
           </View>
           {/* <Button className='callback' type='default'>返回</Button> */}

@@ -172,6 +172,14 @@
                                 </cover-view>
                             </cover-view>
                         </cover-view>
+                        <block>
+                            <block wx:if="{{hasMore}}">
+                                <cover-view bindtap="fetchMoreLikes" class="moreadd">加载更多</cover-view>
+                            </block>
+                            <block wx:else>
+                                <cover-view class="moreadd">没有更多了</cover-view>
+                            </block>
+                        </block>
                     </cover-view>
                 </cover-view>
             </block>

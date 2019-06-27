@@ -165,7 +165,11 @@ var Qropen = (_temp2 = _class = function (_BaseComponent) {
       var that = this;
       setTimeout(function () {
         that.getUserDetail();
+<<<<<<< HEAD
       }, 1000);
+=======
+      }, 2000);
+>>>>>>> 0309acd... 微信小程序免密版--心愿单
     }
   }, {
     key: 'componentDidHide',

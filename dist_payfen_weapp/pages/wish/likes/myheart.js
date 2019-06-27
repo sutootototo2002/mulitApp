@@ -120,6 +120,13 @@ var Myheart = (_temp2 = _class = function (_BaseComponent) {
     key: "componentDidCatchError",
     value: function componentDidCatchError() {}
   }, {
+    key: "fetchMoreLikes",
+    value: function fetchMoreLikes() {
+      if (this.state.hasMore) {
+        this.loadOtherWishes();
+      }
+    }
+  }, {
     key: "loadOtherWishes",
     value: function loadOtherWishes() {
       var _this2 = this;
@@ -146,11 +153,15 @@ var Myheart = (_temp2 = _class = function (_BaseComponent) {
             hash[next.wishlistid] ? "" : hash[next.wishlistid] = item.push(next);
             return item;
           }, []);
+          console.log("chatList：");
           console.log(chatList);
           _index2.default.hideLoading();
+          console.log("pageNo:");
+          console.log(res.data.pageNo);
           _this2.setState({
-            otherWishes: chatList,
-            hasMore: res.data.hasMore
+            otherWishes: _this2.state.otherWishes.concat(chatList),
+            hasMore: res.data.hasMore,
+            pageNo: res.data.pageNo
           });
         },
         fail: function fail(err) {
@@ -664,7 +675,7 @@ var Myheart = (_temp2 = _class = function (_BaseComponent) {
   }]);
 
   return Myheart;
-}(_index.Component), _class.properties = {}, _class.$$events = ["ondelFn", "addWishFn", "unlikeit", "likeit", "oncheckdetail", "toBoxdetail", "onModify", "addgoods", "onSearchHandler", "onInput", "onGoback", "onCloseHeard"], _temp2);
+}(_index.Component), _class.properties = {}, _class.$$events = ["ondelFn", "addWishFn", "unlikeit", "likeit", "oncheckdetail", "toBoxdetail", "onModify", "addgoods", "fetchMoreLikes", "onSearchHandler", "onInput", "onGoback", "onCloseHeard"], _temp2);
 exports.default = Myheart;
 
 Component(require('../../../npm/@tarojs/taro-weapp/index.js').default.createComponent(Myheart, true));
