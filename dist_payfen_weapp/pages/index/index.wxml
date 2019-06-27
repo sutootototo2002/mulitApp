@@ -98,7 +98,6 @@
                             <cover-image class="goodsImg" src="{{unpayorder.goods[0].picurl}}"></cover-image>
                             <cover-view class="goodsInfos">
                                 <cover-view>
-                                    <cover-image class="del" src="{{del}}"></cover-image>
                                     <cover-view class="total">共{{unpayorder.goodsnum}}件商品</cover-view>
                                 </cover-view>
                                 <cover-view class="goodsInfoDetail">[{{unpayorder.goods[0].goodsname}}等...] {{unpayorder.goods[0].location}}</cover-view>
