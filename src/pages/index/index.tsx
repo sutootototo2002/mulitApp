@@ -122,7 +122,8 @@ interface IState {
   markerDetail:Array<object>,
   avatar:string,
   clear:string,
-  timerTem:string
+  timerTem:string,
+  hasMore:boolean
 }
 
 export default class Index extends Component<{}, IState>{
@@ -213,6 +214,7 @@ export default class Index extends Component<{}, IState>{
       unpayorder:[],
       cartTips:'', //提示
       orderid:'',
+      hasMore:true,
       machineid:'',
       orderno:'',
       recogmode:'',
@@ -261,9 +263,18 @@ export default class Index extends Component<{}, IState>{
   componentWillUnmount() {
     order.stopInterval();
   }
+
+  fetchMoreLikes() {
+    if(this.state.hasMore)
+    this.showFeedbackAndThumbups();
+  }
   
   componentDidShow() {
     console.log('---onshow---')
+    this.setState({
+      HearlistBoolean: false
+    })
+
     var that = this;
     if(this.state.singinBoolean== true && this.state.setp1==false && this.state.setp2==true){
       Taro.showLoading({
@@ -1270,11 +1281,13 @@ getNearbyMachines(latitude: Number, longitude: Number) {
 
   //得到心愿回复
   showFeedbackAndThumbups() {
+    var that = this;
     Taro.showLoading({
       title: '',
     });
 
     Taro.request({
+     
       url: BASE_URL + 'wishlist/getWishAndFeedBack',
       data: {
         // userid: this.data.userid,
@@ -1299,7 +1312,10 @@ getNearbyMachines(latitude: Number, longitude: Number) {
           feedbackslist:feedbacks 
         })
         //feedbacks = this.data.feedbacks
-        hasMore = res.data.hasMore
+        
+        that.setState({
+          hasMore:res.data.hasMore
+        })
         
       },
       fail: (err) => {
@@ -1325,14 +1341,14 @@ getNearbyMachines(latitude: Number, longitude: Number) {
   }
   updateWishTimeStamp(rows) {
     
-    tsFeedback = rows.map((item,index)=>{
+    rows.map((item,index)=>{
       if(item.type == 'f'){
-        return item.ts
+        tsFeedback = item.ts
       }
     })
-    tsWish = rows.map((item,index)=>{
+    rows.map((item,index)=>{
       if(item.type !== 'f'){
-        return item.ts
+        tsWish = item.ts
       }
     })
 
@@ -1891,6 +1907,12 @@ getNearbyMachines(latitude: Number, longitude: Number) {
             <CoverView className='hearList'>
               {heartList}
               </CoverView>
+              {this.state.hasMore?
+              <CoverView onClick={this.fetchMoreLikes} className='moreadd'>加载更多</CoverView>
+              :
+              <CoverView className='moreadd'>没有更多了</CoverView>
+              }
+            
             </CoverView>
           </CoverView>
           :

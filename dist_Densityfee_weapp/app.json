@@ -30,5 +30,6 @@
     "scope.userLocation": {
       "desc": "你的位置信息将用于帮您寻找附近的机柜"
     }
-  }
+  },
+  "sitemapLocation": "sitemap.json"
 }
