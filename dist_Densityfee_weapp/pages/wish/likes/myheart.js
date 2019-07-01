@@ -686,11 +686,7 @@ var Myheart = (_temp2 = _class = function (_BaseComponent) {
   }]);
 
   return Myheart;
-<<<<<<< HEAD
-}(_index.Component), _class.properties = {}, _class.$$events = ["ondelFn", "addWishFn", "unlikeit", "likeit", "oncheckdetail", "toBoxdetail", "onModify", "addgoods", "onSearchHandler", "onInput", "onGoback", "onCloseHeard"], _temp2);
-=======
 }(_index.Component), _class.properties = {}, _class.$$events = ["ondelFn", "addWishFn", "unlikeit", "likeit", "oncheckdetail", "toBoxdetail", "onModify", "addgoods", "fetchMoreLikes", "onSearchHandler", "onInput", "onGoback", "onCloseHeard"], _temp2);
->>>>>>> 0309acd... 微信小程序免密版--心愿单
 exports.default = Myheart;
 
 Component(require('../../../npm/@tarojs/taro-weapp/index.js').default.createComponent(Myheart, true));
