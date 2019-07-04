@@ -890,6 +890,41 @@ class Qropen extends Component<{}, IState>{
     })
   }
 
+  gotopayfen(){
+    console.log('开启支付分')
+    this.start();
+
+ }
+
+ start(){
+  Taro.request({
+    url: BASE_URL+'user/startOpenSmartPay',
+    data: '',
+    method: 'GET',
+    dataType: 'json',
+    success: function(res) {
+      console.log(res);
+      let extraData= {
+        mch_id: res.data.data.mch_id,
+        service_id: res.data.data.service_id,
+        out_request_no: res.data.data.out_request_no,
+        timestamp: res.data.data.timestamp,
+        nonce_str: res.data.data.nonce_str,
+        sign_type: res.data.data.sign_type,
+        sign: res.data.data.sign,
+
+      }
+      console.log(extraData);
+      wx.openBusinessView({
+        businessType: 'wxpayScoreEnable',
+        extraData: extraData,
+        envVersion: 'release'
+      })
+    },
+  })
+  
+}
+
   gotoHome(){
 
   }
@@ -912,7 +947,7 @@ class Qropen extends Component<{}, IState>{
              <Image className='loadImg' src={this.state.loadImg}/>
              <View className='infoZm'>扫码即可支付哦！</View>
             <Form >
-            <Button type="default" onClick={this.gotoPapay} className='Btn btnopen'> 开启微信免密支付 </Button>
+            <Button type="default" onClick={this.gotopayfen} className='Btn btnopen'> 开通支付分 </Button>
             </Form>
           </View>
           :
@@ -969,7 +1004,7 @@ class Qropen extends Component<{}, IState>{
                 <Button className='BtnOne' type='default' onClick={this.payOrder}>支付</Button>
                 :
                 <CoverView>
-                  <CoverView className='paynewDiv'><CoverView className='tishiDiv'>提示</CoverView>请到微信支付分中进行支付</CoverView>
+                  <CoverView className='paynewDiv'>请到微信支付分中进行支付</CoverView>
                   <CoverView className='tsDiv'>*请进入微信支付>钱包>微信支付分>订单详情中进行支付！</CoverView>
                 </CoverView>
               }

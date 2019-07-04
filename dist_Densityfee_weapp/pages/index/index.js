@@ -61,10 +61,14 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Index.__proto__ || Object.getPrototypeOf(Index)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "markerDetail", "unpayList", "feedbackslist", "systemUser", "showModalStatus", "showopen", "papayPressed", "qrurl", "showlogin", "showpapay", "isnopasspay", "havearrears", "formid", "isweapp", "mapKey", "latitude", "longitude", "scale", "menus", "screen", "user", "person", "zm", "avatar", "zmdefault", "searchImg", "dw", "unpayImg", "unpriceImg", "pos_", "tempImg", "del", "open", "addr", "mach", "mm", "HearHead", "closebtn", "heardImg", "yyzh", "dyzh", "xydd", "singinImg", "wzc10", "wzc11", "wzc20", "wzc22", "wzc30", "wzc33", "clear", "setp1", "setp2", "setp3", "controls", "isOpened", "mapObj_", "showLocation", "markers", "allMarkers", "bool", "booladdr", "menuright", "token", "checkPapay", "commonCode", "markBoolean", "posBoolean", "unpayBoolean", "machineBoolean", "DensityFree", "HearBoolean", "HearlistBoolean", "singinBoolean", "thumbups", "fee", "befee", "payName", "haslogin", "intervalPapay", "unpayorder", "cartTips", "orderid", "machineid", "orderno", "recogmode", "haveShopping", "Carting", "timerTem"], _this.config = {
 =======
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Index.__proto__ || Object.getPrototypeOf(Index)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "markerDetail", "unpayList", "feedbackslist", "systemUser", "showModalStatus", "showopen", "papayPressed", "qrurl", "showlogin", "showpapay", "isnopasspay", "havearrears", "formid", "isweapp", "mapKey", "latitude", "longitude", "scale", "menus", "screen", "user", "person", "zm", "avatar", "zmdefault", "searchImg", "dw", "unpayImg", "unpriceImg", "pos_", "tempImg", "del", "open", "addr", "mach", "mm", "HearHead", "closebtn", "heardImg", "yyzh", "dyzh", "xydd", "singinImg", "wzc10", "wzc11", "wzc20", "wzc22", "wzc30", "wzc33", "clear", "setp1", "setp2", "setp3", "controls", "isOpened", "mapObj_", "showLocation", "markers", "allMarkers", "bool", "booladdr", "menuright", "token", "checkPapay", "commonCode", "markBoolean", "posBoolean", "unpayBoolean", "machineBoolean", "DensityFree", "HearBoolean", "HearlistBoolean", "singinBoolean", "thumbups", "fee", "befee", "payName", "haslogin", "intervalPapay", "unpayorder", "cartTips", "orderid", "hasMore", "machineid", "orderno", "recogmode", "haveShopping", "Carting", "timerTem"], _this.config = {
 >>>>>>> 0309acd... 微信小程序免密版--心愿单
+=======
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Index.__proto__ || Object.getPrototypeOf(Index)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "markerDetail", "unpayList", "feedbackslist", "systemUser", "showModalStatus", "showopen", "papayPressed", "qrurl", "showlogin", "showpapay", "isnopasspay", "havearrears", "formid", "isweapp", "mapKey", "latitude", "longitude", "scale", "menus", "screen", "user", "person", "zm", "avatar", "zmdefault", "searchImg", "dw", "unpayImg", "unpriceImg", "pos_", "tempImg", "del", "open", "addr", "mach", "mm", "HearHead", "closebtn", "heardImg", "yyzh", "dyzh", "xydd", "singinImg", "wzc10", "wzc11", "wzc20", "wzc22", "wzc30", "wzc33", "clear", "setp1", "setp2", "setp3", "controls", "isOpened", "mapObj_", "showLocation", "markers", "allMarkers", "bool", "booladdr", "menuright", "token", "checkPapay", "commonCode", "markBoolean", "posBoolean", "unpayBoolean", "machineBoolean", "DensityFree", "HearBoolean", "HearlistBoolean", "singinBoolean", "thumbups", "fee", "befee", "payName", "haslogin", "intervalPapay", "unpayorder", "cartTips", "orderid", "hasMore", "machineid", "orderno", "recogmode", "haveShopping", "Carting", "timerTem"], _this.config = {
+>>>>>>> master
       navigationBarTitleText: '首页'
     }, _this.onHeard = function () {
       console.log('心愿单开启');
@@ -171,9 +175,13 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         cartTips: '',
         orderid: '',
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         hasMore: true,
 >>>>>>> 0309acd... 微信小程序免密版--心愿单
+=======
+        hasMore: true,
+>>>>>>> master
         machineid: '',
         orderno: '',
         recogmode: '',
@@ -225,7 +233,10 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
     }
   }, {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
     key: 'fetchMoreLikes',
     value: function fetchMoreLikes() {
       if (this.state.hasMore) {
@@ -233,18 +244,27 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
       }
     }
   }, {
+<<<<<<< HEAD
 >>>>>>> 0309acd... 微信小程序免密版--心愿单
+=======
+>>>>>>> master
     key: 'componentDidShow',
     value: function componentDidShow() {
       var _this2 = this;
 
       console.log('---onshow---');
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
       this.setState({
         HearlistBoolean: false
       });
 >>>>>>> 0309acd... 微信小程序免密版--心愿单
+=======
+      this.setState({
+        HearlistBoolean: false
+      });
+>>>>>>> master
       var that = this;
       if (this.state.singinBoolean == true && this.state.setp1 == false && this.state.setp2 == true) {
         _index2.default.showLoading({
@@ -1276,9 +1296,13 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
       var _this5 = this;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
       var that = this;
 >>>>>>> 0309acd... 微信小程序免密版--心愿单
+=======
+      var that = this;
+>>>>>>> master
       _index2.default.showLoading({
         title: ''
       });
@@ -1308,12 +1332,18 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
           });
           //feedbacks = this.data.feedbacks
 <<<<<<< HEAD
+<<<<<<< HEAD
           hasMore = res.data.hasMore;
 =======
           that.setState({
             hasMore: res.data.hasMore
           });
 >>>>>>> 0309acd... 微信小程序免密版--心愿单
+=======
+          that.setState({
+            hasMore: res.data.hasMore
+          });
+>>>>>>> master
         },
         fail: function fail(err) {
           _index2.default.hideLoading();
@@ -1342,13 +1372,18 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
     key: 'updateWishTimeStamp',
     value: function updateWishTimeStamp(rows) {
 <<<<<<< HEAD
+<<<<<<< HEAD
       tsFeedback = rows.map(function (item, index) {
+=======
+      rows.map(function (item, index) {
+>>>>>>> master
         if (item.type == 'f') {
-          return item.ts;
+          tsFeedback = item.ts;
         }
       });
-      tsWish = rows.map(function (item, index) {
+      rows.map(function (item, index) {
         if (item.type !== 'f') {
+<<<<<<< HEAD
           return item.ts;
 =======
       rows.map(function (item, index) {
@@ -1360,6 +1395,9 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         if (item.type !== 'f') {
           tsWish = item.ts;
 >>>>>>> 0309acd... 微信小程序免密版--心愿单
+=======
+          tsWish = item.ts;
+>>>>>>> master
         }
       });
       console.log('tsFeedback:' + tsFeedback);
@@ -1727,10 +1765,14 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
 
   return Index;
 <<<<<<< HEAD
+<<<<<<< HEAD
 }(_index.Component), _class.properties = {}, _class.$$events = ["onControlTap", "markertap", "regionchange", "topersonfn", "onStored", "getPhoneNumber", "gotoPapay", "onInfo", "gotoCart", "onClosePos", "payOrder", "gotoCartFn", "onCloseHeardlist", "onSetheart", "onScreen", "onRight", "onLeft", "hideModal"], _temp2);
 =======
 }(_index.Component), _class.properties = {}, _class.$$events = ["onControlTap", "markertap", "regionchange", "topersonfn", "onStored", "getPhoneNumber", "gotoPapay", "onInfo", "gotoCart", "onClosePos", "payOrder", "gotoCartFn", "onCloseHeardlist", "onSetheart", "fetchMoreLikes", "onScreen", "onRight", "onLeft", "hideModal"], _temp2);
 >>>>>>> 0309acd... 微信小程序免密版--心愿单
+=======
+}(_index.Component), _class.properties = {}, _class.$$events = ["onControlTap", "markertap", "regionchange", "topersonfn", "onStored", "getPhoneNumber", "gotoPapay", "onInfo", "gotoCart", "onClosePos", "payOrder", "gotoCartFn", "onCloseHeardlist", "onSetheart", "fetchMoreLikes", "onScreen", "onRight", "onLeft", "hideModal"], _temp2);
+>>>>>>> master
 // #region 导出注意
 //
 // 经过上面的声明后需要将导出的 Taro.Component 子类修改为子类本身的 props 属性

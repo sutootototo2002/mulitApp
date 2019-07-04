@@ -123,7 +123,10 @@ var Myheart = (_temp2 = _class = function (_BaseComponent) {
     value: function componentDidCatchError() {}
   }, {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
     key: "fetchMoreLikes",
     value: function fetchMoreLikes() {
       if (this.state.hasMore) {
@@ -131,7 +134,10 @@ var Myheart = (_temp2 = _class = function (_BaseComponent) {
       }
     }
   }, {
+<<<<<<< HEAD
 >>>>>>> 0309acd... 微信小程序免密版--心愿单
+=======
+>>>>>>> master
     key: "loadOtherWishes",
     value: function loadOtherWishes() {
       var _this2 = this;
@@ -159,9 +165,16 @@ var Myheart = (_temp2 = _class = function (_BaseComponent) {
             return item;
           }, []);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+          console.log("chatList：");
+>>>>>>> master
           console.log(chatList);
           _index2.default.hideLoading();
+          console.log("pageNo:");
+          console.log(res.data.pageNo);
           _this2.setState({
+<<<<<<< HEAD
             otherWishes: chatList,
             hasMore: res.data.hasMore
 =======
@@ -175,6 +188,11 @@ var Myheart = (_temp2 = _class = function (_BaseComponent) {
             hasMore: res.data.hasMore,
             pageNo: res.data.pageNo
 >>>>>>> 0309acd... 微信小程序免密版--心愿单
+=======
+            otherWishes: _this2.state.otherWishes.concat(chatList),
+            hasMore: res.data.hasMore,
+            pageNo: res.data.pageNo
+>>>>>>> master
           });
         },
         fail: function fail(err) {
@@ -498,8 +516,8 @@ var Myheart = (_temp2 = _class = function (_BaseComponent) {
             temp.map(function (item, index) {
               if (item.wishlistid == wishlistid) {
                 item.extra = '0';
+                item.likes = res.data.n;
               }
-              return item;
             });
             var lists = that.state.myheartList;
             lists.splice(index_, 1);
@@ -558,7 +576,7 @@ var Myheart = (_temp2 = _class = function (_BaseComponent) {
             var temp = _this4.state.otherWishes;
             temp.map(function (item, index) {
               if (item.wishlistid == wishid) {
-                item.extra = '0';
+                item.extra = '0', item.likes = res.data.n;
               }
               return item;
             });
@@ -622,6 +640,7 @@ var Myheart = (_temp2 = _class = function (_BaseComponent) {
           temp.map(function (item, index) {
             if (index == idx) {
               item.extra = '1';
+              item.likes = res.data.n;
             }
             return item;
           });
