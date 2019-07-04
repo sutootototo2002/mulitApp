@@ -1,5 +1,5 @@
 'use strict';
-var branch = 'payfen'
+var branch = 'payfen_dev'
 var config = {
   projectName: 'mulitApp',
   date: '2019-4-20',
