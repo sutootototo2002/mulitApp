@@ -1,0 +1,16 @@
+<block>
+    <view>
+        <view class="severDiv">
+            <view class="main clearfix">
+                <view class="serverTitle">请选择服务类型</view>
+                <view class="{{item.$loopState__temp2}}" data-id="{{index}}" bindtap="turnFn" wx:for="{{loopArray0}}" wx:for-item="item" wx:for-index="index">
+                    <image class="serverImg" src="{{item.$original.img}}"></image>
+                    <view class="boxtitle">{{item.$original.name}}</view>
+                </view>
+            </view>
+            <button type="default" open-type="contact" class="Btn" style="bottom:10%;">提交</button>
+            <view></view>
+            <button class="loginBtn goback" bindtap="gohome">返回</button>
+        </view>
+    </view>
+</block>
