@@ -70,7 +70,7 @@
                             </view>
                             <block>
                                 <block wx:if="{{isMM}}">
-                                    <button type="default" class="Btn btn1" bindtap="onMM">开启免密 愉快购物</button>
+                                    <button type="default" class="Btn btn1" bindtap="onMM">开启支付分 愉快购物</button>
                                 </block>
                                 <block wx:else>
                                     <button type="default" class="Btn btn1" bindtap="onCloseSuccess">充值成功</button>

@@ -177,7 +177,7 @@ var Recharge = (_temp2 = _class = function (_BaseComponent) {
           console.log('获取用户信息：');
           console.log(res);
           var ismm = false;
-          if (res.data.data.isnopasspay == "1") {
+          if (res.data.data.isscorepay == "1") {
             ismm = false;
           } else {
             ismm = true;
@@ -393,6 +393,42 @@ var Recharge = (_temp2 = _class = function (_BaseComponent) {
     value: function onMM() {
       //开通免密
       //检查是否需要开通，如果已经开通就关闭
+      console.log('开启支付分');
+      this.start();
+    }
+    //开启支付分
+    //   gotopayfen(){
+    //     console.log('开启支付分')
+    //     this.start();
+    //  }
+
+  }, {
+    key: "start",
+    value: function start() {
+      _index2.default.request({
+        url: _index3.BASE_URL + 'user/startOpenSmartPay',
+        data: '',
+        method: 'GET',
+        dataType: 'json',
+        success: function success(res) {
+          console.log(res);
+          var extraData = {
+            mch_id: res.data.data.mch_id,
+            service_id: res.data.data.service_id,
+            out_request_no: res.data.data.out_request_no,
+            timestamp: res.data.data.timestamp,
+            nonce_str: res.data.data.nonce_str,
+            sign_type: res.data.data.sign_type,
+            sign: res.data.data.sign
+          };
+          console.log(extraData);
+          wx.openBusinessView({
+            businessType: 'wxpayScoreEnable',
+            extraData: extraData,
+            envVersion: 'release'
+          });
+        }
+      });
     }
   }, {
     key: "_createData",

@@ -102,7 +102,7 @@ class Qropen extends Component<{}, IState>{
     this.setState({
         formid:this.$router.params.formid,
         lockid:this.$router.params.lockid,
-        machineid:this.$router.params.machineid
+        machineid:this.$router.params.machineid//"21e0211a094065ae25490fd4590aa7d1"||this.$router.params.machineid
     })
     var that = this;
     Taro.showLoading({
@@ -295,13 +295,13 @@ class Qropen extends Component<{}, IState>{
             islogin:false
           })
           //
-          var isnopasspay = res.data.data.isnopasspay;
+          var isscorepay = res.data.data.isscorepay;
           var havearrears = res.data.data.havearrears;
           if (havearrears == "1") {
             that.getUnpayOrder();
             
           }
-            if (isnopasspay == "1") {
+            if (isscorepay == "1") {
               console.log('---已开通免密open---')
               that.setState({
                 islogin:false,
@@ -434,7 +434,7 @@ class Qropen extends Component<{}, IState>{
     Taro.request({
       url: BASE_URL + 'device/open',
       data: {
-        machineid: machineid,
+        machineid: machineid,//machineid || "21e0211a094065ae25490fd4590aa7d1",
         lockid: lockid,
         formid: that.state.formid
       },

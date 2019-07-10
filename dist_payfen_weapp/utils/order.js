@@ -73,6 +73,9 @@ function shoppingorder(succeeded) {
         console.log('---getShoppingOrder(购物中订单)---');
         console.log(result);
         succeeded(result);
+      } else {
+        console.log('---订单购物中订单---');
+        succeeded(result);
       }
     }
   });

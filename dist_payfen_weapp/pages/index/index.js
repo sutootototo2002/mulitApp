@@ -39,6 +39,7 @@ var count = 0;
 var timer = 0;
 var timerList = [];
 var intervalPapayTempArr = [];
+var this_;
 
 var order = require("../../utils/order.js");
 var wishImg = "/assets/images/syxytb.png";
@@ -183,6 +184,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
   }, {
     key: 'componentWillMount',
     value: function componentWillMount() {
+      this_ = this;
       console.log('---onLoad---');
       if (_index2.default.getEnv() == "ALIPAY") {
         _index3.globalData.isweapp = false;
@@ -312,6 +314,13 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         },
         success: function success(res) {
           if (res.data.code == 200) {
+            var havearrears = res.data.data.havearrears;
+            if (havearrears == '0') {
+              that.setState({
+                markBoolean: false,
+                unpayBoolean: false
+              });
+            }
             var isscorepay = res.data.data.isscorepay;
             if (isscorepay == "0") {
               that.setState({
@@ -476,6 +485,12 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
             that.getUnpayOrder();
           } else {
             console.log('没有未结订单！');
+            if (res.data.data.havearrears == "0") {
+              that.setState({
+                unpayBoolean: false,
+                markBoolean: false
+              });
+            }
           }
           if (res.data.data.fee) {
             $fee = res.data.data.fee;
@@ -534,9 +549,11 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
           'token': _index3.globalData.token
         },
         success: function success(res) {
+          console.log('resttttttttt');
+          console.log(res);
           if (res.data.code == 200) {
             _index2.default.setStorageSync("orderid", res.data.data.orderid);
-            that.setState({
+            this_.setState({
               unpayorder: res.data.data,
               singinBoolean: false,
               unpayBoolean: true,
@@ -920,8 +937,16 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
   }, {
     key: 'checkShopping',
     value: function checkShopping() {
+      console.log('是否购买过商品：1111111111');
       var that = this;
       order.shoppingorder(function successed(result) {
+        console.log("result:");
+        console.log(result);
+        if (!result) {
+          console.log('挺住！！！');
+          this_.getUnpayOrder();
+          return;
+        }
         // 如果有购物中订单，设置页面状态，并开启轮询
         var orderid = result.orderid;
         var machineid = result.machineid;
@@ -934,7 +959,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
           machineid: machineid,
           orderno: orderno,
           recogmode: recogmode,
-          haveShopping: true
+          haveShopping: false
         });
         order.startqueryorderstatus(orderid, function succeeded(res) {
           console.log('res:订单数据');
@@ -942,19 +967,20 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
           var orderstatus = res.data.data.orderstatus;
           var doorstatus = res.data.data.doorstatus;
           if (res.data.code == 200) {
-            if (orderstatus == "5" || orderstatus == "3" || orderstatus == "7" || orderstatus == "8" || orderstatus == "9") {
+            if (orderstatus == "5" || orderstatus == "3" || orderstatus == "8" || orderstatus == "9") {
               //5已付款 3已取消 8已完成 9 错误
               console.log('------执行这里-----------');
               order.stopInterval();
+              that.setState({
+                unpayBoolean: false,
+                markBoolean: false
+              });
               setTimeout(function () {
                 _index2.default.redirectTo({
                   url: '/pages/orders/orderdetail/orderdetail?orderid=' + orderid + "&whereis=all"
                 });
-              }, 3000);
-            } else if (orderstatus == "6") {
-              order.stopInterval();
-              that.requestPay(orderid);
-            } else {
+              }, 2000);
+            } else if (!(orderstatus == "6")) {
               console.log('------苏晓燕1111111您有一张订单正在结算中-----');
               that.setState({
                 cartTips: '您有一张订单正在结算中',

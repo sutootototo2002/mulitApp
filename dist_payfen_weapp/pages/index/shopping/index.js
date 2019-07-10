@@ -29,6 +29,7 @@ var shoudReconnet = false;
 var socketMsgQueue = [];
 var timer1 = 0;
 var timerList = [];
+var this_;
 
 //import {} from '../../../utils/util.js';
 var order = require("../../../utils/order.js");
@@ -95,6 +96,8 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
       _index2.default.setNavigationBarTitle({
         title: _index3.globalData.sysTitle
       });
+      this_ = this;
+      console.log(this_);
       console.log('重力柜数据');
       console.log(this.$router.params);
       var machineid = this.$router.params.machineid;
@@ -119,10 +122,11 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
       order.startqueryorderstatus(orderid, function succeeded(res) {
         console.log('-----orderstatus-----');
         console.log(res);
+        var that = this;
         var orderstatus = res.data.data.orderstatus;
         var doorstatus = res.data.data.doorstatus;
         if (res.data.code == 200) {
-          if (orderstatus == "5" || orderstatus == "3" || orderstatus == "7" || orderstatus == "8" || orderstatus == "9") {
+          if (orderstatus == "5" || orderstatus == "3" || orderstatus == "8" || orderstatus == "9") {
             //5已付款 3已取消 8已完成 9 错误
             order.stopInterval();
             setTimeout(function () {
@@ -132,9 +136,11 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
             }, 2000);
           } else if (orderstatus == "6") {
             //6已欠费
-            order.stopInterval();
+            //order.stopInterval();
+            //alert('ttttt')
+            this_.gotoBack();
             //拉起支付
-            that.requestPay(routerinfo.orderid);
+            //that.requestPay(routerinfo.orderid);
           } else {
             that.setState({
               cartTips1: '正在购物中',
@@ -367,7 +373,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
           'token': _index3.globalData.token
         },
         success: function success(res) {
-          console.log('购物商品');
+          console.log('购物商品11111111111');
           console.log(res);
           if (res.data.code == 200) {
             var result = res.data.data;
@@ -434,12 +440,15 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         }
       });
       _index2.default.onSocketMessage(function (res) {
+        var that = this;
         console.log('===onSocketMessage===');
         console.log(res);
         var data = JSON.parse(res.data);
         // json数据转换成js对象
         // var data = eval("(" + res.data + ")");
         var type = data.type || '';
+        console.log("type:11111");
+        console.log(type);
         switch (type) {
           // Events.php中返回的init类型的消息，将client_id发给后台进行uid绑定
           case 'ping':
@@ -474,6 +483,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
           // 当mvc框架调用GatewayClient发消息时直接alert出来
           default:
             console.log('收到服务器内容：');
+            var that = this;
             var result = res;
             var par = JSON.parse(result.data);
             console.log(par);
@@ -482,7 +492,14 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
               var goods = par.data;
               var weights = par.weights;
               var totalfee = par.totalfee;
-              that.setState({
+              console.log(goods);
+              console.log(weights);
+              console.log(totalfee);
+              //that.aaa(goods,totalfee);
+              console.log("this_:");
+              console.log(this_);
+              //aabb();
+              this_.setState({
                 totalfee: totalfee,
                 cartgoods: goods
               });
@@ -498,22 +515,28 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
                 _index2.default.redirectTo({
                   url: '/pages/orders/orderdetail/orderdetail?orderid=' + routerinfo.orderid + '&whereis=weight'
                 });
-              } else if (orderstatus == 4) {
+              } else if (orderstatus == "4") {
                 //4待支付 说明免密接口请求成功 等待回调
+                console.log('待支付');
                 _index2.default.showLoading({
                   title: '结算中...'
                 });
                 socketOpen = false;
                 shoudReconnet = false;
                 _index2.default.closeSocket();
-              } else if (orderstatus == 6) {
+              } else if (orderstatus == "6") {
                 //6已欠费
-                order.stopInterval();
+                //order.stopInterval();
+                console.log('欠费');
                 socketOpen = false;
                 shoudReconnet = false;
                 _index2.default.closeSocket();
+                console.log('gotoBack');
+                _index2.default.navigateTo({
+                  url: '/pages/index/index'
+                });
                 //拉起支付
-                that.requestPay(routerinfo.orderid);
+                //that.requestPay(routerinfo.orderid);
               } else {
                 console.log("未知状态");
                 console.log(result);

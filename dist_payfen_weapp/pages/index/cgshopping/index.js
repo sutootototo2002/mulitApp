@@ -147,9 +147,10 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
             }, 2000);
           } else if (orderstatus == "6") {
             //6已欠费
-            order.stopInterval();
+            // order.stopInterval();
+            that.gotoBack();
             //拉起支付
-            that.requestPay(routerinfo.orderid);
+            //that.requestPay(routerinfo.orderid);
           } else {
             that.setState({
               cartTips1: '正在购物中',

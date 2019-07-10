@@ -108,7 +108,7 @@ var Qropen = (_temp2 = _class = function (_BaseComponent) {
       this.setState({
         formid: this.$router.params.formid,
         lockid: this.$router.params.lockid,
-        machineid: this.$router.params.machineid
+        machineid: this.$router.params.machineid //"21e0211a094065ae25490fd4590aa7d1"||this.$router.params.machineid
       });
       var that = this;
       _index2.default.showLoading({
@@ -293,12 +293,12 @@ var Qropen = (_temp2 = _class = function (_BaseComponent) {
               islogin: false
             });
             //
-            var isnopasspay = res.data.data.isnopasspay;
+            var isscorepay = res.data.data.isscorepay;
             var havearrears = res.data.data.havearrears;
             if (havearrears == "1") {
               that.getUnpayOrder();
             }
-            if (isnopasspay == "1") {
+            if (isscorepay == "1") {
               console.log('---已开通免密open---');
               that.setState({
                 islogin: false,

@@ -172,7 +172,7 @@ class Recharge extends Component<{}, IState>{
         console.log('获取用户信息：')
         console.log(res);
         let ismm:boolean = false;
-        if(res.data.data.isnopasspay=="1"){
+        if(res.data.data.isscorepay=="1"){
             ismm = false;
         }else{
             ismm = true;
@@ -401,8 +401,47 @@ class Recharge extends Component<{}, IState>{
   onMM(){
     //开通免密
     //检查是否需要开通，如果已经开通就关闭
+    console.log('开启支付分')
+    this.start();
 
   }
+
+    //开启支付分
+  //   gotopayfen(){
+  //     console.log('开启支付分')
+  //     this.start();
+  
+  //  }
+
+   start(){
+    Taro.request({
+      url: BASE_URL+'user/startOpenSmartPay',
+      data: '',
+      method: 'GET',
+      dataType: 'json',
+      success: function(res) {
+        console.log(res);
+        let extraData= {
+          mch_id: res.data.data.mch_id,
+          service_id: res.data.data.service_id,
+          out_request_no: res.data.data.out_request_no,
+          timestamp: res.data.data.timestamp,
+          nonce_str: res.data.data.nonce_str,
+          sign_type: res.data.data.sign_type,
+          sign: res.data.data.sign,
+
+        }
+        console.log(extraData);
+        wx.openBusinessView({
+          businessType: 'wxpayScoreEnable',
+          extraData: extraData,
+          envVersion: 'release'
+        })
+      },
+    })
+    
+  }
+
   render () {
    
     const { navList,logList} = this.state;
@@ -503,7 +542,7 @@ class Recharge extends Component<{}, IState>{
                     <CoverView className='mmText'>无需输入支付密码，快速购物！</CoverView>
                   </View>
                {this.state.isMM?
-               <Button type='default' className='Btn btn1' onClick={this.onMM}>开启免密 愉快购物</Button>
+               <Button type='default' className='Btn btn1' onClick={this.onMM}>开启支付分 愉快购物</Button>
                :
                <Button type='default' className='Btn btn1' onClick={this.onCloseSuccess}>充值成功</Button>
                }

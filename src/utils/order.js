@@ -79,7 +79,8 @@ function shoppingorder(succeeded) {
         console.log(result);
         succeeded(result);
       } else {
-
+        console.log('---订单购物中订单---')
+        succeeded(result);
       }
 
     }

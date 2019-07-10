@@ -4,6 +4,8 @@ var socketMsgQueue = [];
 var timer1 = 0;
 var timerList = [];
 
+var this_;
+
 import Taro, { Component, Config, MapContext } from '@tarojs/taro'
 
 import { Map, CoverView,Canvas,View,Image,CoverImage,Button,Text } from '@tarojs/components'
@@ -83,6 +85,8 @@ class Index extends Component<{}, IState>{
     Taro.setNavigationBarTitle({
       title:globalData.sysTitle
     })
+    this_ = this;
+    console.log(this_);
     console.log('重力柜数据')
     console.log(this.$router.params)
     const machineid = this.$router.params.machineid;
@@ -108,11 +112,12 @@ class Index extends Component<{}, IState>{
     order.startqueryorderstatus(orderid, function succeeded(res) {
          console.log('-----orderstatus-----');
          console.log(res);
+         var that = this;
          var orderstatus = res.data.data.orderstatus;
          var doorstatus = res.data.data.doorstatus;
          if (res.data.code == 200) {
               
-             if (orderstatus == "5" || orderstatus == "3" || orderstatus == "7"||orderstatus == "8" || orderstatus == "9") { //5已付款 3已取消 8已完成 9 错误
+             if (orderstatus == "5" || orderstatus == "3" || orderstatus == "8" || orderstatus == "9") { //5已付款 3已取消 8已完成 9 错误
               order.stopInterval();
                setTimeout(() => {
                 Taro.redirectTo({
@@ -121,9 +126,11 @@ class Index extends Component<{}, IState>{
                }, 2000);
               
              } else if (orderstatus == "6") { //6已欠费
-              order.stopInterval();
+              //order.stopInterval();
+              //alert('ttttt')
+              this_.gotoBack();
                //拉起支付
-               that.requestPay(routerinfo.orderid);
+               //that.requestPay(routerinfo.orderid);
              } else {
                that.setState({
                  cartTips1: '正在购物中',
@@ -349,7 +356,7 @@ class Index extends Component<{}, IState>{
         'token': globalData.token
       },
       success: function (res) {
-        console.log('购物商品')
+        console.log('购物商品11111111111')
         console.log(res);
         if (res.data.code == 200) {
           var result = res.data.data;
@@ -426,12 +433,15 @@ class Index extends Component<{}, IState>{
     });
 
     Taro.onSocketMessage(function (res) {
+      var that = this;
       console.log('===onSocketMessage===')
       console.log(res);
       var data = JSON.parse(res.data);
       // json数据转换成js对象
       // var data = eval("(" + res.data + ")");
       var type = data.type || '';
+      console.log("type:11111");
+      console.log(type);
       switch (type) {
         // Events.php中返回的init类型的消息，将client_id发给后台进行uid绑定
         case 'ping':
@@ -461,11 +471,13 @@ class Index extends Component<{}, IState>{
               }
             }
           })
+
           // $.post('./bind.php', { client_id: data.client_id }, function (data) { }, 'json');
           break;
         // 当mvc框架调用GatewayClient发消息时直接alert出来
         default:
           console.log('收到服务器内容：');
+          var that = this;
           var result = res;
           var par = JSON.parse(result.data);
           console.log(par);
@@ -474,7 +486,14 @@ class Index extends Component<{}, IState>{
             var goods = par.data;
             var weights = par.weights;
             var totalfee = par.totalfee;
-            that.setState({
+            console.log(goods);
+            console.log(weights);
+            console.log(totalfee);
+            //that.aaa(goods,totalfee);
+            console.log("this_:");
+            console.log(this_);
+            //aabb();
+            this_.setState({
               totalfee: totalfee,
               cartgoods: goods
             });
@@ -490,7 +509,8 @@ class Index extends Component<{}, IState>{
               Taro.redirectTo({
                 url: '/pages/orders/orderdetail/orderdetail?orderid=' + routerinfo.orderid + '&whereis=weight'
               })
-            } else if (orderstatus == 4) {//4待支付 说明免密接口请求成功 等待回调
+            } else if (orderstatus == "4") {//4待支付 说明免密接口请求成功 等待回调
+              console.log('待支付')
               Taro.showLoading({
                 title: '结算中...',
               })
@@ -498,13 +518,19 @@ class Index extends Component<{}, IState>{
               shoudReconnet = false;
               Taro.closeSocket();
               
-            } else if (orderstatus == 6) {//6已欠费
-              order.stopInterval();
+            } else if (orderstatus == "6") {//6已欠费
+              //order.stopInterval();
+              console.log('欠费')
               socketOpen = false;
               shoudReconnet = false;
               Taro.closeSocket();
+              console.log('gotoBack')
+              Taro.navigateTo({
+                url: '/pages/index/index'
+              })
+              
               //拉起支付
-              that.requestPay(routerinfo.orderid);
+              //that.requestPay(routerinfo.orderid);
             } else {
               console.log("未知状态");
               console.log(result);
@@ -515,7 +541,7 @@ class Index extends Component<{}, IState>{
     });
     
   }
-
+ 
   gotoBack() {
     //回到首页
     Taro.navigateTo({
