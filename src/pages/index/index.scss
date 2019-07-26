@@ -36,17 +36,21 @@ $color-brown1:#633226;
 .fee{
   color:#000;
   float:right;
-  height:78px;
-  // width:200px;
+  height:62rpx;
+  position:absolute;
+  right:10rpx;
+  top:9px;
+  font-size:30rpx;
+  line-height:62rpx;
+  // text-decoration:underline;
+  color:#ff7700;
+  text-align:right;
   // border:1px solid red;
-  position: absolute;
-  right:10px;
-  top:0;
-  font-size:30px;
-  line-height: 78px;
-  text-decoration: underline;
-  color:$color-default;
-  text-align: right;
+  border-radius:78px;
+  padding:0 20px;
+  background:#ff7700;
+  color:#fff;
+
 
 }
 //menus样式
@@ -80,21 +84,21 @@ $color-brown1:#633226;
 
 .menusBtnRight{
   position: absolute;
-  width:126px;
-  height:126px;
+  width:85px;
+  height:113px;
   top:50%;
   left:50%;
-  margin-left:146px;
-  margin-top:-53px;
+  margin-left:167px;
+  margin-top:-48px;
 }
 .menusBtnLeft{
   position: absolute;
-  width:126px;
-  height:126px;
+  width:85px;
+  height:113px;
   top:50%;
   left:50%;
   margin-left:-260px;
-  margin-top:-53px;
+  margin-top:-48px;
 }
 
 //免密提示框
@@ -402,8 +406,8 @@ $color-brown1:#633226;
 .addr_{
   
   padding:0px 0 0 10px;
-  width:50px;
-  height:50px;
+  width:40px;
+  height:40px;
   float:left;
 
 }
@@ -440,10 +444,10 @@ $color-brown1:#633226;
   
 }
 .goodImg{
-  width:70px;
-  height:70px;
+  width:85px;
+  height:85px;
   background:#eceded;
-  border-radius: 45px;
+  border-radius: 85px;
   border:1px solid #eceded;
   overflow:hidden;
   margin:0 15px;
@@ -776,14 +780,14 @@ $color-brown1:#633226;
 
 .thumbups{
   position: absolute;
-  width:25px;
-  height:25px;
-  line-height:25px;
+  width:30px;
+  height:30px;
+  line-height:30px;
   border-radius: 999px;
   background:#ff7700;
-  right:35px;
+  right:3px;
   top:50%;
-  margin-top:-60px;
+  margin-top:-117px;
   text-align: center;
   color:#fff;
   // border:1px solid red;
@@ -792,37 +796,86 @@ $color-brown1:#633226;
 
 //支付分
 .paynewDiv{
-  position: relative;
-  // border:1px solid red;
-  padding:20px;
-  border-radius: 10px;
-  background:#ff7700;
-  margin:0 20px;
+  position:relative;
+  padding:20rpx;
+  border-radius:10rpx;
+  background:#fff;
+  margin:0 20rpx;
   color:#fff;
   font-size:30px;
-  line-height:44px;
-  text-align: center;
+  line-height:44rpx;
+  text-align:center;
+  color:#ff7700;
+  border:1px solid #ff7700;
+
 }
 .tishiDiv{
   // float:left;
   // border:1px solid red;
   // line-height:33px;
   // width:100px;
-  font-size:25px;
+  font-size:35px;
   background:#fff;
   color:#ff7700;
-  padding:0 10px;
+  padding:20px 10px 0 10px;
   border-radius: 10px;
   
 }
 .tsDiv{
-  font-size:20px;
+  font-size:25px;
   text-align: center;
-  padding:10px;
+  padding:20px 0 0 0;
 }
 
 .moreadd{
   width:100%;
   text-align: center;
   font-size: 30px;
+}
+
+
+.personDiv{
+  position: absolute;
+  top:21px;
+  left:100px;
+  background-color:#fff;
+  line-height:1.2;
+ 
+
+
+}
+
+.personDiv::after {
+  border: none;
+}
+
+.openNew{
+  // border:1px solid red;
+  background: #ff7700;
+  border-radius: 10px;
+  color:#fff;
+  position: absolute;
+  right:20px;
+  top:60px;
+  padding:5px 10px;
+}
+
+.closeNew{
+  // border:1px solid red;
+  background: #616161;
+  border-radius: 10px;
+  color:#fff;
+  position: absolute;
+  right:20px;
+  top:60px;
+  padding:5px 10px;
+}
+
+.unpayImg{
+  display:inline-block;
+  width:30px;
+  height:30px;
+}
+.unpayDiv{
+  display:inline-block;
 }

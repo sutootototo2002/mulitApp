@@ -51,7 +51,7 @@ var Qropen = (_temp2 = _class = function (_BaseComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Qropen.__proto__ || Object.getPrototypeOf(Qropen)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "formid", "lockid", "machineid", "orderid", "openfailed", "requestfailed", "pay", "num", "tag", "qrurl", "haslogin", "showlogin", "showpapay", "showopen", "papayPressed", "showModalStatus", "unpayorder", "loadImg", "loadImg1", "loadImg2", "unpayImg", "unpriceImg", "islogin", "markBoolean", "open", "unpay"], _this.config = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Qropen.__proto__ || Object.getPrototypeOf(Qropen)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "formid", "lockid", "machineid", "orderid", "openfailed", "requestfailed", "pay", "num", "tag", "qrurl", "haslogin", "showlogin", "showpapay", "showopen", "papayPressed", "showModalStatus", "unpayorder", "loadImg", "loadImg1", "loadImg2", "unpayImg", "unpriceImg", "unpayorderimg", "islogin", "markBoolean", "open", "unpay"], _this.config = {
       navigationBarTitleText: ''
     }, _this.$$refs = [], _temp), _possibleConstructorReturn(_this, _ret);
   }
@@ -91,6 +91,7 @@ var Qropen = (_temp2 = _class = function (_BaseComponent) {
         loadImg2: _index3.PATH + '/mImages/car.png',
         unpayImg: _index3.PATH + '/mImages/wfk-11.png',
         unpriceImg: _index3.PATH + '/mImages/wfk.png',
+        unpayorderimg: _index3.PATH + '/mImages/unpay_info.png',
         islogin: false,
         markBoolean: false,
         open: false,
@@ -528,9 +529,9 @@ var Qropen = (_temp2 = _class = function (_BaseComponent) {
       setTimeout(function () {
         if (requestfailed) {
           clearInterval(interval);
-          that.requestOpenStatus();
+          //that.requestOpenStatus();
         }
-      }.bind(this), 60000);
+      }.bind(this), 1000);
     }
   }, {
     key: 'openStatus',

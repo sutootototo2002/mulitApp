@@ -20,13 +20,18 @@
 
 .ctime {
   float: right;
-  font-size: 25rpx;
-  color: #ccc;
+  font-size: 30rpx;
+  color: #000;
 }
 
 .addr {
-  font-size: 28rpx;
+  font-size: 30rpx;
   color: #454545;
+  width: 80%;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+     text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .goodsum {
@@ -39,8 +44,8 @@
 }
 
 .addimg {
-  width: 33rpx;
-  height: 33rpx;
+  width: 50rpx;
+  height: 50rpx;
   float: left;
   margin-right: 20rpx;
 }
@@ -55,12 +60,42 @@
   float: right;
   width: 30%;
   border: 0;
-  border-radius: 45rpx;
+  border-radius: 20rpx;
   margin: 0 5rpx;
 }
 
+.btn1 {
+  float: right;
+  width: 30%;
+  border: 0;
+  border-radius: 20rpx;
+  margin: 0 5rpx;
+}
+
+.btn .at-button {
+  border-radius: 999rpx;
+  font-size: 28rpx;
+  padding: 0;
+  height: 60rpx;
+  line-height: 60rpx;
+  margin-right: 10rpx;
+  border: 1rpx solid #0f9e3f !important;
+  color: #0f9e3f !important;
+}
+
+.btn1 .at-button {
+  border-radius: 999rpx;
+  font-size: 28rpx;
+  padding: 0;
+  height: 60rpx;
+  line-height: 60rpx;
+  margin-right: 10rpx;
+  color: #fff !important;
+  background: #ff7700;
+}
+
 .at-button__wxbutton {
-  border-radius: 45rpx;
+  border-radius: 20rpx;
 }
 
 .at-button {
@@ -189,4 +224,11 @@
 }
 .dragUpdataPage .downText {
   margin-left: 20rpx;
+}
+
+.at-tabs__item {
+  font-size: 30rpx;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }

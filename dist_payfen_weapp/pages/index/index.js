@@ -59,7 +59,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Index.__proto__ || Object.getPrototypeOf(Index)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "markerDetail", "unpayList", "feedbackslist", "systemUser", "showModalStatus", "showopen", "papayPressed", "qrurl", "showlogin", "showpapay", "isnopasspay", "havearrears", "formid", "isweapp", "mapKey", "latitude", "longitude", "scale", "menus", "screen", "user", "person", "zm", "avatar", "zmdefault", "searchImg", "dw", "unpayImg", "unpriceImg", "pos_", "tempImg", "del", "open", "addr", "mach", "mm", "HearHead", "closebtn", "heardImg", "yyzh", "dyzh", "xydd", "singinImg", "wzc10", "wzc11", "wzc20", "wzc22", "wzc30", "wzc33", "clear", "setp1", "setp2", "setp3", "controls", "isOpened", "mapObj_", "showLocation", "markers", "allMarkers", "bool", "booladdr", "menuright", "token", "checkPapay", "commonCode", "markBoolean", "posBoolean", "unpayBoolean", "machineBoolean", "DensityFree", "HearBoolean", "HearlistBoolean", "singinBoolean", "thumbups", "fee", "befee", "payName", "haslogin", "intervalPapay", "unpayorder", "cartTips", "orderid", "hasMore", "machineid", "orderno", "recogmode", "haveShopping", "Carting", "timerTem"], _this.config = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Index.__proto__ || Object.getPrototypeOf(Index)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "markerDetail", "unpayList", "feedbackslist", "globalData", "systemUser", "showModalStatus", "showopen", "papayPressed", "qrurl", "showlogin", "showpapay", "isperson", "isnopasspay", "havearrears", "formid", "isweapp", "mapKey", "latitude", "longitude", "scale", "menus", "screen", "user", "person", "zm", "avatar", "zmdefault", "searchImg", "dw", "unpayImg", "unpriceImg", "pos_", "tempImg", "unpayorderimg", "del", "addr", "mach", "mm", "HearHead", "closebtn", "heardImg", "yyzh", "dyzh", "xydd", "singinImg", "wzc10", "wzc11", "wzc30", "wzc33", "clear", "setp1", "setp2", "setp3", "controls", "isOpened", "mapObj_", "showLocation", "markers", "allMarkers", "bool", "booladdr", "menuright", "token", "checkPapay", "commonCode", "markBoolean", "posBoolean", "unpayBoolean", "machineBoolean", "DensityFree", "HearBoolean", "HearlistBoolean", "singinBoolean", "thumbups", "fee", "befee", "payName", "haslogin", "intervalPapay", "unpayorder", "cartTips", "orderid", "hasMore", "machineid", "orderno", "recogmode", "haveShopping", "Carting", "timerTem"], _this.config = {
       navigationBarTitleText: '首页'
     }, _this.onHeard = function () {
       console.log('心愿单开启');
@@ -92,6 +92,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         qrurl: "",
         showlogin: false,
         showpapay: false,
+        isperson: false,
         isnopasspay: 0,
         havearrears: 0,
         formid: '',
@@ -101,9 +102,9 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         longitude: 116.397470,
         scale: 16,
         menus: _index3.PATH + '/mImages/menus.png',
-        screen: _index3.PATH + '/mImages/tytb-3.png',
-        user: _index3.PATH + '/mImages/tytb-6.png',
-        person: _index3.PATH + '/mImages/tytb-22.png',
+        screen: _index3.PATH + '/mImages/tytb-41.png',
+        user: _index3.PATH + '/mImages/server_11.png',
+        person: _index3.PATH + '/mImages/ordericon.png',
         zm: _index3.PATH + '/mImages/zm2.png',
         avatar: '',
         zmdefault: _index3.PATH + '/mImages/zm2.png',
@@ -113,9 +114,9 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         unpriceImg: _index3.PATH + '/mImages/wfk.png',
         pos_: _index3.PATH + '/mImages/bg_0.png',
         tempImg: 'http://filetest.wemall.com.cn/de0aa02f4a0f49171149beab583c826b.jpg',
+        unpayorderimg: _index3.PATH + '/mImages/unpay_info.png',
         del: _index3.PATH + '/mImages/clear.png',
-        open: _index3.PATH + '/mImages/yyz.png',
-        addr: _index3.PATH + '/mImages/tytb-4.png',
+        addr: _index3.PATH + '/mImages/addr1.png',
         mach: _index3.PATH + '/mImages/tytb-1.png',
         mm: _index3.PATH + '/mImages/mm.png',
         HearHead: _index3.PATH + '/mImages/ysjtb1.png',
@@ -125,12 +126,10 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         dyzh: _index3.PATH + '/mImages/dyz_f.png',
         xydd: _index3.PATH + '/mImages/xyd_img.png',
         singinImg: _index3.PATH + '/mImages/gban.png',
-        wzc10: _index3.PATH + '/mImages/wzc-10.png',
-        wzc11: _index3.PATH + '/mImages/wzc-11.png',
-        wzc20: _index3.PATH + '/mImages/wzc-20.png',
-        wzc22: _index3.PATH + '/mImages/wzc-22.png',
-        wzc30: _index3.PATH + '/mImages/wzc-zf1.png?' + Math.random(),
-        wzc33: _index3.PATH + '/mImages/wzc-zf2.png?' + Math.random(),
+        wzc10: _index3.PATH + '/mImages/wzcNew-22.png',
+        wzc11: _index3.PATH + '/mImages/wzcNew-11.png',
+        wzc30: _index3.PATH + '/mImages/wzcNew-33.png',
+        wzc33: _index3.PATH + '/mImages/wzcNew-44.png',
         clear: _index3.PATH + '/mImages/clear.png',
         setp1: true,
         setp2: false,
@@ -228,7 +227,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
     value: function componentDidShow() {
       var _this2 = this;
 
-      console.log('---onshow---');
+      console.log('---onshow1111111111111111111111---');
       this.setState({
         HearlistBoolean: false
       });
@@ -336,9 +335,9 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
                   id: 2,
                   iconPath: wishImg,
                   position: {
-                    width: 100,
-                    height: 100,
-                    left: data.windowWidth - 90,
+                    width: 60,
+                    height: 60,
+                    left: data.windowWidth - 60,
                     top: (data.windowHeight - 115) / 2
                   },
                   clickable: true
@@ -468,7 +467,16 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
           var $avatarUrl = res.data.data.avatar;
           _index3.globalData.avatar = $avatarUrl;
           _index3.globalData.fee = res.data.data.fee;
-          _index3.globalData.nickname = res.data.data.nickname;
+          if (res.data.data.nickname) {
+            _index3.globalData.nickname = res.data.data.nickname;
+            that.setState({
+              isperson: true
+            });
+          } else {
+            that.setState({
+              isperson: false
+            });
+          }
           if (res.data.data.isscorepay == "1") {
             console.log('');
             $singinBoolean = false;
@@ -506,9 +514,9 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
               id: 2,
               iconPath: wishImg,
               position: {
-                width: 100,
-                height: 100,
-                left: data.windowWidth - 90,
+                width: 60,
+                height: 60,
+                left: data.windowWidth - 60,
                 top: (data.windowHeight - 115) / 2
               },
               clickable: true
@@ -549,7 +557,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
           'token': _index3.globalData.token
         },
         success: function success(res) {
-          console.log('resttttttttt');
+          console.log('unpayorder');
           console.log(res);
           if (res.data.code == 200) {
             _index2.default.setStorageSync("orderid", res.data.data.orderid);
@@ -616,7 +624,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
             position: {
               width: 100,
               height: 100,
-              left: data.windowWidth - 90,
+              left: data.windowWidth - 85,
               top: (data.windowHeight - 115) / 2
             },
             clickable: true
@@ -783,7 +791,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
           position: {
             width: 100,
             height: 100,
-            left: data.windowWidth - 90,
+            left: data.windowWidth - 75,
             top: (data.windowHeight - 115) / 2
           },
           clickable: true
@@ -942,11 +950,6 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
       order.shoppingorder(function successed(result) {
         console.log("result:");
         console.log(result);
-        if (!result) {
-          console.log('挺住！！！');
-          this_.getUnpayOrder();
-          return;
-        }
         // 如果有购物中订单，设置页面状态，并开启轮询
         var orderid = result.orderid;
         var machineid = result.machineid;
@@ -959,7 +962,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
           machineid: machineid,
           orderno: orderno,
           recogmode: recogmode,
-          haveShopping: false
+          haveShopping: true
         });
         order.startqueryorderstatus(orderid, function succeeded(res) {
           console.log('res:订单数据');
@@ -984,12 +987,13 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
               console.log('------苏晓燕1111111您有一张订单正在结算中-----');
               that.setState({
                 cartTips: '您有一张订单正在结算中',
-                Carting: true,
                 bool: false,
                 markBoolean: true,
                 haveShopping: true
               });
             }
+          } else {
+            console.log('217 codeing....');
           }
         });
       });
@@ -1200,8 +1204,8 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
           var temps = res.data.data;
           markers = temps.map(function (item, index) {
             item.iconPath = flag;
-            item.width = 50;
-            item.height = 50;
+            item.width = 60;
+            item.height = 60;
             item.latitude = res.data.data[index].lat;
             item.longitude = res.data.data[index].lon;
             item.id = res.data.data[index].machineid;
@@ -1267,7 +1271,8 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
       console.log(e.controlId);
       if (e.controlId == 2) {
         //开启心愿单
-        this.onHeard();
+        //this.onHeard();
+        this.onSetheart();
       }
     }
     //心愿单页面跳转
@@ -1419,19 +1424,24 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
       });
     }
     //去登陆
+    // ongotologin(){
+    //   Taro.navigateTo({
+    //     url: '/pages/personal/index'
+    //   })
+    // }
 
   }, {
-    key: 'ongotologin',
-    value: function ongotologin() {
+    key: 'toOrders',
+    value: function toOrders() {
       _index2.default.navigateTo({
-        url: '/pages/personal/index'
+        url: '../orders/orderlist/orderlist?state=8&value=0'
       });
     }
   }, {
     key: 'onLeft',
     value: function onLeft() {
       console.log('个人中心');
-      this.ongotologin();
+      this.toOrders();
     }
   }, {
     key: 'paytipsmodal',
@@ -1467,17 +1477,19 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         },
         method: "POST",
         success: function success(res) {
+          console.log("检测是否可以开门：floweryan");
+          console.log(res);
           _index2.default.hideLoading();
           //检测是否可以开门
-          console.log("检测是否可以开门");
-          console.log(res);
           if (res.data.code == 200) {
+            console.log('成功！');
             var machineid = res.data.data.machineid;
             var lockid = res.data.data.lockid;
-            _index2.default.reLaunch({
-              url: '../box/open/open?machineid=' + machineid + '&lockid=' + lockid + '&formid='
+            _index2.default.navigateTo({
+              url: '/pages/box/open/open?machineid=' + machineid + '&lockid=' + lockid + '&formid='
             });
           } else {
+            console.log('失败！');
             _index2.default.showModal({
               title: '提示',
               content: res.data.msg,
@@ -1545,7 +1557,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
             markBoolean: true,
             haveShopping: true
           });
-          that.gohome();
+          //that.gohome();
         }
         if (res.data.code == 202) {
           console.log('您的帐号异常，请与客服联系！');
@@ -1624,6 +1636,57 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
       this.requestPay(orderid);
     }
   }, {
+    key: 'userInfoHandler',
+    value: function userInfoHandler(res) {
+      var that = this;
+      console.log(res.detail.userInfo);
+      if (res.detail.userInfo == null) {
+        return;
+      }
+      _index2.default.showLoading({
+        title: ''
+      });
+      _index2.default;
+      _index3.globalData.avatar = res.detail.userInfo.avatarUrl;
+      _index3.globalData.nickname = res.detail.userInfo.nickname || res.detail.userInfo.nickName;
+      console.log("globalData.nickName");
+      console.log(_index3.globalData.nickname);
+      console.log("globalData.avatar");
+      console.log(_index3.globalData.avatar);
+      this.setState({
+        isperson: true
+      });
+      console.log("userInfoList:");
+      // console.log(this.state.userInfoList)
+      _index2.default.request({
+        method: 'POST',
+        url: _index3.BASE_URL + 'user/updateuserinfo',
+        data: {
+          avatarUrl: res.detail.userInfo.avatarUrl,
+          city: res.detail.userInfo.city,
+          country: res.detail.userInfo.country,
+          nickName: res.detail.userInfo.nickName,
+          province: res.detail.userInfo.province
+        },
+        header: {
+          'content-type': 'application/json',
+          'token': _index3.globalData.token
+        },
+        success: function success(res) {
+          console.log(res);
+          _index2.default.showToast({
+            title: '头像更新成功',
+            icon: 'success',
+            duration: 2000
+          });
+          //that.goRecharge();
+        },
+        fail: function fail(res) {
+          _index2.default.hideLoading();
+        }
+      });
+    }
+  }, {
     key: 'gotoCartFn',
     value: function gotoCartFn() {
       var result = _index2.default.getStorageSync('goodsResult');
@@ -1694,7 +1757,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
               },
               success: function success(res) {
                 // that.showBottomModal();
-                console.log('res:');
+                console.log('res机柜信息11111111:');
                 console.log(res);
                 that.setState({
                   markerDetail: res.data.data,
@@ -1749,6 +1812,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
       var anonymousState__temp = this.__state.unpayBoolean ? (this.__state.unpayorder.payfee / 100).toFixed(2) : null;
       Object.assign(this.__state, {
         anonymousState__temp: anonymousState__temp,
+        globalData: _index3.globalData,
         systemUser: _index3.systemUser
       });
       return this.__state;
@@ -1756,7 +1820,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
   }]);
 
   return Index;
-}(_index.Component), _class.properties = {}, _class.$$events = ["onControlTap", "markertap", "regionchange", "topersonfn", "onStored", "getPhoneNumber", "gotopayfen", "onInfo", "gotoCart", "onClosePos", "payOrder", "gotoPapay", "gotoCartFn", "onCloseHeardlist", "onSetheart", "fetchMoreLikes", "onScreen", "onRight", "onLeft", "hideModal"], _temp2);
+}(_index.Component), _class.properties = {}, _class.$$events = ["onControlTap", "markertap", "regionchange", "topersonfn", "userInfoHandler", "onStored", "getPhoneNumber", "gotopayfen", "onInfo", "gotoCart", "onClosePos", "payOrder", "gotoPapay", "gotoCartFn", "onCloseHeardlist", "onSetheart", "fetchMoreLikes", "onScreen", "onRight", "onLeft", "hideModal"], _temp2);
 // #region 导出注意
 //
 // 经过上面的声明后需要将导出的 Taro.Component 子类修改为子类本身的 props 属性

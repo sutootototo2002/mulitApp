@@ -28,6 +28,7 @@ var requestfailed = true;
 var iNow = 0;
 var orderid = '';
 
+var order = require("../../../utils/order.js");
 
 // 如果需要在 h5 环境中开启 React Devtools
 // 取消以下注释：
@@ -84,6 +85,7 @@ var Open = (_temp2 = _class = function (_BaseComponent) {
   }, {
     key: 'componentWillMount',
     value: function componentWillMount() {
+      order.stopInterval();
       _index2.default.setNavigationBarTitle({
         title: _index3.globalData.sysTitle
       });
@@ -105,6 +107,11 @@ var Open = (_temp2 = _class = function (_BaseComponent) {
   }, {
     key: 'componentDidHide',
     value: function componentDidHide() {}
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      order.stopInterval();
+    }
   }, {
     key: 'componentDidCatchError',
     value: function componentDidCatchError() {}
@@ -165,16 +172,17 @@ var Open = (_temp2 = _class = function (_BaseComponent) {
             that.setState({
               openfailed: true,
               isfind: true,
+              infine: res.data.msg,
               markBoolean: true
             });
             // Taro.showModal({
-            //   title: '提示111',
+            //   title: '提示',
             //   content: res.data.msg,
             //   showCancel: false,
             //   success: function (res) {
             //     if (res.confirm) {
-            //       Taro.reLaunch({
-            //         url: '../../index/index'
+            //       Taro.navigateTo({
+            //         url: '/pages/index/index'
             //       })
             //     }
             //   }
@@ -188,8 +196,8 @@ var Open = (_temp2 = _class = function (_BaseComponent) {
             showCancel: false,
             success: function success(res) {
               if (res.confirm) {
-                _index2.default.reLaunch({
-                  url: '../../index/index'
+                _index2.default.navigateTo({
+                  url: '/pages/index/index'
                 });
               }
             }
@@ -215,10 +223,10 @@ var Open = (_temp2 = _class = function (_BaseComponent) {
         });
         //循环执行代码 
         if (requestfailed) {
-          console.log('---循环执行代码 ---');
+          console.log('---循环执行代码0000 ---');
           //that.openStatus();
         } else {
-          console.log('---停止循环执行代码 ---');
+          console.log('---停止循环执行代码2222222 ---');
           that.setState({
             tag: 100
           });
@@ -228,7 +236,7 @@ var Open = (_temp2 = _class = function (_BaseComponent) {
       setTimeout(function () {
         if (requestfailed) {
           clearInterval(interval);
-          that.requestOpenStatus();
+          //that.requestOpenStatus();
         }
       }.bind(this), 60000);
     }
@@ -367,7 +375,7 @@ var Open = (_temp2 = _class = function (_BaseComponent) {
     key: 'onClosePos',
     value: function onClosePos() {
       _index2.default.redirectTo({
-        url: '/pages/service/service'
+        url: '/pages/index/index'
       });
     }
   }, {

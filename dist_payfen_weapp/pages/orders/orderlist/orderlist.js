@@ -70,7 +70,7 @@ var Orderlist = (_temp2 = _class = function (_BaseComponent) {
       this.state = {
         current: 0,
         goodsList: [],
-        addrimg: _index3.PATH + '/mImages/wddd1.png',
+        addrimg: _index3.PATH + '/mImages/wddd2.png',
         dargStyle: {
           top: "0px"
         },
@@ -213,6 +213,68 @@ var Orderlist = (_temp2 = _class = function (_BaseComponent) {
       });
     }
   }, {
+    key: 'userInfoHandler',
+    value: function userInfoHandler(res) {
+      var that = this;
+      console.log(res.detail.userInfo);
+      if (res.detail.userInfo == null) {
+        return;
+      }
+      _index2.default.showLoading({
+        title: ''
+      });
+      _index2.default;
+      _index3.globalData.avatar = res.detail.userInfo.avatarUrl;
+      _index3.globalData.nickname = res.detail.userInfo.nickname || res.detail.userInfo.nickName;
+      console.log("globalData.nickName");
+      console.log(_index3.globalData.nickname);
+      console.log("globalData.avatar");
+      console.log(_index3.globalData.avatar);
+      // this.setState({
+      //   isperson:true
+      // })
+      console.log("userInfoList:");
+      // console.log(this.state.userInfoList)
+      _index2.default.request({
+        method: 'POST',
+        url: _index3.BASE_URL + 'user/updateuserinfo',
+        data: {
+          avatarUrl: res.detail.userInfo.avatarUrl,
+          city: res.detail.userInfo.city,
+          country: res.detail.userInfo.country,
+          nickName: res.detail.userInfo.nickName,
+          province: res.detail.userInfo.province
+        },
+        header: {
+          'content-type': 'application/json',
+          'token': _index3.globalData.token
+        },
+        success: function success(res) {
+          console.log(res);
+          _index2.default.showToast({
+            title: '头像更新成功',
+            icon: 'success',
+            duration: 2000
+          });
+          that.onSetheart();
+        },
+        fail: function fail(res) {
+          _index2.default.hideLoading();
+          // Taro.showModal({
+          //   title: '提示',
+          //   content: '请更新头像',
+          //   success: function(res) {
+          //     if (res.confirm) {
+          //       console.log('用户点击确定')
+          //     } else if (res.cancel) {
+          //       console.log('用户点击取消')
+          //     }
+          //   }
+          // })
+        }
+      });
+    }
+  }, {
     key: 'handleClick',
     value: function handleClick(value) {
       console.log(value);
@@ -221,11 +283,11 @@ var Orderlist = (_temp2 = _class = function (_BaseComponent) {
         curPage = 0;
       }
       if (value == 1) {
-        curStatus = 6;
+        curStatus = 7;
         curPage = 0;
       }
       if (value == 2) {
-        curStatus = 7;
+        curStatus = 0;
         curPage = 0;
       }
       this.setState({
@@ -258,6 +320,14 @@ var Orderlist = (_temp2 = _class = function (_BaseComponent) {
       console.log('上拉');
       // this.props.onPull()
       this.onReachBottom();
+    }
+  }, {
+    key: 'onSetheart',
+    value: function onSetheart() {
+      console.log('进入心愿单中心');
+      _index2.default.navigateTo({
+        url: '/pages/wish/likes/myheart'
+      });
     }
   }, {
     key: 'down',
@@ -399,7 +469,7 @@ var Orderlist = (_temp2 = _class = function (_BaseComponent) {
 
       var goodsList = this.__state.goodsList;
 
-      var tabList = [{ title: '已完成' }, { title: '待支付' }, { title: '转退款' }];
+      var tabList = [{ title: '已付款' }, { title: '转退款' }, { title: '其他' }];
 
       var dargStyle = this.__state.dargStyle;
       var downDragStyle = this.__state.downDragStyle;
@@ -431,7 +501,7 @@ var Orderlist = (_temp2 = _class = function (_BaseComponent) {
   }]);
 
   return Orderlist;
-}(_index.Component), _class.properties = {}, _class.$$events = ["toOrderDetail", "handleClick", "touchmove", "touchEnd", "touchStart", "ScrollToUpper", "ScrollToLower"], _temp2);
+}(_index.Component), _class.properties = {}, _class.$$events = ["toOrderDetail", "userInfoHandler", "handleClick", "touchmove", "touchEnd", "touchStart", "ScrollToUpper", "ScrollToLower"], _temp2);
 exports.default = Orderlist;
 
 Component(require('../../../npm/@tarojs/taro-weapp/index.js').default.createComponent(Orderlist, true));

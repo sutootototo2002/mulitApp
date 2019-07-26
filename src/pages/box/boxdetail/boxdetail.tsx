@@ -45,7 +45,7 @@ class Boxdetail extends Component<{}, IState>{
         machineid:'',
         machine:{},
         goods:[],
-        addr: PATH + '/mImages/tytb-4.png',
+        addr: PATH + '/mImages/addr1.png',
         total:0,
         salesort:'0',
         hasnext:false,
@@ -158,7 +158,7 @@ class Boxdetail extends Component<{}, IState>{
                             <View className='gName'>{item.name}</View>
                             <View className='gName1'>{item.goodsname}</View>
                             <View className='ginfo'>
-                                <View className='price'>￥<Text className='pric'>{item.salefee/100}</Text>/{item.spec}</View>
+                                <View className='price'><Text className='pric'>￥{item.salefee/100}</Text>/{item.spec}</View>
                                 <View className='kcun'>库存{item.amount}</View>
                             </View>
                         </View>
@@ -170,13 +170,13 @@ class Boxdetail extends Component<{}, IState>{
         <View>
            <View className='boxdetail'>
                
-              <View className='boxTitle'>{this.state.machine.machinename?this.state.machine.machinename:globalData.sysTitle}</View>
+              <View className='boxTitle' style='margin-left:10px;font-size:22px;'>{this.state.machine.machinename?this.state.machine.machinename:globalData.sysTitle}</View>
               
-               <View className='imagesDiv'>
+               {/* <View className='imagesDiv'>
                {$pics}
-               </View>
+               </View> */}
             
-              <View className='addr'><Image className='addr1' src={this.state.addr}/> 地址： {this.state.machine.location}-{this.state.machine.dailaddress}| 距您555km<Image className='addr2' onTouchStart={this.viewlocation} src={this.state.addr}/></View>
+              <View className='addr'><Image className='addr1' src={this.state.addr}/> 地址： {this.state.machine.location}-{this.state.machine.dailaddress}| 距您555km</View>
               
             </View>
             <View>

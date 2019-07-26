@@ -27,8 +27,8 @@
                             <view class="wordb">{{wishes.length}}</view>
                             <view class="wordz">心愿</view>
                         </view>
-                        <view class="line">|</view>
-                        <view class="uli" bindtap="gobingcart">
+                        <view class="line" style="display:none">|</view>
+                        <view class="uli" bindtap="gobingcart" style="display:none">
                             <view class="wordb">0</view>
                             <view class="wordz">亲情卡</view>
                         </view>
@@ -52,18 +52,27 @@
                                     </view>
                                 </block>
                             </block>
-                            <view class="iconw">已完成</view>
+                            <view class="iconw">已付款</view>
                         </view>
                         <view class="iconLi" bindtap="toOrders2">
                             <image class="iconb" src="{{iconB1}}"></image>
-                            <view class="iconw">待支付</view>
+                            <view class="iconw">转退款</view>
                         </view>
                         <view class="iconLi" bindtap="toOrders3">
                             <image class="iconb" src="{{iconB3}}"></image>
-                            <view class="iconw">转退款</view>
+                            <view class="iconw">其他</view>
                         </view>
                     </view>
                     <view></view>
+                </view>
+                <view class="mysever" style="padding:0 0 0 0;">
+                    <swiper class="test-h" indicator-color="#999" indicator-active-color="#333" circular="{{true}}" indicator-dots="{{true}}" autoplay="{{true}}">
+                        <swiper-item wx:for="{{SwiperItemArry}}" wx:for-item="item" wx:for-index="index">
+                            <view class="demo-text-1">
+                                <image src="{{item.url}}" style="position:absolute;width:100%;height:100%"></image>
+                            </view>
+                        </swiper-item>
+                    </swiper>
                 </view>
                 <view class="temp"></view>
             </view>

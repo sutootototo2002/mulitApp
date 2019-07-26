@@ -21,7 +21,33 @@
                                                     <image class="addimg" src="{{addrimg}}"></image>{{globalData.sysTitle}}</view>
                                             </block>
                                         </block>
-                                        <view class="ctime">{{item.createtime}}</view>
+                                        <block wx:if="{{item.orderstatus == 1}}">
+                                            <view class="ctime">购物中</view>
+                                        </block>
+                                        <block wx:if="{{item.orderstatus == 2}}">
+                                            <view class="ctime">待结账</view>
+                                        </block>
+                                        <block wx:if="{{item.orderstatus == 3}}">
+                                            <view class="ctime">已取消</view>
+                                        </block>
+                                        <block wx:if="{{item.orderstatus == 4}}">
+                                            <view class="ctime">待支付</view>
+                                        </block>
+                                        <block wx:if="{{item.orderstatus == 5}}">
+                                            <view class="ctime">已付款</view>
+                                        </block>
+                                        <block wx:if="{{item.orderstatus == 6}}">
+                                            <view class="ctime">已欠费</view>
+                                        </block>
+                                        <block wx:if="{{item.orderstatus == 7}}">
+                                            <view class="ctime">转退款</view>
+                                        </block>
+                                        <block wx:if="{{item.orderstatus == 8}}">
+                                            <view class="ctime">已完成</view>
+                                        </block>
+                                        <block wx:if="{{item.orderstatus == 9}}">
+                                            <view class="ctime">订单异常</view>
+                                        </block>
                                     </view>
                                     <block>
                                         <block wx:if="{{item.goods.length}}">
@@ -49,34 +75,9 @@
                                         </block>
                                     </block>
                                     <view class="Btns">
+                                        <view style="float:left;font-size:25rpx;color:#ccc">{{item.createtime}}</view>
                                         <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" data-orderid="{{item.orderid}}" bindonclick="toOrderDetail" __fn_onClick="{{true}}" data-e-onclick-so="this" data-e-onclick-a-a="{{item.orderid}}">订单详情</at-button>
-                                        <block wx:if="{{item.orderstatus == 1}}">
-                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">购物中</at-button>
-                                        </block>
-                                        <block wx:if="{{item.orderstatus == 2}}">
-                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">待结账</at-button>
-                                        </block>
-                                        <block wx:if="{{item.orderstatus == 3}}">
-                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">已取消</at-button>
-                                        </block>
-                                        <block wx:if="{{item.orderstatus == 4}}">
-                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">待支付</at-button>
-                                        </block>
-                                        <block wx:if="{{item.orderstatus == 5}}">
-                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">已付款</at-button>
-                                        </block>
-                                        <block wx:if="{{item.orderstatus == 6}}">
-                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">已欠费</at-button>
-                                        </block>
-                                        <block wx:if="{{item.orderstatus == 7}}">
-                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">转退款</at-button>
-                                        </block>
-                                        <block wx:if="{{item.orderstatus == 8}}">
-                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">已完成</at-button>
-                                        </block>
-                                        <block wx:if="{{item.orderstatus == 9}}">
-                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">异常订单</at-button>
-                                        </block>
+                                        <at-button class="btn1" __triggerObserer="{{ _triggerObserer }}" type="secondary" open-type="getUserInfo" bindongetuserinfo="userInfoHandler" __fn_ongetUserInfo="{{true}}" data-e-ongetuserinfo-so="this">我的心愿</at-button>
                                     </view>
                                 </view>
                             </view>
@@ -107,7 +108,33 @@
                                                     <image class="addimg" src="{{addrimg}}"></image>{{globalData.sysTitle}}</view>
                                             </block>
                                         </block>
-                                        <view class="ctime">{{item.createtime}}</view>
+                                        <block wx:if="{{item.orderstatus == 1}}">
+                                            <view class="ctime">购物中</view>
+                                        </block>
+                                        <block wx:if="{{item.orderstatus == 2}}">
+                                            <view class="ctime">待结账</view>
+                                        </block>
+                                        <block wx:if="{{item.orderstatus == 3}}">
+                                            <view class="ctime">已取消</view>
+                                        </block>
+                                        <block wx:if="{{item.orderstatus == 4}}">
+                                            <view class="ctime">待支付</view>
+                                        </block>
+                                        <block wx:if="{{item.orderstatus == 5}}">
+                                            <view class="ctime">已付款</view>
+                                        </block>
+                                        <block wx:if="{{item.orderstatus == 6}}">
+                                            <view class="ctime">已欠费</view>
+                                        </block>
+                                        <block wx:if="{{item.orderstatus == 7}}">
+                                            <view class="ctime">转退款</view>
+                                        </block>
+                                        <block wx:if="{{item.orderstatus == 8}}">
+                                            <view class="ctime">已完成</view>
+                                        </block>
+                                        <block wx:if="{{item.orderstatus == 9}}">
+                                            <view class="ctime">订单异常</view>
+                                        </block>
                                     </view>
                                     <block>
                                         <block wx:if="{{item.goods.length}}">
@@ -135,34 +162,9 @@
                                         </block>
                                     </block>
                                     <view class="Btns">
+                                        <view style="float:left;font-size:25rpx;color:#ccc">{{item.createtime}}</view>
                                         <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" data-orderid="{{item.orderid}}" bindonclick="toOrderDetail" __fn_onClick="{{true}}" data-e-onclick-so="this" data-e-onclick-a-a="{{item.orderid}}">订单详情</at-button>
-                                        <block wx:if="{{item.orderstatus == 1}}">
-                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">购物中</at-button>
-                                        </block>
-                                        <block wx:if="{{item.orderstatus == 2}}">
-                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">待结账</at-button>
-                                        </block>
-                                        <block wx:if="{{item.orderstatus == 3}}">
-                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">已取消</at-button>
-                                        </block>
-                                        <block wx:if="{{item.orderstatus == 4}}">
-                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">待支付</at-button>
-                                        </block>
-                                        <block wx:if="{{item.orderstatus == 5}}">
-                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">已付款</at-button>
-                                        </block>
-                                        <block wx:if="{{item.orderstatus == 6}}">
-                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">已欠费</at-button>
-                                        </block>
-                                        <block wx:if="{{item.orderstatus == 7}}">
-                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">转退款</at-button>
-                                        </block>
-                                        <block wx:if="{{item.orderstatus == 8}}">
-                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">已完成</at-button>
-                                        </block>
-                                        <block wx:if="{{item.orderstatus == 9}}">
-                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">异常订单</at-button>
-                                        </block>
+                                        <at-button class="btn1" __triggerObserer="{{ _triggerObserer }}" type="secondary" open-type="getUserInfo" bindongetuserinfo="userInfoHandler" __fn_ongetUserInfo="{{true}}" data-e-ongetuserinfo-so="this">我的心愿</at-button>
                                     </view>
                                 </view>
                             </view>
@@ -193,7 +195,33 @@
                                                     <image class="addimg" src="{{addrimg}}"></image>{{globalData.sysTitle}}</view>
                                             </block>
                                         </block>
-                                        <view class="ctime">{{item.createtime}}</view>
+                                        <block wx:if="{{item.orderstatus == 1}}">
+                                            <view class="ctime">购物中</view>
+                                        </block>
+                                        <block wx:if="{{item.orderstatus == 2}}">
+                                            <view class="ctime">待结账</view>
+                                        </block>
+                                        <block wx:if="{{item.orderstatus == 3}}">
+                                            <view class="ctime">已取消</view>
+                                        </block>
+                                        <block wx:if="{{item.orderstatus == 4}}">
+                                            <view class="ctime">待支付</view>
+                                        </block>
+                                        <block wx:if="{{item.orderstatus == 5}}">
+                                            <view class="ctime">已付款</view>
+                                        </block>
+                                        <block wx:if="{{item.orderstatus == 6}}">
+                                            <view class="ctime">已欠费</view>
+                                        </block>
+                                        <block wx:if="{{item.orderstatus == 7}}">
+                                            <view class="ctime">转退款</view>
+                                        </block>
+                                        <block wx:if="{{item.orderstatus == 8}}">
+                                            <view class="ctime">已完成</view>
+                                        </block>
+                                        <block wx:if="{{item.orderstatus == 9}}">
+                                            <view class="ctime">订单异常</view>
+                                        </block>
                                     </view>
                                     <block>
                                         <block wx:if="{{item.goods.length}}">
@@ -221,34 +249,9 @@
                                         </block>
                                     </block>
                                     <view class="Btns">
+                                        <view style="float:left;font-size:25rpx;color:#ccc">{{item.createtime}}</view>
                                         <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" data-orderid="{{item.orderid}}" bindonclick="toOrderDetail" __fn_onClick="{{true}}" data-e-onclick-so="this" data-e-onclick-a-a="{{item.orderid}}">订单详情</at-button>
-                                        <block wx:if="{{item.orderstatus == 1}}">
-                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">购物中</at-button>
-                                        </block>
-                                        <block wx:if="{{item.orderstatus == 2}}">
-                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">待结账</at-button>
-                                        </block>
-                                        <block wx:if="{{item.orderstatus == 3}}">
-                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">已取消</at-button>
-                                        </block>
-                                        <block wx:if="{{item.orderstatus == 4}}">
-                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">待支付</at-button>
-                                        </block>
-                                        <block wx:if="{{item.orderstatus == 5}}">
-                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">已付款</at-button>
-                                        </block>
-                                        <block wx:if="{{item.orderstatus == 6}}">
-                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">已欠费</at-button>
-                                        </block>
-                                        <block wx:if="{{item.orderstatus == 7}}">
-                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">转退款</at-button>
-                                        </block>
-                                        <block wx:if="{{item.orderstatus == 8}}">
-                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">已完成</at-button>
-                                        </block>
-                                        <block wx:if="{{item.orderstatus == 9}}">
-                                            <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" type="secondary">异常订单</at-button>
-                                        </block>
+                                        <at-button class="btn1" __triggerObserer="{{ _triggerObserer }}" type="secondary" open-type="getUserInfo" bindongetuserinfo="userInfoHandler" __fn_ongetUserInfo="{{true}}" data-e-ongetuserinfo-so="this">我的心愿</at-button>
                                     </view>
                                 </view>
                             </view>

@@ -13,7 +13,10 @@
                 <image class="img" src="{{temp}}"></image>
             </view>
             <view class="imgsDiv">
-                <image class="imgsss" src="{{item}}" wx:for="{{pics}}" wx:for-item="item" wx:for-index="index"></image>
+                <view class="imgsss" style="position:relative;" wx:for="{{pics}}" wx:for-item="item" wx:for-index="index">
+                    <view class="poDiv" data-id="{{index}}" bindtap="del">X</view>
+                    <image src="{{item}}" style="width:100%"></image>
+                </view>
             </view>
         </view>
         <view>

@@ -27,6 +27,7 @@ interface IState {
     openfailed:boolean,
     state1:string,
     icon1:string,
+    finishImg:string,
     machine:object,
     shelfs:object,
     socketMsgQueue:Array<object>,
@@ -35,7 +36,11 @@ interface IState {
     cartgoods:Array<object>,
     promotions:number,
     cartTips1:string,
-    cartTips2:string
+    cartTips2:string,
+    cartTips3:string,
+    isfinish:boolean,
+    shopping:string,
+    unpayorder:Array<object>
 }
 
 // 如果需要在 h5 环境中开启 React Devtools
@@ -67,7 +72,8 @@ class Index extends Component<{}, IState>{
         orderno:'',
         orderid:'',
         openfailed:false,
-        state1:PATH + '/mImages/shopping.png',
+        state1:PATH + '/mImages/shopping1.png',
+        shopping:PATH + '/mImages/shopping1.png',
         icon1:PATH + '/mImages/fkz.png',
         socketMsgQueue:[],
         socketOpen:false,
@@ -75,7 +81,11 @@ class Index extends Component<{}, IState>{
         cartgoods:[],
         promotions:0,
         cartTips1:'正在购物中',
-        cartTips2:'小主,拿到满意商品后,要关门哦！'
+        cartTips2:'小主,拿到满意商品后,要关门哦！',
+        cartTips3:'',
+        isfinish:true,
+        unpayorder:[],
+        finishImg:PATH + '/mImages/finishImg.png'
 
     }
 }
@@ -110,33 +120,46 @@ class Index extends Component<{}, IState>{
     //var orderid = that.data.orderid;
       
     order.startqueryorderstatus(orderid, function succeeded(res) {
-         console.log('-----orderstatus-----');
+         console.log('-----orderstatus444444-----');
          console.log(res);
          var that = this;
          var orderstatus = res.data.data.orderstatus;
          var doorstatus = res.data.data.doorstatus;
+         console.log(orderstatus+"-----"+doorstatus)
          if (res.data.code == 200) {
-              
-             if (orderstatus == "5" || orderstatus == "3" || orderstatus == "8" || orderstatus == "9") { //5已付款 3已取消 8已完成 9 错误
+              this_.setState({
+                isfinish:true,
+                state1:this_.state.shopping,
+              })
+              if(doorstatus=='4'  &&  orderstatus !== '6'){  
+                console.log('进这里进这里')
+                this_.setState({
+                  isfinish:false,
+                  state1:this_.state.finishImg,
+                  cartTips1:'完成购物',
+                  cartTips2:'小主,柜门已关,购物已完成。',
+                  cartTips3:'您可放心离开,稍后为您推送购物单。'
+                })
+              }
+              if (orderstatus == "5" || orderstatus == "3" || orderstatus == "8" || orderstatus == "9") { //5已付款 3已取消 8已完成 9 错误
               order.stopInterval();
                setTimeout(() => {
                 Taro.redirectTo({
                   url: '/pages/orders/orderdetail/orderdetail?orderid=' + orderid + '&whereis=weight'
                 })
-               }, 2000);
+               }, 3000);
               
              } else if (orderstatus == "6") { //6已欠费
-              //order.stopInterval();
-              //alert('ttttt')
-              this_.gotoBack();
-               //拉起支付
-               //that.requestPay(routerinfo.orderid);
-             } else {
-               that.setState({
-                 cartTips1: '正在购物中',
-                 cartTips2:'小主,'+systemUser+'正在快速核算订单,请耐心等候哦！'
-               });
-             }
+              
+              this_.getUnpayOrder();
+               
+            } 
+            //else  {
+            //   this_.setState({
+            //      cartTips1: '正在购物中',
+            //      cartTips2:'小主,'+systemUser+'正在快速核算订单,请耐心等候哦！'
+            //    });
+            //  }
            
          }
        });
@@ -201,6 +224,65 @@ class Index extends Component<{}, IState>{
       }
     })
   }
+  payOrder(){
+    var orderid = Taro.getStorageSync("orderid");
+    //var orderid = this.data.unpayorder.orderid;
+    this.setState({
+      orderid: orderid
+    });
+    this.requestPay(orderid);
+
+  }
+    //付支付订单
+    getUnpayOrder() {
+      var that = this;
+      Taro.request({
+        url: BASE_URL + 'order/unpayorder',
+        data: {},
+        header: {
+          'content-type': 'application/json', // 默认值
+          'token': globalData.token
+        },
+        success: function (res) {
+          console.log('购物订单3333：');
+          console.log(res);
+          if (res.data.code == 200) {
+            
+            Taro.setStorageSync("orderid", res.data.data.orderid);
+            if(res.data.data.score == '0'){
+              //自动发起支付
+              this_.setState({
+                isfinish:false,
+                state1:this_.state.finishImg,
+                cartTips1:'购物完成',
+                cartTips2:'您已完成购物,请及时支付',
+                cartTips3:'提示：长时间不支付将影响您的信用'
+              })
+              order.stopInterval();
+              that.payOrder();
+              
+            }else{
+              //order.stopInterval();
+              this_.setState({
+                isfinish:false,
+                state1:this_.state.finishImg,
+                cartTips1:'购物完成',
+                cartTips2:'您已完成购物,请及时支付',
+                cartTips3:'稍后可留意微信支付分发送的支付推送'
+              })
+            }
+            this_.setState({
+              unpayorder: res.data.data 
+            });
+            
+            
+          } else {
+             console.log('您没有未支付订单！')
+          }
+  
+        }
+      })
+    }
   // 请勿修改此函数
   getMachineDetail() {
     const routerinfo= Taro.getStorageSync('routerinfo'); 
@@ -525,9 +607,18 @@ class Index extends Component<{}, IState>{
               shoudReconnet = false;
               Taro.closeSocket();
               console.log('gotoBack')
-              Taro.navigateTo({
-                url: '/pages/index/index'
-              })
+              // Taro.navigateTo({
+              //   url: '/pages/index/index'
+              // })
+              // this_.setState({
+              //   isfinish:true,
+              //   state1:this_.state.finishImg,
+              //   cartTips1:'购物完成',
+              //   cartTips2:'您已完成购物,请及时支付',
+              //   cartTips3:'提示：长时间不支付将影响您的信用'
+              // })
+
+              //this_.getUnpayOrder();
               
               //拉起支付
               //that.requestPay(routerinfo.orderid);
@@ -573,16 +664,22 @@ class Index extends Component<{}, IState>{
     })
     return (
         <View className='smain'>
+          {this.state.isfinish?
+
           <View className='shopDiv'>
-            <Image className='shopImg' src={this.state.state1}/>
+            <Image className='shopImg1' src={this.state.state1}/>
             <View className='shoptitle'>{this.state.cartTips1}</View>
             <View className='shopInfo'>{this.state.cartTips2}</View>
-            {/* <View className='toRight'>
-            <Button className='toSever'>联系客服</Button>
-            </View> */}
-            
-          
+            <View className='shopInfo'>{this.state.cartTips3}</View>
           </View>
+          :
+          <View className='shopDiv'>
+          <Image className='shopImg1' src={this.state.state1}/>
+          <View className='shoptitle'>{this.state.cartTips1}</View>
+          <View className='shopInfo'>{this.state.cartTips2}</View>
+          <View className='shopInfo'>{this.state.cartTips3}</View>
+        </View>
+          }
           <View className='addr'>
                 <Image className='addricon' src={this.state.icon1}/>
                 <View className='addr1'>{this.state.machine.machinename}</View>
@@ -607,7 +704,11 @@ class Index extends Component<{}, IState>{
           </View>
           
           <View>
-          <Button type="default" className='btn' onClick={this.gotoBack}> 收起 </Button>
+          {this.state.unpayorder.score == "0"?
+           <Button type="default" className='btn' onClick={this.payOrder}> 支付 </Button>
+          :
+          <Button type="default" className='btn' onClick={this.gotoBack}>  关闭 </Button>
+          }
           </View>
 
           <View className='orderdetail' hidden={true}>

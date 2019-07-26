@@ -52,7 +52,7 @@ class Orderlist extends Component<{}, IState>{
     this.state = {
         current:0,
         goodsList:[],
-        addrimg:PATH+'/mImages/wddd1.png',
+        addrimg:PATH+'/mImages/wddd2.png',
         dargStyle: {//下拉框的样式
           top: 0 + 'px'
       },
@@ -195,6 +195,74 @@ class Orderlist extends Component<{}, IState>{
     })
 
   }
+  userInfoHandler(res){
+    var that = this;
+    console.log(res.detail.userInfo);
+    if (res.detail.userInfo == null){
+      return;
+    }
+    
+    Taro.showLoading({
+      title: '',
+    });Taro
+    
+    globalData.avatar = res.detail.userInfo.avatarUrl;
+    globalData.nickname = res.detail.userInfo.nickname||res.detail.userInfo.nickName;
+    
+    console.log("globalData.nickName")
+    console.log(globalData.nickname)
+    console.log("globalData.avatar")
+    console.log(globalData.avatar)
+
+    // this.setState({
+    //   isperson:true
+    // })
+
+    console.log("userInfoList:")
+    // console.log(this.state.userInfoList)
+    Taro.request({
+      method: 'POST',
+      url: BASE_URL + 'user/updateuserinfo',
+      data: {
+        avatarUrl: res.detail.userInfo.avatarUrl,
+        city: res.detail.userInfo.city,
+        country: res.detail.userInfo.country,
+        nickName: res.detail.userInfo.nickName,
+        province: res.detail.userInfo.province
+      },
+      header: {
+        'content-type': 'application/json', // 默认值
+        'token': globalData.token
+      },
+      success:  (res)=> {
+        console.log(res);
+        
+        Taro.showToast({
+          title: '头像更新成功',
+          icon: 'success',
+          duration: 2000
+        })
+
+       
+
+        that.onSetheart();
+      },
+      fail: (res)=> {
+        Taro.hideLoading();
+        // Taro.showModal({
+        //   title: '提示',
+        //   content: '请更新头像',
+        //   success: function(res) {
+        //     if (res.confirm) {
+        //       console.log('用户点击确定')
+        //     } else if (res.cancel) {
+        //       console.log('用户点击取消')
+        //     }
+        //   }
+        // })
+      }
+    })
+  }
   handleClick (value) {
     console.log(value)
     if(value==0){
@@ -202,11 +270,11 @@ class Orderlist extends Component<{}, IState>{
         curPage = 0;
     }
     if(value==1){
-        curStatus = 6;
+        curStatus = 7;
         curPage = 0;
     }
     if(value==2){
-        curStatus = 7;
+        curStatus = 0;
         curPage = 0;
     }
 
@@ -235,6 +303,12 @@ pull() {//上拉
       // this.props.onPull()
       this.onReachBottom()
       
+  }
+  onSetheart() {
+    console.log('进入心愿单中心');
+    Taro.navigateTo({
+      url: '/pages/wish/likes/myheart'
+    })
   }
 down() {//下拉
   console.log('下拉')
@@ -353,7 +427,7 @@ touchStart(e) {
   render () {
     const { goodsList } = this.state;
 
-    const tabList = [{ title: '已完成' }, { title: '待支付' }, { title: '转退款' }]
+    const tabList = [{ title: '已付款' }, { title: '转退款' }, { title: '其他' }]
     const Content =goodsList.map((item,index)=>{
           const goodsArr = item.goods.map((item_,index)=>{
               return <View className='gUL' key="">
@@ -380,7 +454,18 @@ touchStart(e) {
                       <View className='addr'><Image className='addimg' src={this.state.addrimg}/>{globalData.sysTitle}</View>
                      }
                     
-                     <View className='ctime'>{item.createtime}</View>
+                    
+                     {item.orderstatus==1? <View className='ctime'>购物中</View>:''}
+                     {item.orderstatus==2? <View className='ctime'>待结账</View>:''}
+                     {item.orderstatus==3? <View className='ctime'>已取消</View>:''}
+                     {item.orderstatus==4? <View className='ctime'>待支付</View>:''}
+                     {item.orderstatus==5? <View className='ctime'>已付款</View>:''}
+                     {item.orderstatus==6? <View className='ctime'>已欠费</View>:''}
+                     {item.orderstatus==7? <View className='ctime'>转退款</View>:''}
+                     {item.orderstatus==8? <View className='ctime'>已完成</View>:''}
+                     {item.orderstatus==9? <View className='ctime'>订单异常</View>:''}
+                    
+
                   </View>
                   { item.goods.length?
                    <View className='gslist'>
@@ -394,17 +479,19 @@ touchStart(e) {
                   
                   }
                    <View className='Btns'>
-                       <AtButton class='btn' data-orderid={item.orderid} onClick={this.toOrderDetail.bind(this,item.orderid)}  >订单详情</AtButton>                      
+                       <View style='float:left;font-size:25rpx;color:#ccc'>{item.createtime}</View>
+                       <AtButton class='btn'  data-orderid={item.orderid} onClick={this.toOrderDetail.bind(this,item.orderid)}  >订单详情</AtButton>                      
                        {/* <AtButton class='btn' >删除订单</AtButton> */}
-                       {item.orderstatus==1?<AtButton class='btn' type='secondary' >购物中</AtButton>:''}
-                       {item.orderstatus==2?<AtButton class='btn' type='secondary'>待结账</AtButton>:''}
-                       {item.orderstatus==3?<AtButton class='btn' type='secondary'>已取消</AtButton>:''}
-                       {item.orderstatus==4?<AtButton class='btn' type='secondary'>待支付</AtButton>:''}
-                       {item.orderstatus==5?<AtButton class='btn' type='secondary'>已付款</AtButton>:''}
-                       {item.orderstatus==6?<AtButton class='btn' type='secondary'>已欠费</AtButton>:''}
-                       {item.orderstatus==7?<AtButton class='btn' type='secondary'>转退款</AtButton>:''}
-                       {item.orderstatus==8?<AtButton class='btn' type='secondary'>已完成</AtButton>:''}    
-                       {item.orderstatus==9?<AtButton class='btn' type='secondary'>异常订单</AtButton>:''}                                         
+                       <AtButton class='btn1' type='secondary'  open-type="getUserInfo" ongetUserInfo={this.userInfoHandler.bind(this)} >我的心愿</AtButton>
+                       {/* {item.orderstatus==1?<AtButton class='btn1' type='secondary' >购物中</AtButton>:''}
+                       {item.orderstatus==2?<AtButton class='btn1' type='secondary'>待结账</AtButton>:''}
+                       {item.orderstatus==3?<AtButton class='btn1' type='secondary'>已取消</AtButton>:''}
+                       {item.orderstatus==4?<AtButton class='btn1' type='secondary'>待支付</AtButton>:''}
+                       {item.orderstatus==5?<AtButton class='btn1' type='secondary'>已付款</AtButton>:''}
+                       {item.orderstatus==6?<AtButton class='btn1' type='secondary'>已欠费</AtButton>:''}
+                       {item.orderstatus==7?<AtButton class='btn1' type='secondary'>转退款</AtButton>:''}
+                       {item.orderstatus==8?<AtButton class='btn1' type='secondary'>已完成</AtButton>:''}    
+                       {item.orderstatus==9?<AtButton class='btn1' type='secondary'>异常订单</AtButton>:''}                                          */}
                        {/* <AtButton class='btn'>已完成</AtButton>
                        <AtButton class='btn'>已付款</AtButton>
                        <AtButton class='btn'>待付款</AtButton>

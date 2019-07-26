@@ -65,8 +65,8 @@
                             </block>
                             <block wx:else>
                                 <cover-view>
-                                    <cover-view class="paynewDiv">请到微信支付分中进行支付</cover-view>
-                                    <cover-view class="tsDiv">*请进入微信支付>钱包>微信支付分>订单详情中进行支付！</cover-view>
+                                    <cover-image class="unpayImg" src="{{unpayorderimg}}"></cover-image>
+                                    <cover-view class="unpayDiv">长时间不支付将影响您的信用</cover-view>
                                 </cover-view>
                             </block>
                         </block>

@@ -3,7 +3,7 @@ var curStatus = 8;
 var cardid = '';
 import Taro, { Component, Config, MapContext } from '@tarojs/taro'
 
-import { Map, CoverView,Canvas,View,Image,CoverImage,Button,Text } from '@tarojs/components'
+import { Map, CoverView,Canvas,View,Image,CoverImage,Button,Text,Swiper, SwiperItem} from '@tarojs/components'
 
 import {BASE_URL,globalData,PATH,systemUser} from '../../config/index.js'; 
 
@@ -29,6 +29,7 @@ interface IState {
   iconC3:string,
   iconC4:string,
   wishes:Array<object>,
+  SwiperItemArry:Array<object>,
   userInfoList:object,
   isuserInfo:boolean,
   goodsList:Array<object>,
@@ -57,9 +58,9 @@ class Index extends Component<{}, IState>{
     super(props)
     this.state = {
       mhhImg:PATH+'/mImages/xydImg.png',
-      iconImg1:PATH+'/mImages/tytb-1.png',
-      iconImg2:PATH+'/mImages/tytb-61.png',
-      tytb33:PATH+'/mImages/tytb-33.png',
+      iconImg1:PATH+'/mImages/homeTo.png',
+      iconImg2:PATH+'/mImages/serverNew.png',
+      tytb33:PATH+'/mImages/tytb-41.png',
       perbox:PATH+'/mImages/perbox.png',
       avator:PATH+'/mImages/tempavator.png',
       iconB1:PATH+'/mImages/wddd-new1-50.png',
@@ -75,6 +76,7 @@ class Index extends Component<{}, IState>{
       wishes:[],
       isuserInfo:true,
       goodsList:[],
+      SwiperItemArry:[{item:'1',url:PATH+'/mImages/swper1.png'},{item:'2',url:PATH+'/mImages/swper2.png'}],
       total:0,
     }
 }
@@ -239,12 +241,12 @@ class Index extends Component<{}, IState>{
   }
   toOrders2(){
     Taro.navigateTo({
-      url: '../orders/orderlist/orderlist?state=6&value=1'
+      url: '../orders/orderlist/orderlist?state=7&value=1'
     })
   }
   toOrders3(){
     Taro.navigateTo({
-      url: '../orders/orderlist/orderlist?state=7&value=2'
+      url: '../orders/orderlist/orderlist?state=0&value=2'
     })
   }
   userInfoHandler(res){
@@ -455,6 +457,15 @@ class Index extends Component<{}, IState>{
       var str1 = str.toFixed(2)
       return str1
     }
+    const { SwiperItemArry} = this.state;
+    const SwiperItems = SwiperItemArry.map((item,index)=>{
+      return(<SwiperItem>
+            <View className='demo-text-1'>
+               <Image src={item.url} style='position:absolute;width:100%;height:100%' />
+            </View>
+      </SwiperItem>
+      )
+    })
     return (
         <View className='personalCenter'>
            <View className='mhh'>
@@ -481,8 +492,8 @@ class Index extends Component<{}, IState>{
                        <View className='wordb'>{this.state.wishes.length}</View>
                        <View className='wordz'>心愿</View>
                      </View>
-                     <View className='line'>|</View>
-                     <View className='uli' onClick={this.gobingcart}>
+                     <View className='line'  style='display:none'>|</View>
+                     <View className='uli' onClick={this.gobingcart} style='display:none'>
                       <View className='wordb'>0</View>
                       <View className='wordz'>亲情卡</View>
                      </View>
@@ -504,15 +515,15 @@ class Index extends Component<{}, IState>{
                        <Image className='iconb' src={this.state.iconB21}/>
                        </View>
                        }
-                       <View className='iconw' >已完成</View>
+                       <View className='iconw' >已付款</View>
                      </View>
                      <View className='iconLi' onClick={this.toOrders2}>
                        <Image className='iconb' src={this.state.iconB1}/>
-                       <View className='iconw' >待支付</View>
+                       <View className='iconw' >转退款</View>
                      </View>
                      <View className='iconLi' onClick={this.toOrders3}>
                        <Image className='iconb' src={this.state.iconB3}/>
-                       <View className='iconw'>转退款</View>
+                       <View className='iconw'>其他</View>
                      </View>
                      {/* <View className='iconLi'>
                        <Image className='iconb' src={this.state.iconB4}/>
@@ -522,6 +533,23 @@ class Index extends Component<{}, IState>{
                   <View>
                      
                   </View>
+                </View>
+                <View className='mysever' style='padding:0 0 0 0;'>
+                <Swiper
+                    className='test-h'
+                    indicatorColor='#999'
+                    indicatorActiveColor='#333'
+                    circular
+                    indicatorDots
+                    autoplay>
+                    {/* <SwiperItem>
+                      <View className='demo-text-1'>
+
+                      </View>
+                    </SwiperItem> */}
+                   
+                    {SwiperItems}
+                  </Swiper>
                 </View>
                 {/* <View className='mysever'>
                 <View className='titleSever'>

@@ -81,7 +81,6 @@ interface IState {
   tempImg: string,
   del: string,
   pos_: string,
-  open: string,
   addr: string,
   mach: string,
   DensityFree: boolean,
@@ -94,12 +93,11 @@ interface IState {
   yyzh: string,
   dyzh: string,
   xydd: string,
+  unpayorderimg:string,
   singinBoolean:boolean,
   singinImg:string,
   wzc10:string,
   wzc11:string,
-  wzc20:string,
-  wzc22:string,
   wzc30:string,
   wzc33:string,
   setp1:boolean,
@@ -124,7 +122,8 @@ interface IState {
   avatar:string,
   clear:string,
   timerTem:string,
-  hasMore:boolean
+  hasMore:boolean,
+  isperson:boolean
 }
 
 export default class Index extends Component<{}, IState>{
@@ -142,6 +141,7 @@ export default class Index extends Component<{}, IState>{
       qrurl:"",
       showlogin:false,
       showpapay: false,
+      isperson:false,
       isnopasspay: 0,
       havearrears: 0,
       formid:'',
@@ -151,9 +151,9 @@ export default class Index extends Component<{}, IState>{
       longitude: 116.397470,
       scale: 16,
       menus: PATH + '/mImages/menus.png',
-      screen: PATH + '/mImages/tytb-3.png',
-      user: PATH + '/mImages/tytb-6.png',
-      person: PATH + '/mImages/tytb-22.png',
+      screen: PATH + '/mImages/tytb-41.png',
+      user: PATH + '/mImages/server_11.png',
+      person: PATH + '/mImages/ordericon.png',
       zm: PATH + '/mImages/zm2.png',
       avatar:'',
       zmdefault:PATH+'/mImages/zm2.png',
@@ -163,9 +163,9 @@ export default class Index extends Component<{}, IState>{
       unpriceImg: PATH + '/mImages/wfk.png',
       pos_: PATH + '/mImages/bg_0.png',
       tempImg: 'http://filetest.wemall.com.cn/de0aa02f4a0f49171149beab583c826b.jpg',
+      unpayorderimg: PATH + '/mImages/unpay_info.png',
       del: PATH + '/mImages/clear.png',
-      open: PATH + '/mImages/yyz.png',
-      addr: PATH + '/mImages/tytb-4.png',
+      addr: PATH + '/mImages/addr1.png',
       mach: PATH + '/mImages/tytb-1.png',
       mm: PATH + '/mImages/mm.png',
       HearHead: PATH + '/mImages/ysjtb1.png',
@@ -175,12 +175,10 @@ export default class Index extends Component<{}, IState>{
       dyzh: PATH + '/mImages/dyz_f.png',
       xydd: PATH + '/mImages/xyd_img.png',
       singinImg:PATH+'/mImages/gban.png',
-      wzc10:PATH+'/mImages/wzc-10.png',
-      wzc11:PATH+'/mImages/wzc-11.png',
-      wzc20:PATH+'/mImages/wzc-20.png',
-      wzc22:PATH+'/mImages/wzc-22.png',
-      wzc30:PATH+'/mImages/wzc-zf1.png?'+Math.random(),
-      wzc33:PATH+'/mImages/wzc-zf2.png?'+Math.random(),
+      wzc10:PATH+'/mImages/wzcNew-22.png',
+      wzc11:PATH+'/mImages/wzcNew-11.png',
+      wzc30:PATH+'/mImages/wzcNew-33.png',
+      wzc33:PATH+'/mImages/wzcNew-44.png',
       clear:PATH+'/mImages/clear.png',
       setp1:true,
       setp2:false,
@@ -272,7 +270,7 @@ export default class Index extends Component<{}, IState>{
   }
   
   componentDidShow() {
-    console.log('---onshow---')
+    console.log('---onshow1111111111111111111111---')
     this.setState({
       HearlistBoolean: false
     })
@@ -379,9 +377,9 @@ export default class Index extends Component<{}, IState>{
                 id: 2,
                 iconPath: wishImg,
                 position: {
-                  width: 100,
-                  height:100,
-                  left: data.windowWidth-90,
+                  width: 60,
+                  height:60,
+                  left: data.windowWidth-60,
                   top: (data.windowHeight-115)/2
                 },
                 clickable: true
@@ -505,10 +503,23 @@ export default class Index extends Component<{}, IState>{
            var $singinBoolean = true;
            var $fee = 0;
            var $markBoolean = true;
+           
            var $avatarUrl = res.data.data.avatar;
            globalData.avatar = $avatarUrl;
            globalData.fee = res.data.data.fee;
-           globalData.nickname = res.data.data.nickname;
+           
+
+           if(res.data.data.nickname){
+            globalData.nickname = res.data.data.nickname;
+
+            that.setState({
+               isperson:true
+            })
+           }else{
+            that.setState({
+              isperson:false
+           })
+           }
            if(res.data.data.isscorepay=="1"){
                   console.log('')
                   $singinBoolean = false;
@@ -549,9 +560,9 @@ export default class Index extends Component<{}, IState>{
               id: 2,
               iconPath: wishImg,
               position: {
-                width: 100,
-                height:100,
-                left: data.windowWidth-90,
+                width: 60,
+                height:60,
+                left: data.windowWidth-60,
                 top: (data.windowHeight-115)/2
               },
               clickable: true
@@ -592,7 +603,7 @@ export default class Index extends Component<{}, IState>{
         'token': globalData.token
       },
       success: function (res) {
-        console.log('resttttttttt');
+        console.log('unpayorder');
         console.log(res);
         if (res.data.code == 200) {
           
@@ -655,7 +666,7 @@ export default class Index extends Component<{}, IState>{
           position: {
             width: 100,
             height:100,
-            left: data.windowWidth-90,
+            left: data.windowWidth-85,
             top: (data.windowHeight-115)/2
           },
           clickable: true
@@ -824,7 +835,7 @@ export default class Index extends Component<{}, IState>{
         position: {
           width: 100,
           height: 100,
-          left: data.windowWidth - 90,
+          left: data.windowWidth - 75,
           top: (data.windowHeight - 115) / 2
         },
         clickable: true
@@ -968,12 +979,6 @@ export default class Index extends Component<{}, IState>{
     order.shoppingorder(function successed(result) {
       console.log("result:")
       console.log(result)
-      if(!result){
-        console.log('挺住！！！')
-        this_.getUnpayOrder();
-        return;
-        
-      }
       // 如果有购物中订单，设置页面状态，并开启轮询
       var orderid = result.orderid;
       var machineid = result.machineid;
@@ -987,7 +992,7 @@ export default class Index extends Component<{}, IState>{
         machineid: machineid,
         orderno: orderno,
         recogmode: recogmode,
-        haveShopping: false
+        haveShopping: true
       });
       order.startqueryorderstatus(orderid, function succeeded(res) {
           console.log('res:订单数据');
@@ -1019,13 +1024,15 @@ export default class Index extends Component<{}, IState>{
                 console.log('------苏晓燕1111111您有一张订单正在结算中-----')
                 that.setState({
                   cartTips: '您有一张订单正在结算中',
-                  Carting:true,
                   bool:false,
                   markBoolean:true,
                   haveShopping: true
                 });
               }
           
+          }else{
+
+          console.log('217 codeing....')
           }
         });
     });
@@ -1237,8 +1244,8 @@ getNearbyMachines(latitude: Number, longitude: Number) {
 
         markers = temps.map((item,index)=>{
           item.iconPath = flag;
-          item.width = 50;
-          item.height= 50;
+          item.width = 60;
+          item.height= 60;
           item.latitude = res.data.data[index].lat;
           item.longitude = res.data.data[index].lon;
           item.id = res.data.data[index].machineid;
@@ -1299,8 +1306,8 @@ getNearbyMachines(latitude: Number, longitude: Number) {
     console.log(e.controlId)
     if (e.controlId == 2) {
       //开启心愿单
-      
-      this.onHeard();
+      //this.onHeard();
+      this.onSetheart();
     }
 
 
@@ -1457,15 +1464,21 @@ getNearbyMachines(latitude: Number, longitude: Number) {
     })
   }
   //去登陆
-  ongotologin(){
+  // ongotologin(){
+  //   Taro.navigateTo({
+  //     url: '/pages/personal/index'
+  //   })
+  // }
+  toOrders(){
     Taro.navigateTo({
-      url: '/pages/personal/index'
+      url: '../orders/orderlist/orderlist?state=8&value=0'
     })
   }
   onLeft() {
     console.log('个人中心')
-    this.ongotologin();
+    this.toOrders();
   }
+
   paytipsmodal(currentStatu) {
     //关闭  
     // if (currentStatu == "close") {
@@ -1497,20 +1510,21 @@ getNearbyMachines(latitude: Number, longitude: Number) {
       },
       method: "POST",
       success: function (res) {
+        console.log("检测是否可以开门：floweryan")
+        console.log(res);
         Taro.hideLoading();
         //检测是否可以开门
-        console.log("检测是否可以开门")
-        console.log(res)
-
         if (res.data.code == 200) {
+          console.log('成功！')
           var machineid = res.data.data.machineid;
           var lockid = res.data.data.lockid;
 
-          Taro.reLaunch({
-            url: '../box/open/open?machineid=' + machineid + '&lockid=' + lockid + '&formid='
+          Taro.navigateTo({
+            url: '/pages/box/open/open?machineid=' + machineid + '&lockid=' + lockid + '&formid='
           })
 
         } else {
+          console.log('失败！')
           Taro.showModal({
             title: '提示',
             content: res.data.msg,
@@ -1578,7 +1592,7 @@ getNearbyMachines(latitude: Number, longitude: Number) {
             markBoolean:true,
             haveShopping: true
           });
-          that.gohome();
+          //that.gohome();
        }
        if(res.data.code==202){ 
         console.log('您的帐号异常，请与客服联系！')
@@ -1653,6 +1667,63 @@ getNearbyMachines(latitude: Number, longitude: Number) {
     this.requestPay(orderid);
 
   }
+  userInfoHandler(res){
+    var that = this;
+    console.log(res.detail.userInfo);
+    if (res.detail.userInfo == null){
+      return;
+    }
+    
+    Taro.showLoading({
+      title: '',
+    });Taro
+    
+    globalData.avatar = res.detail.userInfo.avatarUrl;
+    globalData.nickname = res.detail.userInfo.nickname||res.detail.userInfo.nickName;
+    
+    console.log("globalData.nickName")
+    console.log(globalData.nickname)
+    console.log("globalData.avatar")
+    console.log(globalData.avatar)
+
+    this.setState({
+      isperson:true
+    })
+
+    console.log("userInfoList:")
+    // console.log(this.state.userInfoList)
+    Taro.request({
+      method: 'POST',
+      url: BASE_URL + 'user/updateuserinfo',
+      data: {
+        avatarUrl: res.detail.userInfo.avatarUrl,
+        city: res.detail.userInfo.city,
+        country: res.detail.userInfo.country,
+        nickName: res.detail.userInfo.nickName,
+        province: res.detail.userInfo.province
+      },
+      header: {
+        'content-type': 'application/json', // 默认值
+        'token': globalData.token
+      },
+      success: function (res) {
+        console.log(res);
+        
+        Taro.showToast({
+          title: '头像更新成功',
+          icon: 'success',
+          duration: 2000
+        })
+
+       
+
+        //that.goRecharge();
+      },
+      fail: function (res) {
+        Taro.hideLoading();
+      }
+    })
+  }
   gotoCartFn(){
     var result = Taro.getStorageSync('goodsResult');
     var orderid = result.orderid;
@@ -1724,7 +1795,7 @@ getNearbyMachines(latitude: Number, longitude: Number) {
             },
             success: function (res) {
               // that.showBottomModal();
-              console.log('res:')
+              console.log('res机柜信息11111111:')
               console.log(res)
               that.setState({
                 markerDetail: res.data.data,
@@ -1827,7 +1898,23 @@ getNearbyMachines(latitude: Number, longitude: Number) {
         {/* <Canvas className='canvas'/> */}
         <Map className='mb-map' id='mymap'  show-location={this.state.showLocation} latitude={this.state.latitude} longitude={this.state.longitude} scale={this.state.scale} markers={this.state.markers} controls={this.state.controls} onControlTap={this.onControlTap} onmarkertap={this.markertap} onregionchange={this.regionchange}/>
         <CoverView className='menus_avator'>
-          <CoverImage className='menus_user' onTouchStart={this.topersonfn}  src={this.state.zm} />
+          {globalData.avatar?
+            <CoverImage className='menus_user' onTouchStart={this.topersonfn}  src={globalData.avatar} />
+           :
+           <CoverImage className='menus_user'   src={this.state.zm} />
+
+          }
+           {this.state.isperson?
+           <CoverView className='personDiv'>
+           {/* {globalData.nickname} */}
+           个人中心
+           </CoverView>
+           :
+           <Button className='personDiv'  open-type="getUserInfo" ongetUserInfo={this.userInfoHandler.bind(this)}>
+              点击进入个人中心
+           </Button>
+           }
+          
           {this.state.befee>0?
           <CoverView className='fee' onClick={this.onStored}>当前余额:{this.state.befee/100}元</CoverView>
           :
@@ -1931,8 +2018,11 @@ getNearbyMachines(latitude: Number, longitude: Number) {
                 <Button className='BtnOne' type='default' onClick={this.payOrder}>支付</Button>
                 :
                 <CoverView>
-                  <CoverView className='paynewDiv'>请到微信支付分中进行支付</CoverView>
-                  <CoverView className='tsDiv'>*请进入微信支付>钱包>微信支付分>订单详情中进行支付！</CoverView>
+                  <CoverView className='paynewDiv'>请到您的微信>钱包>支付分中支付</CoverView>
+                  <CoverView className='tsDiv'>
+                    <CoverImage className='unpayImg' src={this.state.unpayorderimg} />
+                    <CoverView className='unpayDiv'>长时间不支付将影响您的信用</CoverView>
+                  </CoverView>
                 </CoverView>
               }
             </CoverView>
@@ -2011,7 +2101,11 @@ getNearbyMachines(latitude: Number, longitude: Number) {
            {this.state.machineBoolean ?
               <CoverView className='machineInfo' onClick={this.hideModal}>
                 <CoverImage className='pos_' src={this.state.pos_} />
-                <CoverImage className='openImg' src={this.state.open} />
+                {markerDetail.businessstatus=="4"?
+                <CoverView class='openNew'>营业中</CoverView>
+                :
+                <CoverView class='closeNew'>打烊了</CoverView>
+                } 
                 <CoverView className='addrDiv'>
                   <CoverImage className='addr' src={this.state.mach} />
                   <CoverView className='address'>{markerDetail.machinename}</CoverView>
@@ -2030,7 +2124,7 @@ getNearbyMachines(latitude: Number, longitude: Number) {
               </CoverView>
               :
               <CoverView></CoverView>
-            }
+              }
       </View>
     )
   }

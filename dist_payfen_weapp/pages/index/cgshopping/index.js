@@ -33,8 +33,8 @@ var intervalOrderStatus;
 var timer = 0;
 var timerList = [];
 var count = 0;
+var this_;
 
-//import {} from '../../../utils/util.js';
 var order = require("../../../utils/order.js");
 
 // 如果需要在 h5 环境中开启 React Devtools
@@ -56,7 +56,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Index.__proto__ || Object.getPrototypeOf(Index)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["cartgoods", "formid", "lockid", "machineid", "machine", "shelfs", "orderno", "orderid", "openfailed", "state1", "icon1", "socketMsgQueue", "socketOpen", "totalfee", "promotions", "cartTips1", "cartTips2", "needRequestOrder", "isRefreshingOrder"], _this.config = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Index.__proto__ || Object.getPrototypeOf(Index)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["cartgoods", "formid", "lockid", "machineid", "machine", "shelfs", "orderno", "orderid", "openfailed", "state1", "shopping", "icon1", "socketMsgQueue", "socketOpen", "totalfee", "promotions", "cartTips1", "cartTips2", "needRequestOrder", "isRefreshingOrder", "unpayorder", "finishImg", "isfinish", "cartTips3"], _this.config = {
       navigationBarTitleText: ''
     }, _this.$$refs = [], _temp), _possibleConstructorReturn(_this, _ret);
   }
@@ -82,7 +82,8 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         orderno: '',
         orderid: '',
         openfailed: false,
-        state1: _index3.PATH + '/mImages/shopping.png',
+        state1: _index3.PATH + '/mImages/shopping1.png',
+        shopping: _index3.PATH + '/mImages/shopping1.png',
         icon1: _index3.PATH + '/mImages/fkz.png',
         socketMsgQueue: [],
         socketOpen: false,
@@ -92,12 +93,16 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         cartTips1: '正在购物中',
         cartTips2: '小主,拿到满意商品后,要关门哦！',
         needRequestOrder: false,
-        isRefreshingOrder: false
+        isRefreshingOrder: false,
+        unpayorder: [],
+        finishImg: _index3.PATH + '/mImages/finishImg.png',
+        isfinish: true
       };
     }
   }, {
     key: "componentWillMount",
     value: function componentWillMount() {
+      this_ = this;
       _index2.default.setNavigationBarTitle({
         title: _index3.globalData.sysTitle
       });
@@ -136,6 +141,16 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         var orderstatus = res.data.data.orderstatus;
         var doorstatus = res.data.data.doorstatus;
         if (res.data.code == 200) {
+          if (doorstatus == '4' && orderstatus !== "6") {
+            console.log('----doorstatus---floweryan----');
+            this_.setState({
+              isfinish: false,
+              state1: this_.state.finishImg,
+              cartTips1: '完成购物',
+              cartTips2: '小主,柜门已关,购物已完成。',
+              cartTips3: '您可放心离开,稍后为您推送购物单。'
+            });
+          }
           if (orderstatus == "5" || orderstatus == "3" || orderstatus == "7" || orderstatus == "8" || orderstatus == "9") {
             //5已付款 3已取消 8已完成 9 错误
             console.log('---走这里---');
@@ -144,19 +159,17 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
               _index2.default.redirectTo({
                 url: '/pages/orders/orderdetail/orderdetail?orderid=' + orderid + '&whereis=cgshop'
               });
-            }, 2000);
+            }, 3000);
           } else if (orderstatus == "6") {
             //6已欠费
-            // order.stopInterval();
-            that.gotoBack();
-            //拉起支付
-            //that.requestPay(routerinfo.orderid);
-          } else {
-            that.setState({
-              cartTips1: '正在购物中',
-              cartTips2: '小主,' + _index3.systemUser + '正在快速核算订单,请耐心等候哦！'
-            });
+            this_.getUnpayOrder();
           }
+          // else {
+          //   that.setState({
+          //     cartTips1: '正在购物中',
+          //     cartTips2:'小主,'+systemUser+'正在快速核算订单,请耐心等候哦！'
+          //   });
+          // }
         }
       });
     }
@@ -189,6 +202,64 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
       _index2.default.redirectTo({
         url: '/pages/index/index'
       });
+    }
+    //付支付订单
+
+  }, {
+    key: "getUnpayOrder",
+    value: function getUnpayOrder() {
+      var that = this;
+      _index2.default.request({
+        url: _index3.BASE_URL + 'order/unpayorder',
+        data: {},
+        header: {
+          'content-type': 'application/json',
+          'token': _index3.globalData.token
+        },
+        success: function success(res) {
+          console.log('购物订单3333：');
+          console.log(res);
+          if (res.data.code == 200) {
+            _index2.default.setStorageSync("orderid", res.data.data.orderid);
+            if (res.data.data.score == '0') {
+              //自动发起支付
+              this_.setState({
+                isfinish: false,
+                state1: this_.state.finishImg,
+                cartTips1: '购物完成',
+                cartTips2: '您已完成购物,请及时支付',
+                cartTips3: '提示：长时间不支付将影响您的信用'
+              });
+              order.stopInterval();
+              that.payOrder();
+            } else {
+              //order.stopInterval();
+              this_.setState({
+                isfinish: false,
+                state1: this_.state.finishImg,
+                cartTips1: '购物完成',
+                cartTips2: '您已完成购物,请及时支付',
+                cartTips3: '稍后可留意微信支付分发送的支付推送'
+              });
+            }
+            this_.setState({
+              unpayorder: res.data.data
+            });
+          } else {
+            console.log('您没有未支付订单！');
+          }
+        }
+      });
+    }
+  }, {
+    key: "payOrder",
+    value: function payOrder() {
+      var orderid = _index2.default.getStorageSync("orderid");
+      //var orderid = this.data.unpayorder.orderid;
+      this.setState({
+        orderid: orderid
+      });
+      this.requestPay(orderid);
     }
   }, {
     key: "getPromotions",
@@ -500,7 +571,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
   }]);
 
   return Index;
-}(_index.Component), _class.properties = {}, _class.$$events = ["goKefu", "gotoBack"], _temp2);
+}(_index.Component), _class.properties = {}, _class.$$events = ["goKefu", "payOrder", "gotoBack"], _temp2);
 exports.default = Index;
 
 Component(require('../../../npm/@tarojs/taro-weapp/index.js').default.createComponent(Index, true));

@@ -139,6 +139,16 @@ var Refund = (_temp2 = _class = function (_BaseComponent) {
       });
     }
   }, {
+    key: 'del',
+    value: function del(e) {
+      console.log(e);
+      var index_ = e.currentTarget.dataset.id;
+      this.state.pics.splice(0, 1);
+      this.setState({
+        pics: this.state.pics
+      });
+    }
+  }, {
     key: 'handleChange',
     value: function handleChange(event) {
       this.setState({
@@ -332,7 +342,7 @@ var Refund = (_temp2 = _class = function (_BaseComponent) {
         item = {
           $original: (0, _index.internal_get_original)(item)
         };
-        var $loopState__temp2 = _this2.__state.id_ == Number(item.$original.id) ? 'btn select' : 'btn';
+        var $loopState__temp2 = _this2.__state.id_ == Number(index + 1) ? 'btn select' : 'btn';
         var $loopState__temp4 = "ab" + index;
         return {
           $loopState__temp2: $loopState__temp2,
@@ -348,7 +358,7 @@ var Refund = (_temp2 = _class = function (_BaseComponent) {
   }]);
 
   return Refund;
-}(_index.Component), _class.properties = {}, _class.$$events = ["selectNav", "handleChange", "chooseImage", "submitRefund"], _temp2);
+}(_index.Component), _class.properties = {}, _class.$$events = ["selectNav", "del", "handleChange", "chooseImage", "submitRefund"], _temp2);
 exports.default = Refund;
 
 Component(require('../../npm/@tarojs/taro-weapp/index.js').default.createComponent(Refund, true));

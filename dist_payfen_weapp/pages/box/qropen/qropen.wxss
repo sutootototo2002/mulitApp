@@ -334,29 +334,36 @@
   position: relative;
   padding: 20rpx;
   border-radius: 10rpx;
-  background: #ff7700;
+  background: #fff;
   margin: 0 20rpx;
   color: #fff;
   font-size: 30rpx;
   line-height: 44rpx;
   text-align: center;
+  color: #ff7700;
+  border: 1rpx solid #ff7700;
 }
 
 .tishiDiv {
+  font-size: 35rpx;
   background: #fff;
   color: #ff7700;
-  width: 100rpx;
-  text-align: center;
-  float: left;
-  font-size: 20rpx;
+  padding: 20rpx 10rpx 0 10rpx;
   border-radius: 10rpx;
-  position: absolute;
-  top: 25%;
-  padding: 8rpx;
 }
 
 .tsDiv {
   font-size: 20rpx;
   text-align: center;
   padding: 10rpx;
+}
+
+.unpayImg {
+  display: inline-block;
+  width: 20rpx;
+  height: 20rpx;
+}
+
+.unpayDiv {
+  display: inline-block;
 }

@@ -16,8 +16,7 @@
             <view class="main_">
                 <button class="{{curNav === post.$original.activityid ? 'box1 select' : 'box1'}}" bindtap="onselectNav" data-money="{{post.$original}}" data-key="{{index}}" data-id="{{post.$original.activityid}}" wx:for="{{loopArray0}}" wx:for-item="post" wx:for-index="index">
                     <view class="price">{{post.$original.fee / 100}}元</view>
-                    <view class="prices">+赠{{post.$original.fee / 100}}元，到账{{post.$loopState__temp2}}元</view>
-                    <image class="pro" src="{{arrow}}"></image>
+                    <view class="prices">+赠{{post.$original.giftfee / 100}}元，到账{{post.$loopState__temp2}}元</view>
                 </button>
             </view>
             <view class="mingxi">

@@ -1,7 +1,7 @@
 var $orderid;
 import Taro, { Component, Config, MapContext } from '@tarojs/taro'
 
-import { Map, CoverView,Canvas,View,Image,CoverImage,Button,Text } from '@tarojs/components'
+import { Map, CoverView,Canvas,View,Image,Icon,CoverImage,Button,Text } from '@tarojs/components'
 
 import {BASE_URL,globalData,PATH,systemUser} from '../../config/index.js'; 
 
@@ -111,6 +111,20 @@ class Refund extends Component<{}, IState>{
      navList:temp
    })
   }
+  del(e){
+    console.log(e);
+    var index_ = e.currentTarget.dataset.id;
+
+    
+    this.state.pics.splice(0, 1)
+
+   
+    this.setState({
+      pics:this.state.pics
+    })
+    
+    
+ }
   handleChange (event) {
     this.setState({
       value: event.target.value
@@ -197,6 +211,7 @@ class Refund extends Component<{}, IState>{
       }
     })
   }
+
   submitRefund(res){
     var that = this;
     
@@ -301,13 +316,16 @@ class Refund extends Component<{}, IState>{
         
         return (
             
-            <AtButton class={this.state.id_ == Number(item.id)?'btn select':'btn'} type='secondary'  id={"ab"+index}  onClick={this.selectNav.bind(this,item.id)} >{item.reason}</AtButton>
+            <AtButton class={(this.state.id_ == Number(index+1))?'btn select':'btn'}  type='secondary'  id={"ab"+index}  onClick={this.selectNav.bind(this,item.id)} >{item.reason}</AtButton>
 
         )
     })
     const imagesContent = pics.map((item,index)=>{
       return (
-          <Image className='imgsss' src={item}/>
+          <View className='imgsss' style='position:relative;'>
+            <View className='poDiv' data-id={index} onClick={this.del}>X</View>
+            <Image src={item} style='width:100%'/>
+          </View>
       )
     })
     return (

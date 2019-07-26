@@ -49,8 +49,9 @@ var SHAREINFO = exports.SHAREINFO = {
   'path': '路径',
   'imageUrl': '图片'
 };
-var PATH = exports.PATH = "https://shoptestapp.wemall.com.cn";
+var PATH = exports.PATH = "https://shoptestapp.wemall.com.cn"; //图片路径
 var systemUser = exports.systemUser = '知码小蜜';
+var bgColor = exports.bgColor = '#ff9409';
 var globalData = exports.globalData = {
   token: '',
   haslogin: false,

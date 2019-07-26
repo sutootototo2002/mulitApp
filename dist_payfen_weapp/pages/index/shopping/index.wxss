@@ -5,6 +5,12 @@
   margin: auto;
 }
 
+.shopImg1 {
+  width: 175rpx;
+  height: 198rpx;
+  margin: auto;
+}
+
 .shopDiv {
   text-align: center;
   padding-top: 76rpx;
@@ -27,42 +33,32 @@
 }
 
 .toSever {
-  width: 150rpx;
-  height: 40rpx;
-  border-radius: 40rpx;
-  font-size: 17rpx;
-  line-height: 40rpx;
-  margin: 20rpx 0;
+  position: absolute;
+  top: 51%;
+  margin-top: -106rpx;
+  right: 10rpx;
+  height: 60rpx;
+  border-radius: 60rpx;
+  font-size: 24rpx;
   float: right;
   border: 0;
   background: #ff7700;
   color: #fff;
-  margin-right: 10rpx;
-  background: -webkit-gradient(linear, right top, left top, from(#ff9204), to(#ff6138));
-  background: -webkit-linear-gradient(right, #ff9204, #ff6138);
-  background: -o-linear-gradient(right, #ff9204, #ff6138);
-  background: linear-gradient(right, #ff9204, #ff6138);
+  margin-right: 40rpx;
 }
 
 .toSever1 {
   position: absolute;
-  top: 50%;
-  margin-top: -40rpx;
-  right: 10rpx;
-  width: 150rpx;
-  height: 40rpx;
-  border-radius: 40rpx;
-  font-size: 17rpx;
-  line-height: 40rpx;
+  top: 10rpx;
+  right: 0;
+  height: 60rpx;
+  border-radius: 60rpx;
+  font-size: 24rpx;
   float: right;
   border: 0;
   background: #ff7700;
   color: #fff;
-  margin-right: 10rpx;
-  background: -webkit-gradient(linear, right top, left top, from(#ff9204), to(#ff6138));
-  background: -webkit-linear-gradient(right, #ff9204, #ff6138);
-  background: -o-linear-gradient(right, #ff9204, #ff6138);
-  background: linear-gradient(right, #ff9204, #ff6138);
+  margin-right: 20rpx;
 }
 
 .selBtn {

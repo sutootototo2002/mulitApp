@@ -5,10 +5,16 @@
   margin: auto;
 }
 
+.shopImgss {
+  width: 312rpx;
+  height: 251rpx;
+  margin: auto;
+}
+
 .shopDiv {
   text-align: center;
   padding-top: 76rpx;
-  padding-bottom: 150rpx;
+  padding-bottom: 20rpx;
   background: #fff;
 }
 
@@ -30,7 +36,7 @@
   width: 150rpx;
   height: 40rpx;
   border-radius: 40rpx;
-  font-size: 17rpx;
+  font-size: 20rpx;
   line-height: 40rpx;
   margin: 20rpx 0;
   float: right;
@@ -38,31 +44,20 @@
   background: #ff7700;
   color: #fff;
   margin-right: 10rpx;
-  background: -webkit-gradient(linear, right top, left top, from(#ff9204), to(#ff6138));
-  background: -webkit-linear-gradient(right, #ff9204, #ff6138);
-  background: -o-linear-gradient(right, #ff9204, #ff6138);
-  background: linear-gradient(right, #ff9204, #ff6138);
 }
 
 .toSever1 {
   position: absolute;
-  top: 50%;
-  margin-top: -40rpx;
+  margin-top: 20rpx;
   right: 10rpx;
-  width: 150rpx;
-  height: 40rpx;
-  border-radius: 40rpx;
-  font-size: 17rpx;
-  line-height: 40rpx;
+  height: 60rpx;
+  border-radius: 60rpx;
+  font-size: 24rpx;
   float: right;
   border: 0;
   background: #ff7700;
   color: #fff;
-  margin-right: 10rpx;
-  background: -webkit-gradient(linear, right top, left top, from(#ff9204), to(#ff6138));
-  background: -webkit-linear-gradient(right, #ff9204, #ff6138);
-  background: -o-linear-gradient(right, #ff9204, #ff6138);
-  background: linear-gradient(right, #ff9204, #ff6138);
+  margin-right: 40rpx;
 }
 
 .selBtn {
@@ -86,7 +81,6 @@
 }
 
 .addr {
-  border: 1rpx solid #d5d5d5;
   background: #fff;
   overflow: hidden;
   position: relative;
@@ -94,7 +88,7 @@
   border-radius: 20rpx;
   width: 90%;
   margin: auto;
-  margin-top: -60rpx;
+  margin-top: 20rpx;
 }
 
 .smain {
@@ -211,7 +205,6 @@
   border-radius: 20rpx;
   background: #fff;
   margin-top: 20rpx;
-  padding: 30rpx 10rpx;
 }
 
 .seltInfo {
@@ -240,7 +233,7 @@
   border-radius: 20rpx;
   margin-top: 20rpx;
   background: #fff;
-  border: 1rpx solid #ccc;
+  padding: 0 0 10rpx 0;
 }
 
 .answer1 {

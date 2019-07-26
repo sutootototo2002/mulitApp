@@ -1,11 +1,10 @@
 
 .boxdetail {
   width: 100%;
-  margin: 32rpx 0 0 0;
+  margin: 10rpx 0 0 0;
   padding: 43rpx 0;
   overflow: hidden;
-  border-top: 1rpx solid #b5b5b6;
-  border-bottom: 1rpx solid #b5b5b6;
+  border-bottom: 1rpx solid #b5b5b5;
 }
 
 .boxTitle {
@@ -48,12 +47,14 @@
 }
 
 .goodsName {
-  padding: 20rpx;
+  padding: 30rpx;
   font-size: 35rpx;
+  color: #7f7e7c;
+  border-bottom: 1rpx solid #b5b5b5;
 }
 
 .gdul {
-  border-top: 1rpx solid #b5b5b6;
+  border-bottom: 1rpx solid #f9f9f9;
   padding: 25rpx;
 }
 
@@ -77,11 +78,13 @@
 
 .gName1 {
   font-size: 28rpx;
+  color: #797979;
 }
 
 .ginfo {
   overflow: hidden;
   width: 100%;
+  margin-top: 35rpx;
 }
 
 .kcun {
@@ -89,12 +92,13 @@
   font-size: 24rpx;
   border: 2rpx solid #ccc;
   border-radius: 5rpx;
-  padding: 10rpx;
-  color: #ccc;
+  padding: 10rpx 20rpx;
+  color: #797979;
 }
 
 .price {
   float: left;
+  color: #797979;
 }
 
 .moregoods {
@@ -103,7 +107,7 @@
   width: 100%;
   text-align: center;
   font-size: 35rpx;
-  color: #ccc;
+  color: #ff612f;
 }
 
 .gli {

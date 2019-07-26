@@ -1,6 +1,6 @@
 import Taro, { Component, Config, MapContext } from '@tarojs/taro'
 
-import { Map, CoverView, Canvas, View, Image, CoverImage, Button, Text } from '@tarojs/components'
+import { Map, CoverView, Canvas, View, Image, CoverImage, Button, Text,Form} from '@tarojs/components'
 
 import { BASE_URL, globalData, PATH, systemUser } from '../../../config/index.js';
 
@@ -29,6 +29,7 @@ interface IState {
   state8: string,
   state9: string,
   icon1: string,
+  formid:string,
   refundhistory:object,
   worksheet:object,
   isrefundhistory:boolean
@@ -64,6 +65,7 @@ class Orderdetail extends Component<{}, IState>{
       state70: PATH + '/mImages/ddxqwcl.png',
       state8: PATH + '/mImages/ddqk.png',
       state9: PATH + '/mImages/ddqk.png',
+      formid:'',
       refundhistory:{},
       isrefundhistory:false,
       worksheet:{}
@@ -105,6 +107,72 @@ class Orderdetail extends Component<{}, IState>{
 
   componentDidCatchError() { }
 
+  requestOpen(qrurl){
+    Taro.showLoading({
+      title: '',
+    });
+    var that = this;
+    Taro.request({
+      url: BASE_URL + 'device/requestopen',
+      data: {
+        qrurl: qrurl
+      },
+      header: {
+        'content-type': 'application/json', // 默认值
+        'token': globalData.token
+      },
+      method: "POST",
+      success: function (res) {
+        console.log("检测是否可以开门：floweryan")
+        console.log(res);
+        Taro.hideLoading();
+        //检测是否可以开门
+        if (res.data.code == 200) {
+          console.log('成功！')
+          var machineid = res.data.data.machineid;
+          var lockid = res.data.data.lockid;
+
+          Taro.navigateTo({
+            url: '/pages/box/open/open?machineid=' + machineid + '&lockid=' + lockid + '&formid='
+          })
+
+        } else {
+          console.log('失败！')
+          Taro.showModal({
+            title: '提示',
+            content: res.data.msg,
+            showCancel: false,
+            success: function (res) {
+              if (res.confirm) {
+                that.gotoBack();
+              }
+            }
+          })
+        }
+
+      },
+      fail: function (e) {
+        Taro.showToast({
+          title: '请求失败',
+          icon: 'fail',
+          duration: 2000
+        })
+      }
+    })
+  }
+  submitInfo(e){
+    console.log('submitInfo')
+    this.requestopen();
+    var formid = e.detail.formId;
+    Taro.setStorageSync("formId", e.detail.formId);
+    
+    console.log(e);
+    var that = this;
+    that.setState({
+      formid: formid
+    });
+
+}
   getDetail() {
     const routerinfo = Taro.getStorageSync('routerinfo');
     // Taro.showLoading({
@@ -268,20 +336,20 @@ class Orderdetail extends Component<{}, IState>{
     }
     if (order.orderstatus == 7 && order.refunding == 1) {
       orderContent = <View>
-        <Image className='shopImg' src={this.state.state0} />
+        <Image className='shopImgss' src={this.state.state70} />
         <View className='shoptitle'>退款中</View>
       </View>
     }
     if (order.orderstatus == 7 && order.refunding == 0) {
       orderContent = <View>
-        <Image className='shopImg' src={this.state.state0} />
+        <Image className='shopImgss' src={this.state.state71} />
         <View className='shoptitle'>转退款</View>
       </View>
     }
 
     if (order.orderstatus == 6) {
       orderContent = <View>
-        <Image className='shopImg' src={this.state.state0} />
+        <Image className='shopImgss' src={this.state.state3} />
         <View className='shoptitle'>已欠费</View>
       </View>
     }
@@ -299,8 +367,8 @@ class Orderdetail extends Component<{}, IState>{
     }
     if (order.orderstatus == 3) {
       orderContent = <View>
-        <Image className='shopImg' src={this.state.state0} />
-        <View className='shoptitle'>已取消</View>
+        <Image className='shopImgss' src={this.state.state3} />
+        <View className='shoptitle'>该机柜还在处理之前的交易，请稍后再试</View>
       </View>
     }
 
@@ -311,8 +379,6 @@ class Orderdetail extends Component<{}, IState>{
       Buttonstate = <Button className='toSever1' data-orderid={order.orderid} onClick={this.ontoAnswer}>申请退款</Button>
     }else if (order.orderstatus == 5 && order.haveworksheet == 1 && order.totalfee > 0 && this.state.showTuihuo) {
       Buttonstate = <Button className='toSever1'>已反馈</Button>
-    }else{
-      Buttonstate = <Button className='toSever1' onClick={this.goKefu}>联系客服</Button>
     }
     // if (order.orderstatus !== 7) {
     //   Buttonstate1 = <Button className='selBtn' data-orderid={order.orderid} onClick={this.ontoAnswer}>问题反馈</Button>
@@ -351,25 +417,12 @@ class Orderdetail extends Component<{}, IState>{
         <View className='shopDiv'>
           {orderContent}
         </View>
-        <View className='addr'>
-          <Image className='addricon' src={this.state.icon1} />
-          <View className='addr1'>{this.state.order.machinename}</View>
-          <View className='addr2'>{this.state.order.location}{this.state.order.dailaddress}</View>
-          {Buttonstate}
-        </View>
-        <View className='seDiv'>
-          <View className='selectDiv'>
-            <View className='seltitle'>所选商品</View>
-            <View className='seltotal'>合计：{this.state.order.payfee / 100}元</View>
-          </View>
-          <View className='goodslist'>
-            {goodsitem}
-          </View>
-        </View>
+        {this.state.order.orderstatus!=="3"?
         <View className='orderdetail'>
-          <View className='selectDiv'>
+          <View className='selectDiv' style='position:relative;'>
             <View className='seltitle'>订单信息</View>
-            {Buttonstate1}
+            {Buttonstate}
+            {/* {Buttonstate} */}
           </View>
           <View className='seltInfo'>
             {_paytypes}
@@ -379,6 +432,23 @@ class Orderdetail extends Component<{}, IState>{
             <View>交易日期：{this.state.order.createtime}</View>
           </View>
         </View>
+        :
+        ""
+        }
+         {this.state.order.orderstatus!=="3"?
+        <View className='seDiv'>
+          <View className='selectDiv'>
+            <View className='seltitle'>所选商品</View>
+            <View className='seltotal'>合计：{this.state.order.payfee / 100}元</View>
+          </View>
+          <View className='goodslist'>
+            {goodsitem}
+          </View>
+        </View>
+        :
+        ""
+      }
+       
        
         <View className='worksheet' >
         {this.state.order.haveworksheet==1?
@@ -423,17 +493,26 @@ class Orderdetail extends Component<{}, IState>{
       :
       ''
         }
-        
+         <View className='addr'>
+          <Image className='addricon' src={this.state.icon1} />
+          <View className='addr1'>{this.state.order.machinename}</View>
+          <View className='addr2'>{this.state.order.location}{this.state.order.dailaddress}</View>
+          
+        </View>
 
 
         <View>
           {/* <Button type='default' className='Btn'>刷 新</Button> */}
-          {this.state.order.orderstatus==6 &&this.state.order.orderstatus==4?
+          {/* {this.state.order.orderstatus==6 &&this.state.order.orderstatus==4?
           <Button type='default' className='btn'> 支付 </Button>
           :
           ''
-          }
+          } */}
+           {this.state.order.orderstatus!=="3"?
           <Button type="default" className='btn' onClick={this.gotoBack}> 返回 </Button>
+          :
+          <Button type="default" className='btn' onClick={this.gotoBack}> 重新开门 </Button>
+        }
 
         </View>
       </View>

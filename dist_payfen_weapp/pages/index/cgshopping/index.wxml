@@ -1,12 +1,24 @@
 <block>
     <view class="smain">
-        <view class="shopDiv">
-            <image class="shopImg" src="{{state1}}"></image>
-            <view class="shoptitle">{{cartTips1}}</view>
-            <view class="shopInfo">{{cartTips2}}</view>
-        </view>
+        <block>
+            <block wx:if="{{isfinish}}">
+                <view class="shopDiv">
+                    <image class="shopImg1" src="{{state1}}"></image>
+                    <view class="shoptitle">{{cartTips1}}</view>
+                    <view class="shopInfo">{{cartTips2}}</view>
+                </view>
+            </block>
+            <block wx:else>
+                <view class="shopDiv">
+                    <image class="shopImg1" src="{{state1}}"></image>
+                    <view class="shoptitle">{{cartTips1}}</view>
+                    <view class="shopInfo">{{cartTips2}}</view>
+                    <view class="shopInfo">{{cartTips3}}</view>
+                </view>
+            </block>
+        </block>
         <view class="addr">
-            <image class="addricon" src="{{icon1}}"></image>
+            <image class="addricon1" src="{{icon1}}"></image>
             <view class="addr1">{{machine.machinename}}</view>
             <view class="addr2">{{machine.location}}{{machine.dailaddress}}</view>
             <button class="toSever1" bindtap="goKefu">联系客服</button>
@@ -20,7 +32,14 @@
             </block>
         </block>
         <view>
-            <button type="default" class="btn" bindtap="gotoBack">收起</button>
+            <block>
+                <block wx:if="{{unpayorder.score == '0'}}">
+                    <button type="default" class="btn" bindtap="payOrder">支付</button>
+                </block>
+                <block wx:else>
+                    <button type="default" class="btn" bindtap="gotoBack">关闭</button>
+                </block>
+            </block>
         </view>
         <view class="seDiv" hidden="{{true}}">
             <view class="selectDiv">

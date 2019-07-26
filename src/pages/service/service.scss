@@ -24,13 +24,17 @@ $color-default1:#ccc;
     border:0.5px solid $color-default1; 
     background-color:$color-white;
     border-radius: 3%;
-    float: left;
+    // float: left;
     margin: 1%;
     position: relative;
 }
 
 .select{
-    border:0.5px solid $color-default; 
+    border:6px solid $color-default; 
+}
+
+.select1{
+    color: $color-default; 
 }
 
 .boxtitle{

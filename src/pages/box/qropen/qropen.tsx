@@ -21,6 +21,7 @@ interface IState {
     openfailed:boolean,
     num:number,
     tag:number,
+    unpayorderimg:string,
     requestfailed:boolean
     loadImg:string,
     loadImg1:string,
@@ -85,6 +86,7 @@ class Qropen extends Component<{}, IState>{
         loadImg2:PATH+'/mImages/car.png',
         unpayImg: PATH + '/mImages/wfk-11.png',
         unpriceImg: PATH + '/mImages/wfk.png',
+        unpayorderimg: PATH + '/mImages/unpay_info.png',
         islogin:false,
         markBoolean:false,
         open:false,
@@ -542,9 +544,9 @@ class Qropen extends Component<{}, IState>{
     setTimeout(function () {
       if (requestfailed) {
         clearInterval(interval);
-        that.requestOpenStatus();
+        //that.requestOpenStatus();
       }
-    }.bind(this), 60000);
+    }.bind(this), 1000);
   }
   openStatus() {
     var that = this;
@@ -1004,8 +1006,8 @@ class Qropen extends Component<{}, IState>{
                 <Button className='BtnOne' type='default' onClick={this.payOrder}>支付</Button>
                 :
                 <CoverView>
-                  <CoverView className='paynewDiv'>请到微信支付分中进行支付</CoverView>
-                  <CoverView className='tsDiv'>*请进入微信支付>钱包>微信支付分>订单详情中进行支付！</CoverView>
+                  <CoverImage className='unpayImg' src={this.state.unpayorderimg} />
+                    <CoverView className='unpayDiv'>长时间不支付将影响您的信用</CoverView>
                 </CoverView>
               }
             </CoverView>

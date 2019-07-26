@@ -42,7 +42,7 @@
   left: 0;
   top: 140rpx;
   overflow: hidden;
-  border: 1rpx solid #ff7700;
+  border: 1rpx solid #ccc;
 }
 
 #ab1 {
@@ -50,7 +50,7 @@
   left: 0;
   top: 220rpx;
   overflow: hidden;
-  border: 1rpx solid #ff7700;
+  border: 1rpx solid #ccc;
 }
 
 #ab2 {
@@ -58,7 +58,7 @@
   right: 0;
   top: 140rpx;
   overflow: hidden;
-  border: 1rpx solid #ff7700;
+  border: 1rpx solid #ccc;
 }
 
 #ab3 {
@@ -66,11 +66,17 @@
   right: 0;
   top: 220rpx;
   overflow: hidden;
-  border: 1rpx solid #ff7700;
+  border: 1rpx solid #ccc;
 }
 
 .select {
-  border: 1rpx solid green !important;
+  background: #ff7700 !important;
+  color: #fff !important;
+}
+
+.select .at-button--secondary {
+  background: #ff7700 !important;
+  color: #fff !important;
 }
 
 .at-button--secondary {
@@ -108,6 +114,13 @@
   border: 1rpx solid #ccc;
   border-radius: 10rpx;
   margin: 20rpx 0 20rpx 20rpx;
+  float: left;
+}
+
+.imgsss image {
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
 
 .imgsDiv {
@@ -120,4 +133,18 @@
   border-radius: 40rpx;
   width: 90%;
   margin: auto;
+}
+
+.poDiv {
+  position: absolute;
+  right: -10rpx;
+  top: -10rpx;
+  width: 30rpx;
+  height: 30rpx;
+  text-align: center;
+  background: red;
+  border-radius: 50rpx;
+  font-size: 20rpx;
+  color: #fff;
+  z-index: 999;
 }

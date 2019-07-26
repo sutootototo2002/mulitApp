@@ -39,7 +39,7 @@ var Orderdetail = (_temp2 = _class = function (_BaseComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Orderdetail.__proto__ || Object.getPrototypeOf(Orderdetail)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["order", "worksheet", "Buttonstate1", "orderid", "whereis", "showTuihuo", "icon1", "state0", "state1", "state3", "state4", "state5", "state6", "state71", "state70", "state8", "state9", "refundhistory", "isrefundhistory"], _this.config = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Orderdetail.__proto__ || Object.getPrototypeOf(Orderdetail)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["order", "worksheet", "orderid", "whereis", "showTuihuo", "icon1", "state0", "state1", "state3", "state4", "state5", "state6", "state71", "state70", "state8", "state9", "formid", "refundhistory", "isrefundhistory"], _this.config = {
       navigationBarTitleText: '订单详情'
     }, _this.$$refs = [], _temp), _possibleConstructorReturn(_this, _ret);
   }
@@ -72,6 +72,7 @@ var Orderdetail = (_temp2 = _class = function (_BaseComponent) {
         state70: _index3.PATH + '/mImages/ddxqwcl.png',
         state8: _index3.PATH + '/mImages/ddqk.png',
         state9: _index3.PATH + '/mImages/ddqk.png',
+        formid: '',
         refundhistory: {},
         isrefundhistory: false,
         worksheet: {}
@@ -116,6 +117,71 @@ var Orderdetail = (_temp2 = _class = function (_BaseComponent) {
   }, {
     key: "componentDidCatchError",
     value: function componentDidCatchError() {}
+  }, {
+    key: "requestOpen",
+    value: function requestOpen(qrurl) {
+      _index2.default.showLoading({
+        title: ''
+      });
+      var that = this;
+      _index2.default.request({
+        url: _index3.BASE_URL + 'device/requestopen',
+        data: {
+          qrurl: qrurl
+        },
+        header: {
+          'content-type': 'application/json',
+          'token': _index3.globalData.token
+        },
+        method: "POST",
+        success: function success(res) {
+          console.log("检测是否可以开门：floweryan");
+          console.log(res);
+          _index2.default.hideLoading();
+          //检测是否可以开门
+          if (res.data.code == 200) {
+            console.log('成功！');
+            var machineid = res.data.data.machineid;
+            var lockid = res.data.data.lockid;
+            _index2.default.navigateTo({
+              url: '/pages/box/open/open?machineid=' + machineid + '&lockid=' + lockid + '&formid='
+            });
+          } else {
+            console.log('失败！');
+            _index2.default.showModal({
+              title: '提示',
+              content: res.data.msg,
+              showCancel: false,
+              success: function success(res) {
+                if (res.confirm) {
+                  that.gotoBack();
+                }
+              }
+            });
+          }
+        },
+        fail: function fail(e) {
+          _index2.default.showToast({
+            title: '请求失败',
+            icon: 'fail',
+            duration: 2000
+          });
+        }
+      });
+    }
+  }, {
+    key: "submitInfo",
+    value: function submitInfo(e) {
+      console.log('submitInfo');
+      this.requestopen();
+      var formid = e.detail.formId;
+      _index2.default.setStorageSync("formId", e.detail.formId);
+      console.log(e);
+      var that = this;
+      that.setState({
+        formid: formid
+      });
+    }
   }, {
     key: "getDetail",
     value: function getDetail() {
@@ -283,19 +349,17 @@ var Orderdetail = (_temp2 = _class = function (_BaseComponent) {
       if (order.orderstatus == 3) {}
       var Buttonstate = void 0;
       var Buttonstate1 = void 0;
-      if (order.orderstatus == 5 && order.haveworksheet == 0 && order.totalfee > 0 && this.__state.showTuihuo) {} else if (order.orderstatus == 5 && order.haveworksheet == 1 && order.totalfee > 0 && this.__state.showTuihuo) {} else {}
+      if (order.orderstatus == 5 && order.haveworksheet == 0 && order.totalfee > 0 && this.__state.showTuihuo) {} else if (order.orderstatus == 5 && order.haveworksheet == 1 && order.totalfee > 0 && this.__state.showTuihuo) {}
       // if (order.orderstatus !== 7) {
       //   Buttonstate1 = <Button className='selBtn' data-orderid={order.orderid} onClick={this.ontoAnswer}>问题反馈</Button>
       // }
-      Object.assign(this.__state, {
-        Buttonstate1: Buttonstate1
-      });
+      Object.assign(this.__state, {});
       return this.__state;
     }
   }]);
 
   return Orderdetail;
-}(_index.Component), _class.properties = {}, _class.$$events = ["ontoAnswer", "goKefu", "gotoBack"], _temp2);
+}(_index.Component), _class.properties = {}, _class.$$events = ["ontoAnswer", "gotoBack"], _temp2);
 exports.default = Orderdetail;
 
 Component(require('../../../npm/@tarojs/taro-weapp/index.js').default.createComponent(Orderdetail, true));

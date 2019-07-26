@@ -70,7 +70,7 @@ var Boxdetail = (_temp2 = _class = function (_BaseComponent) {
         machineid: '',
         machine: {},
         goods: [],
-        addr: _index3.PATH + '/mImages/tytb-4.png',
+        addr: _index3.PATH + '/mImages/addr1.png',
         total: 0,
         salesort: '0',
         hasnext: false,
@@ -196,7 +196,7 @@ var Boxdetail = (_temp2 = _class = function (_BaseComponent) {
   }]);
 
   return Boxdetail;
-}(_index.Component), _class.properties = {}, _class.$$events = ["viewlocation", "getGoods"], _temp2);
+}(_index.Component), _class.properties = {}, _class.$$events = ["getGoods"], _temp2);
 exports.default = Boxdetail;
 
 Component(require('../../../npm/@tarojs/taro-weapp/index.js').default.createComponent(Boxdetail, true));

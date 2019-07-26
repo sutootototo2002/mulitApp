@@ -11,8 +11,6 @@ import { Map, CoverView,Canvas,View,Image,CoverImage,Button,Text,Navigator } fro
 
 import {BASE_URL,globalData,PATH,systemUser} from '../../../config/index.js'; 
 
-var order = require("../../../utils/order.js");
-
 
 
 import './open.scss'
@@ -73,38 +71,31 @@ class Open extends Component<{}, IState>{
 
 
   componentWillMount(){
-    order.stopInterval();
     Taro.setNavigationBarTitle({
       title:globalData.sysTitle
     })
+    console.log("this.$router.params")
     console.log(this.$router.params)
     this.setState({
         formid:this.$router.params.formid,
         lockid:this.$router.params.lockid,
         machineid:this.$router.params.machineid
     })
-    this.open();
+    //this.open();
     this.deviceOpen(this.$router.params.machineid, this.$router.params.lockid);
   }
-  componentDidMount () {
-
-  }
+  componentDidMount () {}
 
   componentDidShow () {}
 
   componentDidHide () {}
-
-  componentWillUnmount() {
-    
-    order.stopInterval();
-
-  }
 
   componentDidCatchError () {}
 
   // 在 App 类中的 render() 函数没有实际作用
   // 请勿修改此函数
   deviceOpen(machineid, lockid) {
+    console.log('deviceOpen')
     Taro.showLoading({
       title: '',
     });
@@ -123,8 +114,15 @@ class Open extends Component<{}, IState>{
       method: "POST",
       success: function (res) {
         Taro.hideLoading();
+
         var code = res.data.code;
+        console.log('res:device/open');
+        console.log(res);
+        console.log("code:");
+        console.log(code);
+
         if (code == 200) {
+          console.log('devicecood:'+'成功！0000')
           orderid = res.data.data.orderid;
           var orderno = res.data.data.orderno;
           var recogmode = res.data.data.recogmode;
@@ -153,24 +151,14 @@ class Open extends Component<{}, IState>{
             })
           }
         } else {
+          console.log('走这里了吗？207')
           that.setState({
             openfailed: true,
             isfind:true,
-            infine:res.data.msg,
-            markBoolean:true
+            markBoolean:true,
+            infine:res.data.msg
           });
-          // Taro.showModal({
-          //   title: '提示',
-          //   content: res.data.msg,
-          //   showCancel: false,
-          //   success: function (res) {
-          //     if (res.confirm) {
-          //       Taro.navigateTo({
-          //         url: '/pages/index/index'
-          //       })
-          //     }
-          //   }
-          // })
+          
         }
 
       },
@@ -180,11 +168,11 @@ class Open extends Component<{}, IState>{
           content: '请求失败，请稍后再试',
           showCancel: false,
           success: function (res) {
-            if (res.confirm) {
-              Taro.navigateTo({
-                url: '/pages/index/index'
-              })
-            }
+            // if (res.confirm) {
+            //   Taro.navigateTo({
+            //     url: '/pages/index/index'
+            //   })
+            // }
           }
         })
       }
@@ -195,111 +183,111 @@ class Open extends Component<{}, IState>{
         url: '/pages/index/index'
       })
   }
-  open() {
-    var that = this;
-    var interval = setInterval(function () {
-      var newtag = iNow +1;
-      that.setState({
-        tag: newtag,
-      });
+  // open() {
+  //   var that = this;
+  //   var interval = setInterval(function () {
+  //     var newtag = iNow +1;
+  //     that.setState({
+  //       tag: newtag,
+  //     });
 
-      //循环执行代码 
-      if (requestfailed) {
-        console.log('---循环执行代码0000 ---');
-        //that.openStatus();
-      } else {
-        console.log('---停止循环执行代码2222222 ---');
-        that.setState({
-          tag: 100,
-        });
-        clearInterval(interval)
-      }
+  //     //循环执行代码 
+  //     if (requestfailed) {
+  //       console.log('---循环执行代码0000 ---');
+  //       //that.openStatus();
+  //     } else {
+  //       console.log('---停止循环执行代码2222222 ---');
+  //       that.setState({
+  //         tag: 100,
+  //       });
+  //       clearInterval(interval)
+  //     }
 
-    },800); //循环时间1秒 
-    setTimeout(function () {
-      if (requestfailed) {
-        clearInterval(interval);
-        //that.requestOpenStatus();
-      }
-    }.bind(this), 60000);
-  }
-  openStatus() {
-    var that = this;
-    orderid = Taro.getStorageSync("orderid");
-    console.log("orderid:")
-    console.log(orderid)
-    Taro.request({
-      url: BASE_URL + 'device/openstatus',
-      data: {
-        orderid: orderid
-      },
-      header: {
-        'content-type': 'application/json', // 默认值
-        'token': globalData.token
-      },
-      method: "POST",
-      success: function (res) {
-        if (res.data.code == 200) {
-          that.setState({
-            requestfailed: false
-          });
-          requestfailed = false
-          console.log("orderid:1111111111111111111111")
-          console.log(orderid)
-          //Taro.setStorageSync("orderid", orderid);
-          // wx.setStorage({
-          //   key: "orderid",
-          //   data: that.data.orderid
-          // });
-          // Taro.reLaunch({
-          //   url: '../../index/index'
-          // })
-        } else if (res.data.code == 211) {
-          that.setState({
-            isfind: true,
-            infine:res.data.msg
-          });
-          Taro.showToast({
-            title: res.data.msg,
-            icon: 'fail',
-            duration: 2000
-          })
-          requestfailed = false
-          // Taro.showModal({
-          //   title: '提示',
-          //   content: res.data.msg,
-          //   showCancel: false,
-          //   success: function (res) {
-          //     if (res.confirm) {
-          //       Taro.navigateBack({
+  //   },800); //循环时间1秒 
+  //   setTimeout(function () {
+  //     if (requestfailed) {
+  //       clearInterval(interval);
+  //       //that.requestOpenStatus();
+  //     }
+  //   }.bind(this), 60000);
+  // }
+  // openStatus() {
+  //   var that = this;
+  //   orderid = Taro.getStorageSync("orderid");
+  //   console.log("orderid:")
+  //   console.log(orderid)
+  //   Taro.request({
+  //     url: BASE_URL + 'device/openstatus',
+  //     data: {
+  //       orderid: orderid
+  //     },
+  //     header: {
+  //       'content-type': 'application/json', // 默认值
+  //       'token': globalData.token
+  //     },
+  //     method: "POST",
+  //     success: function (res) {
+  //       if (res.data.code == 200) {
+  //         that.setState({
+  //           requestfailed: false
+  //         });
+  //         requestfailed = false
+  //         console.log("orderid:1111111111111111111111")
+  //         console.log(orderid)
+  //         //Taro.setStorageSync("orderid", orderid);
+  //         // wx.setStorage({
+  //         //   key: "orderid",
+  //         //   data: that.data.orderid
+  //         // });
+  //         // Taro.reLaunch({
+  //         //   url: '../../index/index'
+  //         // })
+  //       } else if (res.data.code == 211) {
+  //         that.setState({
+  //           isfind: true,
+  //           infine:res.data.msg
+  //         });
+  //         Taro.showToast({
+  //           title: res.data.msg,
+  //           icon: 'fail',
+  //           duration: 2000
+  //         })
+  //         requestfailed = false
+  //         // Taro.showModal({
+  //         //   title: '提示',
+  //         //   content: res.data.msg,
+  //         //   showCancel: false,
+  //         //   success: function (res) {
+  //         //     if (res.confirm) {
+  //         //       Taro.navigateBack({
 
-          //       })
-          //     }
-          //   }
-          // })
-        } else {
-          that.setState({
-            requestfailed: true
-          });
-          Taro.showToast({
-            title: res.data.msg,
-            icon: 'fail',
-            duration: 2000
-          })
-          requestfailed = false
-          that.setState({
-            isfind: true,
-            infine:res.data.msg
-          });
-        }
-      },
-      fail: function (e) {
-        that.setState({
-          openfailed: true
-        });
-      }
-    })
-  }
+  //         //       })
+  //         //     }
+  //         //   }
+  //         // })
+  //       } else {
+  //         that.setState({
+  //           requestfailed: true
+  //         });
+  //         Taro.showToast({
+  //           title: res.data.msg,
+  //           icon: 'fail',
+  //           duration: 2000
+  //         })
+  //         requestfailed = false
+  //         that.setState({
+  //           isfind: true,
+  //           infine:res.data.msg
+  //         });
+  //       }
+  //     },
+  //     fail: function (e) {
+  //       that.setState({
+  //         openfailed: true
+  //       });
+  //     }
+  //   })
+  // }
   requestOpenStatus() {//主动请求机柜状态
     var that = this;
     Taro.request({
@@ -328,12 +316,12 @@ class Open extends Component<{}, IState>{
               })
             
            } else {
+             console.log('到首页1111')
+            // Taro.redirectTo({
 
-            Taro.redirectTo({
+            // url: '../../index/index'
 
-            url: '../../index/index'
-
-            })
+            // })
 
            }
 
@@ -362,7 +350,7 @@ class Open extends Component<{}, IState>{
   }
   onClosePos(){
     Taro.redirectTo({
-      url: '/pages/index/index'
+      url: '/pages/service/service'
     })
   }
   render () {

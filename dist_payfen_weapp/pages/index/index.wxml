@@ -2,7 +2,22 @@
     <view>
         <map class="mb-map" id="mymap" show-location="{{showLocation}}" latitude="{{latitude}}" longitude="{{longitude}}" scale="{{scale}}" markers="{{markers}}" controls="{{controls}}" bindcontroltap="onControlTap" bindmarkertap="markertap" bindregionchange="regionchange"></map>
         <cover-view class="menus_avator">
-            <cover-image class="menus_user" bindtouchstart="topersonfn" src="{{zm}}"></cover-image>
+            <block>
+                <block wx:if="{{globalData.avatar}}">
+                    <cover-image class="menus_user" bindtouchstart="topersonfn" src="{{globalData.avatar}}"></cover-image>
+                </block>
+                <block wx:else>
+                    <cover-image class="menus_user" src="{{zm}}"></cover-image>
+                </block>
+            </block>
+            <block>
+                <block wx:if="{{isperson}}">
+                    <cover-view class="personDiv">个人中心</cover-view>
+                </block>
+                <block wx:else>
+                    <button class="personDiv" open-type="getUserInfo" bindgetuserinfo="userInfoHandler" data-e-getuserinfo-so="this">点击进入个人中心</button>
+                </block>
+            </block>
             <block>
                 <block wx:if="{{befee > 0}}">
                     <cover-view class="fee" bindtap="onStored">当前余额:{{befee / 100}}元</cover-view>
@@ -109,8 +124,11 @@
                             </block>
                             <block wx:else>
                                 <cover-view>
-                                    <cover-view class="paynewDiv">请到微信支付分中进行支付</cover-view>
-                                    <cover-view class="tsDiv">*请进入微信支付>钱包>微信支付分>订单详情中进行支付！</cover-view>
+                                    <cover-view class="paynewDiv">请到您的微信>钱包>支付分中支付</cover-view>
+                                    <cover-view class="tsDiv">
+                                        <cover-image class="unpayImg" src="{{unpayorderimg}}"></cover-image>
+                                        <cover-view class="unpayDiv">长时间不支付将影响您的信用</cover-view>
+                                    </cover-view>
                                 </cover-view>
                             </block>
                         </block>
@@ -213,7 +231,14 @@
             <block wx:if="{{machineBoolean}}">
                 <cover-view class="machineInfo" bindtap="hideModal">
                     <cover-image class="pos_" src="{{pos_}}"></cover-image>
-                    <cover-image class="openImg" src="{{open}}"></cover-image>
+                    <block>
+                        <block wx:if="{{markerDetail.businessstatus == '4'}}">
+                            <cover-view class="openNew">营业中</cover-view>
+                        </block>
+                        <block wx:else>
+                            <cover-view class="closeNew">打烊了</cover-view>
+                        </block>
+                    </block>
                     <cover-view class="addrDiv">
                         <cover-image class="addr" src="{{mach}}"></cover-image>
                         <cover-view class="address">{{markerDetail.machinename}}</cover-view>

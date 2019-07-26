@@ -123,8 +123,10 @@ var Login = (_temp2 = _class = function (_BaseComponent) {
           $original: (0, _index.internal_get_original)(item)
         };
         var $loopState__temp2 = _this2.__state.id_ == Number(item.$original.id) ? 'box select' : 'box';
+        var $loopState__temp4 = _this2.__state.id_ == Number(item.$original.id) ? 'boxtitle select1' : 'boxtitle';
         return {
           $loopState__temp2: $loopState__temp2,
+          $loopState__temp4: $loopState__temp4,
           $original: item.$original
         };
       });

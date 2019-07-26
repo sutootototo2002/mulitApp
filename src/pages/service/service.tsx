@@ -91,7 +91,7 @@ class Login extends Component<{}, IState>{
       return (
         <View className={this.state.id_ == Number(item.id)?'box select':'box'}  data-id={index} onClick={this.turnFn}>
         <Image className='serverImg' src={item.img}/>
-        <View className='boxtitle'>{item.name}</View>
+        <View className={this.state.id_ == Number(item.id)?'boxtitle select1':'boxtitle'} >{item.name}</View>
       </View>
       )
     })

@@ -48,7 +48,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Index.__proto__ || Object.getPrototypeOf(Index)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "globalData", "mhhImg", "iconImg1", "iconImg2", "tytb33", "perbox", "avator", "iconB1", "iconB2", "iconB21", "iconB3", "iconB4", "iconC1", "iconC2", "iconC3", "iconC4", "userInfoList", "wishes", "isuserInfo", "goodsList", "total"], _this.config = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Index.__proto__ || Object.getPrototypeOf(Index)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "SwiperItemArry", "globalData", "mhhImg", "iconImg1", "iconImg2", "tytb33", "perbox", "avator", "iconB1", "iconB2", "iconB21", "iconB3", "iconB4", "iconC1", "iconC2", "iconC3", "iconC4", "userInfoList", "wishes", "isuserInfo", "goodsList", "total"], _this.config = {
       navigationBarTitleText: '个人中心'
     }, _this.$$refs = [], _temp), _possibleConstructorReturn(_this, _ret);
   }
@@ -67,9 +67,9 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
 
       this.state = {
         mhhImg: _index3.PATH + '/mImages/xydImg.png',
-        iconImg1: _index3.PATH + '/mImages/tytb-1.png',
-        iconImg2: _index3.PATH + '/mImages/tytb-61.png',
-        tytb33: _index3.PATH + '/mImages/tytb-33.png',
+        iconImg1: _index3.PATH + '/mImages/homeTo.png',
+        iconImg2: _index3.PATH + '/mImages/serverNew.png',
+        tytb33: _index3.PATH + '/mImages/tytb-41.png',
         perbox: _index3.PATH + '/mImages/perbox.png',
         avator: _index3.PATH + '/mImages/tempavator.png',
         iconB1: _index3.PATH + '/mImages/wddd-new1-50.png',
@@ -85,6 +85,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         wishes: [],
         isuserInfo: true,
         goodsList: [],
+        SwiperItemArry: [{ item: '1', url: _index3.PATH + '/mImages/swper1.png' }, { item: '2', url: _index3.PATH + '/mImages/swper2.png' }],
         total: 0
       };
     }
@@ -257,14 +258,14 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
     key: 'toOrders2',
     value: function toOrders2() {
       _index2.default.navigateTo({
-        url: '../orders/orderlist/orderlist?state=6&value=1'
+        url: '../orders/orderlist/orderlist?state=7&value=1'
       });
     }
   }, {
     key: 'toOrders3',
     value: function toOrders3() {
       _index2.default.navigateTo({
-        url: '../orders/orderlist/orderlist?state=7&value=2'
+        url: '../orders/orderlist/orderlist?state=0&value=2'
       });
     }
   }, {
@@ -474,6 +475,8 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         var str1 = str.toFixed(2);
         return str1;
       };
+      var SwiperItemArry = this.__state.SwiperItemArry;
+
       var anonymousState__temp = price_format(this.__state.userInfoList.fee);
       Object.assign(this.__state, {
         anonymousState__temp: anonymousState__temp,
