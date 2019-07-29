@@ -42,7 +42,10 @@ var intervalPapayTempArr = [];
 var this_;
 
 var order = require("../../utils/order.js");
+// import location from '../../assets/images/location.png'
 var wishImg = "/assets/images/syxytb.png";
+// import juan from '../../assets/images/juan.png'
+
 var flag = "/assets/images/jgtb.png";
 
 var Index = (_temp2 = _class = function (_BaseComponent) {
@@ -59,7 +62,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Index.__proto__ || Object.getPrototypeOf(Index)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "markerDetail", "unpayList", "feedbackslist", "globalData", "systemUser", "showModalStatus", "showopen", "papayPressed", "qrurl", "showlogin", "showpapay", "isperson", "isnopasspay", "havearrears", "formid", "isweapp", "mapKey", "latitude", "longitude", "scale", "menus", "screen", "user", "person", "zm", "avatar", "zmdefault", "searchImg", "dw", "unpayImg", "unpriceImg", "pos_", "tempImg", "unpayorderimg", "del", "addr", "mach", "mm", "HearHead", "closebtn", "heardImg", "yyzh", "dyzh", "xydd", "singinImg", "wzc10", "wzc11", "wzc30", "wzc33", "clear", "setp1", "setp2", "setp3", "controls", "isOpened", "mapObj_", "showLocation", "markers", "allMarkers", "bool", "booladdr", "menuright", "token", "checkPapay", "commonCode", "markBoolean", "posBoolean", "unpayBoolean", "machineBoolean", "DensityFree", "HearBoolean", "HearlistBoolean", "singinBoolean", "thumbups", "fee", "befee", "payName", "haslogin", "intervalPapay", "unpayorder", "cartTips", "orderid", "hasMore", "machineid", "orderno", "recogmode", "haveShopping", "Carting", "timerTem"], _this.config = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Index.__proto__ || Object.getPrototypeOf(Index)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "markerDetail", "unpayList", "feedbackslist", "globalData", "systemUser", "showModalStatus", "showopen", "papayPressed", "qrurl", "showlogin", "showpapay", "isperson", "isnopasspay", "havearrears", "formid", "isweapp", "mapKey", "latitude", "longitude", "scale", "menus", "screen", "user", "person", "zm", "avatar", "zmdefault", "searchImg", "dw", "unpayImg", "unpriceImg", "pos_", "tempImg", "unpayorderimg", "addr", "mach", "mm", "HearHead", "closebtn", "heardImg", "yyzh", "dyzh", "xydd", "singinImg", "wzc10", "wzc11", "wzc30", "wzc33", "clear", "setp1", "setp2", "setp3", "controls", "isOpened", "mapObj_", "showLocation", "markers", "allMarkers", "bool", "booladdr", "menuright", "token", "checkPapay", "commonCode", "markBoolean", "posBoolean", "unpayBoolean", "machineBoolean", "DensityFree", "HearBoolean", "HearlistBoolean", "singinBoolean", "thumbups", "fee", "befee", "payName", "haslogin", "intervalPapay", "unpayorder", "cartTips", "orderid", "hasMore", "machineid", "orderno", "recogmode", "haveShopping", "Carting", "timerTem"], _this.config = {
       navigationBarTitleText: '首页'
     }, _this.onHeard = function () {
       console.log('心愿单开启');
@@ -115,7 +118,6 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         pos_: _index3.PATH + '/mImages/bg_0.png',
         tempImg: 'http://filetest.wemall.com.cn/de0aa02f4a0f49171149beab583c826b.jpg',
         unpayorderimg: _index3.PATH + '/mImages/unpay_info.png',
-        del: _index3.PATH + '/mImages/clear.png',
         addr: _index3.PATH + '/mImages/addr1.png',
         mach: _index3.PATH + '/mImages/tytb-1.png',
         mm: _index3.PATH + '/mImages/mm.png',

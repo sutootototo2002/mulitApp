@@ -447,7 +447,7 @@ class Recharge extends Component<{}, IState>{
     const { navList,logList} = this.state;
    
     const content = navList.map((post,index) => {
-      return <Button className={this.state.curNav === post.activityid?'box1 select':'box1'}  onClick={this.onselectNav} data-money={post} data-key={index} data-id={post.activityid} >
+      return <Button className={this.state.curNav === post.activityid?'box1 select':'box1'}  onClick={this.onselectNav.bind(this)} data-money={post} data-key={index} data-id={post.activityid} >
         <View className='price'>{post.fee/100}元</View>
         <View className='prices'>+赠{post.giftfee/100}元，到账{Number(post.fee)/100+Number(post.giftfee)/100}元</View>
         {/* <Image className='pro' src={this.state.arrow}/> */}

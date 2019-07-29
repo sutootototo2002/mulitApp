@@ -136,7 +136,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
             isfinish: true,
             state1: this_.state.shopping
           });
-          if (doorstatus == '4' && orderstatus !== '6') {
+          if (doorstatus == '4' && (orderstatus !== "6" || orderstatus !== "3" || orderstatus !== "5" || orderstatus !== "8")) {
             console.log('进这里进这里');
             this_.setState({
               isfinish: false,

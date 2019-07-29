@@ -26,11 +26,11 @@ import {login} from '../../utils/util.js';
 
 var order = require("../../utils/order.js");
 
-import location from '../../assets/images/location.png'
+// import location from '../../assets/images/location.png'
 
 import wishImg from '../../assets/images/syxytb.png'
 
-import juan from '../../assets/images/juan.png'
+// import juan from '../../assets/images/juan.png'
 
 import flag from '../../assets/images/jgtb.png'
 
@@ -79,7 +79,6 @@ interface IState {
   payName: number,
   unpayList: Array<object>,
   tempImg: string,
-  del: string,
   pos_: string,
   addr: string,
   mach: string,
@@ -164,7 +163,6 @@ export default class Index extends Component<{}, IState>{
       pos_: PATH + '/mImages/bg_0.png',
       tempImg: 'http://filetest.wemall.com.cn/de0aa02f4a0f49171149beab583c826b.jpg',
       unpayorderimg: PATH + '/mImages/unpay_info.png',
-      del: PATH + '/mImages/clear.png',
       addr: PATH + '/mImages/addr1.png',
       mach: PATH + '/mImages/tytb-1.png',
       mm: PATH + '/mImages/mm.png',

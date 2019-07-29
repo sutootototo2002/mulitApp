@@ -138,7 +138,7 @@ class Index extends Component<{}, IState>{
             var orderstatus = res.data.data.orderstatus;
             var doorstatus = res.data.data.doorstatus;
             if (res.data.code == 200) {
-              if(doorstatus=='4' && orderstatus !== "6"){
+              if(doorstatus=='4' && (orderstatus !== "6"||orderstatus !== "3"||orderstatus !== "5"||orderstatus !== "8")){
                 console.log('----doorstatus---floweryan----')
                 this_.setState({
                   isfinish:false,
