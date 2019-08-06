@@ -1,5 +1,6 @@
 'use strict';
-
+let styleVariables = require('../src/variables');
+let path = require('path');
 var branch = 'payfen';
 var config = {
   projectName: 'mulitApp',

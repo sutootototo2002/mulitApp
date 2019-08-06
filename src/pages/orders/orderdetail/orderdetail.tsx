@@ -32,6 +32,7 @@ interface IState {
   formid:string,
   refundhistory:object,
   worksheet:object,
+  errorreason:string,
   isrefundhistory:boolean
 }
 
@@ -54,18 +55,19 @@ class Orderdetail extends Component<{}, IState>{
       whereis: '',
       showTuihuo: true,
       order: [],
-      icon1: PATH + '/mImages/fkz.png',
-      state0: PATH + '/mImages/gwz1.png',
-      state1: PATH + '/mImages/ddqk.png',
-      state3: PATH + '/mImages/ddqk.png',
-      state4: PATH + '/mImages/ddqk.png',
-      state5: PATH + '/mImages/ddqk.png',
-      state6: PATH + '/mImages/ddqk.png',
-      state71: PATH + '/mImages/ddxqwcl.png',
-      state70: PATH + '/mImages/ddxqwcl.png',
-      state8: PATH + '/mImages/ddqk.png',
-      state9: PATH + '/mImages/ddqk.png',
+      icon1: PATH + 'fkz.png',
+      state0: PATH + 'gwz1.png', //支付完成
+      state1: PATH + 'ddqk.png', //取消
+      state3: PATH + 'ddqk.png',
+      state4: PATH + 'ddqk.png',
+      state5: PATH + 'ddqk.png',
+      state6: PATH + 'ddqk.png',
+      state71: PATH + 'ddxqwcl.png', //转退款
+      state70: PATH + 'ddxqwcl.png',
+      state8: PATH + 'ddqk.png',
+      state9: PATH + 'ddqk.png',
       formid:'',
+      errorreason:'已取消',
       refundhistory:{},
       isrefundhistory:false,
       worksheet:{}
@@ -200,7 +202,8 @@ class Orderdetail extends Component<{}, IState>{
         }
         Taro.hideLoading();
         that.setState({
-          order: res.data.data
+          order: res.data.data,
+          // errorreason:res.data.data.errorreason
         });
         if (res.data.data.haveworksheet == 1) {
           that.getWorksheet();
@@ -276,16 +279,19 @@ class Orderdetail extends Component<{}, IState>{
   }
   gotoBack() {
     //回到首页
+    Taro.redirectTo({
+      url: '/pages/index/index'
+    })
     // console.log(this.state.whereis+"---"+111)
-    if (this.state.whereis == 'weight' || this.state.whereis == 'cgshop' || this.state.whereis == 'all'){
-      Taro.navigateTo({
-        url: '/pages/index/index'
-      })
-    }else{
-      Taro.navigateBack({
+    // if (this.state.whereis == 'weight' || this.state.whereis == 'cgshop' || this.state.whereis == 'all'){
+    //   Taro.navigateTo({
+    //     url: '/pages/index/index'
+    //   })
+    // }else{
+    //   Taro.navigateBack({
 
-      })
-    }
+    //   })
+    // }
     // Taro.navigateBack({
     // }).catch((error)=>{
     //   console.log('既然没有上一页，我就返回首页了哦！')
@@ -368,7 +374,7 @@ class Orderdetail extends Component<{}, IState>{
     if (order.orderstatus == 3) {
       orderContent = <View>
         <Image className='shopImgss' src={this.state.state3} />
-        <View className='shoptitle'>该机柜还在处理之前的交易，请稍后再试</View>
+        <View className='shoptitle'>该机柜还在处理之前的交易，或您没有打开柜门，请稍后再试</View>
       </View>
     }
 

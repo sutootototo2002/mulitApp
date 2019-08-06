@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
@@ -82,9 +84,9 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         orderno: '',
         orderid: '',
         openfailed: false,
-        state1: _index3.PATH + '/mImages/shopping1.png',
-        shopping: _index3.PATH + '/mImages/shopping1.png',
-        icon1: _index3.PATH + '/mImages/fkz.png',
+        state1: _index3.PATH + 'shopping1.png',
+        shopping: _index3.PATH + 'shopping1.png',
+        icon1: _index3.PATH + 'fkz.png',
         socketMsgQueue: [],
         socketOpen: false,
         totalfee: 0,
@@ -95,7 +97,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         needRequestOrder: false,
         isRefreshingOrder: false,
         unpayorder: [],
-        finishImg: _index3.PATH + '/mImages/finishImg.png',
+        finishImg: _index3.PATH + 'finishImg.png',
         isfinish: true
       };
     }
@@ -141,7 +143,9 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         var orderstatus = res.data.data.orderstatus;
         var doorstatus = res.data.data.doorstatus;
         if (res.data.code == 200) {
-          if (doorstatus == '4' && (orderstatus !== "6" || orderstatus !== "3" || orderstatus !== "5" || orderstatus !== "8")) {
+          console.log(typeof orderstatus === "undefined" ? "undefined" : _typeof(orderstatus));
+          console.log("orderstatus: " + orderstatus);
+          if (doorstatus == '4' && orderstatus != "6" && orderstatus != "3" && orderstatus != "5" && orderstatus != "8") {
             console.log('----doorstatus---floweryan----');
             this_.setState({
               isfinish: false,
@@ -227,7 +231,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
                 isfinish: false,
                 state1: this_.state.finishImg,
                 cartTips1: '购物完成',
-                cartTips2: '您已完成购物,请及时支付',
+                cartTips2: '您已完成购物',
                 cartTips3: '提示：长时间不支付将影响您的信用'
               });
               order.stopInterval();
@@ -238,7 +242,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
                 isfinish: false,
                 state1: this_.state.finishImg,
                 cartTips1: '购物完成',
-                cartTips2: '您已完成购物,请及时支付',
+                cartTips2: '您已完成购物',
                 cartTips3: '稍后可留意微信支付分发送的支付推送'
               });
             }

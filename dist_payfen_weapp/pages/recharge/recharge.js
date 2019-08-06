@@ -38,7 +38,7 @@ var Recharge = (_temp2 = _class = function (_BaseComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Recharge.__proto__ || Object.getPrototypeOf(Recharge)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp3", "anonymousState__temp4", "anonymousState__temp5", "loopArray0", "loopArray1", "navList", "logList", "mhhImg", "avatar", "tempavatar", "arrow", "ad", "del", "answer", "mm", "isMM", "fee", "curNav", "curIndex", "realmoney", "wishes", "ispayvalue", "payvalue", "curPage", "logs", "total", "hasnext", "successboolean", "markBoolean"], _this.config = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Recharge.__proto__ || Object.getPrototypeOf(Recharge)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp3", "anonymousState__temp4", "anonymousState__temp5", "loopArray0", "loopArray1", "navList", "logList", "mhhImg", "avatar", "tempavatar", "arrow", "del", "answer", "mm", "isMM", "fee", "curNav", "curIndex", "realmoney", "wishes", "ispayvalue", "payvalue", "curPage", "logs", "total", "hasnext", "successboolean", "markBoolean"], _this.config = {
       navigationBarTitleText: '我的储值'
     }, _this.$$refs = [], _temp), _possibleConstructorReturn(_this, _ret);
   }
@@ -56,14 +56,13 @@ var Recharge = (_temp2 = _class = function (_BaseComponent) {
        */
 
       this.state = {
-        mhhImg: _index3.PATH + '/mImages/xydImg.png',
+        mhhImg: _index3.PATH + 'xydImg.png',
         avatar: '',
-        tempavatar: '/mImages/tempavator.png',
-        arrow: _index3.PATH + '/mImages/arrow.png',
-        ad: _index3.PATH + '/mImages/ad.png',
-        del: _index3.PATH + '/mImages/gban.png',
-        answer: _index3.PATH + '/mImages/bzzx.png',
-        mm: _index3.PATH + '/mImages/mm.png',
+        tempavatar: _index3.PATH + 'tempavator.png',
+        arrow: _index3.PATH + 'arrow.png',
+        del: _index3.PATH + 'gban.png',
+        answer: _index3.PATH + 'bzzx.png',
+        mm: _index3.PATH + 'mm.png',
         isMM: true,
         fee: 0,
         curNav: '',

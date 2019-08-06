@@ -1,14 +1,5 @@
 
-$color-white:#fff;
-$color-white1:#f3f3f3;
-$color-default:#ff7700;
-$color-orgent:#ff4e00;
-$color-gray:#eeeceb;
-$color-gray1:#919191;
-$color-orgent1:#ff3b3b;
-$color-orgent2:#e64307;
-$color-brown:#e1cda9;
-$color-brown1:#633226;
+@import '../../../style.scss';
 
 .mark{
 
@@ -314,9 +305,11 @@ $color-brown1:#633226;
  border-radius: 10px;
  background:$color-white;
 }
+
 .goodsInfos{
- float:left;
- margin-left:20px;
+  float:left;
+  margin-left:20px;
+  width:60%;
 }
 .del{
  float:left;
@@ -335,6 +328,10 @@ $color-brown1:#633226;
 .goodsInfoDetail{
  font-size:30px;
  color:$color-gray1;
+ width:100%;
+ overflow: hidden;
+ text-overflow:ellipsis;
+ white-space: nowrap;
 }
 
 //支付分
@@ -342,14 +339,14 @@ $color-brown1:#633226;
   position:relative;
   padding:20rpx;
   border-radius:10rpx;
-  background:#fff;
+  background:$color-white;
   margin:0 20rpx;
-  color:#fff;
+  color:$color-white;
   font-size:30px;
   line-height:44rpx;
   text-align:center;
-  color:#ff7700;
-  border:1px solid #ff7700;
+  color:$default-btn-color;
+  border:1px solid $default-btn-color;
 
 }
 .tishiDiv{
@@ -358,18 +355,17 @@ $color-brown1:#633226;
   // line-height:33px;
   // width:100px;
   font-size:35px;
-  background:#fff;
-  color:#ff7700;
+  background:$color-white;
+  color:$default-btn-color;
   padding:20px 10px 0 10px;
   border-radius: 10px;
   
 }
 .tsDiv{
-  font-size:20px;
+  font-size:25px;
   text-align: center;
-  padding:10px;
+  padding:20px 0 0 0;
 }
-
 .unpayImg{
   display:inline-block;
   width:20px;

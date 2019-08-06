@@ -25,7 +25,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var curStatus = 8; //默认状态为8
-var curPage = 0;
+var curPage = 1;
 var cardid = '';
 var value = 0;
 
@@ -49,7 +49,7 @@ var Orderlist = (_temp2 = _class = function (_BaseComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Orderlist.__proto__ || Object.getPrototypeOf(Orderlist)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "anonymousState__temp2", "anonymousState__temp3", "anonymousState__temp4", "anonymousState__temp5", "anonymousState__temp6", "anonymousState__temp7", "anonymousState__temp8", "anonymousState__temp9", "goodsList", "globalData", "tabList", "current", "addrimg", "dargStyle", "downDragStyle", "downText", "upDragStyle", "pullText", "start_p", "scrollY", "dargState"], _this.config = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Orderlist.__proto__ || Object.getPrototypeOf(Orderlist)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "anonymousState__temp2", "anonymousState__temp3", "anonymousState__temp4", "anonymousState__temp5", "anonymousState__temp6", "anonymousState__temp7", "anonymousState__temp8", "anonymousState__temp9", "goodsList", "globalData", "tabList", "current", "hasnext", "addrimg", "dargStyle", "downDragStyle", "downText", "upDragStyle", "pullText", "start_p", "scrollY", "dargState"], _this.config = {
       navigationBarTitleText: '订单列表页',
       onReachBottomDistance: 50
     }, _this.$$refs = [], _temp), _possibleConstructorReturn(_this, _ret);
@@ -69,8 +69,9 @@ var Orderlist = (_temp2 = _class = function (_BaseComponent) {
 
       this.state = {
         current: 0,
+        hasnext: true,
         goodsList: [],
-        addrimg: _index3.PATH + '/mImages/wddd2.png',
+        addrimg: _index3.PATH + 'wddd2.png',
         dargStyle: {
           top: "0px"
         },
@@ -91,17 +92,28 @@ var Orderlist = (_temp2 = _class = function (_BaseComponent) {
     key: 'onPullDownRefresh',
     value: function onPullDownRefresh() {
       console.log('下拉事件111111111111111');
-      curPage = 0;
+      curPage = 1;
       this.setState({
         goodsList: []
       });
+      //curPage
       this.getOrdersup();
     }
   }, {
     key: 'onReachBottom',
     value: function onReachBottom() {
       console.log('上拉事件1111111111111111111111');
-      this.getOrders();
+      if (!this.state.hasnext) {
+        _index2.default.showLoading({
+          title: '没有数据更新了'
+        });
+        setTimeout(function () {
+          _index2.default.hideLoading();
+        }, 1000);
+      } else {
+        ++curPage;
+        this.getOrders();
+      }
     }
   }, {
     key: 'componentWillMount',
@@ -120,7 +132,7 @@ var Orderlist = (_temp2 = _class = function (_BaseComponent) {
           current: Number(value)
         });
       }
-      //curPage = 0;
+      curPage = 1;
       console.log("cardid");
       console.log(cardid);
       //curStatus = 8;
@@ -142,7 +154,7 @@ var Orderlist = (_temp2 = _class = function (_BaseComponent) {
     key: 'getOrdersup',
     value: function getOrdersup() {
       var that = this;
-      var page = curPage + 1;
+      var page = curPage;
       _index2.default.showLoading({
         title: ''
       });
@@ -163,6 +175,7 @@ var Orderlist = (_temp2 = _class = function (_BaseComponent) {
           console.log('订单数据列表：');
           console.log(res.data.data.data);
           that.setState({
+            hasnext: res.data.data.hasnext,
             goodsList: res.data.data.data
           });
           //var hasnext = res.data.data.hasnext;
@@ -173,11 +186,10 @@ var Orderlist = (_temp2 = _class = function (_BaseComponent) {
     key: 'getOrders',
     value: function getOrders() {
       var that = this;
-      var page = curPage + 1;
+      var page = curPage;
       // this.setState({
       //   curPage: page
       // })
-      curPage = page;
       _index2.default.showLoading({
         title: ''
       });
@@ -197,16 +209,8 @@ var Orderlist = (_temp2 = _class = function (_BaseComponent) {
           _index2.default.hideLoading();
           console.log('订单数据列表：');
           console.log(res.data.data.data);
-          var hasnext = res.data.data.hasnext;
-          if (!hasnext) {
-            _index2.default.showLoading({
-              title: '没有数据更新了'
-            });
-            setTimeout(function () {
-              _index2.default.hideLoading();
-            }, 1500);
-          }
           that.setState({
+            hasnext: res.data.data.hasnext,
             goodsList: that.state.goodsList.concat(res.data.data.data)
           });
         }
@@ -280,15 +284,15 @@ var Orderlist = (_temp2 = _class = function (_BaseComponent) {
       console.log(value);
       if (value == 0) {
         curStatus = 8;
-        curPage = 0;
+        curPage = 1;
       }
       if (value == 1) {
         curStatus = 7;
-        curPage = 0;
+        curPage = 1;
       }
       if (value == 2) {
-        curStatus = 0;
-        curPage = 0;
+        curStatus = 10;
+        curPage = 1;
       }
       this.setState({
         current: value

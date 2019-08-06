@@ -46,7 +46,7 @@ export const SHAREINFO = {
   'path': '路径',
   'imageUrl': '图片'
 }
-export const PATH ="https://shoptestapp.wemall.com.cn" //图片路径
+export const PATH ="https://shoptestapp.wemall.com.cn/mImages/" //图片路径
 export const systemUser='知码小蜜';
 export const bgColor='#ff9409';
 export const globalData={

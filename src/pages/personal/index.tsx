@@ -57,26 +57,26 @@ class Index extends Component<{}, IState>{
   constructor (props: {} | undefined) {
     super(props)
     this.state = {
-      mhhImg:PATH+'/mImages/xydImg.png',
-      iconImg1:PATH+'/mImages/homeTo.png',
-      iconImg2:PATH+'/mImages/serverNew.png',
-      tytb33:PATH+'/mImages/tytb-41.png',
-      perbox:PATH+'/mImages/perbox.png',
-      avator:PATH+'/mImages/tempavator.png',
-      iconB1:PATH+'/mImages/wddd-new1-50.png',
-      iconB2:PATH+'/mImages/wddd-new3-50.png',
-      iconB21:PATH+'/mImages/wddd-new3-51.png',
-      iconB3:PATH+'/mImages/wddd-new2-50.png',
-      iconB4:PATH+'/mImages/wddd-55.png',
-      iconC1:PATH+'/mImages/zhsz.png',
-      iconC2:PATH+'/mImages/bzzx.png',
-      iconC3:PATH+'/mImages/yjfk.png',
-      iconC4:PATH+'/mImages/wdkf.png',
+      mhhImg:PATH+'xydImg.png',
+      iconImg1:PATH+'homeTo.png',
+      iconImg2:PATH+'serverNew.png',
+      tytb33:PATH+'tytb-41.png',
+      perbox:PATH+'perbox.png',
+      avator:PATH+'tempavator.png',
+      iconB1:PATH+'wddd-new1-50.png',
+      iconB2:PATH+'wddd-new3-50.png',
+      iconB21:PATH+'wddd-new3-51.png',
+      iconB3:PATH+'wddd-new2-50.png',
+      iconB4:PATH+'wddd-55.png',
+      iconC1:PATH+'zhsz.png',
+      iconC2:PATH+'bzzx.png',
+      iconC3:PATH+'yjfk.png',
+      iconC4:PATH+'wdkf.png',
       userInfoList:{},
       wishes:[],
       isuserInfo:true,
       goodsList:[],
-      SwiperItemArry:[{item:'1',url:PATH+'/mImages/swper1.png'},{item:'2',url:PATH+'/mImages/swper2.png'}],
+      SwiperItemArry:[{item:'1',url:PATH+'swper1.png'},{item:'2',url:PATH+'swper2.png'}],
       total:0,
     }
 }
@@ -246,7 +246,7 @@ class Index extends Component<{}, IState>{
   }
   toOrders3(){
     Taro.navigateTo({
-      url: '../orders/orderlist/orderlist?state=0&value=2'
+      url: '../orders/orderlist/orderlist?state=10&value=2'
     })
   }
   userInfoHandler(res){
@@ -502,11 +502,11 @@ class Index extends Component<{}, IState>{
                 <View className='mysever'>
                   <View className='titleSever'>
                     <View className='myordertitle'>我的订单</View>
-                    <View className='mychecked' onClick={this.toOrders}>查看全部订单></View>
+                    <View className='mychecked' onTouchStart={this.toOrders}>查看全部订单></View>
                   </View>
                   <View className='orderDiv'>
                    
-                     <View className='iconLi' onClick={this.toOrders1}>
+                     <View className='iconLi' onTouchStart={this.toOrders1}>
                        {this.state.total<=0?
                        <Image className='iconb' src={this.state.iconB2}/>
                        :
@@ -517,11 +517,11 @@ class Index extends Component<{}, IState>{
                        }
                        <View className='iconw' >已付款</View>
                      </View>
-                     <View className='iconLi' onClick={this.toOrders2}>
+                     <View className='iconLi' onTouchStart={this.toOrders2}>
                        <Image className='iconb' src={this.state.iconB1}/>
                        <View className='iconw' >转退款</View>
                      </View>
-                     <View className='iconLi' onClick={this.toOrders3}>
+                     <View className='iconLi' onTouchStart={this.toOrders3}>
                        <Image className='iconb' src={this.state.iconB3}/>
                        <View className='iconw'>其他</View>
                      </View>

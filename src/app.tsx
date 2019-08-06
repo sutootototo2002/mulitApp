@@ -2,9 +2,11 @@ import '@tarojs/async-await'
 import Taro, { Component, Config } from '@tarojs/taro'
 import Index from './pages/index/index'
 import './app.scss'
+import './style.scss'
 import 'taro-ui/dist/style/index.scss' // 全局引入一次即可
 import './custom-variables.scss'
 import {globalData,bgColor} from './config/index.js'; 
+import {redColor,fontColor} from './variables'; 
 
 // 如果需要在 h5 环境中开启 React Devtools
 // 取消以下注释：
@@ -61,6 +63,14 @@ class App extends Component {
     Taro.setNavigationBarTitle({
       title:globalData.sysTitle
     })
+    Taro.setNavigationBarColor({
+      frontColor:fontColor,
+      backgroundColor:redColor,
+      animation: {
+          duration: 400,
+          timingFunc: 'easeIn'
+      }
+     })
   }
 
   componentDidMount () {}

@@ -1,0 +1,96 @@
+<block>
+    <view>
+        <view class="myrecharge">
+            <view class="mhh">
+                <image class="mhhImages" src="{{mhhImg}}"></image>
+                <view class="priceDiv">
+                    <view>
+                        <view class="price0">￥</view>
+                        <view class="price1">{{anonymousState__temp3}}</view>
+                    </view>
+                    <view class="mhhword">账户余额</view>
+                </view>
+                <view class="btnword">请选择充值金额</view>
+            </view>
+            <image class="boxOne1" src="{{avatar ? avatar : tempavatar}}"></image>
+            <view class="main_">
+                <button class="{{curNav === post.$original.activityid ? 'box1 select' : 'box1'}}" bindtap="onselectNav" data-money="{{post.$original}}" data-key="{{index}}" data-id="{{post.$original.activityid}}" wx:for="{{loopArray0}}" wx:for-item="post" wx:for-index="index">
+                    <view class="price">{{post.$original.fee / 100}}元</view>
+                    <view class="prices">+赠{{post.$original.fee / 100}}元，到账{{post.$loopState__temp2}}元</view>
+                    <image class="pro" src="{{arrow}}"></image>
+                </button>
+            </view>
+            <view class="mingxi">
+                <view class="mxTitle">——— 零钱明细 ———</view>
+                <view class="mxList">
+                    <view class="mxli" wx:for="{{loopArray1}}" wx:for-item="posts" wx:for-index="_anonIdx">
+                        <view class="xmname">{{posts.name}}</view>
+                        <view class="xmtime">{{posts.$original.createtime}}</view>
+                        <view class="xmprice">{{posts.$original.fee / 100}}元</view>
+                    </view>
+                </view>
+            </view>
+            <block>
+                <block wx:if="{{ispayvalue}}">
+                    <view class="payvalue">
+                        <image class="payclose" bindtouchstart="onClose" src="{{del}}"></image>
+                        <view class="payContent">
+                            <view class="payTitle">确认充值</view>
+                            <image class="payanswer" bindtouchstart="onAnswer" src="{{answer}}"></image>
+                            <view class="disfee">
+                                <view class="pricefh">￥</view>
+                                <view class="price_fee">{{payvalue.fee / 100}}</view>
+                            </view>
+                            <view class="payinfo">
+                                <view class="pinfo1">充值信息</view>
+                                <view class="pinfo2">充值{{payvalue.fee / 100}}元，到账{{anonymousState__temp4}}元</view>
+                            </view>
+                            <view class="ts">
+                                <view class="ts1">温馨提示：</view>
+                                <view class="ts2">亲！充值有赠送金额，储值账户余额只能消费，无法退款或提取。</view>
+                            </view>
+                            <button type="default" class="Btn btn1" bindtap="ongenerateorder">确认充值</button>
+                        </view>
+                    </view>
+                </block>
+                <block wx:else>
+                    <view></view>
+                </block>
+            </block>
+            <block>
+                <block wx:if="{{successboolean}}">
+                    <view class="payvalue">
+                        <image class="payclose" bindtouchstart="onCloseSuccess" src="{{del}}"></image>
+                        <view class="payContent">
+                            <view class="payTitle">充值成功</view>
+                            <view class="payTitle1">恭喜小主，您的当前账户余额：{{anonymousState__temp5}}元</view>
+                            <view>
+                                <cover-image class="mmImg" src="{{mm}}"></cover-image>
+                                <cover-view class="mmText">无需输入支付密码，快速购物！</cover-view>
+                            </view>
+                            <block>
+                                <block wx:if="{{isMM}}">
+                                    <button type="default" class="Btn btn1" bindtap="onMM">开启免密 愉快购物</button>
+                                </block>
+                                <block wx:else>
+                                    <button type="default" class="Btn btn1" bindtap="onCloseSuccess">充值成功</button>
+                                </block>
+                            </block>
+                        </view>
+                    </view>
+                </block>
+                <block wx:else>
+                    <view></view>
+                </block>
+            </block>
+            <block>
+                <block wx:if="{{markBoolean}}">
+                    <view class="mark"></view>
+                </block>
+                <block wx:else>
+                    <view></view>
+                </block>
+            </block>
+        </view>
+    </view>
+</block>

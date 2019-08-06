@@ -36,6 +36,8 @@ interface IState {
     showModalStatus:boolean,
     islogin:boolean,
     open:boolean,
+    isReason:boolean,
+    dw:string,
     unpayImg:string,
     unpriceImg:string,
     markBoolean: boolean,
@@ -74,6 +76,8 @@ class Qropen extends Component<{}, IState>{
         num:0,
         tag:100,
         qrurl:'',
+        dw: PATH + 'dw.png',
+        isReason:false,
         haslogin:false,
         showlogin:false,
         showpapay:false,
@@ -81,12 +85,12 @@ class Qropen extends Component<{}, IState>{
         papayPressed:false,
         showModalStatus:false,
         unpayorder:[],
-        loadImg:PATH+'/mImages/openouter.png',
-        loadImg1:PATH+'/mImages/smks-wzc.png',
-        loadImg2:PATH+'/mImages/car.png',
-        unpayImg: PATH + '/mImages/wfk-11.png',
-        unpriceImg: PATH + '/mImages/wfk.png',
-        unpayorderimg: PATH + '/mImages/unpay_info.png',
+        loadImg:PATH+'openouter.png',
+        loadImg1:PATH+'smks-wzc.png',
+        loadImg2:PATH+'car.png',
+        unpayImg: PATH + 'wfk-11.png',
+        unpriceImg: PATH + 'wfk.png',
+        unpayorderimg: PATH + 'unpay_info.png',
         islogin:false,
         markBoolean:false,
         open:false,
@@ -476,6 +480,15 @@ class Qropen extends Component<{}, IState>{
               url: '../../index/cgshopping/index?orderid=' + orderid + '&machineid=' + machineid + '&orderno=' + orderno
             })
           }
+        } else if(res.data.code == 235){
+          console.log('235')
+          that.setState({
+            requestfailed: true,
+            markBoolean:true,
+            isReason:true
+          });
+          requestfailed = false
+          
         } else {
           that.setState({
             openfailed: false,
@@ -699,7 +712,13 @@ class Qropen extends Component<{}, IState>{
             Taro.reLaunch({
             url: '../../index/index'
           })
-        } else {
+        }else if(res.data.code == 201){
+          Taro.showToast({
+            title: '您有未结订单',
+            icon: 'fail',
+            duration: 2000
+          })
+        }else {
             Taro.showModal({
             title: '提示',
             content: res.data.msg,
@@ -926,6 +945,11 @@ class Qropen extends Component<{}, IState>{
   })
   
 }
+onconcel(){
+  Taro.redirectTo({
+    url: '/pages/index/index'
+  })
+}
 
   gotoHome(){
 
@@ -947,7 +971,7 @@ class Qropen extends Component<{}, IState>{
         {this.state.pay?
           <View>
              <Image className='loadImg' src={this.state.loadImg}/>
-             <View className='infoZm'>扫码即可支付哦！</View>
+             {/* <View className='infoZm'>扫码即可支付哦！</View> */}
             <Form >
             <Button type="default" onClick={this.gotopayfen} className='Btn btnopen'> 开通支付分 </Button>
             </Form>
@@ -997,25 +1021,49 @@ class Qropen extends Component<{}, IState>{
                     <CoverView className='total'>共{this.state.unpayorder.goodsnum}件商品</CoverView>
                   </CoverView>
                   <CoverView className='goodsInfoDetail'>
-                    [{this.state.unpayorder.goods[0].goodsname}等...] {this.state.unpayorder.goods[0].location}
+                    {this.state.unpayorder.goods[0].goodsname}等... {this.state.unpayorder.goods[0].location}
                    </CoverView>
                 </CoverView>
               </CoverView>
               {/* <Button className='BtnOne' type='default' onClick={this.payOrder}>支付</Button> */}
-              {this.state.unpayorder.score == 0?
+              
+               {this.state.unpayorder.score == 0?
                 <Button className='BtnOne' type='default' onClick={this.payOrder}>支付</Button>
                 :
                 <CoverView>
-                  <CoverImage className='unpayImg' src={this.state.unpayorderimg} />
+                  <CoverView className='paynewDiv'>请到您的微信>钱包>支付分中支付</CoverView>
+                  <CoverView className='tsDiv'>
+                    <CoverImage className='unpayImg' src={this.state.unpayorderimg} />
                     <CoverView className='unpayDiv'>长时间不支付将影响您的信用</CoverView>
+                  </CoverView>
                 </CoverView>
-              }
+              }               
             </CoverView>
 
           </View>
           :
           <View></View>}
 
+         {this.state.isReason?
+          <CoverView className='boxReason'>
+           <CoverImage className='posImg111' src={this.state.dw} />
+           <CoverView className='word11'>订单创建失败，可能原因如下：</CoverView>
+           <CoverView className='word22'>
+           <CoverView className='word'>
+           1、您有未支付的支付分订单，请在“我->支付->钱包->支付分”中查看并完成支付。
+          
+             </CoverView>
+             <CoverView className='word'>
+            2、微信支付分基于风控因素，导致订单创建失败。
+             </CoverView>
+           </CoverView>
+           {/* <CoverView className='word33'>您可以选择储值方式来进行购物消费</CoverView> */}
+           <CoverView style='margin-top:50px;text-align:center'>
+           <CoverView className='btnOpen12' onClick={this.onconcel}>确定</CoverView>
+          </CoverView>
+          </CoverView>
+          :
+          <CoverView></CoverView>}    
 
 
         

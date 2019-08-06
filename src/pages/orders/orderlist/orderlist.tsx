@@ -1,5 +1,5 @@
 var curStatus = 8; //默认状态为8
-var curPage = 0;
+var curPage = 1;
 var cardid = '';
 var value = 0;
 import Taro, { Component, Config, MapContext } from '@tarojs/taro'
@@ -15,6 +15,7 @@ import './orderlist.scss'
 interface IState {
     current:number,
     addrimg:string,
+    hasnext:string,
     goodsList:Array<object>,
     dargStyle:object,
     downDragStyle:object,
@@ -51,8 +52,9 @@ class Orderlist extends Component<{}, IState>{
     super(props)
     this.state = {
         current:0,
+        hasnext:true,
         goodsList:[],
-        addrimg:PATH+'/mImages/wddd2.png',
+        addrimg:PATH+'wddd2.png',
         dargStyle: {//下拉框的样式
           top: 0 + 'px'
       },
@@ -71,15 +73,28 @@ class Orderlist extends Component<{}, IState>{
     }
     onPullDownRefresh(){
       console.log('下拉事件111111111111111')
-      curPage = 0;
+      curPage = 1;
       this.setState({
         goodsList:[]
       })
+      //curPage
       this.getOrdersup()
     }
     onReachBottom(){
       console.log('上拉事件1111111111111111111111')
-      this.getOrders();
+      if(!this.state.hasnext){
+        Taro.showLoading({
+          title: '没有数据更新了',
+        })
+        setTimeout(() => {
+          Taro.hideLoading();
+        }, 1000);
+        
+      }else{
+        ++curPage;
+        this.getOrders();
+      }
+     
     }
 
   componentWillMount(){
@@ -97,7 +112,7 @@ class Orderlist extends Component<{}, IState>{
         current:Number(value)
       })
     }
-    //curPage = 0;
+    curPage = 1;
    
     
     console.log("cardid");
@@ -116,7 +131,7 @@ class Orderlist extends Component<{}, IState>{
 
   getOrdersup() {
     var that = this;
-    var page = curPage + 1;
+    var page = curPage;
    
     Taro.showLoading({
       title: '',
@@ -138,6 +153,7 @@ class Orderlist extends Component<{}, IState>{
         console.log('订单数据列表：')
         console.log(res.data.data.data)
         that.setState({
+          hasnext:res.data.data.hasnext,
           goodsList: res.data.data.data
         })
         //var hasnext = res.data.data.hasnext;
@@ -148,12 +164,11 @@ class Orderlist extends Component<{}, IState>{
   }
   getOrders() {
     var that = this;
-    var page = curPage + 1;
+    var page = curPage;
     // this.setState({
     //   curPage: page
     // })
-    curPage = page;
-
+    
     Taro.showLoading({
       title: '',
     })
@@ -174,20 +189,8 @@ class Orderlist extends Component<{}, IState>{
         console.log('订单数据列表：')
         console.log(res.data.data.data)
         
-        
-            
-            
-        var hasnext = res.data.data.hasnext;
-        if(!hasnext){
-          Taro.showLoading({
-            title: '没有数据更新了',
-          })
-          setTimeout(() => {
-            Taro.hideLoading();
-          }, 1500);
-          
-        }
           that.setState({
+            hasnext:res.data.data.hasnext,
             goodsList: that.state.goodsList.concat(res.data.data.data)
         })
         
@@ -267,15 +270,15 @@ class Orderlist extends Component<{}, IState>{
     console.log(value)
     if(value==0){
         curStatus = 8; 
-        curPage = 0;
+        curPage = 1;
     }
     if(value==1){
         curStatus = 7;
-        curPage = 0;
+        curPage = 1;
     }
     if(value==2){
-        curStatus = 0;
-        curPage = 0;
+        curStatus = 10;
+        curPage = 1;
     }
 
     this.setState({

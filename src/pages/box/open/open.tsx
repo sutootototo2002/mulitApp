@@ -29,6 +29,7 @@ interface IState {
     loadImg:string,
     isfind:boolean,
     dw:string,
+    isReason:boolean,
     infine:string,
     markBoolean:boolean
 }
@@ -58,6 +59,7 @@ class Open extends Component<{}, IState>{
         lockid:'',
         machineid:'',
         orderid:'',
+        isReason:false,
         openfailed:false,
         requestfailed:true,
         markBoolean:false,
@@ -65,8 +67,8 @@ class Open extends Component<{}, IState>{
         tag:0,
         infine:'设备故障',
         isfind:false,
-        dw: PATH + '/mImages/dw.png',
-        loadImg:PATH+'/mImages/open.png'
+        dw: PATH + 'dw.png',
+        loadImg:PATH+'open.png'
 
     }
 }
@@ -140,7 +142,7 @@ class Open extends Component<{}, IState>{
             //   data: orderid
             // });
             Taro.redirectTo({
-              url: '../../index/shopping/index?orderid=' + orderid + '&machineid=' + machineid + '&orderno=' + orderno + '&from=open'
+              url: '/pages/index/shopping/index?orderid=' + orderid + '&machineid=' + machineid + '&orderno=' + orderno + '&from=open'
             })
           } else {
             Taro.setStorageSync("orderid", orderid);
@@ -149,14 +151,23 @@ class Open extends Component<{}, IState>{
             //   data: orderid
             // });
             Taro.redirectTo({
-              url: '../../index/cgshopping/index?orderid=' + orderid + '&machineid=' + machineid + '&orderno=' + orderno
+              url: '/pages/index/cgshopping/index?orderid=' + orderid + '&machineid=' + machineid + '&orderno=' + orderno
             })
           }
+        } else if(res.data.code == 235){
+          console.log('235')
+          that.setState({
+            requestfailed: true,
+            markBoolean:true,
+            isReason:true
+          });
+          requestfailed = false
+          
         } else {
           that.setState({
             openfailed: true,
             isfind:true,
-            infine:res.data.msg,
+            infine:res.data.msg||'设备故障',
             markBoolean:true
           });
           // Taro.showModal({
@@ -216,12 +227,7 @@ class Open extends Component<{}, IState>{
       }
 
     },800); //循环时间1秒 
-    setTimeout(function () {
-      if (requestfailed) {
-        clearInterval(interval);
-        //that.requestOpenStatus();
-      }
-    }.bind(this), 60000);
+    
   }
   openStatus() {
     var that = this;
@@ -265,19 +271,8 @@ class Open extends Component<{}, IState>{
             duration: 2000
           })
           requestfailed = false
-          // Taro.showModal({
-          //   title: '提示',
-          //   content: res.data.msg,
-          //   showCancel: false,
-          //   success: function (res) {
-          //     if (res.confirm) {
-          //       Taro.navigateBack({
-
-          //       })
-          //     }
-          //   }
-          // })
-        } else {
+         
+        }else{
           that.setState({
             requestfailed: true
           });
@@ -331,7 +326,7 @@ class Open extends Component<{}, IState>{
 
             Taro.redirectTo({
 
-            url: '../../index/index'
+            url: '/pages/index/index'
 
             })
 
@@ -358,6 +353,16 @@ class Open extends Component<{}, IState>{
           openfailed: true
         });
       }
+    })
+  }
+  onconcel(){
+    Taro.redirectTo({
+      url: '/pages/index/index'
+    })
+  }
+  onrecharge(){
+    Taro.redirectTo({
+      url: '/pages/recharge/recharge'
     })
   }
   onClosePos(){
@@ -396,6 +401,27 @@ class Open extends Component<{}, IState>{
             <CoverView className='info'>{this.state.infine}</CoverView>
             <CoverView className='btnOpen' onClick={this.onClosePos}>确定</CoverView>
             
+          </CoverView>
+          :
+          <CoverView></CoverView>}    
+
+          {this.state.isReason?
+          <CoverView className='boxReason'>
+           <CoverImage className='posImg111' src={this.state.dw} />
+           <CoverView className='word11'>订单创建失败，可能原因如下：</CoverView>
+           <CoverView className='word22'>
+           <CoverView className='word'>
+           1、您有未支付的支付分订单，请在“我->支付->钱包->支付分”中查看并完成支付。
+          
+             </CoverView>
+             <CoverView className='word'>
+             2、微信支付分基于风控因素，导致订单创建失败。
+             </CoverView>
+           </CoverView>
+           {/* <CoverView className='word33'>您可以选择储值方式来进行购物消费</CoverView> */}
+           <CoverView style='margin-top:50px;text-align:center'>
+           <CoverView className='btnOpen12' onClick={this.onconcel}>确定</CoverView>
+          </CoverView>
           </CoverView>
           :
           <CoverView></CoverView>}    

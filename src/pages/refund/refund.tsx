@@ -44,12 +44,12 @@ class Refund extends Component<{}, IState>{
   constructor (props: {} | undefined) {
     super(props)
     this.state = {
-        machineImg:PATH+'/mImages/refund.png',
+        machineImg:PATH+'refund.png',
         navList:[],
         id_:0,
         value: '',
-        temp:PATH+'/mImages/carma.jpg',
-        upload:PATH+'/mImages/carma.jpg',
+        temp:PATH+'carma.jpg',
+        upload:PATH+'carma.jpg',
         imagesArr:[],
         pics:[],
         files:[]
@@ -115,9 +115,8 @@ class Refund extends Component<{}, IState>{
     console.log(e);
     var index_ = e.currentTarget.dataset.id;
 
-    
-    this.state.pics.splice(0, 1)
-
+    console.log(index_)
+    this.state.pics.splice(index_, 1)
    
     this.setState({
       pics:this.state.pics

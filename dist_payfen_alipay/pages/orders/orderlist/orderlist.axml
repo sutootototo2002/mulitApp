@@ -1,0 +1,267 @@
+<block>
+    <view style="background:#f2f2f2">
+        <at-tabs current="{{current}}" __triggerObserer="{{ _triggerObserer }}" tabList="{{tabList}}" onClick="handleClick" data-e-onClick-so="this">
+            <at-tabs-pane current="{{current}}" __triggerObserer="{{ _triggerObserer }}" index="{{0}}">
+                <view class="dragUpdataPage">
+                    <view class="downDragBox" style="{{anonymousState__temp}}">
+                        <at-activity-indicator __triggerObserer="{{ _triggerObserer }}"></at-activity-indicator><text class="downText">{{downText}}</text>
+                    </view>
+                    <scroll-view style="{{anonymousState__temp2}}" onTouchMove="touchmove" onTouchEnd="touchEnd" onTouchStart="touchStart" onScrollToUpper="ScrollToUpper" onScrollToLower="ScrollToLower" class="dragUpdata" scroll-y="{{scrollY}}" scroll-with-animation="{{true}}">
+                        <view>
+                            <view>
+                                <view class="boxLi" a:for="{{goodsList}}" a:for-item="item" a:for-index="index">
+                                    <view>
+                                        <block>
+                                            <block a:if="{{item.location}}">
+                                                <view class="addr">
+                                                    <image class="addimg" src="{{addrimg ? addrimg : ''}}"></image>{{item.location}}{{item.dailaddress}}</view>
+                                            </block>
+                                            <block a:else>
+                                                <view class="addr">
+                                                    <image class="addimg" src="{{addrimg}}"></image>{{globalData.sysTitle}}</view>
+                                            </block>
+                                        </block>
+                                        <block a:if="{{item.orderstatus == 1}}">
+                                            <view class="ctime">购物中</view>
+                                        </block>
+                                        <block a:if="{{item.orderstatus == 2}}">
+                                            <view class="ctime">待结账</view>
+                                        </block>
+                                        <block a:if="{{item.orderstatus == 3}}">
+                                            <view class="ctime">已取消</view>
+                                        </block>
+                                        <block a:if="{{item.orderstatus == 4}}">
+                                            <view class="ctime">待支付</view>
+                                        </block>
+                                        <block a:if="{{item.orderstatus == 5}}">
+                                            <view class="ctime">已付款</view>
+                                        </block>
+                                        <block a:if="{{item.orderstatus == 6}}">
+                                            <view class="ctime">已欠费</view>
+                                        </block>
+                                        <block a:if="{{item.orderstatus == 7}}">
+                                            <view class="ctime">转退款</view>
+                                        </block>
+                                        <block a:if="{{item.orderstatus == 8}}">
+                                            <view class="ctime">已完成</view>
+                                        </block>
+                                        <block a:if="{{item.orderstatus == 9}}">
+                                            <view class="ctime">订单异常</view>
+                                        </block>
+                                    </view>
+                                    <block>
+                                        <block a:if="{{item.goods.length}}">
+                                            <view class="gslist">
+                                                <view class="gUL" a:key="" a:for="{{item.goods}}" a:for-item="item_" a:for-index="index">
+                                                    <image class="gImg" src="{{item_.picurl}}"></image>
+                                                    <view class="fLeft">
+                                                        <view class="boxline">
+                                                            <view class="gname">{{item_.goodsname}}</view>
+                                                            <view class="gprice">￥{{item_.unitfee / 100}}</view>
+                                                        </view>
+                                                        <view class="boxline">
+                                                            <view class="gname">{{item_.spec}}</view>
+                                                            <view class="gprice">X{{item_.amount}}</view>
+                                                        </view>
+                                                    </view>
+                                                </view>
+                                                <view class="total">共{{item.goods.length}}件商品 合计：￥{{item.payfee / 100}}</view>
+                                            </view>
+                                        </block>
+                                        <block a:else>
+                                            <view class="goodsum">
+                                                <view>共{{item.goods.length}}件商品 合计：￥{{item.payfee / 100}}</view>
+                                            </view>
+                                        </block>
+                                    </block>
+                                    <view class="Btns">
+                                        <view style="float:left;font-size:25rpx;color:#ccc">{{item.createtime}}</view>
+                                        <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" data-orderid="{{item.orderid}}" onClick="toOrderDetail" data-e-onClick-so="this" data-e-onClick-a-a="{{item.orderid}}">订单详情</at-button>
+                                        <at-button class="btn1" __triggerObserer="{{ _triggerObserer }}" type="secondary" open-type="getUserInfo" ongetUserInfo="userInfoHandler" data-e-ongetUserInfo-so="this">我的心愿</at-button>
+                                    </view>
+                                </view>
+                            </view>
+                        </view>
+                    </scroll-view>
+                    <view class="upDragBox" style="{{anonymousState__temp3}}">
+                        <at-activity-indicator __triggerObserer="{{ _triggerObserer }}"></at-activity-indicator><text class="downText">{{pullText}}</text>
+                    </view>
+                </view>
+            </at-tabs-pane>
+            <at-tabs-pane current="{{current}}" __triggerObserer="{{ _triggerObserer }}" index="{{1}}">
+                <view class="dragUpdataPage">
+                    <view class="downDragBox" style="{{anonymousState__temp4}}">
+                        <at-activity-indicator __triggerObserer="{{ _triggerObserer }}"></at-activity-indicator><text class="downText">{{downText}}</text>
+                    </view>
+                    <scroll-view style="{{anonymousState__temp5}}" onTouchMove="touchmove" onTouchEnd="touchEnd" onTouchStart="touchStart" onScrollToUpper="ScrollToUpper" onScrollToLower="ScrollToLower" class="dragUpdata" scroll-y="{{scrollY}}" scroll-with-animation="{{true}}">
+                        <view>
+                            <view>
+                                <view class="boxLi" a:for="{{goodsList}}" a:for-item="item" a:for-index="index">
+                                    <view>
+                                        <block>
+                                            <block a:if="{{item.location}}">
+                                                <view class="addr">
+                                                    <image class="addimg" src="{{addrimg ? addrimg : ''}}"></image>{{item.location}}{{item.dailaddress}}</view>
+                                            </block>
+                                            <block a:else>
+                                                <view class="addr">
+                                                    <image class="addimg" src="{{addrimg}}"></image>{{globalData.sysTitle}}</view>
+                                            </block>
+                                        </block>
+                                        <block a:if="{{item.orderstatus == 1}}">
+                                            <view class="ctime">购物中</view>
+                                        </block>
+                                        <block a:if="{{item.orderstatus == 2}}">
+                                            <view class="ctime">待结账</view>
+                                        </block>
+                                        <block a:if="{{item.orderstatus == 3}}">
+                                            <view class="ctime">已取消</view>
+                                        </block>
+                                        <block a:if="{{item.orderstatus == 4}}">
+                                            <view class="ctime">待支付</view>
+                                        </block>
+                                        <block a:if="{{item.orderstatus == 5}}">
+                                            <view class="ctime">已付款</view>
+                                        </block>
+                                        <block a:if="{{item.orderstatus == 6}}">
+                                            <view class="ctime">已欠费</view>
+                                        </block>
+                                        <block a:if="{{item.orderstatus == 7}}">
+                                            <view class="ctime">转退款</view>
+                                        </block>
+                                        <block a:if="{{item.orderstatus == 8}}">
+                                            <view class="ctime">已完成</view>
+                                        </block>
+                                        <block a:if="{{item.orderstatus == 9}}">
+                                            <view class="ctime">订单异常</view>
+                                        </block>
+                                    </view>
+                                    <block>
+                                        <block a:if="{{item.goods.length}}">
+                                            <view class="gslist">
+                                                <view class="gUL" a:key="" a:for="{{item.goods}}" a:for-item="item_" a:for-index="index">
+                                                    <image class="gImg" src="{{item_.picurl}}"></image>
+                                                    <view class="fLeft">
+                                                        <view class="boxline">
+                                                            <view class="gname">{{item_.goodsname}}</view>
+                                                            <view class="gprice">￥{{item_.unitfee / 100}}</view>
+                                                        </view>
+                                                        <view class="boxline">
+                                                            <view class="gname">{{item_.spec}}</view>
+                                                            <view class="gprice">X{{item_.amount}}</view>
+                                                        </view>
+                                                    </view>
+                                                </view>
+                                                <view class="total">共{{item.goods.length}}件商品 合计：￥{{item.payfee / 100}}</view>
+                                            </view>
+                                        </block>
+                                        <block a:else>
+                                            <view class="goodsum">
+                                                <view>共{{item.goods.length}}件商品 合计：￥{{item.payfee / 100}}</view>
+                                            </view>
+                                        </block>
+                                    </block>
+                                    <view class="Btns">
+                                        <view style="float:left;font-size:25rpx;color:#ccc">{{item.createtime}}</view>
+                                        <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" data-orderid="{{item.orderid}}" onClick="toOrderDetail" data-e-onClick-so="this" data-e-onClick-a-a="{{item.orderid}}">订单详情</at-button>
+                                        <at-button class="btn1" __triggerObserer="{{ _triggerObserer }}" type="secondary" open-type="getUserInfo" ongetUserInfo="userInfoHandler" data-e-ongetUserInfo-so="this">我的心愿</at-button>
+                                    </view>
+                                </view>
+                            </view>
+                        </view>
+                    </scroll-view>
+                    <view class="upDragBox" style="{{anonymousState__temp6}}">
+                        <at-activity-indicator __triggerObserer="{{ _triggerObserer }}"></at-activity-indicator><text class="downText">{{pullText}}</text>
+                    </view>
+                </view>
+            </at-tabs-pane>
+            <at-tabs-pane current="{{current}}" __triggerObserer="{{ _triggerObserer }}" index="{{2}}">
+                <view class="dragUpdataPage">
+                    <view class="downDragBox" style="{{anonymousState__temp7}}">
+                        <at-activity-indicator __triggerObserer="{{ _triggerObserer }}"></at-activity-indicator><text class="downText">{{downText}}</text>
+                    </view>
+                    <scroll-view style="{{anonymousState__temp8}}" onTouchMove="touchmove" onTouchEnd="touchEnd" onTouchStart="touchStart" onScrollToUpper="ScrollToUpper" onScrollToLower="ScrollToLower" class="dragUpdata" scroll-y="{{scrollY}}" scroll-with-animation="{{true}}">
+                        <view>
+                            <view>
+                                <view class="boxLi" a:for="{{goodsList}}" a:for-item="item" a:for-index="index">
+                                    <view>
+                                        <block>
+                                            <block a:if="{{item.location}}">
+                                                <view class="addr">
+                                                    <image class="addimg" src="{{addrimg ? addrimg : ''}}"></image>{{item.location}}{{item.dailaddress}}</view>
+                                            </block>
+                                            <block a:else>
+                                                <view class="addr">
+                                                    <image class="addimg" src="{{addrimg}}"></image>{{globalData.sysTitle}}</view>
+                                            </block>
+                                        </block>
+                                        <block a:if="{{item.orderstatus == 1}}">
+                                            <view class="ctime">购物中</view>
+                                        </block>
+                                        <block a:if="{{item.orderstatus == 2}}">
+                                            <view class="ctime">待结账</view>
+                                        </block>
+                                        <block a:if="{{item.orderstatus == 3}}">
+                                            <view class="ctime">已取消</view>
+                                        </block>
+                                        <block a:if="{{item.orderstatus == 4}}">
+                                            <view class="ctime">待支付</view>
+                                        </block>
+                                        <block a:if="{{item.orderstatus == 5}}">
+                                            <view class="ctime">已付款</view>
+                                        </block>
+                                        <block a:if="{{item.orderstatus == 6}}">
+                                            <view class="ctime">已欠费</view>
+                                        </block>
+                                        <block a:if="{{item.orderstatus == 7}}">
+                                            <view class="ctime">转退款</view>
+                                        </block>
+                                        <block a:if="{{item.orderstatus == 8}}">
+                                            <view class="ctime">已完成</view>
+                                        </block>
+                                        <block a:if="{{item.orderstatus == 9}}">
+                                            <view class="ctime">订单异常</view>
+                                        </block>
+                                    </view>
+                                    <block>
+                                        <block a:if="{{item.goods.length}}">
+                                            <view class="gslist">
+                                                <view class="gUL" a:key="" a:for="{{item.goods}}" a:for-item="item_" a:for-index="index">
+                                                    <image class="gImg" src="{{item_.picurl}}"></image>
+                                                    <view class="fLeft">
+                                                        <view class="boxline">
+                                                            <view class="gname">{{item_.goodsname}}</view>
+                                                            <view class="gprice">￥{{item_.unitfee / 100}}</view>
+                                                        </view>
+                                                        <view class="boxline">
+                                                            <view class="gname">{{item_.spec}}</view>
+                                                            <view class="gprice">X{{item_.amount}}</view>
+                                                        </view>
+                                                    </view>
+                                                </view>
+                                                <view class="total">共{{item.goods.length}}件商品 合计：￥{{item.payfee / 100}}</view>
+                                            </view>
+                                        </block>
+                                        <block a:else>
+                                            <view class="goodsum">
+                                                <view>共{{item.goods.length}}件商品 合计：￥{{item.payfee / 100}}</view>
+                                            </view>
+                                        </block>
+                                    </block>
+                                    <view class="Btns">
+                                        <view style="float:left;font-size:25rpx;color:#ccc">{{item.createtime}}</view>
+                                        <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" data-orderid="{{item.orderid}}" onClick="toOrderDetail" data-e-onClick-so="this" data-e-onClick-a-a="{{item.orderid}}">订单详情</at-button>
+                                        <at-button class="btn1" __triggerObserer="{{ _triggerObserer }}" type="secondary" open-type="getUserInfo" ongetUserInfo="userInfoHandler" data-e-ongetUserInfo-so="this">我的心愿</at-button>
+                                    </view>
+                                </view>
+                            </view>
+                        </view>
+                    </scroll-view>
+                    <view class="upDragBox" style="{{anonymousState__temp9}}">
+                        <at-activity-indicator __triggerObserer="{{ _triggerObserer }}"></at-activity-indicator><text class="downText">{{pullText}}</text>
+                    </view>
+                </view>
+            </at-tabs-pane>
+        </at-tabs>
+    </view>
+</block>

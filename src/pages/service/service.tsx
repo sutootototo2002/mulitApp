@@ -7,7 +7,7 @@ import {BASE_URL,globalData,PATH,systemUser} from '../../config/index.js';
 import './service.scss'
 
 interface IState {
-    loginImg:string,
+   
     serverImg1:string,
     serverImg2:string,
     serverImg3:string,
@@ -37,18 +37,16 @@ class Login extends Component<{}, IState>{
   constructor (props: {} | undefined) {
     super(props)
     this.state = {
-        
-        loginImg:PATH+'/mImages/loginImg.png',
-        serverImg1:PATH+'/mImages/lxkf-1.png',
-        serverImg2:PATH+'/mImages/lxkf-2.png',
-        serverImg3:PATH+'/mImages/lxkf-3.png',
-        serverImg4:PATH+'/mImages/lxkf-4.png',
+        serverImg1:PATH+'lxkf-1.png',
+        serverImg2:PATH+'lxkf-2.png',
+        serverImg3:PATH+'lxkf-3.png',
+        serverImg4:PATH+'lxkf-4.png',
         id_:0,
         server:[
-          {id:0,img:PATH+'/mImages/lxkf-1.png',name:'订单计算错误'},
-          {id:1,img:PATH+'/mImages/lxkf-2.png',name:'账号储值问题'},
-          {id:2,img:PATH+'/mImages/lxkf-3.png',name:'货柜门打不开'},
-          {id:3,img:PATH+'/mImages/lxkf-4.png',name:'货柜门无法锁上'}
+          {id:0,img:PATH+'lxkf-1.png',name:'订单计算错误'},
+          {id:1,img:PATH+'lxkf-2.png',name:'账号储值问题'},
+          {id:2,img:PATH+'lxkf-3.png',name:'货柜门打不开'},
+          {id:3,img:PATH+'lxkf-4.png',name:'货柜门无法锁上'}
         ]
     }
 }

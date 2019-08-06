@@ -43,7 +43,7 @@ var Login = (_temp2 = _class = function (_BaseComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Login.__proto__ || Object.getPrototypeOf(Login)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["loopArray0", "loginImg", "serverImg1", "serverImg2", "serverImg3", "serverImg4", "id_", "server"], _this.config = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Login.__proto__ || Object.getPrototypeOf(Login)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["loopArray0", "serverImg1", "serverImg2", "serverImg3", "serverImg4", "id_", "server"], _this.config = {
       navigationBarTitleText: '联系客服'
     }, _this.$$refs = [], _temp), _possibleConstructorReturn(_this, _ret);
   }
@@ -61,13 +61,12 @@ var Login = (_temp2 = _class = function (_BaseComponent) {
        */
 
       this.state = {
-        loginImg: _index3.PATH + '/mImages/loginImg.png',
-        serverImg1: _index3.PATH + '/mImages/lxkf-1.png',
-        serverImg2: _index3.PATH + '/mImages/lxkf-2.png',
-        serverImg3: _index3.PATH + '/mImages/lxkf-3.png',
-        serverImg4: _index3.PATH + '/mImages/lxkf-4.png',
+        serverImg1: _index3.PATH + 'lxkf-1.png',
+        serverImg2: _index3.PATH + 'lxkf-2.png',
+        serverImg3: _index3.PATH + 'lxkf-3.png',
+        serverImg4: _index3.PATH + 'lxkf-4.png',
         id_: 0,
-        server: [{ id: 0, img: _index3.PATH + '/mImages/lxkf-1.png', name: '订单计算错误' }, { id: 1, img: _index3.PATH + '/mImages/lxkf-2.png', name: '账号储值问题' }, { id: 2, img: _index3.PATH + '/mImages/lxkf-3.png', name: '货柜门打不开' }, { id: 3, img: _index3.PATH + '/mImages/lxkf-4.png', name: '货柜门无法锁上' }]
+        server: [{ id: 0, img: _index3.PATH + 'lxkf-1.png', name: '订单计算错误' }, { id: 1, img: _index3.PATH + 'lxkf-2.png', name: '账号储值问题' }, { id: 2, img: _index3.PATH + 'lxkf-3.png', name: '货柜门打不开' }, { id: 3, img: _index3.PATH + 'lxkf-4.png', name: '货柜门无法锁上' }]
       };
     }
   }, {

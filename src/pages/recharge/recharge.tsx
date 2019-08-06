@@ -19,7 +19,6 @@ interface IState {
   mhhImg: string,
   avatar: string,
   arrow:string,
-  ad:string,
   fee:number,
   navList:Array<object>,
   curNav:string,
@@ -56,14 +55,13 @@ class Recharge extends Component<{}, IState>{
    constructor (props: {} | undefined) {
     super(props)
     this.state = {
-      mhhImg:PATH+'/mImages/xydImg.png',
+      mhhImg:PATH+'xydImg.png',
       avatar:'',
-      tempavatar:'/mImages/tempavator.png',
-      arrow:PATH+'/mImages/arrow.png',
-      ad:PATH+'/mImages/ad.png',
-      del: PATH + '/mImages/gban.png',
-      answer:PATH+'/mImages/bzzx.png',
-      mm: PATH + '/mImages/mm.png',
+      tempavatar:PATH +'tempavator.png',
+      arrow:PATH+'arrow.png',
+      del: PATH + 'gban.png',
+      answer:PATH+'bzzx.png',
+      mm: PATH + 'mm.png',
       isMM:true,
       fee:0,
       curNav:'',
@@ -239,11 +237,6 @@ class Recharge extends Component<{}, IState>{
     console.log('callback数据recharge');
     console.log(res);
     Taro.setStorageSync('usersinfo',res.data);
-    
-
-    
-    
-   
   }
   onselectNav(event){
     let id = event.currentTarget.dataset.money.activityid;
@@ -447,11 +440,11 @@ class Recharge extends Component<{}, IState>{
     const { navList,logList} = this.state;
    
     const content = navList.map((post,index) => {
-      return <Button className={this.state.curNav === post.activityid?'box1 select':'box1'}  onClick={this.onselectNav.bind(this)} data-money={post} data-key={index} data-id={post.activityid} >
+      return <View className={this.state.curNav == post.activityid?'box1 select':'box1'} data-money={post} data-key={index} data-id={post.activityid}  onTouchStart={this.onselectNav.bind(this)}  >
         <View className='price'>{post.fee/100}元</View>
         <View className='prices'>+赠{post.giftfee/100}元，到账{Number(post.fee)/100+Number(post.giftfee)/100}元</View>
-        {/* <Image className='pro' src={this.state.arrow}/> */}
-      </Button>
+        <Image className='pro' src={this.state.arrow}/>
+      </View>
     })
     const mxList = logList.map((posts)=>{
       let name = ''

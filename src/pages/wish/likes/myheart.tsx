@@ -67,22 +67,22 @@ class Myheart extends Component<{}, IState>{
   constructor (props: {} | undefined) {
     super(props)
     this.state = {
-      mhhImg:PATH+'/mImages/xydImg.png',
-      avator:globalData.avatar?globalData.avatar:PATH+'/mImages/tempavator.jpg',
-      imgs:PATH+'/mImages/xytb.png',
-      imgs1:PATH+'/mImages/xytb-1.png',
-      zmkm:PATH+'/mImages/zmkm0.png',
-      clear:PATH+'/mImages/ljx1.png',
+      mhhImg:PATH+'xydImg.png',
+      avator:globalData.avatar?globalData.avatar:PATH+'tempavator.png',
+      imgs:PATH+'xytb.png',      //点赞
+      imgs1:PATH+'xytb-1.png',  //取消点赞
+      zmkm:PATH+'zmkm0.png', //商户图标
+      clear:PATH+'ljx1.png', //垃圾桶
       value:'',
       bool:false,
       HearBoolean:false,
-      HearHead:PATH+'/mImages/ysjtb1.png',
-      closebtn:PATH+'/mImages/gban1.png',
+      HearHead:PATH+'ysjtb1.png', //详情页头
+      closebtn:PATH+'gban1.png',
       markBoolean:false,
-      heardImg:PATH+'/mImages/fkz.png',
-      addr:PATH+'/mImages/tytb-4.png',
-      dyzh:PATH+'/mImages/dyz_f.png',
-      yyzh:PATH+'/mImages/yyz_f.png',
+      heardImg:PATH+'fkz.png', //机柜图片
+      addr:PATH+'addr.png',
+      dyzh:PATH+'dyz_f.png',
+      yyzh:PATH+'yyz_f.png',
       searLists:[],
       myheartList:[], //我的心愿单
       otherWishes: [],//其他心愿单

@@ -39,7 +39,7 @@ var Orderdetail = (_temp2 = _class = function (_BaseComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Orderdetail.__proto__ || Object.getPrototypeOf(Orderdetail)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["order", "worksheet", "orderid", "whereis", "showTuihuo", "icon1", "state0", "state1", "state3", "state4", "state5", "state6", "state71", "state70", "state8", "state9", "formid", "refundhistory", "isrefundhistory"], _this.config = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Orderdetail.__proto__ || Object.getPrototypeOf(Orderdetail)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["order", "worksheet", "orderid", "whereis", "showTuihuo", "icon1", "state0", "state1", "state3", "state4", "state5", "state6", "state71", "state70", "state8", "state9", "formid", "errorreason", "refundhistory", "isrefundhistory"], _this.config = {
       navigationBarTitleText: '订单详情'
     }, _this.$$refs = [], _temp), _possibleConstructorReturn(_this, _ret);
   }
@@ -61,18 +61,19 @@ var Orderdetail = (_temp2 = _class = function (_BaseComponent) {
         whereis: '',
         showTuihuo: true,
         order: [],
-        icon1: _index3.PATH + '/mImages/fkz.png',
-        state0: _index3.PATH + '/mImages/gwz1.png',
-        state1: _index3.PATH + '/mImages/ddqk.png',
-        state3: _index3.PATH + '/mImages/ddqk.png',
-        state4: _index3.PATH + '/mImages/ddqk.png',
-        state5: _index3.PATH + '/mImages/ddqk.png',
-        state6: _index3.PATH + '/mImages/ddqk.png',
-        state71: _index3.PATH + '/mImages/ddxqwcl.png',
-        state70: _index3.PATH + '/mImages/ddxqwcl.png',
-        state8: _index3.PATH + '/mImages/ddqk.png',
-        state9: _index3.PATH + '/mImages/ddqk.png',
+        icon1: _index3.PATH + 'fkz.png',
+        state0: _index3.PATH + 'gwz1.png',
+        state1: _index3.PATH + 'ddqk.png',
+        state3: _index3.PATH + 'ddqk.png',
+        state4: _index3.PATH + 'ddqk.png',
+        state5: _index3.PATH + 'ddqk.png',
+        state6: _index3.PATH + 'ddqk.png',
+        state71: _index3.PATH + 'ddxqwcl.png',
+        state70: _index3.PATH + 'ddxqwcl.png',
+        state8: _index3.PATH + 'ddqk.png',
+        state9: _index3.PATH + 'ddqk.png',
         formid: '',
+        errorreason: '已取消',
         refundhistory: {},
         isrefundhistory: false,
         worksheet: {}
@@ -288,14 +289,18 @@ var Orderdetail = (_temp2 = _class = function (_BaseComponent) {
     key: "gotoBack",
     value: function gotoBack() {
       //回到首页
+      _index2.default.redirectTo({
+        url: '/pages/index/index'
+      });
       // console.log(this.state.whereis+"---"+111)
-      if (this.state.whereis == 'weight' || this.state.whereis == 'cgshop' || this.state.whereis == 'all') {
-        _index2.default.navigateTo({
-          url: '/pages/index/index'
-        });
-      } else {
-        _index2.default.navigateBack({});
-      }
+      // if (this.state.whereis == 'weight' || this.state.whereis == 'cgshop' || this.state.whereis == 'all'){
+      //   Taro.navigateTo({
+      //     url: '/pages/index/index'
+      //   })
+      // }else{
+      //   Taro.navigateBack({
+      //   })
+      // }
       // Taro.navigateBack({
       // }).catch((error)=>{
       //   console.log('既然没有上一页，我就返回首页了哦！')

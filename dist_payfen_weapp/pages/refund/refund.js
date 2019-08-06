@@ -66,12 +66,12 @@ var Refund = (_temp2 = _class = function (_BaseComponent) {
        */
 
       this.state = {
-        machineImg: _index3.PATH + '/mImages/refund.png',
+        machineImg: _index3.PATH + 'refund.png',
         navList: [],
         id_: 0,
         value: '',
-        temp: _index3.PATH + '/mImages/carma.jpg',
-        upload: _index3.PATH + '/mImages/carma.jpg',
+        temp: _index3.PATH + 'carma.jpg',
+        upload: _index3.PATH + 'carma.jpg',
         imagesArr: [],
         pics: [],
         files: []
@@ -143,7 +143,8 @@ var Refund = (_temp2 = _class = function (_BaseComponent) {
     value: function del(e) {
       console.log(e);
       var index_ = e.currentTarget.dataset.id;
-      this.state.pics.splice(0, 1);
+      console.log(index_);
+      this.state.pics.splice(index_, 1);
       this.setState({
         pics: this.state.pics
       });

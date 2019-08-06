@@ -14,6 +14,8 @@ var _index2 = _interopRequireDefault(_index);
 
 var _index3 = require("./config/index.js");
 
+var _variables = require("./variables.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -67,6 +69,14 @@ var _App = function (_BaseComponent) {
     value: function componentWillMount() {
       _index2.default.setNavigationBarTitle({
         title: _index3.globalData.sysTitle
+      });
+      _index2.default.setNavigationBarColor({
+        frontColor: _variables.fontColor,
+        backgroundColor: _variables.redColor,
+        animation: {
+          duration: 400,
+          timingFunc: 'easeIn'
+        }
       });
     }
   }, {

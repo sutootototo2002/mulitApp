@@ -40,6 +40,27 @@ var timer = 0;
 var timerList = [];
 var intervalPapayTempArr = [];
 var this_;
+var compareVersion = function compareVersion(v1, v2) {
+  v1 = v1.split('.');
+  v2 = v2.split('.');
+  var len = Math.max(v1.length, v2.length);
+  while (v1.length < len) {
+    v1.push('0');
+  }
+  while (v2.length < len) {
+    v2.push('0');
+  }
+  for (var i = 0; i < len; i++) {
+    var num1 = parseInt(v1[i]);
+    var num2 = parseInt(v2[i]);
+    if (num1 > num2) {
+      return 1;
+    } else if (num1 < num2) {
+      return -1;
+    }
+  }
+  return 0;
+};
 
 var order = require("../../utils/order.js");
 // import location from '../../assets/images/location.png'
@@ -62,7 +83,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Index.__proto__ || Object.getPrototypeOf(Index)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "markerDetail", "unpayList", "feedbackslist", "globalData", "systemUser", "showModalStatus", "showopen", "papayPressed", "qrurl", "showlogin", "showpapay", "isperson", "isnopasspay", "havearrears", "formid", "isweapp", "mapKey", "latitude", "longitude", "scale", "menus", "screen", "user", "person", "zm", "avatar", "zmdefault", "searchImg", "dw", "unpayImg", "unpriceImg", "pos_", "tempImg", "unpayorderimg", "addr", "mach", "mm", "HearHead", "closebtn", "heardImg", "yyzh", "dyzh", "xydd", "singinImg", "wzc10", "wzc11", "wzc30", "wzc33", "clear", "setp1", "setp2", "setp3", "controls", "isOpened", "mapObj_", "showLocation", "markers", "allMarkers", "bool", "booladdr", "menuright", "token", "checkPapay", "commonCode", "markBoolean", "posBoolean", "unpayBoolean", "machineBoolean", "DensityFree", "HearBoolean", "HearlistBoolean", "singinBoolean", "thumbups", "fee", "befee", "payName", "haslogin", "intervalPapay", "unpayorder", "cartTips", "orderid", "hasMore", "machineid", "orderno", "recogmode", "haveShopping", "Carting", "timerTem"], _this.config = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Index.__proto__ || Object.getPrototypeOf(Index)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "markerDetail", "unpayList", "feedbackslist", "globalData", "systemUser", "showModalStatus", "showopen", "papayPressed", "qrurl", "showlogin", "showpapay", "isperson", "isnopasspay", "havearrears", "formid", "isweapp", "latitude", "longitude", "scale", "isScan", "menus", "screen", "user", "person", "zm", "avatar", "zmdefault", "dw", "unpayImg", "unpriceImg", "pos_", "unpayorderimg", "addr", "mach", "HearHead", "closebtn", "heardImg", "yyzh", "dyzh", "xydd", "singinImg", "wzc10", "wzc11", "wzc30", "wzc33", "setp1", "setp2", "setp3", "controls", "isOpened", "mapObj_", "showLocation", "markers", "allMarkers", "bool", "booladdr", "menuright", "token", "checkPapay", "commonCode", "markBoolean", "posBoolean", "unpayBoolean", "machineBoolean", "HearBoolean", "HearlistBoolean", "singinBoolean", "thumbups", "fee", "befee", "payName", "haslogin", "intervalPapay", "unpayorder", "cartTips", "orderid", "hasMore", "machineid", "orderno", "recogmode", "haveShopping", "Carting", "timerTem", "mm"], _this.config = {
       navigationBarTitleText: '首页'
     }, _this.onHeard = function () {
       console.log('心愿单开启');
@@ -100,39 +121,35 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         havearrears: 0,
         formid: '',
         isweapp: false,
-        mapKey: 'CFOBZ-IOJKX-TGG4T-ZZM75-EXWF2-OHFAP',
         latitude: 39.908823,
         longitude: 116.397470,
         scale: 16,
-        menus: _index3.PATH + '/mImages/menus.png',
-        screen: _index3.PATH + '/mImages/tytb-41.png',
-        user: _index3.PATH + '/mImages/server_11.png',
-        person: _index3.PATH + '/mImages/ordericon.png',
-        zm: _index3.PATH + '/mImages/zm2.png',
+        isScan: true,
+        menus: _index3.PATH + 'menus.png',
+        screen: _index3.PATH + 'tytb-41.png',
+        user: _index3.PATH + 'server_11.png',
+        person: _index3.PATH + 'ordericon.png',
+        zm: _index3.PATH + 'zm2.png',
         avatar: '',
-        zmdefault: _index3.PATH + '/mImages/zm2.png',
-        searchImg: _index3.PATH + '/mImages/searchImg.png',
-        dw: _index3.PATH + '/mImages/dw.png',
-        unpayImg: _index3.PATH + '/mImages/wfk-11.png',
-        unpriceImg: _index3.PATH + '/mImages/wfk.png',
-        pos_: _index3.PATH + '/mImages/bg_0.png',
-        tempImg: 'http://filetest.wemall.com.cn/de0aa02f4a0f49171149beab583c826b.jpg',
-        unpayorderimg: _index3.PATH + '/mImages/unpay_info.png',
-        addr: _index3.PATH + '/mImages/addr1.png',
-        mach: _index3.PATH + '/mImages/tytb-1.png',
-        mm: _index3.PATH + '/mImages/mm.png',
-        HearHead: _index3.PATH + '/mImages/ysjtb1.png',
-        closebtn: _index3.PATH + '/mImages/gban1.png',
-        heardImg: _index3.PATH + '/mImages/fkz.png',
-        yyzh: _index3.PATH + '/mImages/yyz_f.png',
-        dyzh: _index3.PATH + '/mImages/dyz_f.png',
-        xydd: _index3.PATH + '/mImages/xyd_img.png',
-        singinImg: _index3.PATH + '/mImages/gban.png',
-        wzc10: _index3.PATH + '/mImages/wzcNew-22.png',
-        wzc11: _index3.PATH + '/mImages/wzcNew-11.png',
-        wzc30: _index3.PATH + '/mImages/wzcNew-33.png',
-        wzc33: _index3.PATH + '/mImages/wzcNew-44.png',
-        clear: _index3.PATH + '/mImages/clear.png',
+        zmdefault: _index3.PATH + 'zm2.png',
+        dw: _index3.PATH + 'dw.png',
+        unpayImg: _index3.PATH + 'wfk-11.png',
+        unpriceImg: _index3.PATH + 'wfk.png',
+        pos_: _index3.PATH + 'bg_0.png',
+        unpayorderimg: _index3.PATH + 'unpay_info.png',
+        addr: _index3.PATH + 'addr1.png',
+        mach: _index3.PATH + 'tytb-1.png',
+        HearHead: _index3.PATH + 'ysjtb1.png',
+        closebtn: _index3.PATH + 'gban1.png',
+        heardImg: _index3.PATH + 'fkz.png',
+        yyzh: _index3.PATH + 'yyz_f.png',
+        dyzh: _index3.PATH + 'dyz_f.png',
+        xydd: _index3.PATH + 'xyd_img.png',
+        singinImg: _index3.PATH + 'gban.png',
+        wzc10: _index3.PATH + 'wzcNew-22.png',
+        wzc11: _index3.PATH + 'wzcNew-11.png',
+        wzc30: _index3.PATH + 'wzcNew-33.png',
+        wzc33: _index3.PATH + 'wzcNew-44.png',
         setp1: true,
         setp2: false,
         setp3: false,
@@ -152,7 +169,6 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         posBoolean: false,
         unpayBoolean: false,
         machineBoolean: false,
-        DensityFree: false,
         HearBoolean: false,
         HearlistBoolean: false,
         singinBoolean: false,
@@ -304,6 +320,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
   }, {
     key: 'checkPapay',
     value: function checkPapay() {
+      console.log('checkpaypay11111');
       var that = this;
       var data1 = _index2.default.getStorageSync('userInfo');
       _index2.default.request({
@@ -319,7 +336,8 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
             if (havearrears == '0') {
               that.setState({
                 markBoolean: false,
-                unpayBoolean: false
+                unpayBoolean: false,
+                bool: true
               });
             }
             var isscorepay = res.data.data.isscorepay;
@@ -388,6 +406,13 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
             extraData: extraData,
             envVersion: 'release'
           });
+        },
+        fail: function fail(data) {
+          console.log(data);
+          _index2.default.showModal({
+            title: '提示',
+            content: '支付分开通失败，请升级微信版本'
+          });
         }
       });
     }
@@ -397,7 +422,19 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
     key: 'gotopayfen',
     value: function gotopayfen() {
       console.log('开启支付分');
-      this.start();
+      var version = _index2.default.getSystemInfoSync().version;
+      console.log("wechatVersion:" + version);
+      if (compareVersion(version, '7.0.3') >= 0) {
+        //console.log('支付分高于7.0，3');
+        this.start();
+      } else {
+        //console.log('支付分低于7.0，3');
+        // 如果希望用户在最新版本的客户端上体验您的小程序，可以这样子提示
+        _index2.default.showModal({
+          title: '提示',
+          content: '当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。'
+        });
+      }
     }
     //setp2 开通免密
 
@@ -492,6 +529,9 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
             $markBoolean = true;
           }
           if (res.data.data.havearrears == "1") {
+            that.setState({
+              bool: false
+            });
             that.getUnpayOrder();
           } else {
             console.log('没有未结订单！');
@@ -959,11 +999,13 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         var recogmode = result.recogmode;
         _index2.default.setStorageSync('goodsResult', result);
         that.setState({
+          bool: false,
           cartTips: '您有一张订单正在购物中',
           orderid: orderid,
           machineid: machineid,
           orderno: orderno,
           recogmode: recogmode,
+          markBoolean: true,
           haveShopping: true
         });
         order.startqueryorderstatus(orderid, function succeeded(res) {
@@ -972,12 +1014,16 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
           var orderstatus = res.data.data.orderstatus;
           var doorstatus = res.data.data.doorstatus;
           if (res.data.code == 200) {
+            that.setState({
+              bool: false
+            });
             if (orderstatus == "5" || orderstatus == "3" || orderstatus == "8" || orderstatus == "9") {
               //5已付款 3已取消 8已完成 9 错误
               console.log('------执行这里-----------');
               order.stopInterval();
               that.setState({
                 unpayBoolean: false,
+                haveShopping: false,
                 markBoolean: false
               });
               setTimeout(function () {
@@ -996,6 +1042,11 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
             }
           } else {
             console.log('217 codeing....');
+            _index2.default.showModal({
+              title: '提示',
+              content: res.data.msg,
+              showCancel: false
+            });
           }
         });
       });
@@ -1490,6 +1541,12 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
             _index2.default.navigateTo({
               url: '/pages/box/open/open?machineid=' + machineid + '&lockid=' + lockid + '&formid='
             });
+          } else if (res.data.code == 201) {
+            _index2.default.showToast({
+              title: '您有未结订单',
+              icon: 'fail',
+              duration: 2000
+            });
           } else {
             console.log('失败！');
             _index2.default.showModal({
@@ -1522,6 +1579,18 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
       _index2.default.showLoading({
         title: ''
       });
+      if (!this.state.isScan) {
+        console.log('请稍后再试');
+        _index2.default.showToast({
+          title: '请稍后再试',
+          icon: 'fail',
+          duration: 1000
+        });
+        return;
+      }
+      this.setState({
+        isScan: false
+      });
       _index2.default.request({
         url: _index3.BASE_URL + 'device/checkscan',
         data: {},
@@ -1536,6 +1605,9 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         _index2.default.hideLoading();
         if (res.data.code == 200) {
           //扫码二维码
+          that.setState({
+            isScan: true
+          });
           _index2.default.scanCode().then(function (res) {
             //扫码二维码结果
             console.log(res);
@@ -1544,32 +1616,29 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
           }).catch(function (res) {
             console.log(res);
           });
-        }
-        if (res.data.code == 201) {
+        } else if (res.data.code == 201) {
           console.log('您有未结订单');
           _index2.default.showToast({
             title: '您有未结订单',
             icon: 'fail',
             duration: 2000
           });
-          that.setState({
-            cartTips: '您有一张订单正在结算中',
-            Carting: true,
-            bool: false,
-            markBoolean: true,
-            haveShopping: true
-          });
+          // that.setState({
+          //   cartTips: '您有一张订单正在结算中',
+          //   Carting:true,
+          //   bool:false,
+          //   markBoolean:true,
+          //   haveShopping: true
+          // });
           //that.gohome();
-        }
-        if (res.data.code == 202) {
+        } else if (res.data.code == 202) {
           console.log('您的帐号异常，请与客服联系！');
           _index2.default.showToast({
             title: '您的帐号异常！',
             icon: 'fail',
             duration: 2000
           });
-        }
-        if (res.data.code == 205) {
+        } else if (res.data.code == 205) {
           console.log('用户未登录');
           _index2.default.showToast({
             title: '用户未登录',
@@ -1577,8 +1646,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
             duration: 2000
           });
           //that.gohome();
-        }
-        if (res.data.code == 206) {
+        } else if (res.data.code == 206) {
           console.log('请开通支付分');
           _index2.default.showToast({
             title: '请开通支付分',
@@ -1586,6 +1654,12 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
             duration: 2000
           });
           //that.gohome();
+        } else {
+          _index2.default.showToast({
+            title: res.data.msg,
+            icon: 'fail',
+            duration: 2000
+          });
         }
       });
     }
@@ -1822,16 +1896,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
   }]);
 
   return Index;
-}(_index.Component), _class.properties = {}, _class.$$events = ["onControlTap", "markertap", "regionchange", "topersonfn", "userInfoHandler", "onStored", "getPhoneNumber", "gotopayfen", "onInfo", "gotoCart", "onClosePos", "payOrder", "gotoPapay", "gotoCartFn", "onCloseHeardlist", "onSetheart", "fetchMoreLikes", "onScreen", "onRight", "onLeft", "hideModal"], _temp2);
-// #region 导出注意
-//
-// 经过上面的声明后需要将导出的 Taro.Component 子类修改为子类本身的 props 属性
-// 这样在使用这个子类时 Ts 才不会提示缺少 JSX 类型参数错误
-//
-// #endregion
-// export default Index as ComponentClass<PageOwnProps, PageState>
-
-
+}(_index.Component), _class.properties = {}, _class.$$events = ["onControlTap", "markertap", "regionchange", "topersonfn", "userInfoHandler", "onStored", "getPhoneNumber", "gotopayfen", "onInfo", "gotoCart", "onClosePos", "payOrder", "gotoCartFn", "onCloseHeardlist", "onSetheart", "fetchMoreLikes", "onScreen", "onRight", "onLeft", "hideModal"], _temp2);
 exports.default = Index;
 
 Component(require('../../npm/@tarojs/taro-weapp/index.js').default.createComponent(Index, true));

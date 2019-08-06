@@ -45,11 +45,11 @@ class Boxdetail extends Component<{}, IState>{
         machineid:'',
         machine:{},
         goods:[],
-        addr: PATH + '/mImages/addr1.png',
+        addr: PATH + 'addr1.png',
         total:0,
         salesort:'0',
         hasnext:false,
-        loginImg:PATH+'/mImages/loginImg.png'
+        loginImg:PATH+'loginImg.png'
     }
 }
 

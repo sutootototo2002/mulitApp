@@ -37,10 +37,10 @@
                 <view class="mysever">
                     <view class="titleSever">
                         <view class="myordertitle">我的订单</view>
-                        <view class="mychecked" bindtap="toOrders">查看全部订单></view>
+                        <view class="mychecked" bindtouchstart="toOrders">查看全部订单></view>
                     </view>
                     <view class="orderDiv">
-                        <view class="iconLi" bindtap="toOrders1">
+                        <view class="iconLi" bindtouchstart="toOrders1">
                             <block>
                                 <block wx:if="{{total <= 0}}">
                                     <image class="iconb" src="{{iconB2}}"></image>
@@ -54,11 +54,11 @@
                             </block>
                             <view class="iconw">已付款</view>
                         </view>
-                        <view class="iconLi" bindtap="toOrders2">
+                        <view class="iconLi" bindtouchstart="toOrders2">
                             <image class="iconb" src="{{iconB1}}"></image>
                             <view class="iconw">转退款</view>
                         </view>
-                        <view class="iconLi" bindtap="toOrders3">
+                        <view class="iconLi" bindtouchstart="toOrders3">
                             <image class="iconb" src="{{iconB3}}"></image>
                             <view class="iconw">其他</view>
                         </view>

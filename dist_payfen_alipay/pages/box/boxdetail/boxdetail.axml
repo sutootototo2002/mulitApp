@@ -1,0 +1,33 @@
+<block>
+    <view>
+        <view class="boxdetail">
+            <view class="boxTitle" style="margin-left:10px;font-size:22px;">{{machine.machinename ? machine.machinename : globalData.sysTitle}}</view>
+            <view class="addr">
+                <image class="addr1" src="{{addr}}"></image>地址： {{machine.location}}-{{machine.dailaddress}}| 距您555km</view>
+        </view>
+        <view>
+            <view class="goodsName">当前商品</view>
+            <view class="gdul" a:for="{{goods}}" a:for-item="item" a:for-index="index">
+                <view class="gli">
+                    <image class="gliName" src="{{item.picurl}}"></image>
+                    <view class="gliInfo">
+                        <view class="gName">{{item.name}}</view>
+                        <view class="gName1">{{item.goodsname}}</view>
+                        <view class="ginfo">
+                            <view class="price"><text class="pric">￥{{item.salefee / 100}}</text>/{{item.spec}}</view>
+                            <view class="kcun">库存{{item.amount}}</view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <block>
+                <block a:if="{{hasnext}}">
+                    <view class="moregoods" onTap="getGoods">更多商品</view>
+                </block>
+                <block a:else>
+                    <view class="moregoods">没有更多商品</view>
+                </block>
+            </block>
+        </view>
+    </view>
+</block>

@@ -1,18 +1,4 @@
-$color-white:#fff;
-$color-white1:#f3f3f3;
-$color-white2:#f2f2f2;
-$color-default:#ff7700;
-$color-orgent1:#ff3b3b;
-$color-orgent2:#e64307;
-$color-orgent3:#f38f00;
-$color-orgent4:#ffa300;
-$color-orgent:#ff4e00;
-$color-gray:#eeeceb;
-$color-gray1:#919191;
-$color-gray2:#969696;
-$color-brown:#e1cda9;
-$color-brown1:#633226;
-$color-red:#d80a17;
+@import '../../style.scss';
 body{
     background:#fff;
 }
@@ -294,4 +280,7 @@ body{
 
 .main_{
     padding:20px 0 0 0;
+    margin: auto;
+    text-align: center;
+
 }

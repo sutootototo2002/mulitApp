@@ -1,7 +1,8 @@
 
-$color-white:#fff;
-$color-default:#ff7700;
-$color-default1:#ccc;
+
+
+@import '../../style.scss';
+
 .severDiv{
     position: absolute;
     top:0;
@@ -21,7 +22,7 @@ $color-default1:#ccc;
 .box{
     width: 30%;
     height:210px;
-    border:0.5px solid $color-default1; 
+    border:0.5px solid $color-gray5; 
     background-color:$color-white;
     border-radius: 3%;
     // float: left;
@@ -30,11 +31,11 @@ $color-default1:#ccc;
 }
 
 .select{
-    border:6px solid $color-default; 
+    border:6px solid $default-btn-color; 
 }
 
 .select1{
-    color: $color-default; 
+    color: $default-btn-color; 
 }
 
 .boxtitle{

@@ -70,11 +70,11 @@ var Boxdetail = (_temp2 = _class = function (_BaseComponent) {
         machineid: '',
         machine: {},
         goods: [],
-        addr: _index3.PATH + '/mImages/addr1.png',
+        addr: _index3.PATH + 'addr1.png',
         total: 0,
         salesort: '0',
         hasnext: false,
-        loginImg: _index3.PATH + '/mImages/loginImg.png'
+        loginImg: _index3.PATH + 'loginImg.png'
       };
     }
   }, {

@@ -1,9 +1,11 @@
+@import '../../../style.scss';
+
 .boxLi {
   width: 95%;
   margin: auto;
   border-radius: 20px;
-  background: #fff;
-  box-shadow: 1px 1px #ccc;
+  background: $color-white;
+  box-shadow: 1px 1px $color-gray5;
   // border:1px solid red;
   overflow: hidden;
   padding: 10px 5px;
@@ -33,7 +35,7 @@
   width: 100%;
   text-align: right;
   font-size: 30px;
-  color: #525252;
+  color: $color-gray4;
   padding: 5px 0;
 }
 .addimg {
@@ -71,8 +73,8 @@
     height:60rpx;
     line-height:60rpx;
     margin-right:10rpx;
-    border:1rpx solid #0f9e3f !important;
-    color:#0f9e3f !important;
+    border:1rpx solid $color-green !important;
+    color:$color-green !important;
     
     }
     
@@ -83,8 +85,8 @@
         height:60rpx;
         line-height:60rpx;
         margin-right:10rpx;
-        color:#fff !important;
-        background:#ff7700
+        color:$color-white !important;
+        background:$default-btn-color
         
         }
 
@@ -102,8 +104,8 @@
   line-height: 60px;
 
   margin-right: 10px;
-  border: 1px solid #8d8d8d;
-  color: #8d8d8d;
+  border: 1px solid $color-gray3;
+  color: $color-gray3;
 }
 .at-button--secondary {
   border-radius: 999px;
@@ -113,8 +115,8 @@
   line-height: 60px;
 
   margin-right: 10px;
-  border: 1px solid #ff7700;
-  color: #ff7700;
+  border: 1px solid $default-btn-color;
+  color: $default-btn-color;
 }
 
 .gslist {
@@ -128,7 +130,7 @@
   width: 140px;
   height: 140px;
   border-radius: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid $color-gray5;
 }
 
 .gUL {
@@ -148,7 +150,7 @@
   width: 100%;
   // border:1px solid red;
   font-size: 30px;
-  color: #525252;
+  color: $color-gray4;
   margin-bottom: 5px;
   margin-left: 20px;
 }

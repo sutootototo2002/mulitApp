@@ -13,8 +13,31 @@ var timer = 0;
 var timerList = [];
 var intervalPapayTempArr = [];
 var this_;
+var compareVersion = function(v1, v2) {
+  v1 = v1.split('.')
+  v2 = v2.split('.')
+  const len = Math.max(v1.length, v2.length)
 
+  while (v1.length < len) {
+    v1.push('0')
+  }
+  while (v2.length < len) {
+    v2.push('0')
+  }
 
+  for (let i = 0; i < len; i++) {
+    const num1 = parseInt(v1[i])
+    const num2 = parseInt(v2[i])
+
+    if (num1 > num2) {
+      return 1
+    } else if (num1 < num2) {
+      return -1
+    }
+  }
+
+  return 0
+}
 
 import Taro, { Component, Config, MapContext } from '@tarojs/taro'
 
@@ -36,6 +59,7 @@ import flag from '../../assets/images/jgtb.png'
 
 import './index.scss'
 
+
 interface IState {
   showModalStatus: boolean,
   showopen: boolean,
@@ -50,10 +74,10 @@ interface IState {
   latitude: number,
   longitude: number,
   scale: number,
+  isScan:boolean,
   controls: Array<object>,
   isOpened: boolean,
   mapObj_: object,
-  mapKey: string,
   showLocation: boolean,
   markers: Array<object>,
   allMarkers: Array<object>,
@@ -66,7 +90,7 @@ interface IState {
   person: string,
   zm: string,
   dw: string,
-  searchImg: string,
+  
   token: string,
   commonCode: string,
   checkPapay: boolean,//是否开通免密
@@ -78,12 +102,10 @@ interface IState {
   unpriceImg: string,
   payName: number,
   unpayList: Array<object>,
-  tempImg: string,
   pos_: string,
   addr: string,
   mach: string,
-  DensityFree: boolean,
-  mm: string,
+  
   HearBoolean: boolean,
   HearlistBoolean: boolean,
   HearHead: string,
@@ -119,7 +141,6 @@ interface IState {
   feedbackslist:Array<object>,
   markerDetail:Array<object>,
   avatar:string,
-  clear:string,
   timerTem:string,
   hasMore:boolean,
   isperson:boolean
@@ -145,39 +166,35 @@ export default class Index extends Component<{}, IState>{
       havearrears: 0,
       formid:'',
       isweapp:false,
-      mapKey: 'CFOBZ-IOJKX-TGG4T-ZZM75-EXWF2-OHFAP',
       latitude: 39.908823,
       longitude: 116.397470,
       scale: 16,
-      menus: PATH + '/mImages/menus.png',
-      screen: PATH + '/mImages/tytb-41.png',
-      user: PATH + '/mImages/server_11.png',
-      person: PATH + '/mImages/ordericon.png',
-      zm: PATH + '/mImages/zm2.png',
+      isScan:true,
+      menus: PATH + 'menus.png',
+      screen: PATH + 'tytb-41.png',
+      user: PATH + 'server_11.png',
+      person: PATH + 'ordericon.png',
+      zm: PATH + 'zm2.png',
       avatar:'',
-      zmdefault:PATH+'/mImages/zm2.png',
-      searchImg: PATH + '/mImages/searchImg.png',
-      dw: PATH + '/mImages/dw.png',
-      unpayImg: PATH + '/mImages/wfk-11.png',
-      unpriceImg: PATH + '/mImages/wfk.png',
-      pos_: PATH + '/mImages/bg_0.png',
-      tempImg: 'http://filetest.wemall.com.cn/de0aa02f4a0f49171149beab583c826b.jpg',
-      unpayorderimg: PATH + '/mImages/unpay_info.png',
-      addr: PATH + '/mImages/addr1.png',
-      mach: PATH + '/mImages/tytb-1.png',
-      mm: PATH + '/mImages/mm.png',
-      HearHead: PATH + '/mImages/ysjtb1.png',
-      closebtn: PATH + '/mImages/gban1.png',
-      heardImg: PATH + '/mImages/fkz.png',
-      yyzh: PATH + '/mImages/yyz_f.png',
-      dyzh: PATH + '/mImages/dyz_f.png',
-      xydd: PATH + '/mImages/xyd_img.png',
-      singinImg:PATH+'/mImages/gban.png',
-      wzc10:PATH+'/mImages/wzcNew-22.png',
-      wzc11:PATH+'/mImages/wzcNew-11.png',
-      wzc30:PATH+'/mImages/wzcNew-33.png',
-      wzc33:PATH+'/mImages/wzcNew-44.png',
-      clear:PATH+'/mImages/clear.png',
+      zmdefault:PATH+'zm2.png',
+      dw: PATH + 'dw.png',
+      unpayImg: PATH + 'wfk-11.png',
+      unpriceImg: PATH + 'wfk.png',
+      pos_: PATH + 'bg_0.png',
+      unpayorderimg: PATH + 'unpay_info.png',
+      addr: PATH + 'addr1.png',
+      mach: PATH + 'tytb-1.png',
+      HearHead: PATH + 'ysjtb1.png',
+      closebtn: PATH + 'gban1.png',
+      heardImg: PATH + 'fkz.png',
+      yyzh: PATH + 'yyz_f.png',
+      dyzh: PATH + 'dyz_f.png',
+      xydd: PATH + 'xyd_img.png',
+      singinImg:PATH+'gban.png',
+      wzc10:PATH+'wzcNew-22.png',
+      wzc11:PATH+'wzcNew-11.png',
+      wzc30:PATH+'wzcNew-33.png',
+      wzc33:PATH+'wzcNew-44.png',
       setp1:true,
       setp2:false,
       setp3:false,
@@ -197,7 +214,6 @@ export default class Index extends Component<{}, IState>{
       posBoolean: false,
       unpayBoolean: false,
       machineBoolean: false,
-      DensityFree: false,
       HearBoolean: false,
       HearlistBoolean: false,
       singinBoolean:false,
@@ -341,6 +357,7 @@ export default class Index extends Component<{}, IState>{
 
   }
   checkPapay() {
+    console.log('checkpaypay11111')
     var that = this;
     let data1 = Taro.getStorageSync('userInfo');
   
@@ -357,7 +374,8 @@ export default class Index extends Component<{}, IState>{
           if(havearrears=='0'){
             that.setState({
                 markBoolean:false,
-                unpayBoolean:false
+                unpayBoolean:false,
+                bool:true,
             })
           }
           var isscorepay = res.data.data.isscorepay;
@@ -429,13 +447,36 @@ export default class Index extends Component<{}, IState>{
           envVersion: 'release'
         })
       },
+      fail: (data) => {
+        console.log(data);
+        Taro.showModal({
+          title: '提示',
+          content: '支付分开通失败，请升级微信版本'
+        })
+      }
+      
     })
     
   }
   //开启支付分
   gotopayfen(){
     console.log('开启支付分')
-    this.start();
+    const version = Taro.getSystemInfoSync().version;
+   
+    console.log("wechatVersion:"+ version);
+    if (compareVersion(version, '7.0.3') >= 0) {
+        //console.log('支付分高于7.0，3');
+        this.start();
+    } else {
+      //console.log('支付分低于7.0，3');
+      // 如果希望用户在最新版本的客户端上体验您的小程序，可以这样子提示
+      Taro.showModal({
+        title: '提示',
+        content: '当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。'
+      })
+    }
+   
+    
 
  }
   //setp2 开通免密
@@ -470,6 +511,7 @@ export default class Index extends Component<{}, IState>{
         
        }).catch((error)=>{
          console.log(error);
+        
         
        })
     }).catch((error)=>{
@@ -532,6 +574,9 @@ export default class Index extends Component<{}, IState>{
            }
 
            if(res.data.data.havearrears=="1"){
+              that.setState({
+                  bool:false,
+              })
               that.getUnpayOrder()
            }else{
              console.log('没有未结订单！')
@@ -985,12 +1030,15 @@ export default class Index extends Component<{}, IState>{
 
       Taro.setStorageSync('goodsResult',result)
       that.setState({
+        bool:false,
         cartTips: '您有一张订单正在购物中',
         orderid: orderid,
         machineid: machineid,
         orderno: orderno,
         recogmode: recogmode,
-        haveShopping: true
+        markBoolean:true,
+        haveShopping: true,
+        
       });
       order.startqueryorderstatus(orderid, function succeeded(res) {
           console.log('res:订单数据');
@@ -999,13 +1047,17 @@ export default class Index extends Component<{}, IState>{
           var doorstatus = res.data.data.doorstatus;
 
           if(res.data.code == 200){
-            
+            that.setState({
+              bool:false
+            });
             if (orderstatus == "5" || orderstatus == "3" || orderstatus == "8" || orderstatus == "9") { //5已付款 3已取消 8已完成 9 错误
                 console.log('------执行这里-----------')  
                 order.stopInterval();
                 that.setState({
                   unpayBoolean:false,
-                  markBoolean:false       
+                  haveShopping: false, 
+                  markBoolean:false,
+                   
                 });
                  setTimeout(() => {
                     Taro.redirectTo({
@@ -1031,6 +1083,11 @@ export default class Index extends Component<{}, IState>{
           }else{
 
           console.log('217 codeing....')
+          Taro.showModal({
+            title: '提示',
+            content: res.data.msg,
+            showCancel: false
+          })
           }
         });
     });
@@ -1521,7 +1578,13 @@ getNearbyMachines(latitude: Number, longitude: Number) {
             url: '/pages/box/open/open?machineid=' + machineid + '&lockid=' + lockid + '&formid='
           })
 
-        } else {
+        }else if(res.data.code == 201){
+          Taro.showToast({
+            title: '您有未结订单',
+            icon: 'fail',
+            duration: 2000
+          })
+        }else{
           console.log('失败！')
           Taro.showModal({
             title: '提示',
@@ -1552,6 +1615,19 @@ getNearbyMachines(latitude: Number, longitude: Number) {
     Taro.showLoading({
       title: '',
     });
+   
+    if(!this.state.isScan){
+        console.log('请稍后再试')
+        Taro.showToast({
+          title: '请稍后再试',
+          icon: 'fail',
+          duration: 1000
+        })
+        return;
+    }
+    this.setState({
+      isScan:false
+    })
     
     Taro.request({
       url: BASE_URL + 'device/checkscan',
@@ -1567,6 +1643,9 @@ getNearbyMachines(latitude: Number, longitude: Number) {
        Taro.hideLoading();
        if(res.data.code==200){
          //扫码二维码
+         that.setState({
+           isScan:true
+         })
           Taro.scanCode().then((res)=>{
               //扫码二维码结果
               console.log(res)
@@ -1575,24 +1654,22 @@ getNearbyMachines(latitude: Number, longitude: Number) {
           }).catch((res)=>{
              console.log(res);
           })
-       }
-       if(res.data.code==201){ 
+       }else if(res.data.code==201){ 
           console.log('您有未结订单')
           Taro.showToast({
             title: '您有未结订单',
             icon: 'fail',
             duration: 2000
           })
-          that.setState({
-            cartTips: '您有一张订单正在结算中',
-            Carting:true,
-            bool:false,
-            markBoolean:true,
-            haveShopping: true
-          });
+          // that.setState({
+          //   cartTips: '您有一张订单正在结算中',
+          //   Carting:true,
+          //   bool:false,
+          //   markBoolean:true,
+          //   haveShopping: true
+          // });
           //that.gohome();
-       }
-       if(res.data.code==202){ 
+       }else if(res.data.code==202){ 
         console.log('您的帐号异常，请与客服联系！')
         Taro.showToast({
           title: '您的帐号异常！',
@@ -1601,8 +1678,7 @@ getNearbyMachines(latitude: Number, longitude: Number) {
         })
         
 
-      }
-      if(res.data.code==205){ 
+      }else if(res.data.code==205){ 
         console.log('用户未登录')
         Taro.showToast({
           title: '用户未登录',
@@ -1610,8 +1686,7 @@ getNearbyMachines(latitude: Number, longitude: Number) {
           duration: 2000
         })
         //that.gohome();
-      }
-      if(res.data.code==206){ 
+      }else if(res.data.code==206){ 
          
         console.log('请开通支付分')
         Taro.showToast({
@@ -1621,6 +1696,12 @@ getNearbyMachines(latitude: Number, longitude: Number) {
         })
         //that.gohome();
           
+      }else{
+        Taro.showToast({
+          title:res.data.msg,
+          icon: 'fail',
+          duration: 2000
+        })
       }
 
     })
@@ -1950,7 +2031,7 @@ getNearbyMachines(latitude: Number, longitude: Number) {
              <Button className='singBtn' open-type="getPhoneNumber" onGetPhoneNumber={this.getPhoneNumber.bind(this)} >我去注册</Button>
              }
               {this.state.setp2 && 
-             <Button className='singBtn' onClick={this.gotopayfen} >开通支付分</Button>
+             <Button className='singBtn' onTouchStart={this.gotopayfen} >开通支付分</Button>
               //  <Button className='singBtn' onClick={this.gotopayfen} >开通支付分</Button>
              }
              
@@ -2001,13 +2082,13 @@ getNearbyMachines(latitude: Number, longitude: Number) {
                   <CoverView className='time'>{this.state.unpayorder.createtime}</CoverView>
                 </CoverView>
                 <CoverImage className='goodsImg' src={this.state.unpayorder.goods[0].picurl} />
-                <CoverView className='goodsInfos'>
+                <CoverView className='goodsInfos' style=''>
                   <CoverView>
                     {/* <CoverImage className='del' src={this.state.del} /> */}
                     <CoverView className='total'>共{this.state.unpayorder.goodsnum}件商品</CoverView>
                   </CoverView>
                   <CoverView className='goodsInfoDetail'>
-                  [{this.state.unpayorder.goods[0].goodsname}等...] {this.state.unpayorder.goods[0].location}
+                  {this.state.unpayorder.goods[0].goodsname}等 {this.state.unpayorder.goods[0].location}
                    </CoverView>
                 </CoverView>
               </CoverView>
@@ -2029,16 +2110,7 @@ getNearbyMachines(latitude: Number, longitude: Number) {
           :
           <CoverView></CoverView>}
 
-        {/* //免密提示框 */}
-        {this.state.DensityFree ?
-          <CoverView className='desityFree'>
-            <CoverImage className='mmImg' src={this.state.mm} />
-            <CoverView className='mmText'>无需输入支付密码，快速购物！</CoverView>
-            <Button className='BtnTwo' onClick={this.gotoPapay}>开启免密 愉快购物</Button>
-          </CoverView>
-          :
-          <CoverView></CoverView>
-        }
+        {/* 心愿 */}
         {this.state.bool && this.state.thumbups>0?
          <CoverView className='thumbups'>{this.state.thumbups}</CoverView>
          :
@@ -2128,11 +2200,3 @@ getNearbyMachines(latitude: Number, longitude: Number) {
   }
 }
 
-// #region 导出注意
-//
-// 经过上面的声明后需要将导出的 Taro.Component 子类修改为子类本身的 props 属性
-// 这样在使用这个子类时 Ts 才不会提示缺少 JSX 类型参数错误
-//
-// #endregion
-
-// export default Index as ComponentClass<PageOwnProps, PageState>

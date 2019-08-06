@@ -76,9 +76,9 @@ class Index extends Component<{}, IState>{
         orderno:'',
         orderid:'',
         openfailed:false,
-        state1:PATH + '/mImages/shopping1.png', 
-        shopping:PATH + '/mImages/shopping1.png',
-        icon1:PATH + '/mImages/fkz.png',
+        state1:PATH + 'shopping1.png', 
+        shopping:PATH + 'shopping1.png',
+        icon1:PATH + 'fkz.png',
         socketMsgQueue:[],
         socketOpen:false,
         totalfee:0,
@@ -89,7 +89,7 @@ class Index extends Component<{}, IState>{
         needRequestOrder:false,
         isRefreshingOrder:false,
         unpayorder:[],
-        finishImg:PATH + '/mImages/finishImg.png',
+        finishImg:PATH + 'finishImg.png',
         isfinish:true
 
 
@@ -138,7 +138,9 @@ class Index extends Component<{}, IState>{
             var orderstatus = res.data.data.orderstatus;
             var doorstatus = res.data.data.doorstatus;
             if (res.data.code == 200) {
-              if(doorstatus=='4' && (orderstatus !== "6"||orderstatus !== "3"||orderstatus !== "5"||orderstatus !== "8")){
+              console.log(typeof orderstatus);
+              console.log("orderstatus: "+orderstatus);
+              if(doorstatus=='4' && (orderstatus != "6" && orderstatus != "3" && orderstatus != "5" && orderstatus != "8")){
                 console.log('----doorstatus---floweryan----')
                 this_.setState({
                   isfinish:false,
@@ -223,7 +225,7 @@ class Index extends Component<{}, IState>{
                 isfinish:false,
                 state1:this_.state.finishImg,
                 cartTips1:'购物完成',
-                cartTips2:'您已完成购物,请及时支付',
+                cartTips2:'您已完成购物',
                 cartTips3:'提示：长时间不支付将影响您的信用'
               })
               order.stopInterval();
@@ -234,7 +236,7 @@ class Index extends Component<{}, IState>{
                   isfinish:false,
                   state1:this_.state.finishImg,
                   cartTips1:'购物完成',
-                  cartTips2:'您已完成购物,请及时支付',
+                  cartTips2:'您已完成购物',
                   cartTips3:'稍后可留意微信支付分发送的支付推送'
                 })
               }

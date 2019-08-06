@@ -1,21 +1,5 @@
 
-$default-btn-color:#FF7700;
-$color-white:#fff;
-$color-white1:#f3f3f3;
-$color-white2:#f2f2f2;
-$color-default:#ff7700;
-$color-orgent1:#ff3b3b;
-$color-orgent2:#e64307;
-$color-orgent3:#f38f00;
-$color-orgent4:#ffa300;
-$color-orgent:#ff4e00;
-$color-gray:#eeeceb;
-$color-gray1:#919191;
-$color-gray2:#969696;
-$color-brown:#e1cda9;
-$color-brown1:#633226;
-$color-red:#d80a17;
-
+@import './style.scss';
 
 .Btn{
     position:absolute;
@@ -100,7 +84,7 @@ button[type=default] {
     position: relative;
 }
 .box1{
-    width: 31%;
+    width: 29%;
     height:119px;
     background-color:$color-white;
     border-radius: 3%;
@@ -108,6 +92,7 @@ button[type=default] {
     margin: 1%;
     position: relative;
     overflow:hidden;
+    border:1px solid $color-white4;
 }
 .main1{
     
@@ -119,26 +104,26 @@ button[type=default] {
 
 .price{
     font-size:30px;
-    margin-top:5px;
+    margin-top:10px;
     color:#878787;
     font-weight: bold;
+    text-align: center;
 }
 .prices{
     font-size:20px;
     position: absolute;    
     color:#878787;
     left:10px;
-    // bottom:10px;
     padding:0 0 20px 0;
-
+    bottom: 0px;
 }
 
 .pro{
     position: absolute;
     width:75px;
     height:80px;
-    top:-2px;
-    right:-5px;
+    top:-12px;
+    right:-12px;
 }
 
 .btn{

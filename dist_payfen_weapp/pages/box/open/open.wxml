@@ -38,5 +38,23 @@
                 <cover-view></cover-view>
             </block>
         </block>
+        <block>
+            <block wx:if="{{isReason}}">
+                <cover-view class="boxReason">
+                    <cover-image class="posImg111" src="{{dw}}"></cover-image>
+                    <cover-view class="word11">订单创建失败，可能原因如下：</cover-view>
+                    <cover-view class="word22">
+                        <cover-view class="word">1、您有未支付的支付分订单，请在“我->支付->钱包->支付分”中查看并完成支付。</cover-view>
+                        <cover-view class="word">2、微信支付分基于风控因素，导致订单创建失败。</cover-view>
+                    </cover-view>
+                    <cover-view style="margin-top:50px;text-align:center">
+                        <cover-view class="btnOpen12" bindtap="onconcel">确定</cover-view>
+                    </cover-view>
+                </cover-view>
+            </block>
+            <block wx:else>
+                <cover-view></cover-view>
+            </block>
+        </block>
     </view>
 </block>

@@ -1,0 +1,101 @@
+<block>
+    <view>
+        <block a:if="{{islogin}}">
+            <view>
+                <image class="loadImg" src="{{loadImg1}}"></image>
+                <view class="infoZm">小主,还没有注册没办法购物哦!</view>
+                <form>
+                    <button open-type="getPhoneNumber" onGetPhoneNumber="getPhoneNumber" class="Btn btnopen" data-e-onGetPhoneNumber-so="this">注册</button>
+                </form>
+            </view>
+        </block>
+        <block a:if="{{pay}}">
+            <view>
+                <image class="loadImg" src="{{loadImg}}"></image>
+                <form>
+                    <button type="default" onTap="gotopayfen" class="Btn btnopen">开通支付分</button>
+                </form>
+            </view>
+        </block>
+        <block a:if="{{open}}">
+            <view>
+                <image class="loadImg" src="{{loadImg2}}"></image>
+                <view class="infoZm11">Waaaaaaaaa!</view>
+                <view class="infoZm22">热门商品等着您</view>
+                <form onSubmit="submitInfo" report-submit="true">
+                    <button type="default" form-type="submit" class="Btn btnopen opens">点击开门</button>
+                </form>
+            </view>
+        </block>
+        <block>
+            <block a:if="{{markBoolean}}">
+                <view class="mark"></view>
+            </block>
+            <block a:else>
+                <view></view>
+            </block>
+        </block>
+        <block>
+            <block a:if="{{unpay}}">
+                <view class="unpayOrder">
+                    <cover-image src="{{unpayImg}}"></cover-image>
+                    <cover-image class="unprice" src="{{unpriceImg}}"></cover-image>
+                    <cover-view class="textOne">本次</cover-view>
+                    <cover-view class="textTwo">应付款(元)</cover-view>
+                    <cover-view class="textPrice">{{anonymousState__temp}}</cover-view>
+                    <cover-view class="textshi">Wa! 这里有未付订单！</cover-view>
+                    <cover-view class="unpayList">
+                        <cover-view class="orderList">
+                            <cover-view class="orderInfo">
+                                <cover-view class="goodstate">订单号：[{{unpayorder.orderno}}等...]</cover-view>
+                                <cover-view class="time">{{unpayorder.createtime}}</cover-view>
+                            </cover-view>
+                            <cover-image class="goodsImg" src="{{unpayorder.goods[0].picurl}}"></cover-image>
+                            <cover-view class="goodsInfos">
+                                <cover-view>
+                                    <cover-view class="total">共{{unpayorder.goodsnum}}件商品</cover-view>
+                                </cover-view>
+                                <cover-view class="goodsInfoDetail">{{unpayorder.goods[0].goodsname}}等... {{unpayorder.goods[0].location}}</cover-view>
+                            </cover-view>
+                        </cover-view>
+                        <block>
+                            <block a:if="{{unpayorder.score == 0}}">
+                                <button class="BtnOne" type="default" onTap="payOrder">支付</button>
+                            </block>
+                            <block a:else>
+                                <cover-view>
+                                    <cover-view class="paynewDiv">请到您的微信>钱包>支付分中支付</cover-view>
+                                    <cover-view class="tsDiv">
+                                        <cover-image class="unpayImg" src="{{unpayorderimg}}"></cover-image>
+                                        <cover-view class="unpayDiv">长时间不支付将影响您的信用</cover-view>
+                                    </cover-view>
+                                </cover-view>
+                            </block>
+                        </block>
+                    </cover-view>
+                </view>
+            </block>
+            <block a:else>
+                <view></view>
+            </block>
+        </block>
+        <block>
+            <block a:if="{{isReason}}">
+                <cover-view class="boxReason">
+                    <cover-image class="posImg111" src="{{dw}}"></cover-image>
+                    <cover-view class="word11">订单创建失败，可能原因如下：</cover-view>
+                    <cover-view class="word22">
+                        <cover-view class="word">1、您有未支付的支付分订单，请在“我->支付->钱包->支付分”中查看并完成支付。</cover-view>
+                        <cover-view class="word">2、微信支付分基于风控因素，导致订单创建失败。</cover-view>
+                    </cover-view>
+                    <cover-view style="margin-top:50px;text-align:center">
+                        <cover-view class="btnOpen12" onTap="onconcel">确定</cover-view>
+                    </cover-view>
+                </cover-view>
+            </block>
+            <block a:else>
+                <cover-view></cover-view>
+            </block>
+        </block>
+    </view>
+</block>

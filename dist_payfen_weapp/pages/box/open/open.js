@@ -49,7 +49,7 @@ var Open = (_temp2 = _class = function (_BaseComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Open.__proto__ || Object.getPrototypeOf(Open)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["formid", "lockid", "machineid", "orderid", "openfailed", "requestfailed", "markBoolean", "num", "tag", "infine", "isfind", "dw", "loadImg"], _this.config = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Open.__proto__ || Object.getPrototypeOf(Open)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["formid", "lockid", "machineid", "orderid", "isReason", "openfailed", "requestfailed", "markBoolean", "num", "tag", "infine", "isfind", "dw", "loadImg"], _this.config = {
       navigationBarTitleText: ''
     }, _this.$$refs = [], _temp), _possibleConstructorReturn(_this, _ret);
   }
@@ -71,6 +71,7 @@ var Open = (_temp2 = _class = function (_BaseComponent) {
         lockid: '',
         machineid: '',
         orderid: '',
+        isReason: false,
         openfailed: false,
         requestfailed: true,
         markBoolean: false,
@@ -78,8 +79,8 @@ var Open = (_temp2 = _class = function (_BaseComponent) {
         tag: 0,
         infine: '设备故障',
         isfind: false,
-        dw: _index3.PATH + '/mImages/dw.png',
-        loadImg: _index3.PATH + '/mImages/open.png'
+        dw: _index3.PATH + 'dw.png',
+        loadImg: _index3.PATH + 'open.png'
       };
     }
   }, {
@@ -156,7 +157,7 @@ var Open = (_temp2 = _class = function (_BaseComponent) {
               //   data: orderid
               // });
               _index2.default.redirectTo({
-                url: '../../index/shopping/index?orderid=' + orderid + '&machineid=' + machineid + '&orderno=' + orderno + '&from=open'
+                url: '/pages/index/shopping/index?orderid=' + orderid + '&machineid=' + machineid + '&orderno=' + orderno + '&from=open'
               });
             } else {
               _index2.default.setStorageSync("orderid", orderid);
@@ -165,14 +166,22 @@ var Open = (_temp2 = _class = function (_BaseComponent) {
               //   data: orderid
               // });
               _index2.default.redirectTo({
-                url: '../../index/cgshopping/index?orderid=' + orderid + '&machineid=' + machineid + '&orderno=' + orderno
+                url: '/pages/index/cgshopping/index?orderid=' + orderid + '&machineid=' + machineid + '&orderno=' + orderno
               });
             }
+          } else if (res.data.code == 235) {
+            console.log('235');
+            that.setState({
+              requestfailed: true,
+              markBoolean: true,
+              isReason: true
+            });
+            requestfailed = false;
           } else {
             that.setState({
               openfailed: true,
               isfind: true,
-              infine: res.data.msg,
+              infine: res.data.msg || '设备故障',
               markBoolean: true
             });
             // Taro.showModal({
@@ -233,12 +242,6 @@ var Open = (_temp2 = _class = function (_BaseComponent) {
           clearInterval(interval);
         }
       }, 800); //循环时间1秒 
-      setTimeout(function () {
-        if (requestfailed) {
-          clearInterval(interval);
-          //that.requestOpenStatus();
-        }
-      }.bind(this), 60000);
     }
   }, {
     key: 'openStatus',
@@ -284,17 +287,6 @@ var Open = (_temp2 = _class = function (_BaseComponent) {
               duration: 2000
             });
             requestfailed = false;
-            // Taro.showModal({
-            //   title: '提示',
-            //   content: res.data.msg,
-            //   showCancel: false,
-            //   success: function (res) {
-            //     if (res.confirm) {
-            //       Taro.navigateBack({
-            //       })
-            //     }
-            //   }
-            // })
           } else {
             that.setState({
               requestfailed: true
@@ -347,7 +339,7 @@ var Open = (_temp2 = _class = function (_BaseComponent) {
               });
             } else {
               _index2.default.redirectTo({
-                url: '../../index/index'
+                url: '/pages/index/index'
               });
             }
             //Taro.setStorageSync("orderid", that.state.orderid);
@@ -372,6 +364,20 @@ var Open = (_temp2 = _class = function (_BaseComponent) {
       });
     }
   }, {
+    key: 'onconcel',
+    value: function onconcel() {
+      _index2.default.redirectTo({
+        url: '/pages/index/index'
+      });
+    }
+  }, {
+    key: 'onrecharge',
+    value: function onrecharge() {
+      _index2.default.redirectTo({
+        url: '/pages/recharge/recharge'
+      });
+    }
+  }, {
     key: 'onClosePos',
     value: function onClosePos() {
       _index2.default.redirectTo({
@@ -391,7 +397,7 @@ var Open = (_temp2 = _class = function (_BaseComponent) {
   }]);
 
   return Open;
-}(_index.Component), _class.properties = {}, _class.$$events = ["tryagain", "onClosePos"], _temp2);
+}(_index.Component), _class.properties = {}, _class.$$events = ["tryagain", "onClosePos", "onconcel"], _temp2);
 exports.default = Open;
 
 Component(require('../../../npm/@tarojs/taro-weapp/index.js').default.createComponent(Open, true));

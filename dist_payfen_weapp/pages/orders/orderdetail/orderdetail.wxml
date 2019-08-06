@@ -53,7 +53,7 @@
                 <block wx:if="{{order.orderstatus == 3}}">
                     <view>
                         <image class="shopImgss" src="{{state3}}"></image>
-                        <view class="shoptitle">该机柜还在处理之前的交易，请稍后再试</view>
+                        <view class="shoptitle">该机柜还在处理之前的交易，或您没有打开柜门，请稍后再试</view>
                     </view>
                 </block>
             </block>

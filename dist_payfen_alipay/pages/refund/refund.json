@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "at-button": "../../npm/taro-ui/dist/weapp/components/button/index",
+    "at-textarea": "../../npm/taro-ui/dist/weapp/components/textarea/index"
+  },
+  "defaultTitle": "问题反馈"
+}

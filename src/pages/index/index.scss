@@ -1,14 +1,5 @@
+@import '../../style.scss';
 
-$color-white:#fff;
-$color-white1:#f3f3f3;
-$color-default:#ff7700;
-$color-orgent:#ff4e00;
-$color-gray:#eeeceb;
-$color-gray1:#919191;
-$color-orgent1:#ff3b3b;
-$color-orgent2:#e64307;
-$color-brown:#e1cda9;
-$color-brown1:#633226;
 //地图样式
 .mb-map {
     width: 100%;
@@ -36,20 +27,18 @@ $color-brown1:#633226;
 .fee{
   color:#000;
   float:right;
-  height:62rpx;
+  height:62px;
   position:absolute;
-  right:10rpx;
+  right:10px;
   top:9px;
-  font-size:30rpx;
-  line-height:62rpx;
-  // text-decoration:underline;
-  color:#ff7700;
+  font-size:30px;
+  line-height:62px;
   text-align:right;
   // border:1px solid red;
   border-radius:78px;
   padding:0 20px;
-  background:#ff7700;
-  color:#fff;
+  background:$default-btn-color;
+  color:$color-white;
 
 
 }
@@ -325,6 +314,7 @@ $color-brown1:#633226;
 .goodsInfos{
   float:left;
   margin-left:20px;
+  width:60%;
 }
 .del{
   float:left;
@@ -343,6 +333,11 @@ $color-brown1:#633226;
 .goodsInfoDetail{
   font-size:30px;
   color:$color-gray1;
+  width:100%;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+
 }
 
 .goodstate{
@@ -784,12 +779,12 @@ $color-brown1:#633226;
   height:30px;
   line-height:30px;
   border-radius: 999px;
-  background:#ff7700;
+  background:$default-btn-color;
   right:3px;
   top:50%;
   margin-top:-117px;
   text-align: center;
-  color:#fff;
+  color:$color-white;
   // border:1px solid red;
   font-size:18px;
 }
@@ -799,14 +794,14 @@ $color-brown1:#633226;
   position:relative;
   padding:20rpx;
   border-radius:10rpx;
-  background:#fff;
+  background:$color-white;
   margin:0 20rpx;
-  color:#fff;
+  color:$color-white;
   font-size:30px;
   line-height:44rpx;
   text-align:center;
-  color:#ff7700;
-  border:1px solid #ff7700;
+  color:$default-btn-color;
+  border:1px solid $default-btn-color;
 
 }
 .tishiDiv{
@@ -815,8 +810,8 @@ $color-brown1:#633226;
   // line-height:33px;
   // width:100px;
   font-size:35px;
-  background:#fff;
-  color:#ff7700;
+  background:$color-white;
+  color:$default-btn-color;
   padding:20px 10px 0 10px;
   border-radius: 10px;
   
@@ -838,7 +833,7 @@ $color-brown1:#633226;
   position: absolute;
   top:21px;
   left:100px;
-  background-color:#fff;
+  background-color:$color-white;
   line-height:1.2;
  
 
@@ -851,9 +846,9 @@ $color-brown1:#633226;
 
 .openNew{
   // border:1px solid red;
-  background: #ff7700;
+  background: $default-btn-color;
   border-radius: 10px;
-  color:#fff;
+  color:$color-white;
   position: absolute;
   right:20px;
   top:60px;
@@ -864,7 +859,7 @@ $color-brown1:#633226;
   // border:1px solid red;
   background: #616161;
   border-radius: 10px;
-  color:#fff;
+  color:$color-white;
   position: absolute;
   right:20px;
   top:60px;

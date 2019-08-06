@@ -79,9 +79,9 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         orderno: '',
         orderid: '',
         openfailed: false,
-        state1: _index3.PATH + '/mImages/shopping1.png',
-        shopping: _index3.PATH + '/mImages/shopping1.png',
-        icon1: _index3.PATH + '/mImages/fkz.png',
+        state1: _index3.PATH + 'shopping1.png',
+        shopping: _index3.PATH + 'shopping1.png',
+        icon1: _index3.PATH + '/fkz.png',
         socketMsgQueue: [],
         socketOpen: false,
         totalfee: 0,
@@ -92,7 +92,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         cartTips3: '',
         isfinish: true,
         unpayorder: [],
-        finishImg: _index3.PATH + '/mImages/finishImg.png'
+        finishImg: _index3.PATH + 'finishImg.png'
       };
     }
   }, {
@@ -133,10 +133,9 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         console.log(orderstatus + "-----" + doorstatus);
         if (res.data.code == 200) {
           this_.setState({
-            isfinish: true,
-            state1: this_.state.shopping
+            isfinish: true
           });
-          if (doorstatus == '4' && (orderstatus !== "6" || orderstatus !== "3" || orderstatus !== "5" || orderstatus !== "8")) {
+          if (doorstatus == '4' && orderstatus != "6" && orderstatus != "3" && orderstatus != "5" && orderstatus != "8") {
             console.log('进这里进这里');
             this_.setState({
               isfinish: false,
@@ -263,7 +262,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
                 isfinish: false,
                 state1: this_.state.finishImg,
                 cartTips1: '购物完成',
-                cartTips2: '您已完成购物,请及时支付',
+                cartTips2: '您已完成购物',
                 cartTips3: '提示：长时间不支付将影响您的信用'
               });
               order.stopInterval();
@@ -274,7 +273,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
                 isfinish: false,
                 state1: this_.state.finishImg,
                 cartTips1: '购物完成',
-                cartTips2: '您已完成购物,请及时支付',
+                cartTips2: '您已完成购物',
                 cartTips3: '稍后可留意微信支付分发送的支付推送'
               });
             }
@@ -632,6 +631,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
     key: "gotoBack",
     value: function gotoBack() {
       //回到首页
+      order.stopInterval();
       _index2.default.navigateTo({
         url: '/pages/index/index'
       });

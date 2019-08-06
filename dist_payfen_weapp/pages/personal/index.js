@@ -66,26 +66,26 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
        */
 
       this.state = {
-        mhhImg: _index3.PATH + '/mImages/xydImg.png',
-        iconImg1: _index3.PATH + '/mImages/homeTo.png',
-        iconImg2: _index3.PATH + '/mImages/serverNew.png',
-        tytb33: _index3.PATH + '/mImages/tytb-41.png',
-        perbox: _index3.PATH + '/mImages/perbox.png',
-        avator: _index3.PATH + '/mImages/tempavator.png',
-        iconB1: _index3.PATH + '/mImages/wddd-new1-50.png',
-        iconB2: _index3.PATH + '/mImages/wddd-new3-50.png',
-        iconB21: _index3.PATH + '/mImages/wddd-new3-51.png',
-        iconB3: _index3.PATH + '/mImages/wddd-new2-50.png',
-        iconB4: _index3.PATH + '/mImages/wddd-55.png',
-        iconC1: _index3.PATH + '/mImages/zhsz.png',
-        iconC2: _index3.PATH + '/mImages/bzzx.png',
-        iconC3: _index3.PATH + '/mImages/yjfk.png',
-        iconC4: _index3.PATH + '/mImages/wdkf.png',
+        mhhImg: _index3.PATH + 'xydImg.png',
+        iconImg1: _index3.PATH + 'homeTo.png',
+        iconImg2: _index3.PATH + 'serverNew.png',
+        tytb33: _index3.PATH + 'tytb-41.png',
+        perbox: _index3.PATH + 'perbox.png',
+        avator: _index3.PATH + 'tempavator.png',
+        iconB1: _index3.PATH + 'wddd-new1-50.png',
+        iconB2: _index3.PATH + 'wddd-new3-50.png',
+        iconB21: _index3.PATH + 'wddd-new3-51.png',
+        iconB3: _index3.PATH + 'wddd-new2-50.png',
+        iconB4: _index3.PATH + 'wddd-55.png',
+        iconC1: _index3.PATH + 'zhsz.png',
+        iconC2: _index3.PATH + 'bzzx.png',
+        iconC3: _index3.PATH + 'yjfk.png',
+        iconC4: _index3.PATH + 'wdkf.png',
         userInfoList: {},
         wishes: [],
         isuserInfo: true,
         goodsList: [],
-        SwiperItemArry: [{ item: '1', url: _index3.PATH + '/mImages/swper1.png' }, { item: '2', url: _index3.PATH + '/mImages/swper2.png' }],
+        SwiperItemArry: [{ item: '1', url: _index3.PATH + 'swper1.png' }, { item: '2', url: _index3.PATH + 'swper2.png' }],
         total: 0
       };
     }
@@ -265,7 +265,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
     key: 'toOrders3',
     value: function toOrders3() {
       _index2.default.navigateTo({
-        url: '../orders/orderlist/orderlist?state=0&value=2'
+        url: '../orders/orderlist/orderlist?state=10&value=2'
       });
     }
   }, {

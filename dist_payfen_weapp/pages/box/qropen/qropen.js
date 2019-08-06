@@ -51,7 +51,7 @@ var Qropen = (_temp2 = _class = function (_BaseComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Qropen.__proto__ || Object.getPrototypeOf(Qropen)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "formid", "lockid", "machineid", "orderid", "openfailed", "requestfailed", "pay", "num", "tag", "qrurl", "haslogin", "showlogin", "showpapay", "showopen", "papayPressed", "showModalStatus", "unpayorder", "loadImg", "loadImg1", "loadImg2", "unpayImg", "unpriceImg", "unpayorderimg", "islogin", "markBoolean", "open", "unpay"], _this.config = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Qropen.__proto__ || Object.getPrototypeOf(Qropen)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "formid", "lockid", "machineid", "orderid", "openfailed", "requestfailed", "pay", "num", "tag", "qrurl", "dw", "isReason", "haslogin", "showlogin", "showpapay", "showopen", "papayPressed", "showModalStatus", "unpayorder", "loadImg", "loadImg1", "loadImg2", "unpayImg", "unpriceImg", "unpayorderimg", "islogin", "markBoolean", "open", "unpay"], _this.config = {
       navigationBarTitleText: ''
     }, _this.$$refs = [], _temp), _possibleConstructorReturn(_this, _ret);
   }
@@ -79,6 +79,8 @@ var Qropen = (_temp2 = _class = function (_BaseComponent) {
         num: 0,
         tag: 100,
         qrurl: '',
+        dw: _index3.PATH + 'dw.png',
+        isReason: false,
         haslogin: false,
         showlogin: false,
         showpapay: false,
@@ -86,12 +88,12 @@ var Qropen = (_temp2 = _class = function (_BaseComponent) {
         papayPressed: false,
         showModalStatus: false,
         unpayorder: [],
-        loadImg: _index3.PATH + '/mImages/openouter.png',
-        loadImg1: _index3.PATH + '/mImages/smks-wzc.png',
-        loadImg2: _index3.PATH + '/mImages/car.png',
-        unpayImg: _index3.PATH + '/mImages/wfk-11.png',
-        unpriceImg: _index3.PATH + '/mImages/wfk.png',
-        unpayorderimg: _index3.PATH + '/mImages/unpay_info.png',
+        loadImg: _index3.PATH + 'openouter.png',
+        loadImg1: _index3.PATH + 'smks-wzc.png',
+        loadImg2: _index3.PATH + 'car.png',
+        unpayImg: _index3.PATH + 'wfk-11.png',
+        unpriceImg: _index3.PATH + 'wfk.png',
+        unpayorderimg: _index3.PATH + 'unpay_info.png',
         islogin: false,
         markBoolean: false,
         open: false,
@@ -462,6 +464,14 @@ var Qropen = (_temp2 = _class = function (_BaseComponent) {
                 url: '../../index/cgshopping/index?orderid=' + orderid + '&machineid=' + machineid + '&orderno=' + orderno
               });
             }
+          } else if (res.data.code == 235) {
+            console.log('235');
+            that.setState({
+              requestfailed: true,
+              markBoolean: true,
+              isReason: true
+            });
+            requestfailed = false;
           } else {
             that.setState({
               openfailed: false,
@@ -687,6 +697,12 @@ var Qropen = (_temp2 = _class = function (_BaseComponent) {
             _index2.default.reLaunch({
               url: '../../index/index'
             });
+          } else if (res.data.code == 201) {
+            _index2.default.showToast({
+              title: '您有未结订单',
+              icon: 'fail',
+              duration: 2000
+            });
           } else {
             _index2.default.showModal({
               title: '提示',
@@ -910,6 +926,13 @@ var Qropen = (_temp2 = _class = function (_BaseComponent) {
       });
     }
   }, {
+    key: 'onconcel',
+    value: function onconcel() {
+      _index2.default.redirectTo({
+        url: '/pages/index/index'
+      });
+    }
+  }, {
     key: 'gotoHome',
     value: function gotoHome() {}
   }, {
@@ -928,7 +951,7 @@ var Qropen = (_temp2 = _class = function (_BaseComponent) {
   }]);
 
   return Qropen;
-}(_index.Component), _class.properties = {}, _class.$$events = ["getPhoneNumber", "gotopayfen", "submitInfo", "payOrder"], _temp2);
+}(_index.Component), _class.properties = {}, _class.$$events = ["getPhoneNumber", "gotopayfen", "submitInfo", "payOrder", "onconcel"], _temp2);
 exports.default = Qropen;
 
 Component(require('../../../npm/@tarojs/taro-weapp/index.js').default.createComponent(Qropen, true));

@@ -1,0 +1,160 @@
+<block>
+    <view class="smain">
+        <view class="shopDiv">
+            <block>
+                <block a:if="{{order.orderstatus == 0}}">
+                    <view>
+                        <image class="shopImg" src="{{state0}}"></image>
+                        <view class="shoptitle">交易已完成</view>
+                    </view>
+                </block>
+                <block a:if="{{order.orderstatus == 9}}">
+                    <view>
+                        <image class="shopImg" src="{{state0}}"></image>
+                        <view class="shoptitle">异常订单</view>
+                    </view>
+                </block>
+                <block a:if="{{order.orderstatus == 8}}">
+                    <view>
+                        <image class="shopImg" src="{{state0}}"></image>
+                        <view class="shoptitle">交易已完成</view>
+                    </view>
+                </block>
+                <block a:if="{{order.orderstatus == 7 && order.refunding == 1}}">
+                    <view>
+                        <image class="shopImgss" src="{{state70}}"></image>
+                        <view class="shoptitle">退款中</view>
+                    </view>
+                </block>
+                <block a:if="{{order.orderstatus == 7 && order.refunding == 0}}">
+                    <view>
+                        <image class="shopImgss" src="{{state71}}"></image>
+                        <view class="shoptitle">转退款</view>
+                    </view>
+                </block>
+                <block a:if="{{order.orderstatus == 6}}">
+                    <view>
+                        <image class="shopImgss" src="{{state3}}"></image>
+                        <view class="shoptitle">已欠费</view>
+                    </view>
+                </block>
+                <block a:if="{{order.orderstatus == 5}}">
+                    <view>
+                        <image class="shopImg" src="{{state0}}"></image>
+                        <view class="shoptitle">已付款</view>
+                    </view>
+                </block>
+                <block a:if="{{order.orderstatus == 4}}">
+                    <view>
+                        <image class="shopImg" src="{{state0}}"></image>
+                        <view class="shoptitle">待支付</view>
+                    </view>
+                </block>
+                <block a:if="{{order.orderstatus == 3}}">
+                    <view>
+                        <image class="shopImgss" src="{{state3}}"></image>
+                        <view class="shoptitle">该机柜还在处理之前的交易，或您没有打开柜门，请稍后再试</view>
+                    </view>
+                </block>
+            </block>
+        </view>
+        <block a:if="{{order.orderstatus !== '3'}}">
+            <view class="orderdetail">
+                <view class="selectDiv" style="position:relative;">
+                    <view class="seltitle">订单信息</view>
+                    <block>
+                        <block a:if="{{order.orderstatus == 5 && order.haveworksheet == 0 && order.totalfee > 0 && showTuihuo}}">
+                            <button class="toSever1" data-orderid="{{order.orderid}}" onTap="ontoAnswer">申请退款</button>
+                        </block>
+                        <block a:elif="{{order.orderstatus == 5 && order.haveworksheet == 1 && order.totalfee > 0 && showTuihuo}}">
+                            <button class="toSever1">已反馈</button>
+                        </block>
+                    </block>
+                </view>
+                <view class="seltInfo">
+                    <view a:for="{{order.paytypes}}" a:for-item="item" a:for-index="_anonIdx">{{item.paytype}}：{{item.payfee / 100}}元</view>
+                    <view>优惠总额：{{order.totalpromotion / 100}}元</view>
+                    <view>订单编号：{{order.orderno}}</view>
+                    <view>交易流水：{{order.serialno}}</view>
+                    <view>交易日期：{{order.createtime}}</view>
+                </view>
+            </view>
+        </block>
+        <block a:if="{{order.orderstatus !== '3'}}">
+            <view class="seDiv">
+                <view class="selectDiv">
+                    <view class="seltitle">所选商品</view>
+                    <view class="seltotal">合计：{{order.payfee / 100}}元</view>
+                </view>
+                <view class="goodslist">
+                    <view class="glist" a:for="{{order.goods}}" a:for-item="item" a:for-index="_anonIdx2">
+                        <image class="goodsImg" src="{{item.picurl}}"></image>
+                        <view></view>
+                        <view class="goodsInfo">
+                            <view class="goodsName">商品:{{item.goodsname}}</view>
+                            <view class="line1">
+                                <view class="goodsPrice">价格：{{item.unitfee / 100}}</view>
+                                <view class="acount">数量：{{item.amount}}</view>
+                            </view>
+                            <view class="line1">
+                                <view class="goodsge">规格:{{item.spec}}</view>
+                                <view class="total">总价：{{item.totalfee / 100}}元</view>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </block>
+        <view class="worksheet">
+            <block a:if="{{order.haveworksheet == 1}}">
+                <view class="selectDiv">
+                    <view class="seltitle">问题反馈</view>
+                </view>
+            </block>
+            <block a:if="{{order.haveworksheet == 1}}">
+                <view class="answerDiv">
+                    <view class="answer1">反馈来源：{{worksheet.sourcename}}</view>
+                    <view class="answer1">服务类型：{{worksheet.problemname}}</view>
+                    <view class="answer1">问题备注：{{worksheet.wsdescription}}</view>
+                    <view class="answer1">处理状态：{{worksheet.status}}</view>
+                    <view class="answer1">处理时间：{{worksheet.updatetime}}</view>
+                    <view class="answer1">处理备注：{{worksheet.remark}}</view>
+                    <view class="answer1">问题图片：</view>
+                    <view class="pics">
+                        <image class="img1" src="{{worksheet.pic1 ? worksheet.pic1 : ''}}"></image>
+                        <image class="img1" src="{{worksheet.pic2 ? worksheet.pic2 : ''}}"></image>
+                        <image class="img1" src="{{worksheet.pic3 ? worksheet.pic3 : ''}}"></image>
+                        <image class="img1" src="{{worksheet.pic4 ? worksheet.pic4 : ''}}"></image>
+                    </view>
+                </view>
+            </block>
+        </view>
+        <block a:if="{{isrefundhistory}}">
+            <view class="worksheet1">
+                <view class="selectDiv">
+                    <view class="seltitle">退款记录</view>
+                </view>
+                <view>
+                    <view class="answer1">退款金额：¥{{refundhistory.realfee / 100}}</view>
+                    <view class="answer1">退款流水：{{refundhistory.serialno}}</view>
+                    <view class="answer1">退款时间：{{refundhistory.fefundtime}}</view>
+                </view>
+            </view>
+        </block>
+        <view class="addr">
+            <image class="addricon" src="{{icon1}}"></image>
+            <view class="addr1">{{order.machinename}}</view>
+            <view class="addr2">{{order.location}}{{order.dailaddress}}</view>
+        </view>
+        <view>
+            <block>
+                <block a:if="{{order.orderstatus !== '3'}}">
+                    <button type="default" class="btn" onTap="gotoBack">返回</button>
+                </block>
+                <block a:else>
+                    <button type="default" class="btn" onTap="gotoBack">重新开门</button>
+                </block>
+            </block>
+        </view>
+    </view>
+</block>

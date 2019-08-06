@@ -1,0 +1,71 @@
+<block>
+    <view>
+        <block wx:if="{{islogin}}">
+            <view>
+                <image class="loadImg" src="{{loadImg1}}"></image>
+                <view class="infoZm">小主,还没有注册没办法购物哦!</view>
+                <form>
+                    <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" class="Btn btnopen" data-e-getphonenumber-so="this">注册</button>
+                </form>
+            </view>
+        </block>
+        <block wx:if="{{pay}}">
+            <view>
+                <image class="loadImg" src="{{loadImg}}"></image>
+                <view class="infoZm">扫码即可支付哦！</view>
+                <form>
+                    <button type="default" bindtap="gotoPapay" class="Btn btnopen">开启微信免密支付</button>
+                </form>
+            </view>
+        </block>
+        <block wx:if="{{open}}">
+            <view>
+                <image class="loadImg" src="{{loadImg2}}"></image>
+                <view class="infoZm11">Waaaaaaaaa!</view>
+                <view class="infoZm22">热门商品等着您</view>
+                <form bindsubmit="submitInfo" report-submit="true">
+                    <button type="default" form-type="submit" class="Btn btnopen opens">点击开门</button>
+                </form>
+            </view>
+        </block>
+        <block>
+            <block wx:if="{{markBoolean}}">
+                <view class="mark"></view>
+            </block>
+            <block wx:else>
+                <view></view>
+            </block>
+        </block>
+        <block>
+            <block wx:if="{{unpay}}">
+                <view class="unpayOrder">
+                    <cover-image src="{{unpayImg}}"></cover-image>
+                    <cover-image class="unprice" src="{{unpriceImg}}"></cover-image>
+                    <cover-view class="textOne">本次</cover-view>
+                    <cover-view class="textTwo">应付款(元)</cover-view>
+                    <cover-view class="textPrice">{{anonymousState__temp}}</cover-view>
+                    <cover-view class="textshi">Wa! 这里有未付订单！</cover-view>
+                    <cover-view class="unpayList">
+                        <cover-view class="orderList">
+                            <cover-view class="orderInfo">
+                                <cover-view class="goodstate">订单号：[{{unpayorder.orderno}}等...]</cover-view>
+                                <cover-view class="time">{{unpayorder.createtime}}</cover-view>
+                            </cover-view>
+                            <cover-image class="goodsImg" src="{{unpayorder.goods[0].picurl}}"></cover-image>
+                            <cover-view class="goodsInfos">
+                                <cover-view>
+                                    <cover-view class="total">共{{unpayorder.goodsnum}}件商品</cover-view>
+                                </cover-view>
+                                <cover-view class="goodsInfoDetail">[{{unpayorder.goods[0].goodsname}}等...] {{unpayorder.goods[0].location}}</cover-view>
+                            </cover-view>
+                        </cover-view>
+                        <button class="BtnOne" type="default" bindtap="payOrder">支付</button>
+                    </cover-view>
+                </view>
+            </block>
+            <block wx:else>
+                <view></view>
+            </block>
+        </block>
+    </view>
+</block>
