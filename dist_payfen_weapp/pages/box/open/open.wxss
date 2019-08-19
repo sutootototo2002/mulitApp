@@ -171,11 +171,7 @@
 .posImg111 {
   width: 312rpx;
   height: 215rpx;
-  position: absolute;
-  left: 50%;
-  margin-left: -156rpx;
-  top: 50%;
-  margin-top: -350rpx;
+  margin: auto;
 }
 
 .boxReason {
@@ -198,7 +194,7 @@
 .word11 {
   font-size: 30rpx;
   color: #000;
-  margin-top: 220rpx;
+  margin-top: 20rpx;
   text-indent: 60rpx;
   white-space: normal;
   padding: 0 0 0 35rpx;

@@ -1,3 +1,5 @@
+var count = 0;
+
 import Taro, { Component, Config, MapContext } from '@tarojs/taro'
 
 import { Map, CoverView,Canvas,View,Image,CoverImage,Button,Text } from '@tarojs/components'
@@ -38,7 +40,9 @@ interface IState {
   mm:string,
   tempavatar:string,
   isMM:boolean,
-  markBoolean:boolean
+  markBoolean:boolean,
+  Loadingtime:Number,
+  count:Number,
 }
 class Recharge extends Component<{}, IState>{
   /**
@@ -58,11 +62,11 @@ class Recharge extends Component<{}, IState>{
       mhhImg:PATH+'xydImg.png',
       avatar:'',
       tempavatar:PATH +'tempavator.png',
-      arrow:PATH+'arrow.png',
+      arrow:PATH+'arrow1.png',
       del: PATH + 'gban.png',
       answer:PATH+'bzzx.png',
       mm: PATH + 'mm.png',
-      isMM:true,
+      isMM:false,
       fee:0,
       curNav:'',
       curIndex:0,
@@ -77,7 +81,10 @@ class Recharge extends Component<{}, IState>{
       hasnext:true,
       successboolean:false,
       logList:[],
-      markBoolean: false
+      markBoolean: false,
+      Loadingtime:0,
+      count:0,
+      iscz:true
     }
   }
 
@@ -88,7 +95,9 @@ class Recharge extends Component<{}, IState>{
        avatar:this.$router.params.avatar,
        fee:this.$router.params.fee
     })
+
     this.getUserDetail();
+   
     this.onloadData();
     
 
@@ -114,13 +123,42 @@ class Recharge extends Component<{}, IState>{
       markBoolean:false
     });
   }
-  onCloseSuccess(){
-    console.log('关闭成功')
+  onClose1(){
+    console.log('关闭弹出')
     this.setState({
       successboolean:false,
-      markBoolean:false
+      markBoolean:false,
     });
-    this.getUserDetail();
+  }
+  onCloseSuccess(){
+    var that = this;
+    console.log('关闭成功')
+    
+   
+     var time = setInterval(function(){
+        console.log("count:")
+        console.log(that.state.count++)
+        Taro.showLoading({
+          title: '',
+        })
+        if(that.state.count>=5){
+          clearInterval(time);
+          console.log('出来出来')
+          Taro.hideLoading();
+          that.getUserDetail();
+          if(Number(that.state.fee/100)>=100){
+            console.log('大于100');
+            that.onScreen();
+            that.setState({
+                successboolean:false,
+                markBoolean:false,
+                
+              });
+         }else{
+           that.gohome();
+         }
+        }
+     },1000)
   }
   //获取列表
   onloadData(){
@@ -166,24 +204,37 @@ class Recharge extends Component<{}, IState>{
         'content-type': 'application/json', // 默认值
         'token': globalData.token
       },
-      success: function (res) {
+      success: (res)=> {
         console.log('获取用户信息：')
         console.log(res);
         let ismm:boolean = false;
         if(res.data.data.isscorepay=="1"){
-            ismm = false;
-        }else{
             ismm = true;
+        }else{
+            ismm = false;
           
         }
         var fee = res.data.data.fee;
+        
         that.setState({
           fee: fee,
           isMM:ismm
         });
+
+       
+      },
+      fail:(res)=>{
+        Taro.showToast({
+          title: '请检查网络',
+          icon: 'fail',
+          duration: 1000
+        })
       }
     })
+
   }
+
+  
 
   getLogs() {
     var that = this;
@@ -253,6 +304,19 @@ class Recharge extends Component<{}, IState>{
     })
   }
   ongenerateorder(e){
+    this.setState({
+      iscz:false
+    })
+    if(!this.state.iscz){
+      Taro.showToast({
+        title: '操作过于频繁，请稍后再试！',
+        icon: 'fail',
+        duration: 2000
+      })
+      return
+    }
+    
+
     console.log('点击充值')
     console.log(e)
     var that = this;
@@ -274,6 +338,9 @@ class Recharge extends Component<{}, IState>{
       }
       
     }).then((res)=>{
+        this.setState({
+          iscz:true
+        })
         console.log("成功")
         console.log(res.data)
         var orderid = res.data.data.orderid;
@@ -283,6 +350,9 @@ class Recharge extends Component<{}, IState>{
     }).catch((error)=>{
       console.log("接口异常")
       console.log(error)
+      this.setState({
+        iscz:true
+      })
     })
 
   }
@@ -314,6 +384,137 @@ class Recharge extends Component<{}, IState>{
       
     })
   }
+  requestOpen(qrurl){
+    Taro.showLoading({
+      title: '',
+    });
+    var that = this;
+    Taro.request({
+      url: BASE_URL + 'device/requestopen',
+      data: {
+        qrurl: qrurl
+      },
+      header: {
+        'content-type': 'application/json', // 默认值
+        'token': globalData.token
+      },
+      method: "POST",
+      success: function (res) {
+        Taro.hideLoading();
+        //检测是否可以开门
+        console.log("检测是否可以开门")
+        console.log(res)
+
+        if (res.data.code == 200) {
+          var machineid = res.data.data.machineid;
+          var lockid = res.data.data.lockid;
+
+          Taro.reLaunch({
+            url: '../box/open/open?machineid=' + machineid + '&lockid=' + lockid + '&formid='
+          })
+
+        }else if(res.data.code == 201){
+          Taro.showToast({
+            title: '您有未结订单',
+            icon: 'fail',
+            duration: 2000
+          })
+        }else{
+          console.log('失败！')
+          Taro.showToast({
+            title: "机柜二维码错误",
+            icon: 'fail',
+            duration: 2000
+          })
+        }
+
+      },
+      fail: function (e) {
+        Taro.showToast({
+          title: '请求失败',
+          icon: 'fail',
+          duration: 2000
+        })
+      }
+    })
+  }
+  onScreen() {
+    console.log('扫码开门')
+    //未支付订单判断还没有写
+    var that = this;
+    Taro.showLoading({
+      title: '',
+    });
+    
+    Taro.request({
+      url: BASE_URL + 'device/checkscan',
+      data: {},
+      header: {
+        'content-type': 'application/json', // 默认值
+        'token':globalData.token
+      },
+      method: "POST"
+    }).then((res)=>{
+       console.log("扫码是否成功：")
+       console.log(res)
+       Taro.hideLoading();
+       if(res.data.code==200){
+         //扫码二维码
+          Taro.scanCode().then((res)=>{
+              //扫码二维码结果
+              console.log(res)
+              console.log(res.result)
+              that.requestOpen(res.result);
+          }).catch((res)=>{
+             console.log(res);
+          })
+       }
+       if(res.data.code==201){ 
+          console.log('您有未结订单')
+          Taro.showToast({
+            title: '您有未结订单',
+            icon: 'fail',
+            duration: 2000
+          })
+         
+          that.gohome();
+          
+       }
+       if(res.data.code==202){ 
+        console.log('您已被加入黑名单')
+        Taro.showToast({
+          title: '您的帐号异常！',
+          icon: 'fail',
+          duration: 2000
+        })
+
+        that.gohome();
+      }
+      if(res.data.code==205){ 
+        console.log('用户未登录')
+        Taro.showToast({
+          title: '用户未登录',
+          icon: 'fail',
+          duration: 2000
+        })
+        that.gohome();
+      }
+      if(res.data.code==206){ 
+         
+        console.log('请开通支付分')
+        // Taro.showToast({
+        //   title: '请开通支付分',
+        //   icon: 'fail',
+        //   duration: 2000
+        // })
+        that.gohome();
+          
+      }
+
+    })
+
+  }
+  
   onPay(orderid){
     //去付款
     console.log('去付款')
@@ -388,6 +589,11 @@ class Recharge extends Component<{}, IState>{
         
     })
   }
+  gohome(){
+    Taro.redirectTo({
+      url: '/pages/index/index'
+    })
+  }
   onAnswer(){
     console.log('有疑问请点击这里')
   }
@@ -437,14 +643,31 @@ class Recharge extends Component<{}, IState>{
 
   render () {
    
-    const { navList,logList} = this.state;
+    const { navList,logList,isMM} = this.state;
+
+
    
     const content = navList.map((post,index) => {
-      return <View className={this.state.curNav == post.activityid?'box1 select':'box1'} data-money={post} data-key={index} data-id={post.activityid}  onTouchStart={this.onselectNav.bind(this)}  >
+      if(isMM){
+        return <View className={this.state.curNav == post.activityid?'box1 select':'box1'} data-money={post} data-key={index} data-id={post.activityid}  onTouchStart={this.onselectNav.bind(this)}  >
         <View className='price'>{post.fee/100}元</View>
-        <View className='prices'>+赠{post.giftfee/100}元，到账{Number(post.fee)/100+Number(post.giftfee)/100}元</View>
+       
+        <View className='prices'>+赠{(Number(post.giftfee)/100).toFixed(2)}元，到账{((Number(post.fee)/100)+(Number(post.giftfee)/100)).toFixed(2)}元</View>
         <Image className='pro' src={this.state.arrow}/>
       </View>
+      }else{
+        if((Number(post.fee)/100+Number(post.giftfee)/100+Number(price_format(this.state.fee)))>=100){
+          console.log(Number(post.fee)/100+Number(post.giftfee)/100+Number(price_format(this.state.fee)))
+          return <View className={this.state.curNav == post.activityid?'box1 select':'box1'} data-money={post} data-key={index} data-id={post.activityid}  onTouchStart={this.onselectNav.bind(this)}  >
+          <View className='price'>{post.fee/100}元</View>
+         
+          <View className='prices'>+赠{(Number(post.giftfee)/100).toFixed(2)}元，到账{(Number(post.fee)/100+Number(post.giftfee)/100).toFixed(2)}元</View>
+          <Image className='pro' src={this.state.arrow}/>
+        </View>
+        }
+      }
+       
+     
     })
     const mxList = logList.map((posts)=>{
       let name = ''
@@ -486,9 +709,15 @@ class Recharge extends Component<{}, IState>{
                 </View>
                 <View className='btnword'>请选择充值金额</View>
               </View>
-              <Image className='boxOne1' src={this.state.avatar?this.state.avatar:this.state.tempavatar}/>
+              <Image className='boxOne1' src={globalData.avatar?globalData.avatar:this.state.tempavatar}/>
               
               <View className='main_'>
+                {!this.state.isMM?
+                <View className='infoD'>*为保证您能够正常购物，购物前储值账户余额应大于100元。</View>
+                :
+                ''
+                }
+
                 {content} 
               </View>
               <View className='mingxi'>
@@ -511,13 +740,26 @@ class Recharge extends Component<{}, IState>{
                     <View className='payinfo'>
                       <View className='pinfo1'>充值信息</View>
                       {/* <View className='prices'>+赠{post.fee/100}元，到账{(post.fee+post.giftfee)/100}元</View> */}
-                      <View className='pinfo2'>充值{this.state.payvalue.fee/100}元，到账{(Number(this.state.payvalue.fee)/100+Number(this.state.payvalue.giftfee)/100}元</View>
+                      <View className='pinfo2'>充值{(this.state.payvalue.fee/100).toFixed(2)}元，到账{(Number(this.state.payvalue.fee)/100+Number(this.state.payvalue.giftfee)/100).toFixed(2)}元</View>
                     </View>
+                    {this.state.isMM?
                     <View className='ts'>
                       <View className='ts1'>温馨提示：</View>
                       <View className='ts2'>亲！充值有赠送金额，储值账户余额只能消费，无法退款或提取。</View>
                     </View>
-                    <Button type='default' className='Btn btn1' onClick={this.ongenerateorder}>确认充值</Button>
+                    :
+                     <View className='ts'>
+                     <View className='ts1'>温馨提示：</View>
+                     <View className='ts2'>为保证您能够正常购物，购物前储值账户余额应大于100元，当前账号余额为￥{price_format(this.state.fee)}</View>
+                   </View>
+                    }
+                    
+                     {this.state.iscz?
+                     <Button type='default' className='Btn btn1' onClick={this.ongenerateorder}>确认充值</Button>
+                     :
+                     <Button type='default' className='Btn btn1' >确认充值</Button>
+                     }
+                    
                 </View>
               </View>
               :
@@ -526,21 +768,18 @@ class Recharge extends Component<{}, IState>{
               
              {this.state.successboolean?
              <View className='payvalue'>
-               <Image className='payclose' onTouchStart={this.onCloseSuccess} src={this.state.del}/>
+               <Image className='payclose' onTouchStart={this.onClose1} src={this.state.del}/>
                <View className='payContent'>
                   <View className='payTitle'>充值成功</View>
-                  <View className='payTitle1'>恭喜小主，您的当前账户余额：{(Number(this.state.payvalue.fee)/100+Number(this.state.payvalue.giftfee)/100}元</View>
+                  {/* <View className='payTitle1'>恭喜小主，您的当前账户余额：{price_format(this.state.fee)}元</View> */}
                   <View>
                     <CoverImage className='mmImg' src={this.state.mm} />
                     <CoverView className='mmText'>无需输入支付密码，快速购物！</CoverView>
                   </View>
-               {this.state.isMM?
-               <Button type='default' className='Btn btn1' onClick={this.onMM}>开启支付分 愉快购物</Button>
-               :
-               <Button type='default' className='Btn btn1' onClick={this.onCloseSuccess}>充值成功</Button>
-               }
-               </View>
-               
+                  <Button type='default' className='Btn btn1' onClick={this.onCloseSuccess}>去购物</Button>
+                </View>
+                  
+             
              </View>
              :
              <View></View>
@@ -552,8 +791,11 @@ class Recharge extends Component<{}, IState>{
           <View></View>}
 
            </View>
+        <View className='footer' >
+        <Button className='btn-max-w' style='font-size: 12px;width: 80%;' plain type='primary' onClick={this.gohome}>返回首页</Button>
         </View>
-        
+        </View>
+
     )
   }
 }

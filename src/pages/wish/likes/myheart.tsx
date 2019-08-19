@@ -49,7 +49,8 @@ interface IState {
   isDel:boolean,
   machines:Array<object>,
   wish:string,
-  wishname:string
+  wishname:string,
+  isclose:boolean
 }
 
 class Myheart extends Component<{}, IState>{
@@ -93,7 +94,8 @@ class Myheart extends Component<{}, IState>{
       isDel:false,
       machines:[],
       wish:'',
-      wishname:''
+      wishname:'',
+      isclose:false
     }
   }
   
@@ -291,7 +293,8 @@ class Myheart extends Component<{}, IState>{
   onSearchHandler(value){
      console.log(value);
      this.setState({
-      value:value
+      value:value,
+      isclose:true
     })
      var that = this;
     //  /wishlist/filterWishes
@@ -310,6 +313,11 @@ class Myheart extends Component<{}, IState>{
        if(res.data.code==200){
           console.log("res.data.rows:");
           console.log(res.data.rows);
+          if(!res.data.rows.length){
+            that.setState({
+              isclose:false
+            })
+          }
           that.setState({
             searLists:res.data.rows
           })
@@ -326,6 +334,7 @@ class Myheart extends Component<{}, IState>{
   onGoback(){
     this.setState({
       value:'',
+      isclose:false,
       bool:false
     })
   }
@@ -342,6 +351,9 @@ class Myheart extends Component<{}, IState>{
       return;
     }
     this.adda(value);
+    this.setState({
+      isclose:false
+    })
     
   }
   onBlur(value){
@@ -498,7 +510,7 @@ ondelFn(e){
 }
 toBoxdetail(e){
   Taro.navigateTo({
-    url: `../../box/boxdetail/boxdetail?machineid=${e.currentTarget.dataset.machineid}`,
+    url: `../../box/boxdetail/boxdetail?distance=${e.currentTarget.dataset.distance}&machineid=${e.currentTarget.dataset.machineid}`,
   })
 }
 unlikeit(e){
@@ -709,10 +721,10 @@ addWishFn(e){
                    
                    <View className='gAddr'>{item.location?item.location:globalData.sysTitle}</View>
                    {/* <View className='gAddr_'>{item.phystate}</View> */}
-                   <Button className='gdetail' data-machineid="{{item.machineid}}" onClick={this.toBoxdetail} >查看详情</Button>
+                   <Button className='gdetail' data-machineid="{{item.machineid}}" data-distance="{{item.distance}}"  onClick={this.toBoxdetail} >查看详情</Button>
                    <View className='gdistDiv'>
                      <Image className='gdist' src={this.state.addr} />
-                     <View className='gdist1'>距离您{item.distance}</View>
+                     <View className='gdist1'>距离您{item.distance}km</View>
                    </View>
                  </View>
           )
@@ -765,9 +777,13 @@ addWishFn(e){
                 value={this.state.value}
               />
               </Form>
-                <View>
+              {this.state.isclose?
+                <View className='wishlist'>
                   {searList}
                 </View>
+                :
+                ''
+              }
                 <AtButton type='primary' size='small' className='addgoods1' onClick={this.onInput.bind(this,this.state.value)} >添加</AtButton>
                 <AtButton type='primary' size='small' className='addgoods' onClick={this.onGoback.bind(this,this.state.value)} >返回</AtButton>
               </View>

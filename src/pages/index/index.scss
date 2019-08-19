@@ -34,7 +34,6 @@
   font-size:30px;
   line-height:62px;
   text-align:right;
-  // border:1px solid red;
   border-radius:78px;
   padding:0 20px;
   background:$default-btn-color;
@@ -261,6 +260,18 @@
     
   }
 
+  .BtnTwo1{
+    color:$color-white;
+    background:$color-gray2;
+    line-height:64px;
+    border:0;
+    width:95%;
+    font-size:30px;
+    margin:auto;
+    margin-top:20px;
+    
+  }
+
   .orderList{
     width:90%;
     margin:auto;
@@ -474,6 +485,21 @@
   // border:1px solid red;
 }
 
+.desityFree1{
+  position: absolute;
+  top:50%;
+  margin-top:-180px;
+  width:563px;
+  padding:30px;
+  margin-left:-40%;
+  left:50%;
+  background:$color-white;
+  border-radius: 10px;
+  z-index:10001;
+  overflow:visible;
+
+}
+
 .HearDiv{
   position: absolute;
   top:50%;
@@ -485,13 +511,14 @@
   border-radius: 10px;
   z-index:10001;
   // border:1px solid red;
+  
 }
 
 .closeBtn{
   position: absolute;
   width:55px;
   height:55px;
-  top:0;
+  top:20px;
   right: 20px;
   
 }
@@ -512,6 +539,14 @@
 .mmText{
   text-align: center;
   font-size:30px;
+}
+
+.mmText22{
+  text-align: left;
+  font-size:30px;
+  margin-top:20px;
+  overflow:hidden;
+  white-space : normal;
 }
 
 .HearList{

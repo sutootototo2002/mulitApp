@@ -30,6 +30,7 @@ var intervalPapay;
 var intervalOrderStatus;
 var requestfailed;
 var orderid = '';
+var count = 0;
 
 
 // 如果需要在 h5 环境中开启 React Devtools
@@ -51,7 +52,7 @@ var Qropen = (_temp2 = _class = function (_BaseComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Qropen.__proto__ || Object.getPrototypeOf(Qropen)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "formid", "lockid", "machineid", "orderid", "openfailed", "requestfailed", "pay", "num", "tag", "qrurl", "dw", "isReason", "haslogin", "showlogin", "showpapay", "showopen", "papayPressed", "showModalStatus", "unpayorder", "loadImg", "loadImg1", "loadImg2", "unpayImg", "unpriceImg", "unpayorderimg", "islogin", "markBoolean", "open", "unpay"], _this.config = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Qropen.__proto__ || Object.getPrototypeOf(Qropen)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "formid", "lockid", "machineid", "orderid", "openfailed", "requestfailed", "pay", "num", "tag", "qrurl", "dw", "isReason", "haslogin", "showlogin", "showpapay", "showopen", "papayPressed", "showModalStatus", "unpayorder", "isrchange", "loadImg", "loadImg1", "loadImg2", "unpayImg", "unpriceImg", "unpayorderimg", "islogin", "markBoolean", "open", "unpay"], _this.config = {
       navigationBarTitleText: ''
     }, _this.$$refs = [], _temp), _possibleConstructorReturn(_this, _ret);
   }
@@ -88,6 +89,7 @@ var Qropen = (_temp2 = _class = function (_BaseComponent) {
         papayPressed: false,
         showModalStatus: false,
         unpayorder: [],
+        isrchange: true,
         loadImg: _index3.PATH + 'openouter.png',
         loadImg1: _index3.PATH + 'smks-wzc.png',
         loadImg2: _index3.PATH + 'car.png',
@@ -172,7 +174,9 @@ var Qropen = (_temp2 = _class = function (_BaseComponent) {
     }
   }, {
     key: 'componentDidHide',
-    value: function componentDidHide() {}
+    value: function componentDidHide() {
+      // count=0;
+    }
   }, {
     key: 'componentDidCatchError',
     value: function componentDidCatchError() {}
@@ -298,21 +302,57 @@ var Qropen = (_temp2 = _class = function (_BaseComponent) {
             //
             var isscorepay = res.data.data.isscorepay;
             var havearrears = res.data.data.havearrears;
+            _index3.globalData.fee = res.data.data.fee;
+            _index3.globalData.avatar = res.data.data.avatar;
+            _index3.globalData.nickname = res.data.data.nickname;
             if (havearrears == "1") {
               that.getUnpayOrder();
             }
             if (isscorepay == "1") {
-              console.log('---已开通免密open---');
+              console.log('---已开通支付分open---');
               that.setState({
                 islogin: false,
                 pay: false,
                 open: true
               });
             } else {
-              console.log('---未开通免密open---');
-              that.setState({
-                pay: true
-              });
+              console.log('---未开通支付分open11111---');
+              if (count >= 1) {
+                console.log('111111');
+                that.setState({
+                  isrchange: true,
+                  pay: true
+                });
+                if (res.data.data.fee / 100 >= 100) {
+                  console.log('>100');
+                  that.setState({
+                    open: true,
+                    isrchange: true,
+                    pay: false
+                  });
+                } else {
+                  that.setState({
+                    open: false,
+                    isrchange: false,
+                    pay: true
+                  });
+                }
+              } else {
+                if (res.data.data.fee / 100 >= 100) {
+                  console.log('>100');
+                  that.setState({
+                    open: true,
+                    isrchange: true,
+                    pay: false
+                  });
+                } else {
+                  that.setState({
+                    open: false,
+                    isrchange: true,
+                    pay: true
+                  });
+                }
+              }
             }
             that.getShoppingOrder();
           } else {
@@ -895,11 +935,22 @@ var Qropen = (_temp2 = _class = function (_BaseComponent) {
     key: 'gotopayfen',
     value: function gotopayfen() {
       console.log('开启支付分');
+      count++;
+      console.log(count);
       this.start();
+    }
+  }, {
+    key: 'rechFn',
+    value: function rechFn() {
+      count = 0;
+      _index2.default.navigateTo({
+        url: '/pages/recharge/recharge?avatar=' + _index3.globalData.avatar + '&nickname=' + _index3.globalData.nickname + '&fee=' + _index3.globalData.fee
+      });
     }
   }, {
     key: 'start',
     value: function start() {
+      var that = this;
       _index2.default.request({
         url: _index3.BASE_URL + 'user/startOpenSmartPay',
         data: '',
@@ -920,7 +971,21 @@ var Qropen = (_temp2 = _class = function (_BaseComponent) {
           wx.openBusinessView({
             businessType: 'wxpayScoreEnable',
             extraData: extraData,
-            envVersion: 'release'
+            envVersion: 'release',
+            sucess: function sucess(res) {
+              console.log('sucess');
+              console.log(res);
+            },
+            fail: function fail(res) {
+              console.log('fail');
+              that.setState({
+                isrchange: false
+              });
+            },
+            complete: function complete(res) {
+              console.log('complete');
+              that.getUserDetail();
+            }
           });
         }
       });
@@ -951,7 +1016,7 @@ var Qropen = (_temp2 = _class = function (_BaseComponent) {
   }]);
 
   return Qropen;
-}(_index.Component), _class.properties = {}, _class.$$events = ["getPhoneNumber", "gotopayfen", "submitInfo", "payOrder", "onconcel"], _temp2);
+}(_index.Component), _class.properties = {}, _class.$$events = ["getPhoneNumber", "gotopayfen", "rechFn", "submitInfo", "payOrder", "onconcel"], _temp2);
 exports.default = Qropen;
 
 Component(require('../../../npm/@tarojs/taro-weapp/index.js').default.createComponent(Qropen, true));

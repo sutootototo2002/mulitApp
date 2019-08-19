@@ -40,15 +40,19 @@
         </block>
         <block>
             <block wx:if="{{isReason}}">
-                <cover-view class="boxReason">
+                <cover-view class="boxReason" style="position:absolute;top:50%;margin-top:-50%;">
                     <cover-image class="posImg111" src="{{dw}}"></cover-image>
-                    <cover-view class="word11">订单创建失败，可能原因如下：</cover-view>
-                    <cover-view class="word22">
-                        <cover-view class="word">1、您有未支付的支付分订单，请在“我->支付->钱包->支付分”中查看并完成支付。</cover-view>
-                        <cover-view class="word">2、微信支付分基于风控因素，导致订单创建失败。</cover-view>
+                    <cover-view>
+                        <cover-view class="word11">订单创建失败，可能原因如下：</cover-view>
+                        <cover-view class="word22">
+                            <cover-view class="word">1、您有未支付的支付分订单，请在“我->支付->钱包->支付分”中查看并完成支付。</cover-view>
+                            <cover-view class="word">2、微信支付分基于风控因素，导致订单创建失败。</cover-view>
+                        </cover-view>
                     </cover-view>
+                    <cover-view class="word33">您可以选择储值方式来进行购物消费</cover-view>
                     <cover-view style="margin-top:50px;text-align:center">
-                        <cover-view class="btnOpen12" bindtap="onconcel">确定</cover-view>
+                        <cover-view class="btnOpen12" bindtap="onconcel">取消</cover-view>
+                        <cover-view class="btnOpen12" bindtap="onrecharge">去储值</cover-view>
                     </cover-view>
                 </cover-view>
             </block>

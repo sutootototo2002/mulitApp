@@ -439,11 +439,11 @@ class Index extends Component<{}, IState>{
       if(res.data.code==206){ 
          
         console.log('请开通支付分')
-        Taro.showToast({
-          title: '请开通支付分',
-          icon: 'fail',
-          duration: 2000
-        })
+        // Taro.showToast({
+        //   title: '请开通支付分',
+        //   icon: 'fail',
+        //   duration: 2000
+        // })
         that.gohome();
           
       }

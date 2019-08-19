@@ -47,7 +47,7 @@ var _App = function (_BaseComponent) {
 
 
     _this.config = {
-      pages: ['pages/index/index', 'pages/personal/index', 'pages/recharge/recharge', 'pages/wish/likes/myheart', 'pages/login/login', 'pages/service/service', 'pages/index/shopping/index', 'pages/index/cgshopping/index', 'pages/orders/orderdetail/orderdetail', 'pages/orders/orderlist/orderlist', 'pages/box/boxdetail/boxdetail', 'pages/card/bindcard', 'pages/box/open/open', 'pages/box/qropen/qropen', 'pages/refund/refund'],
+      pages: ['pages/index/index', 'pages/personal/index', 'pages/recharge/recharge', 'pages/wish/likes/myheart', 'pages/login/login', 'pages/service/service', 'pages/index/shopping/index', 'pages/index/cgshopping/index', 'pages/orders/orderdetail/orderdetail', 'pages/orders/orderlist/orderlist', 'pages/box/boxdetail/boxdetail', 'pages/box/qropen/qropen', 'pages/card/bindcard', 'pages/box/open/open', 'pages/refund/refund'],
       window: {
         backgroundTextStyle: 'light',
         navigationBarBackgroundColor: '#ff9409',

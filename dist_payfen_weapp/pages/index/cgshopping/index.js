@@ -145,7 +145,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         if (res.data.code == 200) {
           console.log(typeof orderstatus === "undefined" ? "undefined" : _typeof(orderstatus));
           console.log("orderstatus: " + orderstatus);
-          if (doorstatus == '4' && orderstatus != "6" && orderstatus != "3" && orderstatus != "5" && orderstatus != "8") {
+          if (doorstatus == '4' && orderstatus != "6" && orderstatus != "3" && orderstatus != "5" && orderstatus != "8" && orderstatus != "9") {
             console.log('----doorstatus---floweryan----');
             this_.setState({
               isfinish: false,

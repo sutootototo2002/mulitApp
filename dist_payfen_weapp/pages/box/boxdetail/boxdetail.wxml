@@ -3,7 +3,7 @@
         <view class="boxdetail">
             <view class="boxTitle" style="margin-left:10px;font-size:22px;">{{machine.machinename ? machine.machinename : globalData.sysTitle}}</view>
             <view class="addr">
-                <image class="addr1" src="{{addr}}"></image>地址： {{machine.location}}-{{machine.dailaddress}}| 距您555km</view>
+                <image class="addr1" src="{{addr}}"></image>地址： {{machine.location}}-{{machine.dailaddress}}| 距您{{distance}}km</view>
         </view>
         <view>
             <view class="goodsName">当前商品</view>

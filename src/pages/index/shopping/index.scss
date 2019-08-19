@@ -116,7 +116,12 @@
 .addr1{
     font-size: 30px;
     margin-top:30px;
-    padding:0 30px;
+    padding:0 0px;
+     text-overflow:ellipsis;
+    white-space:nowrap;
+    overflow:hidden;
+    width:60%;
+    text-align:left;
 }
 .addr2{
     font-size: 25px;

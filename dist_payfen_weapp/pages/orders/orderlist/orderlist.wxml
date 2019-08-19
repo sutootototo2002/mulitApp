@@ -75,7 +75,7 @@
                                         </block>
                                     </block>
                                     <view class="Btns">
-                                        <view style="float:left;font-size:25rpx;color:#ccc">{{item.createtime}}</view>
+                                        <view class="btimes">{{item.createtime}}</view>
                                         <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" data-orderid="{{item.orderid}}" bindonclick="toOrderDetail" __fn_onClick="{{true}}" data-e-onclick-so="this" data-e-onclick-a-a="{{item.orderid}}">订单详情</at-button>
                                         <at-button class="btn1" __triggerObserer="{{ _triggerObserer }}" type="secondary" open-type="getUserInfo" bindongetuserinfo="userInfoHandler" __fn_ongetUserInfo="{{true}}" data-e-ongetuserinfo-so="this">我的心愿</at-button>
                                     </view>
@@ -162,7 +162,7 @@
                                         </block>
                                     </block>
                                     <view class="Btns">
-                                        <view style="float:left;font-size:25rpx;color:#ccc">{{item.createtime}}</view>
+                                        <view class="btimes">{{item.createtime}}</view>
                                         <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" data-orderid="{{item.orderid}}" bindonclick="toOrderDetail" __fn_onClick="{{true}}" data-e-onclick-so="this" data-e-onclick-a-a="{{item.orderid}}">订单详情</at-button>
                                         <at-button class="btn1" __triggerObserer="{{ _triggerObserer }}" type="secondary" open-type="getUserInfo" bindongetuserinfo="userInfoHandler" __fn_ongetUserInfo="{{true}}" data-e-ongetuserinfo-so="this">我的心愿</at-button>
                                     </view>
@@ -249,7 +249,7 @@
                                         </block>
                                     </block>
                                     <view class="Btns">
-                                        <view style="float:left;font-size:25rpx;color:#ccc">{{item.createtime}}</view>
+                                        <view class="btimes">{{item.createtime}}</view>
                                         <at-button class="btn" __triggerObserer="{{ _triggerObserer }}" data-orderid="{{item.orderid}}" bindonclick="toOrderDetail" __fn_onClick="{{true}}" data-e-onclick-so="this" data-e-onclick-a-a="{{item.orderid}}">订单详情</at-button>
                                         <at-button class="btn1" __triggerObserer="{{ _triggerObserer }}" type="secondary" open-type="getUserInfo" bindongetuserinfo="userInfoHandler" __fn_ongetUserInfo="{{true}}" data-e-ongetuserinfo-so="this">我的心愿</at-button>
                                     </view>

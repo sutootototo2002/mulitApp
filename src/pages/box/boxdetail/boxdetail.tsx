@@ -2,6 +2,7 @@ var machineid;
 var curPage=0;
 var lat;
 var lon;
+var distance;
 import Taro, { Component, Config, MapContext } from '@tarojs/taro'
 
 import { Map, CoverView,Canvas,View,Image,CoverImage,Button,Text } from '@tarojs/components'
@@ -59,6 +60,7 @@ class Boxdetail extends Component<{}, IState>{
     console.log(this.$router.params)
     console.log(this.$router.params.machineid)
     machineid = this.$router.params.machineid;
+    distance = this.$router.params.distance;
     this.getDetail();
     this.getGoods();
   }
@@ -176,7 +178,7 @@ class Boxdetail extends Component<{}, IState>{
                {$pics}
                </View> */}
             
-              <View className='addr'><Image className='addr1' src={this.state.addr}/> 地址： {this.state.machine.location}-{this.state.machine.dailaddress}| 距您555km</View>
+              <View className='addr'><Image className='addr1' src={this.state.addr}/> 地址： {this.state.machine.location}-{this.state.machine.dailaddress}| 距您{distance}km</View>
               
             </View>
             <View>

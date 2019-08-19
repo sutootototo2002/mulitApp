@@ -482,7 +482,7 @@ touchStart(e) {
                   
                   }
                    <View className='Btns'>
-                       <View style='float:left;font-size:25rpx;color:#ccc'>{item.createtime}</View>
+                       <View className='btimes'>{item.createtime}</View>
                        <AtButton class='btn'  data-orderid={item.orderid} onClick={this.toOrderDetail.bind(this,item.orderid)}  >订单详情</AtButton>                      
                        {/* <AtButton class='btn' >删除订单</AtButton> */}
                        <AtButton class='btn1' type='secondary'  open-type="getUserInfo" ongetUserInfo={this.userInfoHandler.bind(this)} >我的心愿</AtButton>

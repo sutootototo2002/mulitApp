@@ -159,7 +159,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         showLocation: true,
         markers: [],
         allMarkers: [],
-        bool: false,
+        bool: true,
         booladdr: false,
         menuright: [],
         token: '',

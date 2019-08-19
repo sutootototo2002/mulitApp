@@ -249,6 +249,17 @@
   margin-top: 20rpx;
 }
 
+.BtnTwo1 {
+  color: #fff;
+  background: #969696;
+  line-height: 64rpx;
+  border: 0;
+  width: 95%;
+  font-size: 30rpx;
+  margin: auto;
+  margin-top: 20rpx;
+}
+
 .orderList {
   width: 90%;
   margin: auto;
@@ -470,6 +481,20 @@
   z-index: 10001;
 }
 
+.desityFree1 {
+  position: absolute;
+  top: 50%;
+  margin-top: -180rpx;
+  width: 563rpx;
+  padding: 30rpx;
+  margin-left: -40%;
+  left: 50%;
+  background: #fff;
+  border-radius: 10rpx;
+  z-index: 10001;
+  overflow: visible;
+}
+
 .HearDiv {
   position: absolute;
   top: 50%;
@@ -486,7 +511,7 @@
   position: absolute;
   width: 55rpx;
   height: 55rpx;
-  top: 0;
+  top: 20rpx;
   right: 20rpx;
 }
 
@@ -505,6 +530,14 @@
 .mmText {
   text-align: center;
   font-size: 30rpx;
+}
+
+.mmText22 {
+  text-align: left;
+  font-size: 30rpx;
+  margin-top: 20rpx;
+  overflow: hidden;
+  white-space: normal;
 }
 
 .HearList {

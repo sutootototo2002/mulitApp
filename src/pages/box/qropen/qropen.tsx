@@ -2,6 +2,7 @@ var intervalPapay;
 var intervalOrderStatus;
 var requestfailed;
 var orderid = '';
+var count = 0;
 
 import Taro, { Component, Config, MapContext } from '@tarojs/taro'
 
@@ -23,6 +24,7 @@ interface IState {
     tag:number,
     unpayorderimg:string,
     requestfailed:boolean
+    isrchange:boolean,
     loadImg:string,
     loadImg1:string,
     loadImg2:string,
@@ -85,6 +87,7 @@ class Qropen extends Component<{}, IState>{
         papayPressed:false,
         showModalStatus:false,
         unpayorder:[],
+        isrchange:true,
         loadImg:PATH+'openouter.png',
         loadImg1:PATH+'smks-wzc.png',
         loadImg2:PATH+'car.png',
@@ -163,6 +166,7 @@ class Qropen extends Component<{}, IState>{
 
   componentDidShow () {
     console.log("---onShow----")
+    
     var that = this;
     setTimeout(()=>{
       that.getUserDetail();
@@ -171,7 +175,9 @@ class Qropen extends Component<{}, IState>{
 
   }
 
-  componentDidHide () {}
+  componentDidHide () {
+    // count=0;
+  }
 
   componentDidCatchError () {}
 
@@ -303,12 +309,19 @@ class Qropen extends Component<{}, IState>{
           //
           var isscorepay = res.data.data.isscorepay;
           var havearrears = res.data.data.havearrears;
+          globalData.fee = res.data.data.fee;
+          globalData.avatar = res.data.data.avatar;
+          globalData.nickname = res.data.data.nickname;
+          
+
+         
+          
           if (havearrears == "1") {
             that.getUnpayOrder();
             
           }
             if (isscorepay == "1") {
-              console.log('---已开通免密open---')
+              console.log('---已开通支付分open---')
               that.setState({
                 islogin:false,
                 pay:false,
@@ -316,11 +329,53 @@ class Qropen extends Component<{}, IState>{
                
               });
             } else {
-              console.log('---未开通免密open---')
-              that.setState({
-                pay:true
-              });
+              console.log('---未开通支付分open11111---')
+              if(count>=1){
+                console.log('111111')
+                that.setState({
+                  isrchange:true,
+                  pay:true,
+                 
+                });
+                if((res.data.data.fee/100)>=100){
+                  console.log('>100')
+                 
+                  that.setState({
+                    open:true,
+                    isrchange:true,
+                    pay:false,
+                  })
+                  
+                }else{
+                  that.setState({
+                    open:false,
+                    isrchange:false,
+                    pay:true
+                  })
+                }
+                
+              }else{
+                if((res.data.data.fee/100)>=100){
+                  console.log('>100')
+                 
+                  that.setState({
+                    open:true,
+                    isrchange:true,
+                    pay:false,
+                  })
+                  
+                }else{
+                  that.setState({
+                    open:false,
+                    isrchange:true,
+                    pay:true
+                  })
+                }
+              }
+            
             }
+
+           
           
 
           that.getShoppingOrder();
@@ -913,11 +968,21 @@ class Qropen extends Component<{}, IState>{
 
   gotopayfen(){
     console.log('开启支付分')
+    count++;
+    console.log(count);
     this.start();
 
  }
+ rechFn(){
+  count = 0;
+  Taro.navigateTo({
+    url: '/pages/recharge/recharge?avatar=' + globalData.avatar + '&nickname=' + globalData.nickname+'&fee='+globalData.fee
+  })
+}
+
 
  start(){
+  var that = this;
   Taro.request({
     url: BASE_URL+'user/startOpenSmartPay',
     data: '',
@@ -939,7 +1004,24 @@ class Qropen extends Component<{}, IState>{
       wx.openBusinessView({
         businessType: 'wxpayScoreEnable',
         extraData: extraData,
-        envVersion: 'release'
+        envVersion: 'release',
+        sucess(res){
+          console.log('sucess');
+          console.log(res);
+        },
+        fail(res){
+          console.log('fail')
+          that.setState({
+           
+            isrchange:false,
+            
+          })
+        },
+        complete(res){
+          console.log('complete')
+          that.getUserDetail();
+        }
+        
       })
     },
   })
@@ -971,9 +1053,35 @@ onconcel(){
         {this.state.pay?
           <View>
              <Image className='loadImg' src={this.state.loadImg}/>
-             {/* <View className='infoZm'>扫码即可支付哦！</View> */}
+             {this.state.isrchange?
+             ''
+             :
+             <View className='infoZm22'>
+                <View style='font-weight: bold'>
+                微信支付分开通失败的可能原因如下：
+                </View>
+                <View>
+                1、只有实名认证的微信账号方可开通微信支付分；
+                </View>
+                <View>
+                2、账号可能存在异常。稳定的个人基本信息、适度的消费、良好的支付行为，一段时间后可尝试再次开通。
+可联系微信支付官方客服进行咨询（咨询电话：95017）
+                </View>
+                <View style='font-weight: bold'>
+                在无法开通微信支付分的情况下，您可以选择储值的方式进行购物消费。
+                </View>
+                
+             </View>
+             }
             <Form >
-            <Button type="default" onClick={this.gotopayfen} className='Btn btnopen'> 开通支付分 </Button>
+            {this.state.isrchange?
+            <Button type="default" onClick={this.gotopayfen} className='Btn btnopen'> 开通支付分</Button>
+            :
+            <View>
+              <Button type="default" onClick={this.rechFn} className='Btn btnopen' style='bottom:100px;' > 去储值 </Button>
+              <Button onClick={this.gotopayfen} className='Btn btnopen1' style='bottom:30px;'> 重新开通支付分 </Button>
+            </View>
+            }
             </Form>
           </View>
           :
@@ -982,8 +1090,8 @@ onconcel(){
         {this.state.open?
          <View>
            <Image className='loadImg' src={this.state.loadImg2}/>
-           <View className='infoZm11'>Waaaaaaaaa!</View>
-           <View className='infoZm22'>热门商品等着您</View>
+           {/* <View className='infoZm11'>Waaaaaaaaa!</View> */}
+           <View className='infoZm'>热门商品等着您</View>
            <Form onSubmit={this.submitInfo} report-submit='true' >
              <Button type="default" form-type="submit" className='Btn btnopen opens'> 点击开门 </Button>
            </Form>
@@ -1059,7 +1167,8 @@ onconcel(){
            </CoverView>
            {/* <CoverView className='word33'>您可以选择储值方式来进行购物消费</CoverView> */}
            <CoverView style='margin-top:50px;text-align:center'>
-           <CoverView className='btnOpen12' onClick={this.onconcel}>确定</CoverView>
+           <CoverView className='btnOpen12' onClick={this.onconcel}>取消</CoverView>
+           <CoverView className='btnOpen12' onClick={this.rechFn}>去储值</CoverView>
           </CoverView>
           </CoverView>
           :

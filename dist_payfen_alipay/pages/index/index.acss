@@ -36,6 +36,7 @@
   line-height: 62rpx;
   text-align: right;
   border-radius: 78rpx;
+  border-radius: 50%;
   padding: 0 20rpx;
   background: #FF7700;
   color: #fff;

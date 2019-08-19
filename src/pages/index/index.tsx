@@ -13,6 +13,7 @@ var timer = 0;
 var timerList = [];
 var intervalPapayTempArr = [];
 var this_;
+var count = 0;
 var compareVersion = function(v1, v2) {
   v1 = v1.split('.')
   v2 = v2.split('.')
@@ -143,7 +144,8 @@ interface IState {
   avatar:string,
   timerTem:string,
   hasMore:boolean,
-  isperson:boolean
+  isperson:boolean,
+  isrchange:boolean
 }
 
 export default class Index extends Component<{}, IState>{
@@ -235,7 +237,8 @@ export default class Index extends Component<{}, IState>{
       Carting:false,
       feedbackslist:[],
       markerDetail:[],
-      timerTem:"0"
+      timerTem:"0",
+      isrchange:false
     }
   }
 
@@ -286,8 +289,10 @@ export default class Index extends Component<{}, IState>{
   componentDidShow() {
     console.log('---onshow1111111111111111111111---')
     this.setState({
-      HearlistBoolean: false
+      HearlistBoolean: false,
+      machineBoolean:false
     })
+ 
 
     var that = this;
     if(this.state.singinBoolean== true && this.state.setp1==false && this.state.setp2==true){
@@ -379,15 +384,37 @@ export default class Index extends Component<{}, IState>{
             })
           }
           var isscorepay = res.data.data.isscorepay;
-          if (isscorepay == "0") {
+          if((res.data.data.fee/100)>=100){
             that.setState({
-              setp2:true
+              singinBoolean:false,
+              isrchange:false,
+              markBoolean:false,
+              bool:true,
+              fee:res.data.data.fee,
+              befee:res.data.data.fee,
+              
             })
+            return;
+          }
+          if (isscorepay == "0") {
+            if(that.state.isrchange){
+              that.setState({
+                singinBoolean:false,
+                setp2:true
+              })
+              
+            }else{
+              that.setState({
+                setp2:true
+              })
+            }
+            
           } else {
             that.setState({
               setp1:true,
               setp2:false,
               singinBoolean:false,
+              isrchange:false,
               bool:true,
               controls:[{
                 id: 2,
@@ -423,6 +450,7 @@ export default class Index extends Component<{}, IState>{
     })
   }
   start(){
+    var that = this;
     Taro.request({
       url: BASE_URL+'user/startOpenSmartPay',
       data: '',
@@ -444,7 +472,25 @@ export default class Index extends Component<{}, IState>{
         wx.openBusinessView({
           businessType: 'wxpayScoreEnable',
           extraData: extraData,
-          envVersion: 'release'
+          envVersion: 'release',
+          sucess(res){
+            console.log('sucess');
+            console.log(res);
+          },
+          fail(res){
+            console.log('支付分创建失败fail')
+            console.log(res);
+            that.setState({
+              singinBoolean:false,
+              isrchange:true,
+              
+            })
+          },
+          complete(res){
+            console.log('complete')
+            console.log(res);
+            that.getUserDetail();
+          }
         })
       },
       fail: (data) => {
@@ -466,6 +512,8 @@ export default class Index extends Component<{}, IState>{
     console.log("wechatVersion:"+ version);
     if (compareVersion(version, '7.0.3') >= 0) {
         //console.log('支付分高于7.0，3');
+        count++;
+        console.log("count:"+count)
         this.start();
     } else {
       //console.log('支付分低于7.0，3');
@@ -543,6 +591,8 @@ export default class Index extends Component<{}, IState>{
            var $singinBoolean = true;
            var $fee = 0;
            var $markBoolean = true;
+           var $isrchange = false;
+           var $bool = false;
            
            var $avatarUrl = res.data.data.avatar;
            globalData.avatar = $avatarUrl;
@@ -560,17 +610,60 @@ export default class Index extends Component<{}, IState>{
               isperson:false
            })
            }
+
+           if((res.data.data.fee/100)>=100){
+            console.log('>100')
+            $isrchange = false;
+            $markBoolean = false;
+            $singinBoolean = false;
+            $bool = true;
+            that.setState({
+              bool:$bool,
+              markBoolean:$markBoolean,
+              isrchange:$isrchange,
+              fee:res.data.data.fee,
+              befee:res.data.data.fee,
+              controls:[{
+                id: 2,
+                iconPath: wishImg,
+                position: {
+                  width: 60,
+                  height:60,
+                  left: data.windowWidth-60,
+                  top: (data.windowHeight-115)/2
+                },
+                clickable: true
+              }
+            
+            });
+            return;
+          }
+
            if(res.data.data.isscorepay=="1"){
-                  console.log('')
+                  
                   $singinBoolean = false;
                   $markBoolean = false;
+                  $isrchange=false;
+                  $bool = true;
                   var userid = res.data.data.userid;
                   if(userid){
                    that.fetchWishCount();
                   }
            }else{ 
-                 $singinBoolean = true;
-                 $markBoolean = true;
+                
+                 if(count>=1){
+                  $isrchange = true;
+                  $singinBoolean = false;
+                  $markBoolean = true;
+                  $bool = false;
+                  $singinBoolean = false;
+                 
+                }else{
+                  console.log('<100')
+                  $singinBoolean = true;
+                  $markBoolean = true;
+                  $bool = false;
+                }
            }
 
            if(res.data.data.havearrears=="1"){
@@ -597,8 +690,9 @@ export default class Index extends Component<{}, IState>{
              setp2:$setp2,
              singinBoolean:$singinBoolean,
              markBoolean:$markBoolean,
+             isrchange:$isrchange,
              befee:$fee,
-             bool:true,
+             bool:$bool,
              controls:[{
               id: 2,
               iconPath: wishImg,
@@ -655,6 +749,7 @@ export default class Index extends Component<{}, IState>{
             unpayorder: res.data.data,
             singinBoolean:false,
             unpayBoolean:true,
+            isrchange:false,
             markBoolean:true       
           });
         } else {
@@ -1586,15 +1681,10 @@ getNearbyMachines(latitude: Number, longitude: Number) {
           })
         }else{
           console.log('失败！')
-          Taro.showModal({
-            title: '提示',
-            content: res.data.msg,
-            showCancel: false,
-            success: function (res) {
-              if (res.confirm) {
-                that.gohome();
-              }
-            }
+          Taro.showToast({
+            title: "机柜二维码错误",
+            icon: 'fail',
+            duration: 2000
           })
         }
 
@@ -1689,10 +1779,16 @@ getNearbyMachines(latitude: Number, longitude: Number) {
       }else if(res.data.code==206){ 
          
         console.log('请开通支付分')
-        Taro.showToast({
-          title: '请开通支付分',
-          icon: 'fail',
-          duration: 2000
+        // Taro.showToast({
+        //   title: '请开通支付分',
+        //   icon: 'fail',
+        //   duration: 2000
+        // })
+       
+        that.setState({
+            isScan:true,
+            isrchange:true,
+            markBoolean:true
         })
         //that.gohome();
           
@@ -1813,10 +1909,19 @@ getNearbyMachines(latitude: Number, longitude: Number) {
   }
   closeCarting(){
     this.setState({
-      Carting: false,
+      bool: true,
+      isrchange:false,
       markBoolean: false
     })
     
+  }
+  rechFn(){
+    Taro.navigateTo({
+      url: '/pages/recharge/recharge?avatar=' + globalData.avatar + '&nickname=' + globalData.nickname+'&fee='+globalData.fee
+    })
+  }
+  redoFn(){
+    this.start();
   }
   regionchange(e){
     console.log('e:'+e);
@@ -1906,7 +2011,7 @@ getNearbyMachines(latitude: Number, longitude: Number) {
     //   machineBoolean: false
     // })
     Taro.navigateTo({
-      url: `../box/boxdetail/boxdetail?machineid=${machineid}`
+      url: `../box/boxdetail/boxdetail?distance=${this.state.markerDetail.distance}&machineid=${this.state.markerDetail.machineid}`
     })
   }
 
@@ -1976,6 +2081,7 @@ getNearbyMachines(latitude: Number, longitude: Number) {
       <View>
         {/* <Canvas className='canvas'/> */}
         <Map className='mb-map' id='mymap'  show-location={this.state.showLocation} latitude={this.state.latitude} longitude={this.state.longitude} scale={this.state.scale} markers={this.state.markers} controls={this.state.controls} onControlTap={this.onControlTap} onmarkertap={this.markertap} onregionchange={this.regionchange}/>
+        {this.state.bool?
         <CoverView className='menus_avator'>
           {globalData.avatar?
             <CoverImage className='menus_user' onTouchStart={this.topersonfn}  src={globalData.avatar} />
@@ -2001,6 +2107,9 @@ getNearbyMachines(latitude: Number, longitude: Number) {
           }
 
         </CoverView>
+        :
+        ""
+        }
 
         {/* 遮罩层 */}
         {this.state.markBoolean ?
@@ -2031,7 +2140,7 @@ getNearbyMachines(latitude: Number, longitude: Number) {
              <Button className='singBtn' open-type="getPhoneNumber" onGetPhoneNumber={this.getPhoneNumber.bind(this)} >我去注册</Button>
              }
               {this.state.setp2 && 
-             <Button className='singBtn' onTouchStart={this.gotopayfen} >开通支付分</Button>
+             <Button className='singBtn' onClick={this.gotopayfen} onTouchStart={this.gotopayfen} >开通支付分</Button>
               //  <Button className='singBtn' onClick={this.gotopayfen} >开通支付分</Button>
              }
              
@@ -2115,6 +2224,33 @@ getNearbyMachines(latitude: Number, longitude: Number) {
          <CoverView className='thumbups'>{this.state.thumbups}</CoverView>
          :
          ''
+        }
+        
+         {/* //储值分支 */}
+         {this.state.isrchange?
+          <CoverView className='desityFree1'>
+             <CoverImage src={this.state.closebtn} onTouchStart={this.closeCarting} className='closeBtn' />
+            
+            <CoverView className='mmText22' style='font-weight: bold'>
+            微信支付分开通失败的可能原因如下：
+            </CoverView>
+            <CoverView className='mmText22'>
+            1、只有实名认证的微信账号方可开通微信支付分；
+            </CoverView>
+            <CoverView className='mmText22'>
+            2、账号可能存在异常。稳定的个人基本信息、适度的消费、良好的支付行为，一段时间后可尝试再次开通。
+可联系微信支付官方客服进行咨询（咨询电话：95017）
+            </CoverView>
+            <CoverView className='mmText22' style='font-weight: bold'>
+            在无法开通微信支付分的情况下，您可以选择储值的方式进行购物消费。
+            </CoverView>
+            <CoverView style='text-align:center;'>
+            <Button className='BtnTwo1' style='display:inline-block;width:120px;' onClick={this.redoFn}>重新开通支付分</Button>
+            <Button className='BtnTwo' style='display:inline-block;width:120px;margin:0 0 0 10px' onClick={this.rechFn}>去储值</Button>
+            </CoverView>
+          </CoverView>
+          :
+          <CoverView></CoverView>
         }
          {/* //购物中订单 */}
          {this.state.Carting?

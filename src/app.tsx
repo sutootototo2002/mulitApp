@@ -26,7 +26,7 @@ class App extends Component {
 
   config: Config = {
     pages: [
-     
+      
       'pages/index/index',
       'pages/personal/index',
       'pages/recharge/recharge',
@@ -38,9 +38,9 @@ class App extends Component {
       'pages/orders/orderdetail/orderdetail',
       'pages/orders/orderlist/orderlist',
       'pages/box/boxdetail/boxdetail',
+      'pages/box/qropen/qropen',
       'pages/card/bindcard',
       'pages/box/open/open',
-      'pages/box/qropen/qropen',
       'pages/refund/refund'
     ],
     window: {

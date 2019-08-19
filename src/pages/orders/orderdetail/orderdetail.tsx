@@ -30,7 +30,7 @@ interface IState {
   state9: string,
   icon1: string,
   formid:string,
-  refundhistory:object,
+  refundhistory:Array<object>,
   worksheet:object,
   errorreason:string,
   isrefundhistory:boolean
@@ -68,7 +68,7 @@ class Orderdetail extends Component<{}, IState>{
       state9: PATH + 'ddqk.png',
       formid:'',
       errorreason:'已取消',
-      refundhistory:{},
+      refundhistory:[],
       isrefundhistory:false,
       worksheet:{}
     }
@@ -256,7 +256,7 @@ class Orderdetail extends Component<{}, IState>{
         console.log('refundhistory:')
         console.log(res.data.data);
         
-        if (res.data.data != undefined && res.data.data.refundstatus == 3){
+        if (res.data.data != undefined){
           
           that.setState({
             isrefundhistory:true,
@@ -264,6 +264,7 @@ class Orderdetail extends Component<{}, IState>{
           });
         }else{
           that.setState({
+            isrefundhistory:false,
             isrefundhistory:false
           });
         }
@@ -317,10 +318,19 @@ class Orderdetail extends Component<{}, IState>{
   // 在 App 类中的 render() 函数没有实际作用
   // 请勿修改此函数
   render() {
-    const { order } = this.state;
+    const { order,refundhistory } = this.state;
     console.log("order")
     console.log(order)
     let orderContent;
+    let refundList = refundhistory.map((item,index)=>{
+      return (
+      <View>
+          <View className='answer1'>退款流水：{item.serialno}</View>
+          <View className='answer1'>退款时间：{item.fefundtime}</View>
+          <View className='answer1'>退款金额：{Number(item.realfee/100).toFixed(2)}元</View>
+      </View>
+      )
+    })
     if (order.orderstatus == 0) {
 
       orderContent = <View>
@@ -491,9 +501,8 @@ class Orderdetail extends Component<{}, IState>{
           <View className='seltitle'>退款记录</View>
         </View>
         <View>
-          <View className='answer1'>退款金额：¥{this.state.refundhistory.realfee/100}</View>
-          <View className='answer1'>退款流水：{this.state.refundhistory.serialno}</View>
-          <View className='answer1'>退款时间：{this.state.refundhistory.fefundtime}</View>
+         
+          {refundList}
         </View>
       </View>
       :
@@ -515,7 +524,7 @@ class Orderdetail extends Component<{}, IState>{
           ''
           } */}
            {this.state.order.orderstatus!=="3"?
-          <Button type="default" className='btn' onClick={this.gotoBack}> 返回 </Button>
+          <Button type="default" className='btn' onClick={this.gotoBack}> 返回首页 </Button>
           :
           <Button type="default" className='btn' onClick={this.gotoBack}> 重新开门 </Button>
         }

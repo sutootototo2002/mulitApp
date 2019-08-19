@@ -226,6 +226,12 @@
   margin-left: 20rpx;
 }
 
+.btimes {
+  float: left;
+  font-size: 25rpx;
+  color: #5f5f5f;
+}
+
 .at-tabs__item {
   font-size: 30rpx;
   -o-text-overflow: ellipsis;

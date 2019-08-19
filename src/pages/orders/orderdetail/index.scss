@@ -110,7 +110,12 @@
 .addr1{
     font-size: 30px;
     margin-top:30px;
-    padding:0 30px;
+    padding:0 0px;
+     text-overflow:ellipsis;
+    white-space:nowrap;
+    overflow:hidden;
+    width:80%;
+    text-align:left;
 }
 .addr2{
     font-size: 25px;
@@ -250,4 +255,12 @@
 }
 .pics{
     padding:20px;
+}
+
+.nosum{
+    width:100%;
+    color:#ccc;
+    text-align:center;
+    padding:5px;
+    font-size:25px;
 }

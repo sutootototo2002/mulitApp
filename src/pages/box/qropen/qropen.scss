@@ -87,7 +87,7 @@
     left:50%;
     margin-left:-196px;
     top:50%;
-    margin-top:-390px;
+    margin-top:-490px;
     z-index:9;
 }
 .btnopen{
@@ -102,6 +102,19 @@
     color:#fff;
 }
 
+.btnopen1{
+  position: absolute;
+  width:70%;
+  left:50%;
+  margin-left:-35%;
+  height:auto;
+  font-size:35px;
+  bottom:250px;
+  text-align: center;
+  color:#fff;
+  background:$color-gray2
+}
+
 .infoZm{
     position:absolute;
     bottom:360px;
@@ -110,6 +123,25 @@
     font-size:30px;
 
 }
+
+.infoZm22{
+  
+text-align: left;
+width: 80%;
+font-size: 25px;
+white-space: normal;
+overflow: hidden;
+padding: 30px;
+position: absolute;
+bottom: 180px;
+top:50%;
+margin-top:-60px;
+margin-left: -40%;
+left: 50%;
+
+
+}
+
 .infoZm11{
     position:absolute;
     top:50%;
@@ -119,14 +151,7 @@
     font-size:45px;
     color:#ee751a
 }
-.infoZm22{
-    position:absolute;
-    top:50%;
-    margin-top:80px;
-    text-align:center;
-    width:100%;
-    font-size:30px;
-}
+
 
 .opens{
     width:40%;

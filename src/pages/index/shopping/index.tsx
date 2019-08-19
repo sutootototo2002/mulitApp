@@ -130,7 +130,7 @@ class Index extends Component<{}, IState>{
               this_.setState({
                 isfinish:true,
               })
-              if(doorstatus=='4' && (orderstatus != "6" && orderstatus != "3" && orderstatus != "5" && orderstatus != "8")){  
+              if(doorstatus=='4' && (orderstatus != "6" && orderstatus != "3" && orderstatus != "5" && orderstatus != "8" && orderstatus != "9")){  
                 console.log('进这里进这里')
                 this_.setState({
                   isfinish:false,

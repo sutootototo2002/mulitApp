@@ -43,7 +43,7 @@ var Myheart = (_temp2 = _class = function (_BaseComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Myheart.__proto__ || Object.getPrototypeOf(Myheart)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["myheartList", "searLists", "otherWishes", "machines", "globalData", "mhhImg", "avator", "imgs", "imgs1", "zmkm", "clear", "value", "bool", "HearBoolean", "HearHead", "closebtn", "markBoolean", "heardImg", "addr", "dyzh", "yyzh", "hashOtherWishes", "pageNo", "pageSize", "hasMore", "isDel", "wish", "wishname"], _this.config = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Myheart.__proto__ || Object.getPrototypeOf(Myheart)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["myheartList", "searLists", "otherWishes", "machines", "globalData", "mhhImg", "avator", "imgs", "imgs1", "zmkm", "clear", "value", "bool", "HearBoolean", "HearHead", "closebtn", "markBoolean", "heardImg", "addr", "dyzh", "yyzh", "hashOtherWishes", "pageNo", "pageSize", "hasMore", "isDel", "wish", "wishname", "isclose"], _this.config = {
       navigationBarTitleText: '心愿单'
     }, _this.$$refs = [], _temp), _possibleConstructorReturn(_this, _ret);
   }
@@ -87,7 +87,8 @@ var Myheart = (_temp2 = _class = function (_BaseComponent) {
         isDel: false,
         machines: [],
         wish: '',
-        wishname: ''
+        wishname: '',
+        isclose: false
       };
     }
   }, {
@@ -302,7 +303,8 @@ var Myheart = (_temp2 = _class = function (_BaseComponent) {
     value: function onSearchHandler(value) {
       console.log(value);
       this.setState({
-        value: value
+        value: value,
+        isclose: true
       });
       var that = this;
       //  /wishlist/filterWishes
@@ -320,6 +322,11 @@ var Myheart = (_temp2 = _class = function (_BaseComponent) {
         if (res.data.code == 200) {
           console.log("res.data.rows:");
           console.log(res.data.rows);
+          if (!res.data.rows.length) {
+            that.setState({
+              isclose: false
+            });
+          }
           that.setState({
             searLists: res.data.rows
           });
@@ -337,6 +344,7 @@ var Myheart = (_temp2 = _class = function (_BaseComponent) {
     value: function onGoback() {
       this.setState({
         value: '',
+        isclose: false,
         bool: false
       });
     }
@@ -355,6 +363,9 @@ var Myheart = (_temp2 = _class = function (_BaseComponent) {
         return;
       }
       this.adda(value);
+      this.setState({
+        isclose: false
+      });
     }
   }, {
     key: "onBlur",
@@ -509,7 +520,7 @@ var Myheart = (_temp2 = _class = function (_BaseComponent) {
     key: "toBoxdetail",
     value: function toBoxdetail(e) {
       _index2.default.navigateTo({
-        url: "../../box/boxdetail/boxdetail?machineid=" + e.currentTarget.dataset.machineid
+        url: "../../box/boxdetail/boxdetail?distance=" + e.currentTarget.dataset.distance + "&machineid=" + e.currentTarget.dataset.machineid
       });
     }
   }, {

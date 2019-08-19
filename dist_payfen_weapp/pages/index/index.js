@@ -40,6 +40,7 @@ var timer = 0;
 var timerList = [];
 var intervalPapayTempArr = [];
 var this_;
+var count = 0;
 var compareVersion = function compareVersion(v1, v2) {
   v1 = v1.split('.');
   v2 = v2.split('.');
@@ -83,7 +84,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Index.__proto__ || Object.getPrototypeOf(Index)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "markerDetail", "unpayList", "feedbackslist", "globalData", "systemUser", "showModalStatus", "showopen", "papayPressed", "qrurl", "showlogin", "showpapay", "isperson", "isnopasspay", "havearrears", "formid", "isweapp", "latitude", "longitude", "scale", "isScan", "menus", "screen", "user", "person", "zm", "avatar", "zmdefault", "dw", "unpayImg", "unpriceImg", "pos_", "unpayorderimg", "addr", "mach", "HearHead", "closebtn", "heardImg", "yyzh", "dyzh", "xydd", "singinImg", "wzc10", "wzc11", "wzc30", "wzc33", "setp1", "setp2", "setp3", "controls", "isOpened", "mapObj_", "showLocation", "markers", "allMarkers", "bool", "booladdr", "menuright", "token", "checkPapay", "commonCode", "markBoolean", "posBoolean", "unpayBoolean", "machineBoolean", "HearBoolean", "HearlistBoolean", "singinBoolean", "thumbups", "fee", "befee", "payName", "haslogin", "intervalPapay", "unpayorder", "cartTips", "orderid", "hasMore", "machineid", "orderno", "recogmode", "haveShopping", "Carting", "timerTem", "mm"], _this.config = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Index.__proto__ || Object.getPrototypeOf(Index)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "markerDetail", "unpayList", "feedbackslist", "globalData", "systemUser", "showModalStatus", "showopen", "papayPressed", "qrurl", "showlogin", "showpapay", "isperson", "isnopasspay", "havearrears", "formid", "isweapp", "latitude", "longitude", "scale", "isScan", "menus", "screen", "user", "person", "zm", "avatar", "zmdefault", "dw", "unpayImg", "unpriceImg", "pos_", "unpayorderimg", "addr", "mach", "HearHead", "closebtn", "heardImg", "yyzh", "dyzh", "xydd", "singinImg", "wzc10", "wzc11", "wzc30", "wzc33", "setp1", "setp2", "setp3", "controls", "isOpened", "mapObj_", "showLocation", "markers", "allMarkers", "bool", "booladdr", "menuright", "token", "checkPapay", "commonCode", "markBoolean", "posBoolean", "unpayBoolean", "machineBoolean", "HearBoolean", "HearlistBoolean", "singinBoolean", "thumbups", "fee", "befee", "payName", "haslogin", "intervalPapay", "unpayorder", "cartTips", "orderid", "hasMore", "machineid", "orderno", "recogmode", "haveShopping", "Carting", "timerTem", "isrchange", "mm"], _this.config = {
       navigationBarTitleText: '首页'
     }, _this.onHeard = function () {
       console.log('心愿单开启');
@@ -190,7 +191,8 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         Carting: false,
         feedbackslist: [],
         markerDetail: [],
-        timerTem: "0"
+        timerTem: "0",
+        isrchange: false
       };
     }
   }, {
@@ -247,7 +249,8 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
 
       console.log('---onshow1111111111111111111111---');
       this.setState({
-        HearlistBoolean: false
+        HearlistBoolean: false,
+        machineBoolean: false
       });
       var that = this;
       if (this.state.singinBoolean == true && this.state.setp1 == false && this.state.setp2 == true) {
@@ -341,15 +344,34 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
               });
             }
             var isscorepay = res.data.data.isscorepay;
-            if (isscorepay == "0") {
+            if (res.data.data.fee / 100 >= 100) {
               that.setState({
-                setp2: true
+                singinBoolean: false,
+                isrchange: false,
+                markBoolean: false,
+                bool: true,
+                fee: res.data.data.fee,
+                befee: res.data.data.fee
               });
+              return;
+            }
+            if (isscorepay == "0") {
+              if (that.state.isrchange) {
+                that.setState({
+                  singinBoolean: false,
+                  setp2: true
+                });
+              } else {
+                that.setState({
+                  setp2: true
+                });
+              }
             } else {
               that.setState({
                 setp1: true,
                 setp2: false,
                 singinBoolean: false,
+                isrchange: false,
                 bool: true,
                 controls: [{
                   id: 2,
@@ -384,6 +406,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
   }, {
     key: 'start',
     value: function start() {
+      var that = this;
       _index2.default.request({
         url: _index3.BASE_URL + 'user/startOpenSmartPay',
         data: '',
@@ -404,7 +427,24 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
           wx.openBusinessView({
             businessType: 'wxpayScoreEnable',
             extraData: extraData,
-            envVersion: 'release'
+            envVersion: 'release',
+            sucess: function sucess(res) {
+              console.log('sucess');
+              console.log(res);
+            },
+            fail: function fail(res) {
+              console.log('支付分创建失败fail');
+              console.log(res);
+              that.setState({
+                singinBoolean: false,
+                isrchange: true
+              });
+            },
+            complete: function complete(res) {
+              console.log('complete');
+              console.log(res);
+              that.getUserDetail();
+            }
           });
         },
         fail: function fail(data) {
@@ -426,6 +466,8 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
       console.log("wechatVersion:" + version);
       if (compareVersion(version, '7.0.3') >= 0) {
         //console.log('支付分高于7.0，3');
+        count++;
+        console.log("count:" + count);
         this.start();
       } else {
         //console.log('支付分低于7.0，3');
@@ -503,6 +545,8 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
           var $singinBoolean = true;
           var $fee = 0;
           var $markBoolean = true;
+          var $isrchange = false;
+          var $bool = false;
           var $avatarUrl = res.data.data.avatar;
           _index3.globalData.avatar = $avatarUrl;
           _index3.globalData.fee = res.data.data.fee;
@@ -516,17 +560,54 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
               isperson: false
             });
           }
+          if (res.data.data.fee / 100 >= 100) {
+            console.log('>100');
+            $isrchange = false;
+            $markBoolean = false;
+            $singinBoolean = false;
+            $bool = true;
+            that.setState({
+              bool: $bool,
+              markBoolean: $markBoolean,
+              isrchange: $isrchange,
+              fee: res.data.data.fee,
+              befee: res.data.data.fee,
+              controls: [{
+                id: 2,
+                iconPath: wishImg,
+                position: {
+                  width: 60,
+                  height: 60,
+                  left: data.windowWidth - 60,
+                  top: (data.windowHeight - 115) / 2
+                },
+                clickable: true
+              }]
+            });
+            return;
+          }
           if (res.data.data.isscorepay == "1") {
-            console.log('');
             $singinBoolean = false;
             $markBoolean = false;
+            $isrchange = false;
+            $bool = true;
             var userid = res.data.data.userid;
             if (userid) {
               that.fetchWishCount();
             }
           } else {
-            $singinBoolean = true;
-            $markBoolean = true;
+            if (count >= 1) {
+              $isrchange = true;
+              $singinBoolean = false;
+              $markBoolean = true;
+              $bool = false;
+              $singinBoolean = false;
+            } else {
+              console.log('<100');
+              $singinBoolean = true;
+              $markBoolean = true;
+              $bool = false;
+            }
           }
           if (res.data.data.havearrears == "1") {
             that.setState({
@@ -550,8 +631,9 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
             setp2: $setp2,
             singinBoolean: $singinBoolean,
             markBoolean: $markBoolean,
+            isrchange: $isrchange,
             befee: $fee,
-            bool: true,
+            bool: $bool,
             controls: [{
               id: 2,
               iconPath: wishImg,
@@ -607,6 +689,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
               unpayorder: res.data.data,
               singinBoolean: false,
               unpayBoolean: true,
+              isrchange: false,
               markBoolean: true
             });
           } else {
@@ -1549,15 +1632,10 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
             });
           } else {
             console.log('失败！');
-            _index2.default.showModal({
-              title: '提示',
-              content: res.data.msg,
-              showCancel: false,
-              success: function success(res) {
-                if (res.confirm) {
-                  that.gohome();
-                }
-              }
+            _index2.default.showToast({
+              title: "机柜二维码错误",
+              icon: 'fail',
+              duration: 2000
             });
           }
         },
@@ -1648,10 +1726,15 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
           //that.gohome();
         } else if (res.data.code == 206) {
           console.log('请开通支付分');
-          _index2.default.showToast({
-            title: '请开通支付分',
-            icon: 'fail',
-            duration: 2000
+          // Taro.showToast({
+          //   title: '请开通支付分',
+          //   icon: 'fail',
+          //   duration: 2000
+          // })
+          that.setState({
+            isScan: true,
+            isrchange: true,
+            markBoolean: true
           });
           //that.gohome();
         } else {
@@ -1776,9 +1859,22 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
     key: 'closeCarting',
     value: function closeCarting() {
       this.setState({
-        Carting: false,
+        bool: true,
+        isrchange: false,
         markBoolean: false
       });
+    }
+  }, {
+    key: 'rechFn',
+    value: function rechFn() {
+      _index2.default.navigateTo({
+        url: '/pages/recharge/recharge?avatar=' + _index3.globalData.avatar + '&nickname=' + _index3.globalData.nickname + '&fee=' + _index3.globalData.fee
+      });
+    }
+  }, {
+    key: 'redoFn',
+    value: function redoFn() {
+      this.start();
     }
   }, {
     key: 'regionchange',
@@ -1861,7 +1957,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
       //   machineBoolean: false
       // })
       _index2.default.navigateTo({
-        url: "../box/boxdetail/boxdetail?machineid=" + machineid
+        url: "../box/boxdetail/boxdetail?distance=" + this.state.markerDetail.distance + "&machineid=" + this.state.markerDetail.machineid
       });
     }
   }, {
@@ -1896,7 +1992,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
   }]);
 
   return Index;
-}(_index.Component), _class.properties = {}, _class.$$events = ["onControlTap", "markertap", "regionchange", "topersonfn", "userInfoHandler", "onStored", "getPhoneNumber", "gotopayfen", "onInfo", "gotoCart", "onClosePos", "payOrder", "gotoCartFn", "onCloseHeardlist", "onSetheart", "fetchMoreLikes", "onScreen", "onRight", "onLeft", "hideModal"], _temp2);
+}(_index.Component), _class.properties = {}, _class.$$events = ["onControlTap", "markertap", "regionchange", "topersonfn", "userInfoHandler", "onStored", "getPhoneNumber", "gotopayfen", "onInfo", "gotoCart", "onClosePos", "payOrder", "closeCarting", "redoFn", "rechFn", "gotoCartFn", "onCloseHeardlist", "onSetheart", "fetchMoreLikes", "onScreen", "onRight", "onLeft", "hideModal"], _temp2);
 exports.default = Index;
 
 Component(require('../../npm/@tarojs/taro-weapp/index.js').default.createComponent(Index, true));

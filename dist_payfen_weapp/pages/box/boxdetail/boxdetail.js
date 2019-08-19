@@ -28,6 +28,7 @@ var machineid;
 var curPage = 0;
 var lat;
 var lon;
+var distance;
 
 
 // 如果需要在 h5 环境中开启 React Devtools
@@ -49,7 +50,7 @@ var Boxdetail = (_temp2 = _class = function (_BaseComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Boxdetail.__proto__ || Object.getPrototypeOf(Boxdetail)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["machine", "goods", "globalData", "machineid", "addr", "total", "salesort", "hasnext", "loginImg"], _this.config = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Boxdetail.__proto__ || Object.getPrototypeOf(Boxdetail)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["machine", "goods", "globalData", "distance", "machineid", "addr", "total", "salesort", "hasnext", "loginImg"], _this.config = {
       navigationBarTitleText: '机柜详情页'
     }, _this.$$refs = [], _temp), _possibleConstructorReturn(_this, _ret);
   }
@@ -84,6 +85,7 @@ var Boxdetail = (_temp2 = _class = function (_BaseComponent) {
       console.log(this.$router.params);
       console.log(this.$router.params.machineid);
       machineid = this.$router.params.machineid;
+      distance = this.$router.params.distance;
       this.getDetail();
       this.getGoods();
     }
@@ -189,7 +191,8 @@ var Boxdetail = (_temp2 = _class = function (_BaseComponent) {
         console.log('1111111111111');
       }
       Object.assign(this.__state, {
-        globalData: _index3.globalData
+        globalData: _index3.globalData,
+        distance: distance
       });
       return this.__state;
     }

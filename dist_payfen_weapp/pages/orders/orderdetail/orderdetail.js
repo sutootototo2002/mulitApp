@@ -18,6 +18,8 @@ var _index3 = require("../../../config/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -39,7 +41,7 @@ var Orderdetail = (_temp2 = _class = function (_BaseComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Orderdetail.__proto__ || Object.getPrototypeOf(Orderdetail)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["order", "worksheet", "orderid", "whereis", "showTuihuo", "icon1", "state0", "state1", "state3", "state4", "state5", "state6", "state71", "state70", "state8", "state9", "formid", "errorreason", "refundhistory", "isrefundhistory"], _this.config = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Orderdetail.__proto__ || Object.getPrototypeOf(Orderdetail)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["order", "loopArray0", "refundhistory", "worksheet", "orderid", "whereis", "showTuihuo", "icon1", "state0", "state1", "state3", "state4", "state5", "state6", "state71", "state70", "state8", "state9", "formid", "errorreason", "isrefundhistory"], _this.config = {
       navigationBarTitleText: '订单详情'
     }, _this.$$refs = [], _temp), _possibleConstructorReturn(_this, _ret);
   }
@@ -74,7 +76,7 @@ var Orderdetail = (_temp2 = _class = function (_BaseComponent) {
         state9: _index3.PATH + 'ddqk.png',
         formid: '',
         errorreason: '已取消',
-        refundhistory: {},
+        refundhistory: [],
         isrefundhistory: false,
         worksheet: {}
       };
@@ -264,15 +266,15 @@ var Orderdetail = (_temp2 = _class = function (_BaseComponent) {
         success: function success(res) {
           console.log('refundhistory:');
           console.log(res.data.data);
-          if (res.data.data != undefined && res.data.data.refundstatus == 3) {
+          if (res.data.data != undefined) {
             that.setState({
               isrefundhistory: true,
               refundhistory: res.data.data
             });
           } else {
-            that.setState({
+            that.setState(_defineProperty({
               isrefundhistory: false
-            });
+            }, "isrefundhistory", false));
           }
         }
       });
@@ -338,11 +340,14 @@ var Orderdetail = (_temp2 = _class = function (_BaseComponent) {
       var __isRunloopRef = arguments[2];
       ;
 
-      var order = this.__state.order;
+      var _state = this.__state,
+          order = _state.order,
+          refundhistory = _state.refundhistory;
 
       console.log("order");
       console.log(order);
       var orderContent = void 0;
+
       if (order.orderstatus == 0) {}
       if (order.orderstatus == 9) {}
       if (order.orderstatus == 8) {}
@@ -358,7 +363,19 @@ var Orderdetail = (_temp2 = _class = function (_BaseComponent) {
       // if (order.orderstatus !== 7) {
       //   Buttonstate1 = <Button className='selBtn' data-orderid={order.orderid} onClick={this.ontoAnswer}>问题反馈</Button>
       // }
-      Object.assign(this.__state, {});
+      var loopArray0 = refundhistory.map(function (item, index) {
+        item = {
+          $original: (0, _index.internal_get_original)(item)
+        };
+        var $loopState__temp2 = Number(item.$original.realfee / 100).toFixed(2);
+        return {
+          $loopState__temp2: $loopState__temp2,
+          $original: item.$original
+        };
+      });
+      Object.assign(this.__state, {
+        loopArray0: loopArray0
+      });
       return this.__state;
     }
   }]);

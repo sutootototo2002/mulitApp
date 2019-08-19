@@ -63,7 +63,7 @@ body {
   left: 50%;
   margin-left: -100rpx;
   margin-top: -35rpx;
-  z-index: 999;
+  z-index: 111;
 }
 
 .ad {
@@ -93,6 +93,7 @@ body {
 .mxList {
   width: 100%;
   overflow-y: scroll;
+  padding: 0 0 40rpx 0;
 }
 
 .mxli {
@@ -215,17 +216,20 @@ body {
 
 .ts {
   clear: both;
-  font-size: 20rpx;
-  margin-top: 250rpx;
+  font-size: 25rpx;
+  margin-top: 200rpx;
   padding: 0 20rpx;
+  color: #000;
 }
 
 .ts1 {
   color: #e64307;
+  white-space: normal;
 }
 
 .ts2 {
   color: #a1a1a1;
+  white-space: normal;
 }
 
 .mmImg {
@@ -271,4 +275,19 @@ body {
   padding: 20rpx 0 0 0;
   margin: auto;
   text-align: center;
+}
+
+.infoD {
+  margin-top: 20rpx;
+  font-size: 25rpx;
+  padding: 20rpx 0;
+}
+
+.footer {
+  position: fixed;
+  z-index: 9999;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.6);
+  width: 100%;
+  padding: 20rpx 10rpx;
 }

@@ -12,16 +12,33 @@
         <block wx:if="{{pay}}">
             <view>
                 <image class="loadImg" src="{{loadImg}}"></image>
+                <block wx:if="{{!isrchange}}">
+                    <view class="infoZm22">
+                        <view style="font-weight: bold">微信支付分开通失败的可能原因如下：</view>
+                        <view>1、只有实名认证的微信账号方可开通微信支付分；</view>
+                        <view>2、账号可能存在异常。稳定的个人基本信息、适度的消费、良好的支付行为，一段时间后可尝试再次开通。可联系微信支付官方客服进行咨询（咨询电话：95017）</view>
+                        <view style="font-weight: bold">在无法开通微信支付分的情况下，您可以选择储值的方式进行购物消费。</view>
+                    </view>
+                </block>
                 <form>
-                    <button type="default" bindtap="gotopayfen" class="Btn btnopen">开通支付分</button>
+                    <block>
+                        <block wx:if="{{isrchange}}">
+                            <button type="default" bindtap="gotopayfen" class="Btn btnopen">开通支付分</button>
+                        </block>
+                        <block wx:else>
+                            <view>
+                                <button type="default" bindtap="rechFn" class="Btn btnopen" style="bottom:100px;">去储值</button>
+                                <button bindtap="gotopayfen" class="Btn btnopen1" style="bottom:30px;">重新开通支付分</button>
+                            </view>
+                        </block>
+                    </block>
                 </form>
             </view>
         </block>
         <block wx:if="{{open}}">
             <view>
                 <image class="loadImg" src="{{loadImg2}}"></image>
-                <view class="infoZm11">Waaaaaaaaa!</view>
-                <view class="infoZm22">热门商品等着您</view>
+                <view class="infoZm">热门商品等着您</view>
                 <form bindsubmit="submitInfo" report-submit="true">
                     <button type="default" form-type="submit" class="Btn btnopen opens">点击开门</button>
                 </form>
@@ -89,7 +106,8 @@
                         <cover-view class="word">2、微信支付分基于风控因素，导致订单创建失败。</cover-view>
                     </cover-view>
                     <cover-view style="margin-top:50px;text-align:center">
-                        <cover-view class="btnOpen12" bindtap="onconcel">确定</cover-view>
+                        <cover-view class="btnOpen12" bindtap="onconcel">取消</cover-view>
+                        <cover-view class="btnOpen12" bindtap="rechFn">去储值</cover-view>
                     </cover-view>
                 </cover-view>
             </block>

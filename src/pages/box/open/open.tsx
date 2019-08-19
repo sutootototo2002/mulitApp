@@ -406,8 +406,9 @@ class Open extends Component<{}, IState>{
           <CoverView></CoverView>}    
 
           {this.state.isReason?
-          <CoverView className='boxReason'>
+          <CoverView className='boxReason' style='position:absolute;top:50%;margin-top:-50%;'>
            <CoverImage className='posImg111' src={this.state.dw} />
+           <CoverView >
            <CoverView className='word11'>订单创建失败，可能原因如下：</CoverView>
            <CoverView className='word22'>
            <CoverView className='word'>
@@ -417,10 +418,13 @@ class Open extends Component<{}, IState>{
              <CoverView className='word'>
              2、微信支付分基于风控因素，导致订单创建失败。
              </CoverView>
+             
            </CoverView>
-           {/* <CoverView className='word33'>您可以选择储值方式来进行购物消费</CoverView> */}
+           </CoverView>
+           <CoverView className='word33'>您可以选择储值方式来进行购物消费</CoverView>
            <CoverView style='margin-top:50px;text-align:center'>
-           <CoverView className='btnOpen12' onClick={this.onconcel}>确定</CoverView>
+           <CoverView className='btnOpen12' onClick={this.onconcel}>取消</CoverView>
+           <CoverView className='btnOpen12' onClick={this.onrecharge}>去储值</CoverView>
           </CoverView>
           </CoverView>
           :

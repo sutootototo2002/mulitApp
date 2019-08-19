@@ -1,32 +1,34 @@
 <block>
     <view>
         <map class="mb-map" id="mymap" show-location="{{showLocation}}" latitude="{{latitude}}" longitude="{{longitude}}" scale="{{scale}}" markers="{{markers}}" controls="{{controls}}" bindcontroltap="onControlTap" bindmarkertap="markertap" bindregionchange="regionchange"></map>
-        <cover-view class="menus_avator">
-            <block>
-                <block wx:if="{{globalData.avatar}}">
-                    <cover-image class="menus_user" bindtouchstart="topersonfn" src="{{globalData.avatar}}"></cover-image>
+        <block wx:if="{{bool}}">
+            <cover-view class="menus_avator">
+                <block>
+                    <block wx:if="{{globalData.avatar}}">
+                        <cover-image class="menus_user" bindtouchstart="topersonfn" src="{{globalData.avatar}}"></cover-image>
+                    </block>
+                    <block wx:else>
+                        <cover-image class="menus_user" src="{{zm}}"></cover-image>
+                    </block>
                 </block>
-                <block wx:else>
-                    <cover-image class="menus_user" src="{{zm}}"></cover-image>
+                <block>
+                    <block wx:if="{{isperson}}">
+                        <cover-view class="personDiv">个人中心</cover-view>
+                    </block>
+                    <block wx:else>
+                        <button class="personDiv" open-type="getUserInfo" bindgetuserinfo="userInfoHandler" data-e-getuserinfo-so="this">点击进入个人中心</button>
+                    </block>
                 </block>
-            </block>
-            <block>
-                <block wx:if="{{isperson}}">
-                    <cover-view class="personDiv">个人中心</cover-view>
+                <block>
+                    <block wx:if="{{befee > 0}}">
+                        <cover-view class="fee" bindtap="onStored">当前余额:{{befee / 100}}元</cover-view>
+                    </block>
+                    <block wx:else>
+                        <cover-view class="fee" bindtap="onStored">储值有优惠</cover-view>
+                    </block>
                 </block>
-                <block wx:else>
-                    <button class="personDiv" open-type="getUserInfo" bindgetuserinfo="userInfoHandler" data-e-getuserinfo-so="this">点击进入个人中心</button>
-                </block>
-            </block>
-            <block>
-                <block wx:if="{{befee > 0}}">
-                    <cover-view class="fee" bindtap="onStored">当前余额:{{befee / 100}}元</cover-view>
-                </block>
-                <block wx:else>
-                    <cover-view class="fee" bindtap="onStored">储值有优惠</cover-view>
-                </block>
-            </block>
-        </cover-view>
+            </cover-view>
+        </block>
         <block>
             <block wx:if="{{markBoolean}}">
                 <cover-view class="mark"></cover-view>
@@ -62,7 +64,7 @@
                             <button class="singBtn" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" data-e-getphonenumber-so="this">我去注册</button>
                         </block>
                         <block wx:if="{{setp2}}">
-                            <button class="singBtn" bindtouchstart="gotopayfen">开通支付分</button>
+                            <button class="singBtn" bindtap="gotopayfen" bindtouchstart="gotopayfen">开通支付分</button>
                         </block>
                     </cover-view>
                 </cover-view>
@@ -141,6 +143,24 @@
         </block>
         <block wx:if="{{bool && thumbups > 0}}">
             <cover-view class="thumbups">{{thumbups}}</cover-view>
+        </block>
+        <block>
+            <block wx:if="{{isrchange}}">
+                <cover-view class="desityFree1">
+                    <cover-image src="{{closebtn}}" bindtouchstart="closeCarting" class="closeBtn"></cover-image>
+                    <cover-view class="mmText22" style="font-weight: bold">微信支付分开通失败的可能原因如下：</cover-view>
+                    <cover-view class="mmText22">1、只有实名认证的微信账号方可开通微信支付分；</cover-view>
+                    <cover-view class="mmText22">2、账号可能存在异常。稳定的个人基本信息、适度的消费、良好的支付行为，一段时间后可尝试再次开通。可联系微信支付官方客服进行咨询（咨询电话：95017）</cover-view>
+                    <cover-view class="mmText22" style="font-weight: bold">在无法开通微信支付分的情况下，您可以选择储值的方式进行购物消费。</cover-view>
+                    <cover-view style="text-align:center;">
+                        <button class="BtnTwo1" style="display:inline-block;width:120px;" bindtap="redoFn">重新开通支付分</button>
+                        <button class="BtnTwo" style="display:inline-block;width:120px;margin:0 0 0 10px" bindtap="rechFn">去储值</button>
+                    </cover-view>
+                </cover-view>
+            </block>
+            <block wx:else>
+                <cover-view></cover-view>
+            </block>
         </block>
         <block>
             <block wx:if="{{Carting}}">

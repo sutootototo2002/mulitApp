@@ -453,11 +453,11 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         }
         if (res.data.code == 206) {
           console.log('请开通支付分');
-          _index2.default.showToast({
-            title: '请开通支付分',
-            icon: 'fail',
-            duration: 2000
-          });
+          // Taro.showToast({
+          //   title: '请开通支付分',
+          //   icon: 'fail',
+          //   duration: 2000
+          // })
           that.gohome();
         }
       });

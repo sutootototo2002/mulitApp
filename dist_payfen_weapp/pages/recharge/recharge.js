@@ -24,6 +24,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var count = 0;
 var Recharge = (_temp2 = _class = function (_BaseComponent) {
   _inherits(Recharge, _BaseComponent);
 
@@ -38,7 +39,7 @@ var Recharge = (_temp2 = _class = function (_BaseComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Recharge.__proto__ || Object.getPrototypeOf(Recharge)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp3", "anonymousState__temp4", "anonymousState__temp5", "loopArray0", "loopArray1", "navList", "logList", "mhhImg", "avatar", "tempavatar", "arrow", "del", "answer", "mm", "isMM", "fee", "curNav", "curIndex", "realmoney", "wishes", "ispayvalue", "payvalue", "curPage", "logs", "total", "hasnext", "successboolean", "markBoolean"], _this.config = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Recharge.__proto__ || Object.getPrototypeOf(Recharge)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp11", "anonymousState__temp12", "anonymousState__temp13", "anonymousState__temp14", "loopArray0", "loopArray1", "navList", "isMM", "logList", "globalData", "mhhImg", "avatar", "tempavatar", "arrow", "del", "answer", "mm", "fee", "curNav", "curIndex", "realmoney", "wishes", "ispayvalue", "payvalue", "curPage", "logs", "total", "hasnext", "successboolean", "markBoolean", "Loadingtime", "count", "iscz"], _this.config = {
       navigationBarTitleText: '我的储值'
     }, _this.$$refs = [], _temp), _possibleConstructorReturn(_this, _ret);
   }
@@ -59,11 +60,11 @@ var Recharge = (_temp2 = _class = function (_BaseComponent) {
         mhhImg: _index3.PATH + 'xydImg.png',
         avatar: '',
         tempavatar: _index3.PATH + 'tempavator.png',
-        arrow: _index3.PATH + 'arrow.png',
+        arrow: _index3.PATH + 'arrow1.png',
         del: _index3.PATH + 'gban.png',
         answer: _index3.PATH + 'bzzx.png',
         mm: _index3.PATH + 'mm.png',
-        isMM: true,
+        isMM: false,
         fee: 0,
         curNav: '',
         curIndex: 0,
@@ -78,7 +79,10 @@ var Recharge = (_temp2 = _class = function (_BaseComponent) {
         hasnext: true,
         successboolean: false,
         logList: [],
-        markBoolean: false
+        markBoolean: false,
+        Loadingtime: 0,
+        count: 0,
+        iscz: true
       };
     }
   }, {
@@ -119,14 +123,42 @@ var Recharge = (_temp2 = _class = function (_BaseComponent) {
       });
     }
   }, {
-    key: "onCloseSuccess",
-    value: function onCloseSuccess() {
-      console.log('关闭成功');
+    key: "onClose1",
+    value: function onClose1() {
+      console.log('关闭弹出');
       this.setState({
         successboolean: false,
         markBoolean: false
       });
-      this.getUserDetail();
+    }
+  }, {
+    key: "onCloseSuccess",
+    value: function onCloseSuccess() {
+      var that = this;
+      console.log('关闭成功');
+      var time = setInterval(function () {
+        console.log("count:");
+        console.log(that.state.count++);
+        _index2.default.showLoading({
+          title: ''
+        });
+        if (that.state.count >= 5) {
+          clearInterval(time);
+          console.log('出来出来');
+          _index2.default.hideLoading();
+          that.getUserDetail();
+          if (Number(that.state.fee / 100) >= 100) {
+            console.log('大于100');
+            that.onScreen();
+            that.setState({
+              successboolean: false,
+              markBoolean: false
+            });
+          } else {
+            that.gohome();
+          }
+        }
+      }, 1000);
     }
     //获取列表
 
@@ -177,14 +209,21 @@ var Recharge = (_temp2 = _class = function (_BaseComponent) {
           console.log(res);
           var ismm = false;
           if (res.data.data.isscorepay == "1") {
-            ismm = false;
-          } else {
             ismm = true;
+          } else {
+            ismm = false;
           }
           var fee = res.data.data.fee;
           that.setState({
             fee: fee,
             isMM: ismm
+          });
+        },
+        fail: function fail(res) {
+          _index2.default.showToast({
+            title: '请检查网络',
+            icon: 'fail',
+            duration: 1000
           });
         }
       });
@@ -262,6 +301,19 @@ var Recharge = (_temp2 = _class = function (_BaseComponent) {
   }, {
     key: "ongenerateorder",
     value: function ongenerateorder(e) {
+      var _this3 = this;
+
+      this.setState({
+        iscz: false
+      });
+      if (!this.state.iscz) {
+        _index2.default.showToast({
+          title: '操作过于频繁，请稍后再试！',
+          icon: 'fail',
+          duration: 2000
+        });
+        return;
+      }
       console.log('点击充值');
       console.log(e);
       var that = this;
@@ -282,6 +334,9 @@ var Recharge = (_temp2 = _class = function (_BaseComponent) {
           'token': _index3.globalData.token
         }
       }).then(function (res) {
+        _this3.setState({
+          iscz: true
+        });
         console.log("成功");
         console.log(res.data);
         var orderid = res.data.data.orderid;
@@ -289,6 +344,9 @@ var Recharge = (_temp2 = _class = function (_BaseComponent) {
       }).catch(function (error) {
         console.log("接口异常");
         console.log(error);
+        _this3.setState({
+          iscz: true
+        });
       });
     }
   }, {
@@ -314,6 +372,128 @@ var Recharge = (_temp2 = _class = function (_BaseComponent) {
         _index2.default.hideLoading();
         // wx.navigateBack();
       }).catch(function (res) {});
+    }
+  }, {
+    key: "requestOpen",
+    value: function requestOpen(qrurl) {
+      _index2.default.showLoading({
+        title: ''
+      });
+      var that = this;
+      _index2.default.request({
+        url: _index3.BASE_URL + 'device/requestopen',
+        data: {
+          qrurl: qrurl
+        },
+        header: {
+          'content-type': 'application/json',
+          'token': _index3.globalData.token
+        },
+        method: "POST",
+        success: function success(res) {
+          _index2.default.hideLoading();
+          //检测是否可以开门
+          console.log("检测是否可以开门");
+          console.log(res);
+          if (res.data.code == 200) {
+            var machineid = res.data.data.machineid;
+            var lockid = res.data.data.lockid;
+            _index2.default.reLaunch({
+              url: '../box/open/open?machineid=' + machineid + '&lockid=' + lockid + '&formid='
+            });
+          } else if (res.data.code == 201) {
+            _index2.default.showToast({
+              title: '您有未结订单',
+              icon: 'fail',
+              duration: 2000
+            });
+          } else {
+            console.log('失败！');
+            _index2.default.showToast({
+              title: "机柜二维码错误",
+              icon: 'fail',
+              duration: 2000
+            });
+          }
+        },
+        fail: function fail(e) {
+          _index2.default.showToast({
+            title: '请求失败',
+            icon: 'fail',
+            duration: 2000
+          });
+        }
+      });
+    }
+  }, {
+    key: "onScreen",
+    value: function onScreen() {
+      console.log('扫码开门');
+      //未支付订单判断还没有写
+      var that = this;
+      _index2.default.showLoading({
+        title: ''
+      });
+      _index2.default.request({
+        url: _index3.BASE_URL + 'device/checkscan',
+        data: {},
+        header: {
+          'content-type': 'application/json',
+          'token': _index3.globalData.token
+        },
+        method: "POST"
+      }).then(function (res) {
+        console.log("扫码是否成功：");
+        console.log(res);
+        _index2.default.hideLoading();
+        if (res.data.code == 200) {
+          //扫码二维码
+          _index2.default.scanCode().then(function (res) {
+            //扫码二维码结果
+            console.log(res);
+            console.log(res.result);
+            that.requestOpen(res.result);
+          }).catch(function (res) {
+            console.log(res);
+          });
+        }
+        if (res.data.code == 201) {
+          console.log('您有未结订单');
+          _index2.default.showToast({
+            title: '您有未结订单',
+            icon: 'fail',
+            duration: 2000
+          });
+          that.gohome();
+        }
+        if (res.data.code == 202) {
+          console.log('您已被加入黑名单');
+          _index2.default.showToast({
+            title: '您的帐号异常！',
+            icon: 'fail',
+            duration: 2000
+          });
+          that.gohome();
+        }
+        if (res.data.code == 205) {
+          console.log('用户未登录');
+          _index2.default.showToast({
+            title: '用户未登录',
+            icon: 'fail',
+            duration: 2000
+          });
+          that.gohome();
+        }
+        if (res.data.code == 206) {
+          console.log('请开通支付分');
+          // Taro.showToast({
+          //   title: '请开通支付分',
+          //   icon: 'fail',
+          //   duration: 2000
+          // })
+          that.gohome();
+        }
+      });
     }
   }, {
     key: "onPay",
@@ -383,6 +563,13 @@ var Recharge = (_temp2 = _class = function (_BaseComponent) {
       });
     }
   }, {
+    key: "gohome",
+    value: function gohome() {
+      _index2.default.redirectTo({
+        url: '/pages/index/index'
+      });
+    }
+  }, {
     key: "onAnswer",
     value: function onAnswer() {
       console.log('有疑问请点击这里');
@@ -432,6 +619,8 @@ var Recharge = (_temp2 = _class = function (_BaseComponent) {
   }, {
     key: "_createData",
     value: function _createData() {
+      var _this4 = this;
+
       this.__state = arguments[0] || this.state || {};
       this.__props = arguments[1] || this.props || {};
       var __isRunloopRef = arguments[2];
@@ -439,7 +628,8 @@ var Recharge = (_temp2 = _class = function (_BaseComponent) {
 
       var _state = this.__state,
           navList = _state.navList,
-          logList = _state.logList;
+          logList = _state.logList,
+          isMM = _state.isMM;
 
 
       var price_format = function price_format(data) {
@@ -447,20 +637,11 @@ var Recharge = (_temp2 = _class = function (_BaseComponent) {
         var str1 = str.toFixed(2);
         return str1;
       };
-      var anonymousState__temp3 = price_format(this.__state.fee);
-      var anonymousState__temp4 = this.__state.ispayvalue ? Number(this.__state.payvalue.fee) / 100 + Number(this.__state.payvalue.giftfee) / 100 : null;
-      var anonymousState__temp5 = this.__state.successboolean ? Number(this.__state.payvalue.fee) / 100 + Number(this.__state.payvalue.giftfee) / 100 : null;
-      var loopArray0 = navList.map(function (post, index) {
-        post = {
-          $original: (0, _index.internal_get_original)(post)
-        };
-        var $loopState__temp2 = Number(post.$original.fee) / 100 + Number(post.$original.giftfee) / 100;
-        return {
-          $loopState__temp2: $loopState__temp2,
-          $original: post.$original
-        };
-      });
-      var loopArray1 = logList.map(function (posts) {
+      var anonymousState__temp11 = price_format(this.__state.fee);
+      var anonymousState__temp12 = this.__state.ispayvalue ? (this.__state.payvalue.fee / 100).toFixed(2) : null;
+      var anonymousState__temp13 = this.__state.ispayvalue ? (Number(this.__state.payvalue.fee) / 100 + Number(this.__state.payvalue.giftfee) / 100).toFixed(2) : null;
+      var anonymousState__temp14 = price_format(this.__state.fee);
+      var loopArray0 = logList.map(function (posts) {
         posts = {
           $original: (0, _index.internal_get_original)(posts)
         };
@@ -483,19 +664,50 @@ var Recharge = (_temp2 = _class = function (_BaseComponent) {
           $original: posts.$original
         };
       });
+      var loopArray1 = navList.map(function (post, index) {
+        post = {
+          $original: (0, _index.internal_get_original)(post)
+        };
+        var $loopState__temp10 = null;
+        var $loopState__temp8 = null;
+        var $loopState__temp6 = Number(post.$original.fee) / 100 + Number(post.$original.giftfee) / 100 + Number(price_format(_this4.__state.fee)) >= 100;
+        var $loopState__temp4 = null;
+        var $loopState__temp2 = null;
+
+        if (isMM) {
+          $loopState__temp2 = (Number(post.$original.giftfee) / 100).toFixed(2);
+          $loopState__temp4 = (Number(post.$original.fee) / 100 + Number(post.$original.giftfee) / 100).toFixed(2);
+        } else {
+          if ($loopState__temp6) {
+            console.log(Number(post.$original.fee) / 100 + Number(post.$original.giftfee) / 100 + Number(price_format(_this4.__state.fee)));
+            $loopState__temp8 = (Number(post.$original.giftfee) / 100).toFixed(2);
+            $loopState__temp10 = (Number(post.$original.fee) / 100 + Number(post.$original.giftfee) / 100).toFixed(2);
+          }
+        }
+        return {
+          $loopState__temp10: $loopState__temp10,
+          $loopState__temp8: $loopState__temp8,
+          $loopState__temp6: $loopState__temp6,
+          $loopState__temp4: $loopState__temp4,
+          $loopState__temp2: $loopState__temp2,
+          $original: post.$original
+        };
+      });
       Object.assign(this.__state, {
-        anonymousState__temp3: anonymousState__temp3,
-        anonymousState__temp4: anonymousState__temp4,
-        anonymousState__temp5: anonymousState__temp5,
+        anonymousState__temp11: anonymousState__temp11,
+        anonymousState__temp12: anonymousState__temp12,
+        anonymousState__temp13: anonymousState__temp13,
+        anonymousState__temp14: anonymousState__temp14,
         loopArray0: loopArray0,
-        loopArray1: loopArray1
+        loopArray1: loopArray1,
+        globalData: _index3.globalData
       });
       return this.__state;
     }
   }]);
 
   return Recharge;
-}(_index.Component), _class.properties = {}, _class.$$events = ["onselectNav", "onClose", "onAnswer", "ongenerateorder", "onCloseSuccess", "onMM"], _temp2);
+}(_index.Component), _class.properties = {}, _class.$$events = ["onselectNav", "onClose", "onAnswer", "ongenerateorder", "onClose1", "onCloseSuccess", "gohome"], _temp2);
 exports.default = Recharge;
 
 Component(require('../../npm/@tarojs/taro-weapp/index.js').default.createComponent(Recharge, true));

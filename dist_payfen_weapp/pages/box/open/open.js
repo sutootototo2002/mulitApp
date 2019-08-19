@@ -397,7 +397,7 @@ var Open = (_temp2 = _class = function (_BaseComponent) {
   }]);
 
   return Open;
-}(_index.Component), _class.properties = {}, _class.$$events = ["tryagain", "onClosePos", "onconcel"], _temp2);
+}(_index.Component), _class.properties = {}, _class.$$events = ["tryagain", "onClosePos", "onconcel", "onrecharge"], _temp2);
 exports.default = Open;
 
 Component(require('../../../npm/@tarojs/taro-weapp/index.js').default.createComponent(Open, true));

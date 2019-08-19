@@ -458,3 +458,14 @@
   font-size: 30rpx;
   width: 100%;
 }
+
+.wishlist {
+  width: 60%;
+  background: #fff;
+  border: 1rpx solid #ccc;
+  margin: auto;
+  border-radius: 0 0 10rpx 10rpx;
+  margin-top: -3rpx;
+  height: 200rpx;
+  overflow: scroll;
+}

@@ -135,9 +135,11 @@
                     <view class="seltitle">退款记录</view>
                 </view>
                 <view>
-                    <view class="answer1">退款金额：¥{{refundhistory.realfee / 100}}</view>
-                    <view class="answer1">退款流水：{{refundhistory.serialno}}</view>
-                    <view class="answer1">退款时间：{{refundhistory.fefundtime}}</view>
+                    <view wx:for="{{loopArray0}}" wx:for-item="item" wx:for-index="index">
+                        <view class="answer1">退款流水：{{item.$original.serialno}}</view>
+                        <view class="answer1">退款时间：{{item.$original.fefundtime}}</view>
+                        <view class="answer1">退款金额：{{item.$loopState__temp2}}元</view>
+                    </view>
                 </view>
             </view>
         </block>
@@ -149,7 +151,7 @@
         <view>
             <block>
                 <block wx:if="{{order.orderstatus !== '3'}}">
-                    <button type="default" class="btn" bindtap="gotoBack">返回</button>
+                    <button type="default" class="btn" bindtap="gotoBack">返回首页</button>
                 </block>
                 <block wx:else>
                     <button type="default" class="btn" bindtap="gotoBack">重新开门</button>
