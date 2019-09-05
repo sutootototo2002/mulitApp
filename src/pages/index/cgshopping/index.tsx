@@ -158,7 +158,7 @@ class Index extends Component<{}, IState>{
                       Taro.redirectTo({
                         url: '/pages/orders/orderdetail/orderdetail?orderid=' + orderid + '&whereis=cgshop'
                       })
-                    },3000)
+                    },1000)
                  
                 } else if (orderstatus == "6") { //6已欠费
                   
@@ -584,7 +584,7 @@ class Index extends Component<{}, IState>{
                 <Image className='addricon1' src={this.state.icon1}/>
                 <View className='addr1'>{this.state.machine.machinename}</View>
                 <View className='addr2'>{this.state.machine.location}{this.state.machine.dailaddress}</View>
-                <Button className='toSever1' onClick={this.goKefu}>联系客服</Button>
+                {/* <Button className='toSever1' onClick={this.goKefu}>联系客服</Button> */}
           </View>
           {this.state.promotions>0?
           <View className='promotionInfo'>本次购物会在结算时享受优惠活动，请关门后查看</View>

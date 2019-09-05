@@ -481,7 +481,7 @@ class Index extends Component<{}, IState>{
                   :
                   <View className='boxName'>{globalData.nickName}</View>
                   }
-                  <Button className='boxInfo' onClick={this.goRecharge}>充值优惠</Button>
+                  {/* <Button className='boxInfo' onClick={this.goRecharge}>充值优惠</Button> */}
                   <View className='boxUl'>
                      <View className='uli' onClick={this.goRecharge}>
                        <View className='wordb'>￥{price_format(this.state.userInfoList.fee)}</View>

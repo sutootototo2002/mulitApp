@@ -16,7 +16,6 @@
                             <view class="boxName">{{globalData.nickName}}</view>
                         </block>
                     </block>
-                    <button class="boxInfo" bindtap="goRecharge">充值优惠</button>
                     <view class="boxUl">
                         <view class="uli" bindtap="goRecharge">
                             <view class="wordb">￥{{anonymousState__temp}}</view>

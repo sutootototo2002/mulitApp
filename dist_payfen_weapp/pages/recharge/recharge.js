@@ -39,7 +39,7 @@ var Recharge = (_temp2 = _class = function (_BaseComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Recharge.__proto__ || Object.getPrototypeOf(Recharge)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp11", "anonymousState__temp12", "anonymousState__temp13", "anonymousState__temp14", "loopArray0", "loopArray1", "navList", "isMM", "logList", "globalData", "mhhImg", "avatar", "tempavatar", "arrow", "del", "answer", "mm", "fee", "curNav", "curIndex", "realmoney", "wishes", "ispayvalue", "payvalue", "curPage", "logs", "total", "hasnext", "successboolean", "markBoolean", "Loadingtime", "count", "iscz"], _this.config = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Recharge.__proto__ || Object.getPrototypeOf(Recharge)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp5", "anonymousState__temp6", "anonymousState__temp7", "anonymousState__temp8", "loopArray0", "loopArray1", "navList", "logList", "globalData", "mhhImg", "avatar", "tempavatar", "arrow", "del", "answer", "mm", "isMM", "fee", "curNav", "curIndex", "realmoney", "wishes", "ispayvalue", "payvalue", "curPage", "logs", "total", "hasnext", "successboolean", "minrechage", "markBoolean", "Loadingtime", "count", "iscz"], _this.config = {
       navigationBarTitleText: '我的储值'
     }, _this.$$refs = [], _temp), _possibleConstructorReturn(_this, _ret);
   }
@@ -78,6 +78,7 @@ var Recharge = (_temp2 = _class = function (_BaseComponent) {
         total: 0,
         hasnext: true,
         successboolean: false,
+        minrechage: 0,
         logList: [],
         markBoolean: false,
         Loadingtime: 0,
@@ -91,8 +92,9 @@ var Recharge = (_temp2 = _class = function (_BaseComponent) {
       console.log('---onload-rechange---');
       console.log(this.$router.params);
       this.setState({
-        avatar: this.$router.params.avatar,
-        fee: this.$router.params.fee
+        avatar: this.$router.params.avatar || _index3.globalData.avatar,
+        fee: this.$router.params.fee || _index3.globalData.fee,
+        minrechage: this.$router.params.minrechage || _index3.globalData.minrechage
       });
       this.getUserDetail();
       this.onloadData();
@@ -147,7 +149,7 @@ var Recharge = (_temp2 = _class = function (_BaseComponent) {
           console.log('出来出来');
           _index2.default.hideLoading();
           that.getUserDetail();
-          if (Number(that.state.fee / 100) >= 100) {
+          if (Number((that.state.fee - that.state.minrechage) / 100) > that.state.minrechage) {
             console.log('大于100');
             that.onScreen();
             that.setState({
@@ -178,7 +180,8 @@ var Recharge = (_temp2 = _class = function (_BaseComponent) {
           y: ''
         },
         header: {
-          'content-type': 'application/json' // 默认值
+          'content-type': 'application/json',
+          'token': _index3.globalData.token
         }
       }).then(function (res) {
         _index2.default.hideLoading();
@@ -619,8 +622,6 @@ var Recharge = (_temp2 = _class = function (_BaseComponent) {
   }, {
     key: "_createData",
     value: function _createData() {
-      var _this4 = this;
-
       this.__state = arguments[0] || this.state || {};
       this.__props = arguments[1] || this.props || {};
       var __isRunloopRef = arguments[2];
@@ -637,11 +638,23 @@ var Recharge = (_temp2 = _class = function (_BaseComponent) {
         var str1 = str.toFixed(2);
         return str1;
       };
-      var anonymousState__temp11 = price_format(this.__state.fee);
-      var anonymousState__temp12 = this.__state.ispayvalue ? (this.__state.payvalue.fee / 100).toFixed(2) : null;
-      var anonymousState__temp13 = this.__state.ispayvalue ? (Number(this.__state.payvalue.fee) / 100 + Number(this.__state.payvalue.giftfee) / 100).toFixed(2) : null;
-      var anonymousState__temp14 = price_format(this.__state.fee);
-      var loopArray0 = logList.map(function (posts) {
+      var anonymousState__temp5 = price_format(this.__state.fee);
+      var anonymousState__temp6 = this.__state.ispayvalue ? (this.__state.payvalue.fee / 100).toFixed(2) : null;
+      var anonymousState__temp7 = this.__state.ispayvalue ? (Number(this.__state.payvalue.fee) / 100 + Number(this.__state.payvalue.giftfee) / 100).toFixed(2) : null;
+      var anonymousState__temp8 = price_format(this.__state.fee);
+      var loopArray0 = navList.map(function (post, index) {
+        post = {
+          $original: (0, _index.internal_get_original)(post)
+        };
+        var $loopState__temp2 = (Number(post.$original.giftfee) / 100).toFixed(2);
+        var $loopState__temp4 = (Number(post.$original.fee) / 100 + Number(post.$original.giftfee) / 100).toFixed(2);
+        return {
+          $loopState__temp2: $loopState__temp2,
+          $loopState__temp4: $loopState__temp4,
+          $original: post.$original
+        };
+      });
+      var loopArray1 = logList.map(function (posts) {
         posts = {
           $original: (0, _index.internal_get_original)(posts)
         };
@@ -664,40 +677,11 @@ var Recharge = (_temp2 = _class = function (_BaseComponent) {
           $original: posts.$original
         };
       });
-      var loopArray1 = navList.map(function (post, index) {
-        post = {
-          $original: (0, _index.internal_get_original)(post)
-        };
-        var $loopState__temp10 = null;
-        var $loopState__temp8 = null;
-        var $loopState__temp6 = Number(post.$original.fee) / 100 + Number(post.$original.giftfee) / 100 + Number(price_format(_this4.__state.fee)) >= 100;
-        var $loopState__temp4 = null;
-        var $loopState__temp2 = null;
-
-        if (isMM) {
-          $loopState__temp2 = (Number(post.$original.giftfee) / 100).toFixed(2);
-          $loopState__temp4 = (Number(post.$original.fee) / 100 + Number(post.$original.giftfee) / 100).toFixed(2);
-        } else {
-          if ($loopState__temp6) {
-            console.log(Number(post.$original.fee) / 100 + Number(post.$original.giftfee) / 100 + Number(price_format(_this4.__state.fee)));
-            $loopState__temp8 = (Number(post.$original.giftfee) / 100).toFixed(2);
-            $loopState__temp10 = (Number(post.$original.fee) / 100 + Number(post.$original.giftfee) / 100).toFixed(2);
-          }
-        }
-        return {
-          $loopState__temp10: $loopState__temp10,
-          $loopState__temp8: $loopState__temp8,
-          $loopState__temp6: $loopState__temp6,
-          $loopState__temp4: $loopState__temp4,
-          $loopState__temp2: $loopState__temp2,
-          $original: post.$original
-        };
-      });
       Object.assign(this.__state, {
-        anonymousState__temp11: anonymousState__temp11,
-        anonymousState__temp12: anonymousState__temp12,
-        anonymousState__temp13: anonymousState__temp13,
-        anonymousState__temp14: anonymousState__temp14,
+        anonymousState__temp5: anonymousState__temp5,
+        anonymousState__temp6: anonymousState__temp6,
+        anonymousState__temp7: anonymousState__temp7,
+        anonymousState__temp8: anonymousState__temp8,
         loopArray0: loopArray0,
         loopArray1: loopArray1,
         globalData: _index3.globalData

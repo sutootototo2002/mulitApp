@@ -6,7 +6,7 @@
                 <view class="priceDiv">
                     <view>
                         <view class="price0">￥</view>
-                        <view class="price1">{{anonymousState__temp11}}</view>
+                        <view class="price1">{{anonymousState__temp5}}</view>
                     </view>
                     <view class="mhhword">账户余额</view>
                 </view>
@@ -15,30 +15,18 @@
             <image class="boxOne1" src="{{globalData.avatar ? globalData.avatar : tempavatar}}"></image>
             <view class="main_">
                 <block wx:if="{{!isMM}}">
-                    <view class="infoD">*为保证您能够正常购物，购物前储值账户余额应大于100元。</view>
+                    <view class="infoD">*为保证您能够正常购物，购物前储值账户余额应大于{{minrechage}}元。</view>
                 </block>
-                <block wx:for="{{loopArray1}}" wx:for-item="post" wx:for-index="index">
-                    <block wx:if="{{isMM}}">
-                        <view class="{{curNav == post.$original.activityid ? 'box1 select' : 'box1'}}" data-money="{{post.$original}}" data-key="{{index}}" data-id="{{post.$original.activityid}}" bindtouchstart="onselectNav" data-e-touchstart-so="this">
-                            <view class="price">{{post.$original.fee / 100}}元</view>
-                            <view class="prices">+赠{{post.$loopState__temp2}}元，到账{{post.$loopState__temp4}}元</view>
-                            <image class="pro" src="{{arrow}}"></image>
-                        </view>
-                    </block>
-                    <block wx:elif="{{post.$loopState__temp6}}">
-                        <view class="{{curNav == post.$original.activityid ? 'box1 select' : 'box1'}}" data-money="{{post.$original}}" data-key="{{index}}" data-id="{{post.$original.activityid}}" bindtouchstart="onselectNav" data-e-touchstart-so="this">
-                            <view class="price">{{post.$original.fee / 100}}元</view>
-                            <view class="prices">+赠{{post.$loopState__temp8}}元，到账{{post.$loopState__temp10}}元</view>
-                            <image class="pro" src="{{arrow}}"></image>
-                        </view>
-                    </block>
-                    <block wx:else></block>
-                </block>
+                <view class="{{curNav == post.$original.activityid ? 'box1 select' : 'box1'}}" data-money="{{post.$original}}" data-key="{{index}}" data-id="{{post.$original.activityid}}" bindtouchstart="onselectNav" wx:for="{{loopArray0}}" wx:for-item="post" wx:for-index="index" data-e-touchstart-so="this">
+                    <view class="price">{{post.$original.fee / 100}}元</view>
+                    <view class="prices">+赠{{post.$loopState__temp2}}元，到账{{post.$loopState__temp4}}元</view>
+                    <image class="pro" src="{{arrow}}"></image>
+                </view>
             </view>
             <view class="mingxi">
                 <view class="mxTitle">——— 零钱明细 ———</view>
                 <view class="mxList">
-                    <view class="mxli" wx:for="{{loopArray0}}" wx:for-item="posts" wx:for-index="_anonIdx">
+                    <view class="mxli" wx:for="{{loopArray1}}" wx:for-item="posts" wx:for-index="_anonIdx">
                         <view class="xmname">{{posts.name}}</view>
                         <view class="xmtime">{{posts.$original.createtime}}</view>
                         <view class="xmprice">{{posts.$original.fee / 100}}元</view>
@@ -58,7 +46,7 @@
                             </view>
                             <view class="payinfo">
                                 <view class="pinfo1">充值信息</view>
-                                <view class="pinfo2">充值{{anonymousState__temp12}}元，到账{{anonymousState__temp13}}元</view>
+                                <view class="pinfo2">充值{{anonymousState__temp6}}元，到账{{anonymousState__temp7}}元</view>
                             </view>
                             <block>
                                 <block wx:if="{{isMM}}">
@@ -70,7 +58,7 @@
                                 <block wx:else>
                                     <view class="ts">
                                         <view class="ts1">温馨提示：</view>
-                                        <view class="ts2">为保证您能够正常购物，购物前储值账户余额应大于100元，当前账号余额为￥{{anonymousState__temp14}}</view>
+                                        <view class="ts2">为保证您能够正常购物，购物前储值账户余额应大于{{minrechage}}元，当前账号余额为￥{{anonymousState__temp8}}</view>
                                     </view>
                                 </block>
                             </block>

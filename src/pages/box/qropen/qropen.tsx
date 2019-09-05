@@ -312,10 +312,8 @@ class Qropen extends Component<{}, IState>{
           globalData.fee = res.data.data.fee;
           globalData.avatar = res.data.data.avatar;
           globalData.nickname = res.data.data.nickname;
-          
-
-         
-          
+          globalData.minrechage = res.data.data.minrechage/100;
+        
           if (havearrears == "1") {
             that.getUnpayOrder();
             
@@ -337,7 +335,7 @@ class Qropen extends Component<{}, IState>{
                   pay:true,
                  
                 });
-                if((res.data.data.fee/100)>=100){
+                if((res.data.data.fee/100)>=globalData.minrechage){
                   console.log('>100')
                  
                   that.setState({
@@ -355,7 +353,7 @@ class Qropen extends Component<{}, IState>{
                 }
                 
               }else{
-                if((res.data.data.fee/100)>=100){
+                if((res.data.data.fee/100)>globalData.minrechage){
                   console.log('>100')
                  
                   that.setState({
@@ -976,7 +974,7 @@ class Qropen extends Component<{}, IState>{
  rechFn(){
   count = 0;
   Taro.navigateTo({
-    url: '/pages/recharge/recharge?avatar=' + globalData.avatar + '&nickname=' + globalData.nickname+'&fee='+globalData.fee
+    url: '/pages/recharge/recharge?avatar=' + globalData.avatar + '&nickname=' + globalData.nickname+'&fee='+globalData.fee++'&minrechage='+globalData.minrechage
   })
 }
 
@@ -1042,9 +1040,9 @@ onconcel(){
         {this.state.islogin?
         <View>
           <Image className='loadImg' src={this.state.loadImg1}/>
-          <View className='infoZm'>小主,还没有注册没办法购物哦!</View>
+          <View className='infoZm'>小主,还没有开通没办法购物哦!</View>
           <Form>
-            <Button open-type="getPhoneNumber" onGetPhoneNumber={this.getPhoneNumber.bind(this)} className='Btn btnopen'>注册</Button>
+            <Button open-type="getPhoneNumber" onGetPhoneNumber={this.getPhoneNumber.bind(this)} className='Btn btnopen'>开通</Button>
           </Form>
         </View>
         :

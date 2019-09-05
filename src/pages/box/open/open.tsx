@@ -85,7 +85,7 @@ class Open extends Component<{}, IState>{
         lockid:this.$router.params.lockid,
         machineid:this.$router.params.machineid
     })
-    this.open();
+    
     this.deviceOpen(this.$router.params.machineid, this.$router.params.lockid);
   }
   componentDidMount () {
@@ -107,9 +107,7 @@ class Open extends Component<{}, IState>{
   // 在 App 类中的 render() 函数没有实际作用
   // 请勿修改此函数
   deviceOpen(machineid, lockid) {
-    Taro.showLoading({
-      title: '',
-    });
+    
     var that = this;
     Taro.request({
       url: BASE_URL + 'device/open',
@@ -124,7 +122,7 @@ class Open extends Component<{}, IState>{
       },
       method: "POST",
       success: function (res) {
-        Taro.hideLoading();
+        
         var code = res.data.code;
         if (code == 200) {
           orderid = res.data.data.orderid;
@@ -208,25 +206,25 @@ class Open extends Component<{}, IState>{
   }
   open() {
     var that = this;
-    var interval = setInterval(function () {
-      var newtag = iNow +1;
-      that.setState({
-        tag: newtag,
-      });
+    // var interval = setInterval(function () {
+    //   var newtag = iNow +1;
+    //   that.setState({
+    //     tag: newtag,
+    //   });
 
-      //循环执行代码 
-      if (requestfailed) {
-        console.log('---循环执行代码0000 ---');
-        //that.openStatus();
-      } else {
-        console.log('---停止循环执行代码2222222 ---');
-        that.setState({
-          tag: 100,
-        });
-        clearInterval(interval)
-      }
+    //   //循环执行代码 
+    //   if (requestfailed) {
+    //     console.log('---循环执行代码0000 ---');
+    //     //that.openStatus();
+    //   } else {
+    //     console.log('---停止循环执行代码2222222 ---');
+    //     that.setState({
+    //       tag: 100,
+    //     });
+    //     clearInterval(interval)
+    //   }
 
-    },800); //循环时间1秒 
+    // },800); //循环时间1秒 
     
   }
   openStatus() {
@@ -381,8 +379,11 @@ class Open extends Component<{}, IState>{
 
           {!this.state.openfailed?
           <View>
-         <View className="loader">{this.state.tag}%</View>
+         <View className="loader">
+            <View class="loader-11"></View>
+         </View>
            <Image className='loadImg' src={this.state.loadImg}/>
+            
           <View className='openlock'>开锁中，听到开锁声就可以购物啦！</View>
           </View>
           :

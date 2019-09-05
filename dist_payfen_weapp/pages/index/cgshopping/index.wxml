@@ -21,7 +21,6 @@
             <image class="addricon1" src="{{icon1}}"></image>
             <view class="addr1">{{machine.machinename}}</view>
             <view class="addr2">{{machine.location}}{{machine.dailaddress}}</view>
-            <button class="toSever1" bindtap="goKefu">联系客服</button>
         </view>
         <block>
             <block wx:if="{{promotions > 0}}">

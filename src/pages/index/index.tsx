@@ -50,11 +50,7 @@ import {login} from '../../utils/util.js';
 
 var order = require("../../utils/order.js");
 
-// import location from '../../assets/images/location.png'
-
 import wishImg from '../../assets/images/syxytb.png'
-
-// import juan from '../../assets/images/juan.png'
 
 import flag from '../../assets/images/jgtb.png'
 
@@ -91,7 +87,6 @@ interface IState {
   person: string,
   zm: string,
   dw: string,
-  
   token: string,
   commonCode: string,
   checkPapay: boolean,//是否开通免密
@@ -106,7 +101,6 @@ interface IState {
   pos_: string,
   addr: string,
   mach: string,
-  
   HearBoolean: boolean,
   HearlistBoolean: boolean,
   HearHead: string,
@@ -193,8 +187,8 @@ export default class Index extends Component<{}, IState>{
       dyzh: PATH + 'dyz_f.png',
       xydd: PATH + 'xyd_img.png',
       singinImg:PATH+'gban.png',
-      wzc10:PATH+'wzcNew-22.png',
-      wzc11:PATH+'wzcNew-11.png',
+      wzc10:PATH+'wzcNew-66.png',
+      wzc11:PATH+'wzcNew-55.png',
       wzc30:PATH+'wzcNew-33.png',
       wzc33:PATH+'wzcNew-44.png',
       setp1:true,
@@ -247,20 +241,18 @@ export default class Index extends Component<{}, IState>{
   }
 
   componentWillReceiveProps(nextProps: any) {
-    console.log(this.props, nextProps)
+    //console.log(this.props, nextProps)
   }
   componentWillMount() {
     this_ = this;
     console.log('---onLoad---')
      if (Taro.getEnv() == "ALIPAY") {
         globalData.isweapp=false;
-        //console.log('**支付宝端(isweapp为false)**'+globalData.isweapp)
         }
     if (Taro.getEnv() == "WEAPP") {
         globalData.isweapp=true;
-        //console.log('**微信端(isweapp为true)**'+globalData.isweapp)
     }
-    this.mapObj = Taro.createMapContext("mymap"); //获取地图控件
+    this.mapObj = Taro.createMapContext("mymap"); 
     var that = this;
     Taro.getSystemInfo({
     }).then((res: { windowWidth: number; windowHeight: number; }) => {
@@ -287,13 +279,11 @@ export default class Index extends Component<{}, IState>{
   }
   
   componentDidShow() {
-    console.log('---onshow1111111111111111111111---')
+    console.log('---onshow---')
     this.setState({
       HearlistBoolean: false,
       machineBoolean:false
     })
- 
-
     var that = this;
     if(this.state.singinBoolean== true && this.state.setp1==false && this.state.setp2==true){
       Taro.showLoading({
@@ -323,12 +313,10 @@ export default class Index extends Component<{}, IState>{
 
   //setp1 点击获取手机号码授权
   getPhoneNumber(e){
-    console.log(e.detail.errMsg)
     var that = this;
     if (e.detail.errMsg == 'getPhoneNumber:ok') {
       var that = this;
       Taro.login().then((res)=>{
-         console.log(res)
          var code = res.code;  //获取code
          console.log('开始登录:' + code);
          function succeeded(res) {
@@ -362,7 +350,6 @@ export default class Index extends Component<{}, IState>{
 
   }
   checkPapay() {
-    console.log('checkpaypay11111')
     var that = this;
     let data1 = Taro.getStorageSync('userInfo');
   
@@ -376,6 +363,7 @@ export default class Index extends Component<{}, IState>{
       success: function (res) {
         if (res.data.code == 200) {
           var havearrears = res.data.data.havearrears;
+          globalData.minrechage = res.data.data.minrechage/100;
           if(havearrears=='0'){
             that.setState({
                 markBoolean:false,
@@ -384,7 +372,7 @@ export default class Index extends Component<{}, IState>{
             })
           }
           var isscorepay = res.data.data.isscorepay;
-          if((res.data.data.fee/100)>=100){
+          if((res.data.data.fee/100)>globalData.minrechage){
             that.setState({
               singinBoolean:false,
               isrchange:false,
@@ -513,7 +501,6 @@ export default class Index extends Component<{}, IState>{
     if (compareVersion(version, '7.0.3') >= 0) {
         //console.log('支付分高于7.0，3');
         count++;
-        console.log("count:"+count)
         this.start();
     } else {
       //console.log('支付分低于7.0，3');
@@ -593,26 +580,23 @@ export default class Index extends Component<{}, IState>{
            var $markBoolean = true;
            var $isrchange = false;
            var $bool = false;
-           
            var $avatarUrl = res.data.data.avatar;
            globalData.avatar = $avatarUrl;
            globalData.fee = res.data.data.fee;
-           
-
+           globalData.minrechage = res.data.data.minrechage/100;
            if(res.data.data.nickname){
-            globalData.nickname = res.data.data.nickname;
-
-            that.setState({
-               isperson:true
-            })
+              globalData.nickname = res.data.data.nickname;
+              that.setState({
+                isperson:true
+              })
            }else{
-            that.setState({
-              isperson:false
-           })
+              that.setState({
+                isperson:false
+            })
            }
 
-           if((res.data.data.fee/100)>=100){
-            console.log('>100')
+           if((res.data.data.fee/100)>globalData.minrechage){
+            console.log('大于100')
             $isrchange = false;
             $markBoolean = false;
             $singinBoolean = false;
@@ -663,14 +647,17 @@ export default class Index extends Component<{}, IState>{
                   $singinBoolean = true;
                   $markBoolean = true;
                   $bool = false;
+                  that.setState({
+                         haveShopping: false
+                      });
                 }
            }
 
            if(res.data.data.havearrears=="1"){
               that.setState({
-                  bool:false,
+                  bool:false
               })
-              that.getUnpayOrder()
+              that.getUnpayOrder();
            }else{
              console.log('没有未结订单！')
              if(res.data.data.havearrears=="0"){
@@ -1112,39 +1099,42 @@ export default class Index extends Component<{}, IState>{
   }
   //检查是否购买过商品
   checkShopping(){
-    console.log('是否购买过商品：1111111111')
+   
     var that = this;
     order.shoppingorder(function successed(result) {
-      console.log("result:")
-      console.log(result)
-      // 如果有购物中订单，设置页面状态，并开启轮询
+     
       var orderid = result.orderid;
       var machineid = result.machineid;
       var orderno = result.orderno;
       var recogmode = result.recogmode;
-
-      Taro.setStorageSync('goodsResult',result)
+      Taro.setStorageSync('goodsResult',result);
       that.setState({
         bool:false,
-        cartTips: '您有一张订单正在购物中',
         orderid: orderid,
         machineid: machineid,
         orderno: orderno,
         recogmode: recogmode,
         markBoolean:true,
-        haveShopping: true,
-        
+        haveShopping: false
       });
       order.startqueryorderstatus(orderid, function succeeded(res) {
-          console.log('res:订单数据');
-          console.log(res);
           var orderstatus = res.data.data.orderstatus;
           var doorstatus = res.data.data.doorstatus;
-
           if(res.data.code == 200){
             that.setState({
-              bool:false
+              bool:false,
+              haveShopping: true
             });
+             if(doorstatus=='4' && (orderstatus != "6" && orderstatus != "3" && orderstatus != "5" && orderstatus != "8" && orderstatus != "9")){  
+                that.setState({
+                  cartTips: '您的购物正在结算，稍后为您推送购物信息',
+                  bool:false,
+                  markBoolean:true,
+                  haveShopping: true
+                });
+                return
+              }
+              
             if (orderstatus == "5" || orderstatus == "3" || orderstatus == "8" || orderstatus == "9") { //5已付款 3已取消 8已完成 9 错误
                 console.log('------执行这里-----------')  
                 order.stopInterval();
@@ -1160,15 +1150,10 @@ export default class Index extends Component<{}, IState>{
                   })
                  }, 2000);
                 
-              }else if(orderstatus == "6"){
-                  //order.stopInterval();
-                  //that.requestPay(orderid);
-                  //that.getUnpayOrder();
-                  //that.gohome();
-              }else{
-                console.log('------苏晓燕1111111您有一张订单正在结算中-----')
+              }else {
+                console.log('------您有一张订单正在结算中-----')
                 that.setState({
-                  cartTips: '您有一张订单正在结算中',
+                  cartTips: '您有一张购物中订单，请及时关门',
                   bool:false,
                   markBoolean:true,
                   haveShopping: true
@@ -1917,7 +1902,7 @@ getNearbyMachines(latitude: Number, longitude: Number) {
   }
   rechFn(){
     Taro.navigateTo({
-      url: '/pages/recharge/recharge?avatar=' + globalData.avatar + '&nickname=' + globalData.nickname+'&fee='+globalData.fee
+      url: '/pages/recharge/recharge?avatar=' + globalData.avatar + '&nickname=' + globalData.nickname+'&fee='+globalData.fee+'&minrechage='+globalData.minrechage
     })
   }
   redoFn(){
@@ -1932,8 +1917,8 @@ getNearbyMachines(latitude: Number, longitude: Number) {
     })
    
     if (e.type == 'end') {
-      if (this.mapContext) {
-        this.mapContext.getCenterLocation({
+      if (this.mapObj) {
+        this.mapObj.getCenterLocation({
           success: function (res) {
             // that.setData({
             //   latitude: res.latitude,
@@ -2137,7 +2122,7 @@ getNearbyMachines(latitude: Number, longitude: Number) {
                </CoverView>
              <CoverView className='sinfo'>亲！{systemUser}恭候您多时啦...</CoverView>
              {this.state.setp1 && 
-             <Button className='singBtn' open-type="getPhoneNumber" onGetPhoneNumber={this.getPhoneNumber.bind(this)} >我去注册</Button>
+             <Button className='singBtn' open-type="getPhoneNumber" onGetPhoneNumber={this.getPhoneNumber.bind(this)} >我去开通</Button>
              }
               {this.state.setp2 && 
              <Button className='singBtn' onClick={this.gotopayfen} onTouchStart={this.gotopayfen} >开通支付分</Button>
@@ -2155,8 +2140,8 @@ getNearbyMachines(latitude: Number, longitude: Number) {
         {this.state.haveShopping?
           <CoverView className='boxInfo' onClick={this.onInfo}>
             <CoverImage className='posImg' src={this.state.dw} />
-            <CoverView className='info'>亲！您有一张购物中订单</CoverView>
-            <CoverView className='btnOpen' data-orderid='{{orderid}}' data-machineid='{{machineid}}' data-orderno='{{orderno}}' data-recogmode='{{recogmode}}' onClick={this.gotoCart}>打开订单</CoverView>
+            <CoverView className='info'>{this.state.cartTips}</CoverView>
+            {/* <CoverView className='btnOpen' data-orderid='{{orderid}}' data-machineid='{{machineid}}' data-orderno='{{orderno}}' data-recogmode='{{recogmode}}' onClick={this.gotoCart}>打开订单</CoverView> */}
             
           </CoverView>
           :

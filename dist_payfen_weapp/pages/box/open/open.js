@@ -96,7 +96,6 @@ var Open = (_temp2 = _class = function (_BaseComponent) {
         lockid: this.$router.params.lockid,
         machineid: this.$router.params.machineid
       });
-      this.open();
       this.deviceOpen(this.$router.params.machineid, this.$router.params.lockid);
     }
   }, {
@@ -122,9 +121,6 @@ var Open = (_temp2 = _class = function (_BaseComponent) {
   }, {
     key: 'deviceOpen',
     value: function deviceOpen(machineid, lockid) {
-      _index2.default.showLoading({
-        title: ''
-      });
       var that = this;
       _index2.default.request({
         url: _index3.BASE_URL + 'device/open',
@@ -139,7 +135,6 @@ var Open = (_temp2 = _class = function (_BaseComponent) {
         },
         method: "POST",
         success: function success(res) {
-          _index2.default.hideLoading();
           var code = res.data.code;
           if (code == 200) {
             orderid = res.data.data.orderid;
@@ -225,23 +220,23 @@ var Open = (_temp2 = _class = function (_BaseComponent) {
     key: 'open',
     value: function open() {
       var that = this;
-      var interval = setInterval(function () {
-        var newtag = 1;
-        that.setState({
-          tag: newtag
-        });
-        //循环执行代码 
-        if (requestfailed) {
-          console.log('---循环执行代码0000 ---');
-          //that.openStatus();
-        } else {
-          console.log('---停止循环执行代码2222222 ---');
-          that.setState({
-            tag: 100
-          });
-          clearInterval(interval);
-        }
-      }, 800); //循环时间1秒 
+      // var interval = setInterval(function () {
+      //   var newtag = iNow +1;
+      //   that.setState({
+      //     tag: newtag,
+      //   });
+      //   //循环执行代码 
+      //   if (requestfailed) {
+      //     console.log('---循环执行代码0000 ---');
+      //     //that.openStatus();
+      //   } else {
+      //     console.log('---停止循环执行代码2222222 ---');
+      //     that.setState({
+      //       tag: 100,
+      //     });
+      //     clearInterval(interval)
+      //   }
+      // },800); //循环时间1秒 
     }
   }, {
     key: 'openStatus',

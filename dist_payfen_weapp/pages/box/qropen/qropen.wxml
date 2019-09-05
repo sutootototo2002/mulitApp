@@ -3,9 +3,9 @@
         <block wx:if="{{islogin}}">
             <view>
                 <image class="loadImg" src="{{loadImg1}}"></image>
-                <view class="infoZm">小主,还没有注册没办法购物哦!</view>
+                <view class="infoZm">小主,还没有开通没办法购物哦!</view>
                 <form>
-                    <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" class="Btn btnopen" data-e-getphonenumber-so="this">注册</button>
+                    <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" class="Btn btnopen" data-e-getphonenumber-so="this">开通</button>
                 </form>
             </view>
         </block>

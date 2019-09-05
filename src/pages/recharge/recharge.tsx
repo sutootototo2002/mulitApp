@@ -40,9 +40,11 @@ interface IState {
   mm:string,
   tempavatar:string,
   isMM:boolean,
+  minrechage:Number,
   markBoolean:boolean,
   Loadingtime:Number,
   count:Number,
+  iscz:boolean
 }
 class Recharge extends Component<{}, IState>{
   /**
@@ -80,6 +82,7 @@ class Recharge extends Component<{}, IState>{
       total:0,
       hasnext:true,
       successboolean:false,
+      minrechage:0,
       logList:[],
       markBoolean: false,
       Loadingtime:0,
@@ -92,8 +95,9 @@ class Recharge extends Component<{}, IState>{
     console.log('---onload-rechange---')
     console.log(this.$router.params)
     this.setState({
-       avatar:this.$router.params.avatar,
-       fee:this.$router.params.fee
+       avatar:this.$router.params.avatar || globalData.avatar ,
+       fee:this.$router.params.fee || globalData.fee
+       minrechage:this.$router.params.minrechage || globalData.minrechage
     })
 
     this.getUserDetail();
@@ -146,7 +150,7 @@ class Recharge extends Component<{}, IState>{
           console.log('出来出来')
           Taro.hideLoading();
           that.getUserDetail();
-          if(Number(that.state.fee/100)>=100){
+          if(Number((that.state.fee - that.state.minrechage)/100)>that.state.minrechage){
             console.log('大于100');
             that.onScreen();
             that.setState({
@@ -173,7 +177,8 @@ class Recharge extends Component<{}, IState>{
         y: ''
       },
       header: {
-        'content-type': 'application/json' // 默认值
+        'content-type': 'application/json', // 默认值
+         'token': globalData.token
       }
     }).then((res)=>{
       Taro.hideLoading();
@@ -648,26 +653,14 @@ class Recharge extends Component<{}, IState>{
 
    
     const content = navList.map((post,index) => {
-      if(isMM){
-        return <View className={this.state.curNav == post.activityid?'box1 select':'box1'} data-money={post} data-key={index} data-id={post.activityid}  onTouchStart={this.onselectNav.bind(this)}  >
+
+      return <View className={this.state.curNav == post.activityid?'box1 select':'box1'} data-money={post} data-key={index} data-id={post.activityid}  onTouchStart={this.onselectNav.bind(this)}  >
         <View className='price'>{post.fee/100}元</View>
        
         <View className='prices'>+赠{(Number(post.giftfee)/100).toFixed(2)}元，到账{((Number(post.fee)/100)+(Number(post.giftfee)/100)).toFixed(2)}元</View>
         <Image className='pro' src={this.state.arrow}/>
       </View>
-      }else{
-        if((Number(post.fee)/100+Number(post.giftfee)/100+Number(price_format(this.state.fee)))>=100){
-          console.log(Number(post.fee)/100+Number(post.giftfee)/100+Number(price_format(this.state.fee)))
-          return <View className={this.state.curNav == post.activityid?'box1 select':'box1'} data-money={post} data-key={index} data-id={post.activityid}  onTouchStart={this.onselectNav.bind(this)}  >
-          <View className='price'>{post.fee/100}元</View>
-         
-          <View className='prices'>+赠{(Number(post.giftfee)/100).toFixed(2)}元，到账{(Number(post.fee)/100+Number(post.giftfee)/100).toFixed(2)}元</View>
-          <Image className='pro' src={this.state.arrow}/>
-        </View>
-        }
-      }
        
-     
     })
     const mxList = logList.map((posts)=>{
       let name = ''
@@ -713,7 +706,7 @@ class Recharge extends Component<{}, IState>{
               
               <View className='main_'>
                 {!this.state.isMM?
-                <View className='infoD'>*为保证您能够正常购物，购物前储值账户余额应大于100元。</View>
+                <View className='infoD'>*为保证您能够正常购物，购物前储值账户余额应大于{(this.state.minrechage)}元。</View>
                 :
                 ''
                 }
@@ -750,7 +743,7 @@ class Recharge extends Component<{}, IState>{
                     :
                      <View className='ts'>
                      <View className='ts1'>温馨提示：</View>
-                     <View className='ts2'>为保证您能够正常购物，购物前储值账户余额应大于100元，当前账号余额为￥{price_format(this.state.fee)}</View>
+                     <View className='ts2'>为保证您能够正常购物，购物前储值账户余额应大于{(this.state.minrechage)}元，当前账号余额为￥{price_format(this.state.fee)}</View>
                    </View>
                     }
                     

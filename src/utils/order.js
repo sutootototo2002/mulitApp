@@ -16,6 +16,7 @@ module.exports = {
   stopInterval: stopInterval,
   startqueryorderstatus:startqueryorderstatus,
   requestorderstatus:requestorderstatus
+  
 }
 //停止销毁轮询
 function stopInterval(){
@@ -46,7 +47,7 @@ function startqueryorderstatus(orderid,succeeded) {
 
       console.log(new Date() + '_' + globalData.requestcount);
 
-  }, 2000)
+  }, 1000)
 
   ArrayList.push(globalData.timerTem)
 
@@ -110,3 +111,4 @@ function requestorderstatus(orderid, succeeded) {
     }
   })
 }
+

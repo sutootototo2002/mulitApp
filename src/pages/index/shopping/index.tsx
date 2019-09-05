@@ -14,6 +14,7 @@ import {BASE_URL,globalData,PATH,HOST_WEBSOCKET,HOST_URL,systemUser} from '../..
 
 //import {} from '../../../utils/util.js';
 var order = require("../../../utils/order.js");
+// const socket = require("../../../utils/socket.js")
 
 import './index.scss'
 import { number } from 'prop-types';
@@ -96,13 +97,10 @@ class Index extends Component<{}, IState>{
       title:globalData.sysTitle
     })
     this_ = this;
-    console.log(this_);
-    console.log('重力柜数据')
-    console.log(this.$router.params)
+    var that = this;
     const machineid = this.$router.params.machineid;
     const orderid = this.$router.params.orderid;
     const orderno = this.$router.params.orderno;
-    var that = this;
     this.setState({
       machineid: machineid,
       orderid: orderid,
@@ -110,15 +108,17 @@ class Index extends Component<{}, IState>{
     })
     Taro.setStorageSync("routerinfo", this.$router.params);
     const routerinfo= Taro.getStorageSync('routerinfo'); 
-    //机柜详细信息
+    console.log('---第一步---')
     this.getMachineDetail();
     //得到
+    console.log('---第二步---')
     this.getShelfs();
     this.getPromotions(routerinfo.machineid);
+    console.log('---第三步---')
     this.cartitems();
     //获取订单状态
     //var orderid = that.data.orderid;
-      
+    console.log('---第四步---')
     order.startqueryorderstatus(orderid, function succeeded(res) {
          console.log('-----orderstatus444444-----');
          console.log(res);
@@ -146,7 +146,7 @@ class Index extends Component<{}, IState>{
                 Taro.redirectTo({
                   url: '/pages/orders/orderdetail/orderdetail?orderid=' + orderid + '&whereis=weight'
                 })
-               }, 3000);
+               }, 1000);
               
              } else if (orderstatus == "6") { //6已欠费
               
@@ -172,11 +172,11 @@ class Index extends Component<{}, IState>{
   componentDidShow () {}
 
   componentDidHide () {
-    order.stopInterval();
+    //order.stopInterval();
   }
   componentWillUnmount() {
     
-    order.stopInterval();
+    //order.stopInterval();
 
   }
 
@@ -202,7 +202,7 @@ class Index extends Component<{}, IState>{
         //检测是否可以开门
         if (res.data.code == 200) {
           var promotions = res.data.data;
-          console.log("promotions:success");
+          console.log("获取促销商品promotions:success");
           console.log(promotions);
           that.setState({
             promotions: promotions.length
@@ -444,7 +444,7 @@ class Index extends Component<{}, IState>{
           console.log('---cartitems---');
           console.log(result);
           var goods = result.data;
-          console.log('商品：');
+          console.log('获取商品：');
           console.log(goods);
           var weights = result.weights;
           var totalfee = result.totalfee;
@@ -461,7 +461,86 @@ class Index extends Component<{}, IState>{
       }
     })
   }
-  
+  connectServer1() {
+    const routerinfo= Taro.getStorageSync('routerinfo'); 
+    
+    var that = this;
+
+    Taro.connectSocket({
+      url: HOST_WEBSOCKET,
+      success: function () {
+        console.log('connect success::::::'+new Date())
+      }
+    }).then(task => {
+      console.log('task');
+      console.log(task);
+      task.onOpen(function () {
+        console.log('onOpen::::'+new Date())
+        var data = {
+          "orderno": routerinfo.orderno,
+          "message": "connect"
+        };
+        task.send({ data: data })
+      })
+      task.onMessage(function (task) {
+        console.log('onMessage::::::::::'+new Date())
+        console.log(task.data+'----'+'----'+typeof task.data);
+        that.setState({
+          cartgoods: JSON.parse(task.data).data
+        });
+        switch (JSON.parse(task.data).type) {
+          // Events.php中返回的init类型的消息，将client_id发给后台进行uid绑定
+          case 'ping':
+            break;
+          case 'init':
+            // 利用jquery发起ajax请求，将client_id发给后端进行uid绑定
+            // wx.showToast({
+            //   title: 'start',
+            // })
+            Taro.request({
+              method: 'POST',
+              data: {
+                'orderno': routerinfo.orderno,
+                'client_id': JSON.parse(task.data).client_id
+              },
+              url: HOST_URL + 'callbackapi/bind/bind',
+              header: {
+                'Accept': 'application/json',
+                'token': globalData.token
+              },
+              success: function (res) {
+                console.log("init::::");
+                console.log(res.data);
+              }
+            })
+            break;
+            default:
+              console.log('收到服务器内容：111111111111111111');
+              console.log(task);
+              var par = JSON.parse(task.data)
+              if (par.op == 'cart') {
+                console.log('收到购物车信息');
+                console.log(par.data)
+                that.setState({
+                  cartgoods: par.data
+                });
+              }
+
+          }
+
+        // task.close()
+      })
+      task.onError(function () {
+        console.log('onError:::::::'+new Date())
+      })
+      task.onClose(function (e) {
+        console.log('onClose::::::', e+new Date())
+      })
+    })
+
+    
+    
+  }
   connectServer() {
     const routerinfo= Taro.getStorageSync('routerinfo'); 
     
@@ -479,9 +558,6 @@ class Index extends Component<{}, IState>{
     })
     Taro.onSocketOpen((res)=>{
       console.log("WebSocket连接已打开！");
-      //  Taro.showToast({
-      //   title: '',
-      // })
       var data = {
         "orderno": routerinfo.orderno,
         "message": "connect"
@@ -492,9 +568,6 @@ class Index extends Component<{}, IState>{
 
     Taro.onSocketError(function (res) {
       console.log('WebSocket连接打开失败，请检查！')
-      // wx.showToast({
-      //   title: '连接打开失败',
-      // })
       console.log(res);
       if (shoudReconnet) {
         Taro.connectSocket({
@@ -518,8 +591,6 @@ class Index extends Component<{}, IState>{
       console.log('===onSocketMessage===')
       console.log(res);
       var data = JSON.parse(res.data);
-      // json数据转换成js对象
-      // var data = eval("(" + res.data + ")");
       var type = data.type || '';
       console.log("type:11111");
       console.log(type);
@@ -561,16 +632,13 @@ class Index extends Component<{}, IState>{
           var that = this;
           var result = res;
           var par = JSON.parse(result.data);
-          console.log(par);
+          //console.log(par);
           if (par.op == 'cart') {
             console.log('收到购物车信息');
+            console.log(par.data)
             var goods = par.data;
             var weights = par.weights;
             var totalfee = par.totalfee;
-            console.log(goods);
-            console.log(weights);
-            console.log(totalfee);
-            //that.aaa(goods,totalfee);
             console.log("this_:");
             console.log(this_);
             //aabb();
@@ -685,7 +753,7 @@ class Index extends Component<{}, IState>{
                 <Image className='addricon' src={this.state.icon1}/>
                 <View className='addr1'>{this.state.machine.machinename}</View>
                 <View className='addr2'>{this.state.machine.location}{this.state.machine.dailaddress}</View>
-                <Button className='toSever1' onClick={this.goKefu}>联系客服</Button>
+                {/* <Button className='toSever1' onClick={this.goKefu}>联系客服</Button> */}
           </View>
           {this.state.promotions>0?
           <View className='promotionInfo'>本次购物会在结算时享受优惠活动，请关门后查看</View>

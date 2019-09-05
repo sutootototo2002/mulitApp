@@ -47,7 +47,7 @@ function startqueryorderstatus(orderid, succeeded) {
     requestorderstatus(orderid, succeeded);
 
     console.log(new Date() + '_' + _index.globalData.requestcount);
-  }, 2000);
+  }, 1000);
 
   ArrayList.push(_index.globalData.timerTem);
 

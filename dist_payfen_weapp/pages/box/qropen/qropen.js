@@ -305,6 +305,7 @@ var Qropen = (_temp2 = _class = function (_BaseComponent) {
             _index3.globalData.fee = res.data.data.fee;
             _index3.globalData.avatar = res.data.data.avatar;
             _index3.globalData.nickname = res.data.data.nickname;
+            _index3.globalData.minrechage = res.data.data.minrechage / 100;
             if (havearrears == "1") {
               that.getUnpayOrder();
             }
@@ -323,7 +324,7 @@ var Qropen = (_temp2 = _class = function (_BaseComponent) {
                   isrchange: true,
                   pay: true
                 });
-                if (res.data.data.fee / 100 >= 100) {
+                if (res.data.data.fee / 100 >= _index3.globalData.minrechage) {
                   console.log('>100');
                   that.setState({
                     open: true,
@@ -338,7 +339,7 @@ var Qropen = (_temp2 = _class = function (_BaseComponent) {
                   });
                 }
               } else {
-                if (res.data.data.fee / 100 >= 100) {
+                if (res.data.data.fee / 100 > _index3.globalData.minrechage) {
                   console.log('>100');
                   that.setState({
                     open: true,
@@ -944,7 +945,7 @@ var Qropen = (_temp2 = _class = function (_BaseComponent) {
     value: function rechFn() {
       count = 0;
       _index2.default.navigateTo({
-        url: '/pages/recharge/recharge?avatar=' + _index3.globalData.avatar + '&nickname=' + _index3.globalData.nickname + '&fee=' + _index3.globalData.fee
+        url: '/pages/recharge/recharge?avatar=' + _index3.globalData.avatar + '&nickname=' + _index3.globalData.nickname + '&fee=' + _index3.globalData.fee++, '&minrechage=': +_index3.globalData.minrechage
       });
     }
   }, {

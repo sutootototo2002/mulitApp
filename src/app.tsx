@@ -38,8 +38,8 @@ class App extends Component {
       'pages/orders/orderdetail/orderdetail',
       'pages/orders/orderlist/orderlist',
       'pages/box/boxdetail/boxdetail',
-      'pages/box/qropen/qropen',
       'pages/card/bindcard',
+      'pages/box/qropen/qropen',
       'pages/box/open/open',
       'pages/refund/refund'
     ],

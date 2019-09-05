@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
@@ -33,6 +35,7 @@ var this_;
 
 //import {} from '../../../utils/util.js';
 var order = require("../../../utils/order.js");
+// const socket = require("../../../utils/socket.js")
 
 // 如果需要在 h5 环境中开启 React Devtools
 // 取消以下注释：
@@ -102,13 +105,10 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         title: _index3.globalData.sysTitle
       });
       this_ = this;
-      console.log(this_);
-      console.log('重力柜数据');
-      console.log(this.$router.params);
+      var that = this;
       var machineid = this.$router.params.machineid;
       var orderid = this.$router.params.orderid;
       var orderno = this.$router.params.orderno;
-      var that = this;
       this.setState({
         machineid: machineid,
         orderid: orderid,
@@ -116,14 +116,17 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
       });
       _index2.default.setStorageSync("routerinfo", this.$router.params);
       var routerinfo = _index2.default.getStorageSync('routerinfo');
-      //机柜详细信息
+      console.log('---第一步---');
       this.getMachineDetail();
       //得到
+      console.log('---第二步---');
       this.getShelfs();
       this.getPromotions(routerinfo.machineid);
+      console.log('---第三步---');
       this.cartitems();
       //获取订单状态
       //var orderid = that.data.orderid;
+      console.log('---第四步---');
       order.startqueryorderstatus(orderid, function succeeded(res) {
         console.log('-----orderstatus444444-----');
         console.log(res);
@@ -152,7 +155,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
               _index2.default.redirectTo({
                 url: '/pages/orders/orderdetail/orderdetail?orderid=' + orderid + '&whereis=weight'
               });
-            }, 3000);
+            }, 1000);
           } else if (orderstatus == "6") {
             //6已欠费
             this_.getUnpayOrder();
@@ -175,12 +178,12 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
   }, {
     key: "componentDidHide",
     value: function componentDidHide() {
-      order.stopInterval();
+      //order.stopInterval();
     }
   }, {
     key: "componentWillUnmount",
     value: function componentWillUnmount() {
-      order.stopInterval();
+      //order.stopInterval();
     }
   }, {
     key: "componentDidCatchError",
@@ -208,7 +211,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
           //检测是否可以开门
           if (res.data.code == 200) {
             var promotions = res.data.data;
-            console.log("promotions:success");
+            console.log("获取促销商品promotions:success");
             console.log(promotions);
             that.setState({
               promotions: promotions.length
@@ -454,7 +457,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
             console.log('---cartitems---');
             console.log(result);
             var goods = result.data;
-            console.log('商品：');
+            console.log('获取商品：');
             console.log(goods);
             var weights = result.weights;
             var totalfee = result.totalfee;
@@ -465,6 +468,81 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
             that.connectServer();
           }
         }
+      });
+    }
+  }, {
+    key: "connectServer1",
+    value: function connectServer1() {
+      var routerinfo = _index2.default.getStorageSync('routerinfo');
+      var that = this;
+      _index2.default.connectSocket({
+        url: _index3.HOST_WEBSOCKET,
+        success: function success() {
+          console.log('connect success::::::' + new Date());
+        }
+      }).then(function (task) {
+        console.log('task');
+        console.log(task);
+        task.onOpen(function () {
+          console.log('onOpen::::' + new Date());
+          var data = {
+            "orderno": routerinfo.orderno,
+            "message": "connect"
+          };
+          task.send({ data: data });
+        });
+        task.onMessage(function (task) {
+          console.log('onMessage::::::::::' + new Date());
+          console.log(task.data + '----' + '----' + _typeof(task.data));
+          that.setState({
+            cartgoods: JSON.parse(task.data).data
+          });
+          switch (JSON.parse(task.data).type) {
+            // Events.php中返回的init类型的消息，将client_id发给后台进行uid绑定
+            case 'ping':
+              break;
+            case 'init':
+              // 利用jquery发起ajax请求，将client_id发给后端进行uid绑定
+              // wx.showToast({
+              //   title: 'start',
+              // })
+              _index2.default.request({
+                method: 'POST',
+                data: {
+                  'orderno': routerinfo.orderno,
+                  'client_id': JSON.parse(task.data).client_id
+                },
+                url: _index3.HOST_URL + 'callbackapi/bind/bind',
+                header: {
+                  'Accept': 'application/json',
+                  'token': _index3.globalData.token
+                },
+                success: function success(res) {
+                  console.log("init::::");
+                  console.log(res.data);
+                }
+              });
+              break;
+            default:
+              console.log('收到服务器内容：111111111111111111');
+              console.log(task);
+              var par = JSON.parse(task.data);
+              if (par.op == 'cart') {
+                console.log('收到购物车信息');
+                console.log(par.data);
+                that.setState({
+                  cartgoods: par.data
+                });
+              }
+          }
+          // task.close()
+        });
+        task.onError(function () {
+          console.log('onError:::::::' + new Date());
+        });
+        task.onClose(function (e) {
+          console.log('onClose::::::', e + new Date());
+        });
       });
     }
   }, {
@@ -483,9 +561,6 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
       });
       _index2.default.onSocketOpen(function (res) {
         console.log("WebSocket连接已打开！");
-        //  Taro.showToast({
-        //   title: '',
-        // })
         var data = {
           "orderno": routerinfo.orderno,
           "message": "connect"
@@ -495,9 +570,6 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
       });
       _index2.default.onSocketError(function (res) {
         console.log('WebSocket连接打开失败，请检查！');
-        // wx.showToast({
-        //   title: '连接打开失败',
-        // })
         console.log(res);
         if (shoudReconnet) {
           _index2.default.connectSocket({
@@ -518,8 +590,6 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         console.log('===onSocketMessage===');
         console.log(res);
         var data = JSON.parse(res.data);
-        // json数据转换成js对象
-        // var data = eval("(" + res.data + ")");
         var type = data.type || '';
         console.log("type:11111");
         console.log(type);
@@ -560,16 +630,13 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
             var that = this;
             var result = res;
             var par = JSON.parse(result.data);
-            console.log(par);
+            //console.log(par);
             if (par.op == 'cart') {
               console.log('收到购物车信息');
+              console.log(par.data);
               var goods = par.data;
               var weights = par.weights;
               var totalfee = par.totalfee;
-              console.log(goods);
-              console.log(weights);
-              console.log(totalfee);
-              //that.aaa(goods,totalfee);
               console.log("this_:");
               console.log(this_);
               //aabb();
@@ -652,7 +719,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
   }]);
 
   return Index;
-}(_index.Component), _class.properties = {}, _class.$$events = ["goKefu", "payOrder", "gotoBack"], _temp2);
+}(_index.Component), _class.properties = {}, _class.$$events = ["payOrder", "gotoBack"], _temp2);
 exports.default = Index;
 
 Component(require('../../../npm/@tarojs/taro-weapp/index.js').default.createComponent(Index, true));

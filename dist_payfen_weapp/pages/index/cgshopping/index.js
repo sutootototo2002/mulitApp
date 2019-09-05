@@ -163,7 +163,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
               _index2.default.redirectTo({
                 url: '/pages/orders/orderdetail/orderdetail?orderid=' + orderid + '&whereis=cgshop'
               });
-            }, 3000);
+            }, 1000);
           } else if (orderstatus == "6") {
             //6已欠费
             this_.getUnpayOrder();
@@ -575,7 +575,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
   }]);
 
   return Index;
-}(_index.Component), _class.properties = {}, _class.$$events = ["goKefu", "payOrder", "gotoBack"], _temp2);
+}(_index.Component), _class.properties = {}, _class.$$events = ["payOrder", "gotoBack"], _temp2);
 exports.default = Index;
 
 Component(require('../../../npm/@tarojs/taro-weapp/index.js').default.createComponent(Index, true));

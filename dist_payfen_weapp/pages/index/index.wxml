@@ -61,7 +61,7 @@
                         </cover-view>
                         <cover-view class="sinfo">亲！{{systemUser}}恭候您多时啦...</cover-view>
                         <block wx:if="{{setp1}}">
-                            <button class="singBtn" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" data-e-getphonenumber-so="this">我去注册</button>
+                            <button class="singBtn" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" data-e-getphonenumber-so="this">我去开通</button>
                         </block>
                         <block wx:if="{{setp2}}">
                             <button class="singBtn" bindtap="gotopayfen" bindtouchstart="gotopayfen">开通支付分</button>
@@ -77,8 +77,7 @@
             <block wx:if="{{haveShopping}}">
                 <cover-view class="boxInfo" catchtap="onInfo">
                     <cover-image class="posImg" src="{{dw}}"></cover-image>
-                    <cover-view class="info">亲！您有一张购物中订单</cover-view>
-                    <cover-view class="btnOpen" data-orderid="{{orderid}}" data-machineid="{{machineid}}" data-orderno="{{orderno}}" data-recogmode="{{recogmode}}" bindtap="gotoCart">打开订单</cover-view>
+                    <cover-view class="info">{{cartTips}}</cover-view>
                 </cover-view>
             </block>
             <block wx:else>

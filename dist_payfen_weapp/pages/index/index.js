@@ -64,10 +64,7 @@ var compareVersion = function compareVersion(v1, v2) {
 };
 
 var order = require("../../utils/order.js");
-// import location from '../../assets/images/location.png'
 var wishImg = "/assets/images/syxytb.png";
-// import juan from '../../assets/images/juan.png'
-
 var flag = "/assets/images/jgtb.png";
 
 var Index = (_temp2 = _class = function (_BaseComponent) {
@@ -147,8 +144,8 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         dyzh: _index3.PATH + 'dyz_f.png',
         xydd: _index3.PATH + 'xyd_img.png',
         singinImg: _index3.PATH + 'gban.png',
-        wzc10: _index3.PATH + 'wzcNew-22.png',
-        wzc11: _index3.PATH + 'wzcNew-11.png',
+        wzc10: _index3.PATH + 'wzcNew-66.png',
+        wzc11: _index3.PATH + 'wzcNew-55.png',
         wzc30: _index3.PATH + 'wzcNew-33.png',
         wzc33: _index3.PATH + 'wzcNew-44.png',
         setp1: true,
@@ -198,7 +195,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
-      console.log(this.props, nextProps);
+      //console.log(this.props, nextProps)
     }
   }, {
     key: 'componentWillMount',
@@ -207,13 +204,11 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
       console.log('---onLoad---');
       if (_index2.default.getEnv() == "ALIPAY") {
         _index3.globalData.isweapp = false;
-        //console.log('**支付宝端(isweapp为false)**'+globalData.isweapp)
       }
       if (_index2.default.getEnv() == "WEAPP") {
         _index3.globalData.isweapp = true;
-        //console.log('**微信端(isweapp为true)**'+globalData.isweapp)
       }
-      this.mapObj = _index2.default.createMapContext("mymap"); //获取地图控件
+      this.mapObj = _index2.default.createMapContext("mymap");
       var that = this;
       _index2.default.getSystemInfo({}).then(function (res) {
         _index2.default.setStorageSync("userInfo", res);
@@ -247,7 +242,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
     value: function componentDidShow() {
       var _this2 = this;
 
-      console.log('---onshow1111111111111111111111---');
+      console.log('---onshow---');
       this.setState({
         HearlistBoolean: false,
         machineBoolean: false
@@ -282,12 +277,10 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
   }, {
     key: 'getPhoneNumber',
     value: function getPhoneNumber(e) {
-      console.log(e.detail.errMsg);
       var that = this;
       if (e.detail.errMsg == 'getPhoneNumber:ok') {
         var that = this;
         _index2.default.login().then(function (res) {
-          console.log(res);
           var code = res.code; //获取code
           console.log('开始登录:' + code);
           function succeeded(res) {
@@ -323,7 +316,6 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
   }, {
     key: 'checkPapay',
     value: function checkPapay() {
-      console.log('checkpaypay11111');
       var that = this;
       var data1 = _index2.default.getStorageSync('userInfo');
       _index2.default.request({
@@ -336,6 +328,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         success: function success(res) {
           if (res.data.code == 200) {
             var havearrears = res.data.data.havearrears;
+            _index3.globalData.minrechage = res.data.data.minrechage / 100;
             if (havearrears == '0') {
               that.setState({
                 markBoolean: false,
@@ -344,7 +337,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
               });
             }
             var isscorepay = res.data.data.isscorepay;
-            if (res.data.data.fee / 100 >= 100) {
+            if (res.data.data.fee / 100 > _index3.globalData.minrechage) {
               that.setState({
                 singinBoolean: false,
                 isrchange: false,
@@ -467,7 +460,6 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
       if (compareVersion(version, '7.0.3') >= 0) {
         //console.log('支付分高于7.0，3');
         count++;
-        console.log("count:" + count);
         this.start();
       } else {
         //console.log('支付分低于7.0，3');
@@ -550,6 +542,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
           var $avatarUrl = res.data.data.avatar;
           _index3.globalData.avatar = $avatarUrl;
           _index3.globalData.fee = res.data.data.fee;
+          _index3.globalData.minrechage = res.data.data.minrechage / 100;
           if (res.data.data.nickname) {
             _index3.globalData.nickname = res.data.data.nickname;
             that.setState({
@@ -560,8 +553,8 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
               isperson: false
             });
           }
-          if (res.data.data.fee / 100 >= 100) {
-            console.log('>100');
+          if (res.data.data.fee / 100 > _index3.globalData.minrechage) {
+            console.log('大于100');
             $isrchange = false;
             $markBoolean = false;
             $singinBoolean = false;
@@ -607,6 +600,9 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
               $singinBoolean = true;
               $markBoolean = true;
               $bool = false;
+              that.setState({
+                haveShopping: false
+              });
             }
           }
           if (res.data.data.havearrears == "1") {
@@ -1070,12 +1066,8 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
   }, {
     key: 'checkShopping',
     value: function checkShopping() {
-      console.log('是否购买过商品：1111111111');
       var that = this;
       order.shoppingorder(function successed(result) {
-        console.log("result:");
-        console.log(result);
-        // 如果有购物中订单，设置页面状态，并开启轮询
         var orderid = result.orderid;
         var machineid = result.machineid;
         var orderno = result.orderno;
@@ -1083,23 +1075,30 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         _index2.default.setStorageSync('goodsResult', result);
         that.setState({
           bool: false,
-          cartTips: '您有一张订单正在购物中',
           orderid: orderid,
           machineid: machineid,
           orderno: orderno,
           recogmode: recogmode,
           markBoolean: true,
-          haveShopping: true
+          haveShopping: false
         });
         order.startqueryorderstatus(orderid, function succeeded(res) {
-          console.log('res:订单数据');
-          console.log(res);
           var orderstatus = res.data.data.orderstatus;
           var doorstatus = res.data.data.doorstatus;
           if (res.data.code == 200) {
             that.setState({
-              bool: false
+              bool: false,
+              haveShopping: true
             });
+            if (doorstatus == '4' && orderstatus != "6" && orderstatus != "3" && orderstatus != "5" && orderstatus != "8" && orderstatus != "9") {
+              that.setState({
+                cartTips: '您的购物正在结算，稍后为您推送购物信息',
+                bool: false,
+                markBoolean: true,
+                haveShopping: true
+              });
+              return;
+            }
             if (orderstatus == "5" || orderstatus == "3" || orderstatus == "8" || orderstatus == "9") {
               //5已付款 3已取消 8已完成 9 错误
               console.log('------执行这里-----------');
@@ -1114,10 +1113,10 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
                   url: '/pages/orders/orderdetail/orderdetail?orderid=' + orderid + "&whereis=all"
                 });
               }, 2000);
-            } else if (!(orderstatus == "6")) {
-              console.log('------苏晓燕1111111您有一张订单正在结算中-----');
+            } else {
+              console.log('------您有一张订单正在结算中-----');
               that.setState({
-                cartTips: '您有一张订单正在结算中',
+                cartTips: '您有一张购物中订单，请及时关门',
                 bool: false,
                 markBoolean: true,
                 haveShopping: true
@@ -1868,7 +1867,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
     key: 'rechFn',
     value: function rechFn() {
       _index2.default.navigateTo({
-        url: '/pages/recharge/recharge?avatar=' + _index3.globalData.avatar + '&nickname=' + _index3.globalData.nickname + '&fee=' + _index3.globalData.fee
+        url: '/pages/recharge/recharge?avatar=' + _index3.globalData.avatar + '&nickname=' + _index3.globalData.nickname + '&fee=' + _index3.globalData.fee + '&minrechage=' + _index3.globalData.minrechage
       });
     }
   }, {
@@ -1886,8 +1885,8 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         machineBoolean: false
       });
       if (e.type == 'end') {
-        if (this.mapContext) {
-          this.mapContext.getCenterLocation({
+        if (this.mapObj) {
+          this.mapObj.getCenterLocation({
             success: function success(res) {
               // that.setData({
               //   latitude: res.latitude,
@@ -1992,7 +1991,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
   }]);
 
   return Index;
-}(_index.Component), _class.properties = {}, _class.$$events = ["onControlTap", "markertap", "regionchange", "topersonfn", "userInfoHandler", "onStored", "getPhoneNumber", "gotopayfen", "onInfo", "gotoCart", "onClosePos", "payOrder", "closeCarting", "redoFn", "rechFn", "gotoCartFn", "onCloseHeardlist", "onSetheart", "fetchMoreLikes", "onScreen", "onRight", "onLeft", "hideModal"], _temp2);
+}(_index.Component), _class.properties = {}, _class.$$events = ["onControlTap", "markertap", "regionchange", "topersonfn", "userInfoHandler", "onStored", "getPhoneNumber", "gotopayfen", "onInfo", "onClosePos", "payOrder", "closeCarting", "redoFn", "rechFn", "gotoCartFn", "onCloseHeardlist", "onSetheart", "fetchMoreLikes", "onScreen", "onRight", "onLeft", "hideModal"], _temp2);
 exports.default = Index;
 
 Component(require('../../npm/@tarojs/taro-weapp/index.js').default.createComponent(Index, true));
